@@ -12,30 +12,31 @@
         />
       </div>
       <h3>tabadol</h3>
+      <router-link class="red" to="/">Home</router-link> |
+      <router-link class="red" to="/login"> signin</router-link>
 
       <v-spacer></v-spacer>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld,
-  },
 };
 </script>
 
 <style lang="scss">
 .header {
-  h3 {
+  h3,
+  a {
+    color: red;
+  }
+  .red {
     color: red;
   }
 }
