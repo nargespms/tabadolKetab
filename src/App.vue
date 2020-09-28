@@ -12,9 +12,9 @@
         />
       </div>
       <h3>tabadol</h3>
+
       <router-link class="red" to="/">Home</router-link> |
       <router-link class="red" to="/login"> signin</router-link>
-
       <v-spacer></v-spacer>
     </v-app-bar>
 

@@ -11,6 +11,7 @@ const axiosInstance = axios.create({
     });
   },
 });
+console.log(axiosInstance);
 // eslint-disable-next-line no-unused-vars
 export default ({ app, router, Vue }) => {
   Vue.prototype.$axios = axiosInstance;
