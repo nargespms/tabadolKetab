@@ -43,4 +43,7 @@ export default {
   font-family: 'aasaam-Noto', sans-serif;
   background: #fff !important;
 }
+a {
+  text-decoration: none;
+}
 </style>

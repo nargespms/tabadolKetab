@@ -6,41 +6,50 @@
     color="blue-grey darken-4"
     class="white--text mainRightMenuWrap"
   >
-    <v-list>
-      <div class="blue-grey lighten-1">
+    <v-list class="mainRightMenuList">
+      <div class="grey darken-4 white--text">
         <v-list-item>
           <v-list-item-avatar>
             <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
           </v-list-item-avatar>
         </v-list-item>
 
-        <v-list-item link>
+        <v-list-item class="white--text" link>
           <v-list-item-content>
             <v-list-item-title class="title">
               John Leider
             </v-list-item-title>
-            <v-list-item-subtitle>john@vuetifyjs.com</v-list-item-subtitle>
+            <v-list-item-subtitle class="white--text"
+              >john@vuetifyjs.com</v-list-item-subtitle
+            >
           </v-list-item-content>
         </v-list-item>
       </div>
 
       <v-list-item>
         <v-list-item-icon>
-          <v-icon>mdi-home</v-icon>
+          <v-icon small>mdi-home</v-icon>
         </v-list-item-icon>
 
-        <v-list-item-title>Home</v-list-item-title>
+        <v-list-item-title>
+          <router-link to="/">
+            {{ $t('dashboard') }}
+          </router-link>
+        </v-list-item-title>
       </v-list-item>
 
       <v-list-group
         color="teal"
         :value="true"
         prepend-icon="mdi-account-circle"
+        append-icon="fas fa-caret-down"
       >
         <template v-slot:activator>
-          <v-list-item-title color="grey" class="grey--text"
-            >Users</v-list-item-title
-          >
+          <v-list-item-title color="grey" class="grey--text" link>
+            <router-link to="/users">
+              {{ $t('users') }}
+            </router-link>
+          </v-list-item-title>
         </template>
 
         <v-list-group color="teal" :value="true" no-action sub-group>
@@ -52,7 +61,7 @@
 
           <v-list-item v-for="([title, icon], i) in admins" :key="i" link>
             <v-list-item-icon>
-              <v-icon v-text="icon"></v-icon>
+              <v-icon small v-text="icon"></v-icon>
             </v-list-item-icon>
 
             <v-list-item-title v-text="title"></v-list-item-title>
@@ -68,7 +77,7 @@
 
           <v-list-item v-for="([title, icon], i) in cruds" :key="i" link>
             <v-list-item-icon>
-              <v-icon v-text="icon"></v-icon>
+              <v-icon small v-text="icon"></v-icon>
             </v-list-item-icon>
             <v-list-item-title v-text="title"></v-list-item-title>
           </v-list-item>
@@ -112,11 +121,28 @@ export default {
 .mainRightMenuWrap {
   .v-list-item__title {
     color: #d5d5d5;
+    a {
+      color: #d5d5d5;
+      display: block;
+    }
   }
   .v-list {
     .v-icon {
       color: #d5d5d5;
     }
   }
+  .v-list-item--active {
+    background-color: teal;
+    color: white;
+    .v-list-item__title {
+      color: #fff !important;
+    }
+    .v-icon {
+      color: #fff !important;
+    }
+  }
+}
+.mainRightMenuList {
+  padding: 0 !important;
 }
 </style>

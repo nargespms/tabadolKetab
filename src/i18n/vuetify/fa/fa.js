@@ -3,4 +3,6 @@ export default {
   login: 'ورود',
   changing: 'معاوضه',
   book: 'کتاب ',
+  dashboard: 'پنل مدیریت',
+  users: 'کاربران',
 };
