@@ -7,6 +7,23 @@
     class="white--text mainRightMenuWrap"
   >
     <v-list>
+      <div class="blue-grey lighten-1">
+        <v-list-item>
+          <v-list-item-avatar>
+            <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+          </v-list-item-avatar>
+        </v-list-item>
+
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title class="title">
+              John Leider
+            </v-list-item-title>
+            <v-list-item-subtitle>john@vuetifyjs.com</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+
       <v-list-item>
         <v-list-item-icon>
           <v-icon>mdi-home</v-icon>
@@ -94,11 +111,11 @@ export default {
 <style lang="scss">
 .mainRightMenuWrap {
   .v-list-item__title {
-    color: grey;
+    color: #d5d5d5;
   }
   .v-list {
     .v-icon {
-      color: grey;
+      color: #d5d5d5;
     }
   }
 }
