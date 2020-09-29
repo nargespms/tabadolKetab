@@ -37,4 +37,10 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '../node_modules/@aasaam/noto-font/dist/font-face.css';
+.v-application {
+  font-family: 'aasaam-Noto', sans-serif;
+  background: #fff !important;
+}
+</style>

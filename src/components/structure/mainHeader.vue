@@ -1,8 +1,14 @@
 <template>
   <div>
-    <v-app-bar app color="primary">
-      <v-app-bar-nav-icon @click="changeDrawer"></v-app-bar-nav-icon>
-      <h3>tabadol</h3>
+    <v-app-bar app color="grey darken-4" class="white--text">
+      <v-app-bar-nav-icon
+        class="white--text"
+        @click="changeDrawer"
+      ></v-app-bar-nav-icon>
+
+      <span class="red--text darken-4">{{ $t('changing') }} &nbsp; </span>
+
+      <span class="white--text">{{ $t('book') }} &nbsp; </span>
     </v-app-bar>
     <mainRightMenu
       :drawer="drawer"

@@ -1,6 +1,8 @@
 <template>
   <div>
-    home
+    {{ $t('home') }}
+    {{ $t('login') }}
+    <!-- home -->
   </div>
 </template>
 
