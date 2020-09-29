@@ -32,6 +32,7 @@ export default {
     },
     changeState(value) {
       console.log(value);
+      this.drawer = value;
     },
   },
 };
