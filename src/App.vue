@@ -1,12 +1,7 @@
 <template>
   <v-app>
     <div>
-      <mainHeader @changeDraw="changeDraw" :drawer="drawer" />
-      <mainRightMenu
-        :drawer="drawer"
-        :state="drawer"
-        @changeState="changeState"
-      />
+      <mainHeader @changeDraw="changeDraw" />
     </div>
 
     <v-main>
@@ -21,14 +16,12 @@
 <script>
 import mainFooter from './components/structure/mainFooter.vue';
 import mainHeader from './components/structure/mainHeader.vue';
-import mainRightMenu from './components/structure/mainRightMenu.vue';
 
 export default {
   name: 'App',
   components: {
     mainFooter,
     mainHeader,
-    mainRightMenu,
   },
   data() {
     return {
@@ -38,9 +31,6 @@ export default {
 
   methods: {
     changeDraw(value) {
-      this.drawer = value;
-    },
-    changeState(value) {
       this.drawer = value;
     },
   },
