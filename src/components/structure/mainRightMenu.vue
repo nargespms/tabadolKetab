@@ -20,13 +20,13 @@
       </v-list-item>
 
       <v-list-item link>
-        <router-link class="flex black--text" to="/about">
+        <router-link class="flex black--text" to="/login">
           <v-list-item-action>
             <v-icon>mdi-email</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>About</v-list-item-title>
+            <v-list-item-title>Login</v-list-item-title>
           </v-list-item-content>
         </router-link>
       </v-list-item>
