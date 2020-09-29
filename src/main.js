@@ -10,7 +10,7 @@ Vue.use({
     Vue.prototype.$axios = axios.create({});
   },
 });
-console.log(axios);
+
 Vue.config.productionTip = false;
 
 new Vue({

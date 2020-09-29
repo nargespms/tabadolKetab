@@ -1,43 +1,50 @@
 <template>
   <v-app>
-    <v-app-bar class="header" app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-      </div>
-      <h3>tabadol</h3>
-
-      <router-link class="red" to="/">Home</router-link> |
-      <router-link class="red" to="/login"> signin</router-link>
-      <v-spacer></v-spacer>
-    </v-app-bar>
+    <div>
+      <mainHeader @changeDraw="changeDraw" :drawer="drawer" />
+      <mainRightMenu
+        :drawer="drawer"
+        :state="drawer"
+        @changeState="changeState"
+      />
+    </div>
 
     <v-main>
-      <router-view />
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
     </v-main>
+    <mainFooter />
   </v-app>
 </template>
 
 <script>
+import mainFooter from './components/structure/mainFooter.vue';
+import mainHeader from './components/structure/mainHeader.vue';
+import mainRightMenu from './components/structure/mainRightMenu.vue';
+
 export default {
   name: 'App',
+  components: {
+    mainFooter,
+    mainHeader,
+    mainRightMenu,
+  },
+  data() {
+    return {
+      drawer: '', // Hide mobile side menu by default
+    };
+  },
+
+  methods: {
+    changeDraw(value) {
+      this.drawer = value;
+    },
+    changeState(value) {
+      this.drawer = value;
+    },
+  },
 };
 </script>
 
-<style lang="scss">
-.header {
-  h3,
-  a {
-    color: red;
-  }
-  .red {
-    color: red;
-  }
-}
-</style>
+<style lang="scss"></style>

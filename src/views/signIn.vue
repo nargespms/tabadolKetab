@@ -1,7 +1,11 @@
 <template>
   <div>
     signin
-    {{ data }}
+    <ul class="list">
+      <li v-for="search in data" :key="search.index">
+        {{ search }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -12,7 +16,7 @@ export default {
   name: 'signIn',
   data() {
     return {
-      data: {},
+      data: [],
     };
   },
   mounted() {
@@ -22,8 +26,19 @@ export default {
       )
       .then(res => {
         console.log(res);
-        this.data = res.data;
+        this.data = res.data.Search;
       });
   },
 };
 </script>
+
+<style lang="scss">
+.list {
+  width: 80%;
+  list-style: none;
+  li {
+    background-color: grey;
+    margin-bottom: 12px;
+  }
+}
+</style>
