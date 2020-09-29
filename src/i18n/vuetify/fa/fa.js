@@ -1,7 +1,7 @@
 export default {
   home: 'خانه',
   login: 'ورود',
-  changing: 'معاوضه',
+  changing: 'تبادل',
   book: 'کتاب ',
   dashboard: 'پنل مدیریت',
   users: 'کاربران',
