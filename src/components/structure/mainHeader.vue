@@ -6,7 +6,7 @@
         @click="changeDrawer"
       ></v-app-bar-nav-icon>
 
-      <span class="red--text darken-4">{{ $t('changing') }} &nbsp; </span>
+      <span class="red--text text--darken-4">{{ $t('changing') }} &nbsp; </span>
 
       <span class="white--text">{{ $t('book') }} &nbsp; </span>
     </v-app-bar>
