@@ -1,14 +1,13 @@
 <template>
   <div>
-    {{ $t('home') }}
-    {{ $t('login') }}
+    {{ $t('dashboard') }}
     <!-- home -->
   </div>
 </template>
 
 <script>
 export default {
-  name: 'home',
+  name: 'dashboard',
 
   components: {},
 };
