@@ -4,7 +4,8 @@
     app
     right
     color="blue-grey darken-4"
-    class=" mainRightMenuWrap"
+    class="mainRightMenuWrap"
+    dark
   >
     <!-- simple  -->
     <v-list-item
@@ -13,7 +14,6 @@
       :to="item.link"
       exact
       active-class="teal--text text--lighten-2"
-      color="white"
     >
       <v-list-item-icon>
         <v-icon>
@@ -23,7 +23,7 @@
 
       <v-list-item-content>
         <v-list-item-title>
-          {{ item.title }}
+          {{ $t(item.title) }}
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
@@ -32,14 +32,18 @@
       v-for="item in groupItems"
       :key="item.title"
       v-model="item.active"
-      class="mt-2 white--text"
-      :prepend-icon="item.action"
+      class="mt-2"
       no-action
       color="blue-grey lighten-3"
+      :prepend-icon="item.action"
+      append-icon="fas fa-caret-down"
     >
       <template v-slot:activator>
-        <v-list-item-content class=" white--text">
-          <v-list-item-title v-text="item.title"></v-list-item-title>
+        <v-list-item-content>
+          <v-list-item-title
+            class="font-weight-medium menuTitles fn15"
+            v-text="$t(item.title)"
+          ></v-list-item-title>
         </v-list-item-content>
       </template>
 
@@ -48,10 +52,17 @@
         :key="subItem.title"
         :to="subItem.link"
         active-class="teal--text text--lighten-2"
-        color="white"
+        dark
       >
+        <v-icon size="14" class="pl-3">
+          {{ subItem.icon }}
+        </v-icon>
+
         <v-list-item-content>
-          <v-list-item-title v-text="subItem.title"></v-list-item-title>
+          <v-list-item-title
+            class="pr3"
+            v-text="$t(subItem.title)"
+          ></v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list-group>
@@ -78,18 +89,68 @@ export default {
           title: 'Users',
           active: false,
           items: [
-            { title: 'Add User', link: '/users/form/' },
-            { title: 'User List', link: '/users/list' },
+            { title: 'AddUser', link: '/users/addUser', icon: 'fas fa-plus' },
+            {
+              title: 'StaffsList',
+              link: '/users/staffs',
+              icon: 'fa fa-table',
+            },
+            {
+              title: 'ClientsList',
+              link: '/users/clients',
+              icon: 'fa fa-table',
+            },
           ],
         },
         {
           action: 'mdi-card-account-details-outline',
-          title: 'Card',
+          title: 'BookCategory',
           active: false,
           items: [
-            { title: 'Add Card', link: '/card/add/' },
-            { title: 'Allocate Card', link: '/card/allocate' },
-            { title: 'Card List', link: '/card/list' },
+            {
+              title: 'AddBookCategory',
+              link: '/card/addBookCat',
+              icon: 'fas fa-plus',
+            },
+            {
+              title: 'BookCategoryList',
+              link: '/card/bookCatList',
+              icon: 'fa fa-table',
+            },
+          ],
+        },
+        {
+          action: 'mdi-android-messages',
+          title: 'messages',
+          active: false,
+          items: [
+            {
+              title: 'CreateMessage',
+              link: '/card/createNewMsg',
+              icon: 'fas fa-plus',
+            },
+            {
+              title: 'MessagesList',
+              link: '/card/messagesList',
+              icon: 'fa fa-table',
+            },
+          ],
+        },
+        {
+          action: 'mdi-ticket-account',
+          title: 'tickets',
+          active: false,
+          items: [
+            {
+              title: 'AddTicket',
+              link: '/card/addTicket',
+              icon: 'fas fa-plus',
+            },
+            {
+              title: 'TicketsList',
+              link: '/card/ticketsList',
+              icon: 'fa fa-table',
+            },
           ],
         },
       ],
@@ -106,4 +167,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.fn15 {
+  font-size: 15px !important;
+}
+</style>
