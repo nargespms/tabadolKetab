@@ -16,4 +16,6 @@ export default {
   tickets: 'تیکت ‌ها',
   AddTicket: 'ایجاد تیکت',
   TicketsList: 'لیست تیکت ها ',
+  username: 'نام کاربری',
+  email: 'ایمیل',
 };
