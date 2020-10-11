@@ -6,11 +6,13 @@
     update:options
     :server-items-length="totalData"
     :loading="loading"
-    class="elevation-1 text-center"
+    class="elevation-1 text-center ma-4"
     hide-default-header
   >
     <template v-slot:top>
-      <v-toolbar color="teal " flat height="48"> </v-toolbar>
+      <v-toolbar color="teal " flat height="48">
+        <v-icon color="white" @click="addStaff">mdi-account-plus </v-icon>
+      </v-toolbar>
     </template>
 
     <template v-slot:header="{ props: { headers } }">
@@ -22,8 +24,34 @@
         </tr>
       </thead>
     </template>
-    <template v-slot:pageText>
-      kk
+    <template v-slot:body="{ items }">
+      <tbody>
+        <tr v-for="item in items" :key="item.index">
+          <td class="v-data-table__divider">
+            {{ item.name }}
+          </td>
+          <td class="v-data-table__divider">
+            {{ item.username }}
+          </td>
+          <td class="v-data-table__divider">
+            {{ item.email }}
+          </td>
+          <td class="v-data-table__divider">
+            {{ item.phone }}
+          </td>
+          <td class="v-data-table__divider">
+            {{ item.website }}
+          </td>
+          <td class="v-data-table__divider">
+            {{ item.company.name }}
+          </td>
+          <td class="v-data-table__divider">
+            <v-icon color="grey darken-3" @click="deleteRecord">
+              mdi-delete
+            </v-icon>
+          </td>
+        </tr>
+      </tbody>
     </template>
   </v-data-table>
 </template>
@@ -52,6 +80,16 @@ export default {
     return {
       innerOptions: this.options,
     };
+  },
+  methods: {
+    addStaff() {
+      this.$router.push({
+        path: `/users/addUser`,
+      });
+    },
+    deleteRecord() {
+      console.log('deleted');
+    },
   },
   watch: {
     options: {

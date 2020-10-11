@@ -6,7 +6,15 @@
 
     <v-main>
       <v-container fluid>
-        <router-view></router-view>
+        <transition
+          appear
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+          :duration="600"
+          mode="out-in"
+        >
+          <router-view></router-view>
+        </transition>
       </v-container>
     </v-main>
     <mainFooter />

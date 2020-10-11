@@ -32,6 +32,12 @@ export default {
           align: 'center',
           divider: true,
         },
+        {
+          text: 'operation',
+          value: 'operation',
+          align: 'center',
+          divider: true,
+        },
       ],
     };
   },

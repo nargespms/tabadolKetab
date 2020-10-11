@@ -20,4 +20,5 @@ export default {
   email: 'ایمیل',
   name: 'نام',
   phone: 'تلفن',
+  operation:'عملیات',
 };

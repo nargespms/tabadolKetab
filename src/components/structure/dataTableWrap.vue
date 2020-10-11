@@ -8,16 +8,26 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <clientsTable
+      v-if="this.module === 'clientsList'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
 <script>
 import staffTable from '../users/staffTable.vue';
+import clientsTable from '../users/clientsTable.vue';
 
 export default {
   name: 'dataTableWrap',
   components: {
     staffTable,
+    clientsTable,
   },
   props: {
     headers: {
@@ -33,16 +43,18 @@ export default {
       tableData: [],
       loading: true,
       options: {
-        itemsPerPage: 10,
+        page: 1,
+        sortBy: 'time',
       },
     };
   },
   methods: {
     getUsers() {
       console.log('getUserCalled');
-      const { page, itemsPerPage } = this.options;
+      const { page, itemsPerPage, sortBy } = this.options;
       console.log(page);
       console.log(itemsPerPage);
+      console.log(sortBy);
       this.$axios.get('http://jsonplaceholder.typicode.com/users').then(res => {
         console.log(res);
         if (res.status === 200) {
