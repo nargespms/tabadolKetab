@@ -18,4 +18,6 @@ export default {
   TicketsList: 'لیست تیکت ها ',
   username: 'نام کاربری',
   email: 'ایمیل',
+  name: 'نام',
+  phone: 'تلفن',
 };

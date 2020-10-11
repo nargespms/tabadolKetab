@@ -33,7 +33,7 @@ export default {
       tableData: [],
       loading: true,
       options: {
-        itemsPerPage: 5,
+        itemsPerPage: 10,
       },
     };
   },
