@@ -20,5 +20,10 @@ export default {
   email: 'ایمیل',
   name: 'نام',
   phone: 'تلفن',
-  operation:'عملیات',
+  operation: 'عملیات',
+  deleteUser: 'حذف کاربر',
+  RUSureUWantToDeletThisUser: 'آیا میخواهید این کاربر را حذف نمایید؟',
+  accept: 'تایید',
+  reject: 'لغو',
+  operationSuccessfullyOcured: 'عملیات با موفقیت انجام شد',
 };

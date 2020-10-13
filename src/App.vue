@@ -55,6 +55,10 @@ $body-font-family: 'aasaam-Noto', sans-serif;
   font-family: $body-font-family;
   background: #fff !important;
 }
+.v-application .headline {
+  font-family: $body-font-family !important;
+  background: #fff !important;
+}
 a {
   text-decoration: none;
 }

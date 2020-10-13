@@ -14,7 +14,7 @@
         <v-toolbar color="teal " flat height="48">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-icon color="white" @click="addStaff" v-bind="attrs" v-on="on"
+              <v-icon color="white" @click="addClient" v-bind="attrs" v-on="on"
                 >mdi-account-plus
               </v-icon>
             </template>
@@ -32,7 +32,6 @@
           </tr>
         </thead>
       </template>
-
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon color="grey darken-3" @click="deleteRecord(item)">
           mdi-delete
@@ -61,11 +60,9 @@ import promptDialog from '../structure/promptDialog.vue';
 import successNotif from '../structure/successNotif.vue';
 
 export default {
-  name: 'staffTable',
-  components: {
-    promptDialog,
-    successNotif,
-  },
+  name: 'clientsTable',
+  components: { promptDialog, successNotif },
+
   props: {
     headers: {
       type: Array,
@@ -92,7 +89,7 @@ export default {
     };
   },
   methods: {
-    addStaff() {
+    addClient() {
       this.$router.push({
         path: `/users/addUser`,
       });
