@@ -16,18 +16,28 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <bookCategoryTable
+      v-if="this.module === 'bookCats'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
 <script>
 import staffTable from '../users/staffTable.vue';
 import clientsTable from '../users/clientsTable.vue';
+import bookCategoryTable from '../bookCategory/bookCategoryTable.vue';
 
 export default {
   name: 'dataTableWrap',
   components: {
     staffTable,
     clientsTable,
+    bookCategoryTable,
   },
   props: {
     headers: {
@@ -55,20 +65,22 @@ export default {
       console.log(page);
       console.log(itemsPerPage);
       console.log(sortBy);
-      this.$axios.get('http://jsonplaceholder.typicode.com/users').then(res => {
-        console.log(res);
-        if (res.status === 200) {
-          this.tableData = res.data;
-          this.totalData = this.tableData.length;
-          this.loading = false;
-          // if (itemsPerPage > 0) {
-          //   this.tableData = this.tableData.slice(
-          //     (page - 1) * itemsPerPage,
-          //     page * itemsPerPage
-          //   );
-          // }
-        }
-      });
+      this.$axios
+        .get('http://jsonplaceholder.typicode.com/users')
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            this.tableData = res.data;
+            this.totalData = this.tableData.length;
+            this.loading = false;
+            // if (itemsPerPage > 0) {
+            //   this.tableData = this.tableData.slice(
+            //     (page - 1) * itemsPerPage,
+            //     page * itemsPerPage
+            //   );
+            // }
+          }
+        });
     },
   },
   // watch: {

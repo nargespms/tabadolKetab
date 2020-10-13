@@ -109,12 +109,12 @@ export default {
           items: [
             {
               title: 'AddBookCategory',
-              link: '/card/addBookCat',
+              link: '/addBookCat',
               icon: 'fas fa-plus',
             },
             {
               title: 'BookCategoryList',
-              link: '/card/bookCatList',
+              link: '/bookCatList',
               icon: 'fa fa-table',
             },
           ],

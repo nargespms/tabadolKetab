@@ -26,4 +26,12 @@ export default {
   accept: 'تایید',
   reject: 'لغو',
   operationSuccessfullyOcured: 'عملیات با موفقیت انجام شد',
+  thisFieldIsRequired: 'وارد کردن این بخش الزامی است',
+  minCharaters3: 'حداقل تعداد حروف ۳ عدد میباشد',
+  activeinactive: 'فعال - غیرفعال',
+  resetForm: 'پاک کردن فرم',
+  save: 'ذخیره',
+  title: 'عنوان',
+  deleteBookCategory: 'حذف دسته بندی کتاب',
+  RUSureUWantToDeletThisBookCategory: 'آیا میخواهید این دسته بندی را حذف کنید؟',
 };
