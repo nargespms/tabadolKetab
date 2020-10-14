@@ -1,6 +1,6 @@
 <template>
   <div>
-    <addBookCategory />
+    <addBookCategory :mode="'addPage'" />
   </div>
 </template>
 

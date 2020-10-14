@@ -14,19 +14,16 @@ export default {
     return {
       headers: [
         {
-          text: 'name',
+          text: 'id',
           align: 'center',
           sortable: false,
-          value: 'name',
+          value: 'id',
           divider: true,
         },
-        { text: 'username', value: 'username', align: 'center', divider: true },
-        { text: 'email', value: 'email', align: 'center', divider: true },
-        { text: 'phone', value: 'phone', align: 'left', divider: true },
-        { text: 'website', value: 'website', align: 'center', divider: true },
+        { text: 'title', value: 'title', align: 'center', divider: true },
         {
-          text: 'company',
-          value: 'company.name',
+          text: 'completed',
+          value: 'completed',
           align: 'center',
           divider: true,
         },

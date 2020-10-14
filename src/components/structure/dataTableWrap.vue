@@ -49,6 +49,7 @@ export default {
   },
   data() {
     return {
+      endpoint: '',
       totalData: 0,
       tableData: [],
       loading: true,
@@ -65,22 +66,25 @@ export default {
       console.log(page);
       console.log(itemsPerPage);
       console.log(sortBy);
-      this.$axios
-        .get('http://jsonplaceholder.typicode.com/users')
-        .then((res) => {
-          console.log(res);
-          if (res.status === 200) {
-            this.tableData = res.data;
-            this.totalData = this.tableData.length;
-            this.loading = false;
-            // if (itemsPerPage > 0) {
-            //   this.tableData = this.tableData.slice(
-            //     (page - 1) * itemsPerPage,
-            //     page * itemsPerPage
-            //   );
-            // }
-          }
-        });
+      if (this.module === 'bookCats') {
+        this.endpoint = 'http://jsonplaceholder.typicode.com/todos';
+      } else {
+        this.endpoint = 'http://jsonplaceholder.typicode.com/users';
+      }
+      this.$axios.get(this.endpoint).then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          this.tableData = res.data;
+          this.totalData = this.tableData.length;
+          this.loading = false;
+          // if (itemsPerPage > 0) {
+          //   this.tableData = this.tableData.slice(
+          //     (page - 1) * itemsPerPage,
+          //     page * itemsPerPage
+          //   );
+          // }
+        }
+      });
     },
   },
   // watch: {

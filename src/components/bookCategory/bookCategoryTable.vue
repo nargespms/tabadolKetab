@@ -39,7 +39,10 @@
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon color="grey darken-3" @click="deleteRecord(item)">
+        <v-icon medium class="ml-3" @click="editRecord(item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon medium color="grey darken-3" @click="deleteRecord(item)">
           mdi-delete
         </v-icon>
       </template>
@@ -53,8 +56,19 @@
         @reject="closeDelete"
       />
     </v-dialog>
+    <v-dialog v-model="enableEdit">
+      <addBookCategory
+        :mode="'edit'"
+        :title="edittingItem.title"
+        :active="edittingItem.completed"
+        @savedSuccessfully="editBookSuccess"
+      />
+    </v-dialog>
+    <v-dialog v-model="enableAdd">
+      <addBookCategory :mode="'add'" @savedSuccessfully="addBookSuccess" />
+    </v-dialog>
     <successNotif
-      v-if="deleteSuccess"
+      v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
     />
@@ -64,12 +78,14 @@
 <script>
 import promptDialog from '../structure/promptDialog.vue';
 import successNotif from '../structure/successNotif.vue';
+import addBookCategory from './addBookCategory.vue';
 
 export default {
   name: 'bookCategoryTable',
   components: {
     promptDialog,
     successNotif,
+    addBookCategory,
   },
   props: {
     headers: {
@@ -91,17 +107,18 @@ export default {
   data() {
     return {
       innerOptions: this.options,
+      // delete
       enableDelete: false,
       deletingItem: {},
-      deleteSuccess: false,
+      successNotif: false,
+      // edit
+      enableEdit: false,
+      edittingItem: {},
+      // add
+      enableAdd: false,
     };
   },
   methods: {
-    addBookCategory() {
-      this.$router.push({
-        name: 'addBookCat',
-      });
-    },
     // methods for delete notif
     deleteRecord(item) {
       this.deletingItem = item;
@@ -109,7 +126,7 @@ export default {
     },
     acceptDelete(value) {
       console.log(`deleted ${value.name}`);
-      this.deleteSuccess = true;
+      this.successNotif = true;
 
       this.closeDelete();
     },
@@ -118,7 +135,26 @@ export default {
       this.deletingItem = {};
     },
     hideNotif() {
-      this.deleteSuccess = false;
+      this.successNotif = false;
+    },
+    // methods for edit items
+    editRecord(item) {
+      console.log(item);
+      this.enableEdit = true;
+      this.edittingItem = item;
+    },
+    editBookSuccess() {
+      this.enableEdit = false;
+      this.successNotif = true;
+      this.edittingItem = {};
+    },
+    // add
+    addBookCategory() {
+      this.enableAdd = true;
+    },
+    addBookSuccess() {
+      this.successNotif = true;
+      this.enableAdd = false;
     },
   },
   watch: {

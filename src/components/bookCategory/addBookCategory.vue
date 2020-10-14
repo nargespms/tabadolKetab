@@ -22,15 +22,14 @@
         </v-card-actions>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
-            v-model="catTitle"
+            v-model="bookCat.title"
             :counter="10"
             :rules="titleRules"
             :label="$t('title')"
             required
           ></v-text-field>
           <v-checkbox
-            v-model="activeCategory"
-            :rules="[(v) => !!v || `${this.$t('thisFieldIsRequired')}`]"
+            v-model="bookCat.active"
             :label="$t('activeinactive')"
             required
           ></v-checkbox>
@@ -68,22 +67,42 @@ export default {
   components: {
     successNotif,
   },
+  props: {
+    mode: {
+      type: String,
+    },
+    title: {
+      type: String,
+      default: '',
+    },
+    active: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       valid: true,
-      catTitle: '',
+      bookCat: {
+        title: '',
+        active: true,
+      },
+
       titleRules: [
         (v) => !!v || `${this.$t('thisFieldIsRequired')}`,
         (v) => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
-      activeCategory: true,
       saveSuccess: false,
     };
   },
   methods: {
     validate() {
       this.$refs.form.validate();
-      this.saveSuccess = true;
+      if (this.mode === 'addPage') {
+        this.saveSuccess = true;
+        this.reset();
+      }
+      this.$emit('savedSuccessfully');
     },
     reset() {
       this.$refs.form.reset();
@@ -94,6 +113,20 @@ export default {
     },
     bookCatList() {
       this.$router.push({ path: 'bookCatList' });
+    },
+  },
+  mounted() {
+    if (this.mode === 'edit') {
+      this.bookCat.active = this.active;
+      this.bookCat.title = this.title;
+    }
+  },
+  watch: {
+    active(newVal) {
+      this.bookCat.active = newVal;
+    },
+    title(newVal) {
+      this.bookCat.title = newVal;
     },
   },
 };
