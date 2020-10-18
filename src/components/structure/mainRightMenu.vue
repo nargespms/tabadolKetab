@@ -126,12 +126,12 @@ export default {
           items: [
             {
               title: 'CreateMessage',
-              link: '/card/createNewMsg',
+              link: '/createNewMsg',
               icon: 'fas fa-plus',
             },
             {
               title: 'MessagesList',
-              link: '/card/messagesList',
+              link: '/messagesList',
               icon: 'fa fa-table',
             },
           ],
@@ -143,12 +143,12 @@ export default {
           items: [
             {
               title: 'AddTicket',
-              link: '/card/addTicket',
+              link: '/addTicket',
               icon: 'fas fa-plus',
             },
             {
               title: 'TicketsList',
-              link: '/card/ticketsList',
+              link: '/ticketsList',
               icon: 'fa fa-table',
             },
           ],

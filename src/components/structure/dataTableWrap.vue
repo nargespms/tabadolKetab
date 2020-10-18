@@ -24,6 +24,22 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <messagesTable
+      v-if="this.module === 'messages'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
+    <ticketsTable
+      v-if="this.module === 'tickets'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
@@ -31,6 +47,8 @@
 import staffTable from '../users/staffTable.vue';
 import clientsTable from '../users/clientsTable.vue';
 import bookCategoryTable from '../bookCategory/bookCategoryTable.vue';
+import messagesTable from '../messages/messagesTable.vue';
+import ticketsTable from '../tickets/ticketsTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -38,6 +56,8 @@ export default {
     staffTable,
     clientsTable,
     bookCategoryTable,
+    messagesTable,
+    ticketsTable,
   },
   props: {
     headers: {
@@ -68,6 +88,8 @@ export default {
       console.log(sortBy);
       if (this.module === 'bookCats') {
         this.endpoint = 'http://jsonplaceholder.typicode.com/todos';
+      } else if (this.module === 'messages' || this.module === 'tickets') {
+        this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
       } else {
         this.endpoint = 'http://jsonplaceholder.typicode.com/users';
       }

@@ -33,5 +33,22 @@ const routes = [
     name: 'bookCatList',
     component: () => import('../views/bookCategory/bookCatList.vue'),
   },
+  // messages
+  {
+    path: '/createNewMsg',
+    name: 'createNewMsg',
+    component: () => import('../views/messages/createNewMsg.vue'),
+  },
+  {
+    path: '/messagesList',
+    name: 'messagesList',
+    component: () => import('../views/messages/messagesList.vue'),
+  },
+  // tickets
+  {
+    path: '/ticketsList',
+    name: 'ticketsList',
+    component: () => import('../views/tickets/ticketsList.vue'),
+  },
 ];
 export default routes;

@@ -27,11 +27,23 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
+              <v-icon v-if="h.sortable" :key="h.index" color="grey" @click="sort">
+                mdi-menu-down
+              </v-icon>
               {{ $t(h.text) }}
+              <v-icon
+                v-if="h.filterable"
+                color="grey"
+                size="11"
+                class="pa-2"
+                @click="filter"
+                >fas fa-filter</v-icon
+              >
             </th>
           </tr>
         </thead>
       </template>
+
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon color="grey darken-3" @click="deleteRecord(item)">
           mdi-delete
@@ -112,6 +124,14 @@ export default {
     hideNotif() {
       this.deleteSuccess = false;
     },
+     // sort funcs
+    sort(){
+      console.log('sorted');
+    },
+    // filter
+    filter(){
+      console.log('filtered');
+    }
   },
   watch: {
     options: {

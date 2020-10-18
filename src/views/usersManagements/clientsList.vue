@@ -14,24 +14,29 @@ export default {
   },
   data() {
     return {
-      headers: [
+        headers: [
         {
-          text: 'name',
+          text: 'avatar',
           align: 'center',
           sortable: false,
-          value: 'name',
+          value: 'avatar',
           divider: true,
         },
-        { text: 'username', value: 'username', align: 'center', divider: true },
-        { text: 'email', value: 'email', align: 'center', divider: true },
-        { text: 'phone', value: 'phone', align: 'left', divider: true },
-        { text: 'website', value: 'website', align: 'center', divider: true },
         {
-          text: 'company',
-          value: 'company.name',
+          text: 'fullName',
           align: 'center',
+          sortable: true,
+          filterable:true,
+          value: 'fullName',
           divider: true,
         },
+        { text: 'mobilephone', value: 'mobilephone', align: 'left', filterable:true, divider: true },
+        { text: 'phone', value: 'phone', align: 'left', filterable:true, divider: true },
+        { text: 'roll', value: 'roll', align: 'center', filterable:true, divider: true },
+        { text: 'email', value: 'email', align: 'left', filterable:true, divider: true },
+        { text: 'nationalId', value: 'nationalId', align: 'center', filterable:true, divider: true },
+        { text: 'status', value: 'status', align: 'center', filterable:true, divider: true },
+        { text: 'createdAt', value: 'createdAt', align: 'center', filterable:true, divider: true },
         {
           text: 'operation',
           value: 'operation',

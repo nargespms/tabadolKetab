@@ -14,11 +14,11 @@
         <v-toolbar color="teal " flat height="48">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-icon color="white" @click="addStaff" v-bind="attrs" v-on="on"
-                >mdi-account-plus
+              <v-icon color="white" @click="addTicket" v-bind="attrs" v-on="on"
+                >mdi-comment-plus-outline
               </v-icon>
             </template>
-            <span>{{ $t('AddUser') }}</span>
+            <span>{{ $t('addTicket') }}</span>
           </v-tooltip>
         </v-toolbar>
       </template>
@@ -27,33 +27,55 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon v-if="h.sortable" :key="h.index" color="grey" @click="sort">
+              <v-icon
+                v-if="h.sortable"
+                :key="h.index"
+                color="grey"
+                @click="sort"
+              >
                 mdi-menu-down
               </v-icon>
               {{ $t(h.text) }}
-              <v-icon v-if="h.filterable" color="grey" size="11" class="pa-2" @click="filter">fas fa-filter</v-icon>
+              <v-icon
+                v-if="h.filterable"
+                color="grey"
+                size="11"
+                class="pa-2"
+                @click="filter"
+                >fas fa-filter
+              </v-icon>
             </th>
           </tr>
         </thead>
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon color="grey darken-3" @click="deleteRecord(item)">
+        <v-icon medium class="ma-2" @click="preview(item)">
+          mdi-eye
+        </v-icon>
+
+        <v-icon
+          medium
+          class="ma-2"
+          color="grey darken-3"
+          @click="deleteRecord(item)"
+        >
           mdi-delete
         </v-icon>
       </template>
     </v-data-table>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
-        :title="'deleteUser'"
-        :message="'RUSureUWantToDeletThisUser'"
+        :title="'deleteMessage'"
+        :message="'RUSureUWantToDeletThisMessage'"
         :data="deletingItem"
         @accept="acceptDelete"
         @reject="closeDelete"
       />
     </v-dialog>
+
     <successNotif
-      v-if="deleteSuccess"
+      v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
     />
@@ -61,90 +83,76 @@
 </template>
 
 <script>
-import promptDialog from '../structure/promptDialog.vue';
 import successNotif from '../structure/successNotif.vue';
+import promptDialog from '../structure/promptDialog.vue';
 
 export default {
-  name: 'staffTable',
+  name: 'ticketsTable',
   components: {
-    promptDialog,
     successNotif,
+    promptDialog,
   },
   props: {
-    headers: {
-      type: Array,
-    },
-    tableData: {
-      type: Array,
-    },
+    headers: { type: Array },
+    tableData: { type: Array },
     options: {
       type: Object,
     },
-    totalData: {
-      type: Number,
-    },
-    loading: {
-      type: Boolean,
-    },
+    totalData: { type: Number },
+    loading: { type: Boolean },
   },
-  data() {
+  data () {
     return {
       innerOptions: this.options,
+      // delete
       enableDelete: false,
       deletingItem: {},
-      deleteSuccess: false,
+      successNotif: false,
     };
   },
   methods: {
-    addStaff() {
+    addTicket () {
       this.$router.push({
-        path: `/users/addUser`,
+        path: '/addTicket',
       });
     },
     // methods for delete notif
-    deleteRecord(item) {
+    deleteRecord (item) {
       this.deletingItem = item;
       this.enableDelete = true;
     },
-    acceptDelete(value) {
+    acceptDelete (value) {
       console.log(`deleted ${value.name}`);
-      this.deleteSuccess = true;
+      this.successNotif = true;
 
       this.closeDelete();
     },
-    closeDelete() {
+    closeDelete () {
       this.enableDelete = false;
       this.deletingItem = {};
     },
-    hideNotif() {
-      this.deleteSuccess = false;
+    hideNotif () {
+      this.successNotif = false;
+    },
+    // methods for preview
+    preview (item) {
+      console.log(item);
     },
     // sort funcs
-    sort(){
+    sort () {
       console.log('sorted');
     },
     // filter
-    filter(){
+    filter () {
       console.log('filtered');
-    }
+    },
   },
   watch: {
     options: {
-      handler(newVal) {
+      handler (newVal) {
         this.innerOptions = newVal;
       },
     },
   },
 };
 </script>
-
-<style lang="scss">
-.tableDataHead {
-  tr {
-    th {
-      border-top: thin solid rgba(0, 0, 0, 0.12);
-      border-right: thin solid rgba(0, 0, 0, 0.12);
-    }
-  }
-}
-</style>
