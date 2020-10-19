@@ -46,6 +46,11 @@ const routes = [
   },
   // tickets
   {
+    path: '/createNewTicket',
+    name: 'createNewTicket',
+    component: () => import('../views/tickets/createNewTicket.vue'),
+  },
+  {
     path: '/ticketsList',
     name: 'ticketsList',
     component: () => import('../views/tickets/ticketsList.vue'),

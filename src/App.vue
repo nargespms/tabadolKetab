@@ -62,4 +62,10 @@ $body-font-family: 'aasaam-Noto', sans-serif;
 a {
   text-decoration: none;
 }
+.sh-0 {
+  box-shadow:none!important;
+}
+.fn13 {
+  font-size: 13px;
+}
 </style>

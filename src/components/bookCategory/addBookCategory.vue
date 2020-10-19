@@ -98,11 +98,16 @@ export default {
   methods: {
     validate() {
       this.$refs.form.validate();
-      if (this.mode === 'addPage') {
-        this.saveSuccess = true;
+      if(this.$refs.form.validate()) {
+
+        if (this.mode === 'addPage') {
+          this.saveSuccess = true;
         this.reset();
       }
       this.$emit('savedSuccessfully');
+      }else {
+        this.valid = false
+      }
     },
     reset() {
       this.$refs.form.reset();

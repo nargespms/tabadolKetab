@@ -143,7 +143,7 @@ export default {
           items: [
             {
               title: 'AddTicket',
-              link: '/addTicket',
+              link: '/createNewTicket',
               icon: 'fas fa-plus',
             },
             {

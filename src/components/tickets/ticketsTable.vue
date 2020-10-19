@@ -18,7 +18,7 @@
                 >mdi-comment-plus-outline
               </v-icon>
             </template>
-            <span>{{ $t('addTicket') }}</span>
+            <span>{{ $t('AddTicket') }}</span>
           </v-tooltip>
         </v-toolbar>
       </template>
@@ -113,7 +113,7 @@ export default {
   methods: {
     addTicket () {
       this.$router.push({
-        path: '/addTicket',
+        name: 'createNewTicket',
       });
     },
     // methods for delete notif

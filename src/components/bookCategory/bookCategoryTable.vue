@@ -67,16 +67,13 @@
         @reject="closeDelete"
       />
     </v-dialog>
-    <v-dialog v-model="enableEdit">
+    <v-dialog v-model="enableEdit"  content-class="sh-0">
       <addBookCategory
         :mode="'edit'"
         :title="edittingItem.title"
         :active="edittingItem.completed"
         @savedSuccessfully="editBookSuccess"
       />
-    </v-dialog>
-    <v-dialog v-model="enableAdd">
-      <addBookCategory :mode="'add'" @savedSuccessfully="addBookSuccess" />
     </v-dialog>
     <successNotif
       v-if="successNotif"
@@ -125,8 +122,7 @@ export default {
       // edit
       enableEdit: false,
       edittingItem: {},
-      // add
-      enableAdd: false,
+
     };
   },
   methods: {
@@ -161,12 +157,11 @@ export default {
     },
     // add
     addBookCategory() {
-      this.enableAdd = true;
+      this.$router.push({
+        name:'addBookCat',
+      })
     },
-    addBookSuccess() {
-      this.successNotif = true;
-      this.enableAdd = false;
-    },
+
      // sort funcs
     sort(){
       console.log('sorted');

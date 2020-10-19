@@ -61,6 +61,11 @@ export default {
   attachments:'فایل ضمیمه',
   sender:'فرستنده',
   senderNumber:'شماره فرستنده',
-
-
+  chooseUserorS:'انتخاب کاربر(ها)',
+  allStaffs:'همه کارمندان',
+  allClients:' همه مشتریان',
+  POST:'پست',
+  IT:'فناوری اطلاعات',
+  BILLING:'مالی',
+  department:'واحد',
 };
