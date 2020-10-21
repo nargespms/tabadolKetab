@@ -5,7 +5,7 @@
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
             <span>
-              {{ $t('CreateMessage') }}
+              {{ $t(cardName) }}
             </span>
           </v-card-title>
           <v-spacer></v-spacer>
@@ -24,28 +24,14 @@
         </v-card-actions>
         <v-form class="pt-6" ref="form" v-model="valid" lazy-validation>
           <div class="recieveUserWrap d-flex align-center">
-            <span class="font-weight-black">
-              {{$t('reciever')}} :
-            </span>
-              <v-radio-group
-                v-model="reciever"
-                row
-              >
-                <v-radio
-                  :label="$t('chooseUserorS')"
-                  value="notAll"
-                ></v-radio>
-                <v-radio
-                  :label="$t('allStaffs')"
-                  value="staffs"
-                ></v-radio>
-                <v-radio
-                  :label="$t('allClients')"
-                  value="clients"
-                ></v-radio>
-              </v-radio-group>
+            <span class="font-weight-black"> {{ $t('reciever') }} : </span>
+            <v-radio-group v-model="reciever" row>
+              <v-radio :label="$t('chooseUserorS')" value="notAll"></v-radio>
+              <v-radio :label="$t('allStaffs')" value="staffs"></v-radio>
+              <v-radio :label="$t('allClients')" value="clients"></v-radio>
+            </v-radio-group>
           </div>
-          <usersAutoComplete v-if="reciever === 'notAll'"/>
+          <usersAutoComplete v-if="reciever === 'notAll'" />
           <v-text-field
             v-model="message.title"
             :rules="messageRules"
@@ -63,13 +49,13 @@
             :label="$t('summaryText')"
             v-model="message.text"
           ></v-textarea>
-          <div class="d-flex align-center" >
+          <div class="d-flex align-center">
             <v-select
               :items="messageType"
               :label="$t('messageType')"
               outlined
               required="true"
-              :rules="[(v) => !!v || `${this.$t('thisFieldIsRequired')}`]"
+              :rules="[v => !!v || `${this.$t('thisFieldIsRequired')}`]"
             >
               <template v-slot:item="{ item }">
                 <span>
@@ -91,7 +77,12 @@
               @setDate="setDate"
             />
           </div>
-          <v-file-input outlined show-size multiple :label="$t('attachments')"></v-file-input>
+          <v-file-input
+            outlined
+            show-size
+            multiple
+            :label="$t('attachments')"
+          ></v-file-input>
           <v-row no-gutters>
             <v-col cols="6" md="4">
               <v-checkbox
@@ -127,7 +118,6 @@
   </v-row>
 </template>
 
-
 <script>
 import successNotif from '../structure/successNotif.vue';
 import dataPickerCmp from '../structure/datePickerCmp.vue';
@@ -138,10 +128,13 @@ export default {
   components: {
     successNotif,
     dataPickerCmp,
-    usersAutoComplete
+    usersAutoComplete,
   },
   props: {
     mode: {
+      type: String,
+    },
+    cardName: {
       type: String,
     },
   },
@@ -150,22 +143,22 @@ export default {
       valid: true,
       saveSuccess: false,
       messageRules: [
-        (v) => !!v || `${this.$t('thisFieldIsRequired')}`,
-        (v) => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
+        v => !!v || `${this.$t('thisFieldIsRequired')}`,
+        v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
-      requireRule: [(v) => !!v || `${this.$t('thisFieldIsRequired')}`],
+      requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       messageType: ['privateMessage', 'publicMessage'],
-      users:['user1', 'user2', 'user3', 'user4'],
+      users: ['user1', 'user2', 'user3', 'user4'],
       message: {
         title: '',
         text: '',
         messageType: null,
         sms: false,
-        reciever:[],
+        reciever: [],
       },
-      reciever:'notAll',
-      Datevalidate:true,
-      dateKey:0,
+      reciever: 'notAll',
+      Datevalidate: true,
+      dateKey: 0,
     };
   },
   methods: {
@@ -177,18 +170,21 @@ export default {
     validate() {
       this.$refs.form.validate();
       console.log(this.$refs.datePicker.date);
-      if(this.$refs.datePicker.date.length<1 || this.$refs.datePicker.date === null) {
+      if (
+        this.$refs.datePicker.date.length < 1 ||
+        this.$refs.datePicker.date === null
+      ) {
         this.Datevalidate = false;
-        this.dateKey =+1;
+        this.dateKey = +1;
       }
-      if(this.$refs.form.validate()) {
+      if (this.$refs.form.validate()) {
         if (this.mode === 'addPage') {
           this.saveSuccess = true;
           this.reset();
         }
         this.$emit('savedSuccessfully');
-      }else {
-        this.valid = false
+      } else {
+        this.valid = false;
       }
     },
     reset() {
@@ -199,12 +195,11 @@ export default {
       this.saveSuccess = false;
     },
     // date
-    setDate(value){
+    setDate(value) {
       // this valu is persian date
       // it should convert to gregorian
       console.log(value);
-    }
+    },
   },
-
 };
 </script>

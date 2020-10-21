@@ -1,6 +1,7 @@
 <template>
   <div>
-    <addMessageCmp :mode="'addPage'" :cardName="'CreateMessage'" />
+    <span> messageId: {{ $route.params.messageId }} </span>
+    <addMessageCmp :mode="'edit'" :cardName="'editMessage'" />
   </div>
 </template>
 
@@ -8,7 +9,7 @@
 import addMessageCmp from '../../components/messages/addMessageCmp.vue';
 
 export default {
-  name: 'createNewMsg',
+  name: 'message',
   components: {
     addMessageCmp,
   },

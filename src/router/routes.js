@@ -44,6 +44,11 @@ const routes = [
     name: 'messagesList',
     component: () => import('../views/messages/messagesList.vue'),
   },
+  {
+    path: '/messagesList/:messageId',
+    name: 'message',
+    component: () => import('../views/messages/message.vue'),
+  },
   // tickets
   {
     path: '/createNewTicket',

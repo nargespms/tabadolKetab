@@ -27,38 +27,79 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon v-if="h.sortable" :key="h.index" color="grey" @click="sort">
+              <v-icon
+                v-if="h.sortable"
+                :key="h.index"
+                color="grey"
+                @click="sort"
+              >
                 mdi-menu-down
               </v-icon>
-                {{ $t(h.text) }}
-                <v-icon
-                  v-if="h.filterable"
-                  color="grey"
-                  size="11"
-                  class="pa-2"
-                  @click="filter">fas fa-filter
-                </v-icon>
-
+              {{ $t(h.text) }}
+              <v-icon
+                v-if="h.filterable"
+                color="grey"
+                size="11"
+                class="pa-2"
+                @click="filter"
+                >fas fa-filter
+              </v-icon>
             </th>
           </tr>
         </thead>
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon medium class="ma-2" @click="preview(item)">
-          mdi-eye
-        </v-icon>
-
-        <v-icon
-          medium
-          class="ma-2"
-          color="grey darken-3"
-          @click="deleteRecord(item)"
-        >
-          mdi-delete
-        </v-icon>
+        <div class="d-flex">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                medium
+                class="ma-2"
+                v-bind="attrs"
+                @click="preview(item)"
+                v-on="on"
+              >
+                mdi-eye
+              </v-icon>
+            </template>
+            {{ $t('preview') }}
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                medium
+                class="ma-2"
+                @click="editRecord(item)"
+                v-on="on"
+                v-bind="attrs"
+              >
+                mdi-pencil
+              </v-icon>
+            </template>
+            {{ $t('edit') }}
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                medium
+                class="ma-2"
+                color="grey darken-3"
+                @click="deleteRecord(item)"
+                v-on="on"
+                v-bind="attrs"
+              >
+                mdi-delete
+              </v-icon>
+            </template>
+            {{ $t('delete') }}
+          </v-tooltip>
+        </div>
       </template>
     </v-data-table>
+    <v-dialog v-model="enablePreview" content-class="sh-0">
+      <messageShow :item="previewItem" />
+    </v-dialog>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
         :title="'deleteMessage'"
@@ -77,17 +118,17 @@
   </div>
 </template>
 
-
-
 <script>
 import successNotif from '../structure/successNotif.vue';
 import promptDialog from '../structure/promptDialog.vue';
+import messageShow from './messageShow.vue';
 
 export default {
   name: 'messagesTable',
   components: {
     successNotif,
     promptDialog,
+    messageShow,
   },
   props: {
     headers: { type: Array },
@@ -105,13 +146,17 @@ export default {
       enableDelete: false,
       deletingItem: {},
       successNotif: false,
+      // preview
+      enablePreview: false,
+      previewItem: {},
     };
   },
+
   methods: {
     addMessage() {
-     this.$router.push({
-       name:'createNewMsg',
-     })
+      this.$router.push({
+        name: 'createNewMsg',
+      });
     },
     // methods for delete notif
     deleteRecord(item) {
@@ -134,21 +179,34 @@ export default {
     // methods for preview
     preview(item) {
       console.log(item);
+      this.enablePreview = true;
+      this.previewItem = item;
+    },
+    // edit func
+    editRecord(item) {
+      this.$router.push({
+        path: `/messagesList/${item.id}`,
+      });
     },
     // sort funcs
-    sort(){
+    sort() {
       console.log('sorted');
     },
     // filter
-    filter(){
+    filter() {
       console.log('filtered');
-    }
+    },
   },
   watch: {
     options: {
       handler(newVal) {
         this.innerOptions = newVal;
       },
+    },
+    enablePreview(newVal) {
+      if (newVal === false) {
+        this.previewItem = {};
+      }
     },
   },
 };

@@ -3,13 +3,14 @@ export default {
   changing: 'تبادل',
   book: 'کتاب ',
   Dashboard: 'پنل مدیریت',
-
+  edit:'ویرایش',
+  delete:'حذف',
+  preview:'مشاهده',
   BookCategory: 'دسته بندی کتاب',
   AddBookCategory: ' ایجاد دسته بندی کتاب',
   BookCategoryList: ' لیست دسته بندی‌های کتاب',
   messages: 'پیام ‌ها',
-  CreateMessage: 'ایجاد پیام ',
-  MessagesList: 'لیست پیام ها',
+
   tickets: 'تیکت ‌ها',
   AddTicket: 'ایجاد تیکت',
   TicketsList: 'لیست تیکت ها ',
@@ -68,4 +69,8 @@ export default {
   IT:'فناوری اطلاعات',
   BILLING:'مالی',
   department:'واحد',
+  editMessage:'ویرایش پیام',
+  CreateMessage: 'ایجاد پیام ',
+  MessagesList: 'لیست پیام ها',
+
 };
