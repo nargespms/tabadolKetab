@@ -72,5 +72,6 @@ export default {
   editMessage:'ویرایش پیام',
   CreateMessage: 'ایجاد پیام ',
   MessagesList: 'لیست پیام ها',
+  uploadeMore:'بارگزاری بیشتر',
 
 };

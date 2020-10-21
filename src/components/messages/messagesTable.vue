@@ -1,5 +1,9 @@
 <template>
   <div>
+    <span>
+      This Component is not used anyWhere It will be deleted after
+      lazyMessageTable confirmed
+    </span>
     <v-data-table
       :headers="headers"
       :items="tableData"

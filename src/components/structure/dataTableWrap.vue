@@ -24,14 +24,15 @@
       :totalData="totalData"
       :loading="loading"
     />
-    <messagesTable
+
+    <!-- <messagesTable
       v-if="this.module === 'messages'"
       :headers="headers"
       :tableData="tableData"
       :options="options"
       :totalData="totalData"
       :loading="loading"
-    />
+    /> -->
     <ticketsTable
       v-if="this.module === 'tickets'"
       :headers="headers"
@@ -47,8 +48,8 @@
 import staffTable from '../users/staffTable.vue';
 import clientsTable from '../users/clientsTable.vue';
 import bookCategoryTable from '../bookCategory/bookCategoryTable.vue';
-import messagesTable from '../messages/messagesTable.vue';
 import ticketsTable from '../tickets/ticketsTable.vue';
+// import messagesTable from '../messages/messagesTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -56,8 +57,8 @@ export default {
     staffTable,
     clientsTable,
     bookCategoryTable,
-    messagesTable,
     ticketsTable,
+    // messagesTable,
   },
   props: {
     headers: {
@@ -93,7 +94,7 @@ export default {
       } else {
         this.endpoint = 'http://jsonplaceholder.typicode.com/users';
       }
-      this.$axios.get(this.endpoint).then((res) => {
+      this.$axios.get(this.endpoint).then(res => {
         console.log(res);
         if (res.status === 200) {
           this.tableData = res.data;
