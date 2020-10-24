@@ -20,6 +20,9 @@
             </template>
             <span>{{ $t('AddTicket') }}</span>
           </v-tooltip>
+          <span class="pr-4 font-weight-medium white--text">
+            {{ $t('TicketsList') }}
+          </span>
         </v-toolbar>
       </template>
 
@@ -48,7 +51,11 @@
           </tr>
         </thead>
       </template>
-
+      <template v-slot:[`item.title`]="{ item }">
+        <router-link :to="`/ticketsList/${item.id}`" class="black--text">
+          {{ item.title }}l</router-link
+        >
+      </template>
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon medium class="ma-2" @click="preview(item)">
           mdi-eye
@@ -64,6 +71,9 @@
         </v-icon>
       </template>
     </v-data-table>
+    <v-dialog v-model="enablePreview" content-class="sh-0">
+      <showTicket :item="previewItem" />
+    </v-dialog>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
         :title="'deleteMessage'"
@@ -85,12 +95,14 @@
 <script>
 import successNotif from '../structure/successNotif.vue';
 import promptDialog from '../structure/promptDialog.vue';
+import showTicket from './showTicket.vue';
 
 export default {
   name: 'ticketsTable',
   components: {
     successNotif,
     promptDialog,
+    showTicket,
   },
   props: {
     headers: { type: Array },
@@ -101,57 +113,66 @@ export default {
     totalData: { type: Number },
     loading: { type: Boolean },
   },
-  data () {
+  data() {
     return {
       innerOptions: this.options,
       // delete
       enableDelete: false,
       deletingItem: {},
       successNotif: false,
+      // preview
+      enablePreview: false,
+      previewItem: {},
     };
   },
   methods: {
-    addTicket () {
+    addTicket() {
       this.$router.push({
         name: 'createNewTicket',
       });
     },
     // methods for delete notif
-    deleteRecord (item) {
+    deleteRecord(item) {
       this.deletingItem = item;
       this.enableDelete = true;
     },
-    acceptDelete (value) {
+    acceptDelete(value) {
       console.log(`deleted ${value.name}`);
       this.successNotif = true;
 
       this.closeDelete();
     },
-    closeDelete () {
+    closeDelete() {
       this.enableDelete = false;
       this.deletingItem = {};
     },
-    hideNotif () {
+    hideNotif() {
       this.successNotif = false;
     },
     // methods for preview
-    preview (item) {
-      console.log(item);
+    preview(item) {
+      this.enablePreview = true;
+      this.previewItem = item;
     },
     // sort funcs
-    sort () {
+    sort() {
       console.log('sorted');
     },
     // filter
-    filter () {
+    filter() {
       console.log('filtered');
     },
   },
   watch: {
     options: {
-      handler (newVal) {
+      handler(newVal) {
         this.innerOptions = newVal;
       },
+    },
+    enablePreview(newVal) {
+      if (newVal === false) {
+        this.previewItem = {};
+      }
     },
   },
 };

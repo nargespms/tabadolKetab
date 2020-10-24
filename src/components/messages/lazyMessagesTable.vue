@@ -9,6 +9,9 @@
         </template>
         <span>{{ $t('CreateMessage') }}</span>
       </v-tooltip>
+      <span class="pr-4 font-weight-medium white--text">
+        {{ $t('MessagesList') }}
+      </span>
     </v-toolbar>
     <v-progress-linear
       v-if="isLoading"

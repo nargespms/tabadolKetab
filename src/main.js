@@ -1,10 +1,11 @@
 import Vue from 'vue';
+import axios from 'axios';
+import VueI18n from 'vue-i18n';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import router from './router/index.js';
 import messages from './i18n/vuetify';
-import axios from 'axios';
-import VueI18n from 'vue-i18n';
+
 Vue.use(VueI18n);
 
 const i18n = new VueI18n({
@@ -13,6 +14,7 @@ const i18n = new VueI18n({
 });
 
 Vue.use({
+  // eslint-disable-next-line no-shadow
   install(Vue) {
     Vue.prototype.$axios = axios.create({});
   },

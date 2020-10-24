@@ -73,5 +73,7 @@ export default {
   CreateMessage: 'ایجاد پیام ',
   MessagesList: 'لیست پیام ها',
   uploadeMore:'بارگزاری بیشتر',
+  // tickets
+  reply:'پاسخ',
 
 };

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import mainRightMenu from '../structure/mainRightMenu.vue';
+import mainRightMenu from './mainRightMenu.vue';
 
 export default {
   name: 'mainHeader',

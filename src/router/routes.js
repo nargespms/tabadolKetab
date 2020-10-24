@@ -60,5 +60,10 @@ const routes = [
     name: 'ticketsList',
     component: () => import('../views/tickets/ticketsList.vue'),
   },
+  {
+    path: '/ticketsList/:ticketId',
+    name: 'ticketPage',
+    component: () => import('../views/tickets/ticket.vue'),
+  },
 ];
 export default routes;

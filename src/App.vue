@@ -63,9 +63,15 @@ a {
   text-decoration: none;
 }
 .sh-0 {
-  box-shadow:none!important;
+  box-shadow: none !important;
 }
 .fn13 {
   font-size: 13px;
+}
+.fn12 {
+  font-size: 12px;
+}
+.clear {
+  overflow: auto;
 }
 </style>

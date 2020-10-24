@@ -25,6 +25,9 @@
             </template>
             <span>{{ $t('AddBookCategory') }}</span>
           </v-tooltip>
+          <span class="pr-4 font-weight-medium white--text">
+            {{ $t('BookCategoryList') }}
+          </span>
         </v-toolbar>
       </template>
 
@@ -32,7 +35,12 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon v-if="h.sortable" :key="h.index" color="grey" @click="sort">
+              <v-icon
+                v-if="h.sortable"
+                :key="h.index"
+                color="grey"
+                @click="sort"
+              >
                 mdi-menu-down
               </v-icon>
               {{ $t(h.text) }}
@@ -41,9 +49,9 @@
                 color="grey"
                 size="11"
                 class="pa-2"
-                @click="filter">fas fa-filter
-                </v-icon>
-
+                @click="filter"
+                >fas fa-filter
+              </v-icon>
             </th>
           </tr>
         </thead>
@@ -67,7 +75,7 @@
         @reject="closeDelete"
       />
     </v-dialog>
-    <v-dialog v-model="enableEdit"  content-class="sh-0">
+    <v-dialog v-model="enableEdit" content-class="sh-0">
       <addBookCategory
         :mode="'edit'"
         :title="edittingItem.title"
@@ -122,7 +130,6 @@ export default {
       // edit
       enableEdit: false,
       edittingItem: {},
-
     };
   },
   methods: {
@@ -158,18 +165,18 @@ export default {
     // add
     addBookCategory() {
       this.$router.push({
-        name:'addBookCat',
-      })
+        name: 'addBookCat',
+      });
     },
 
-     // sort funcs
-    sort(){
+    // sort funcs
+    sort() {
       console.log('sorted');
     },
     // filter
-    filter(){
+    filter() {
       console.log('filtered');
-    }
+    },
   },
   watch: {
     options: {

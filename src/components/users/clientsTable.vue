@@ -20,6 +20,9 @@
             </template>
             <span>{{ $t('AddUser') }}</span>
           </v-tooltip>
+          <span class="pr-4 font-weight-medium white--text">
+            {{ $t('ClientsList') }}
+          </span>
         </v-toolbar>
       </template>
 
@@ -27,7 +30,12 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon v-if="h.sortable" :key="h.index" color="grey" @click="sort">
+              <v-icon
+                v-if="h.sortable"
+                :key="h.index"
+                color="grey"
+                @click="sort"
+              >
                 mdi-menu-down
               </v-icon>
               {{ $t(h.text) }}
@@ -124,14 +132,14 @@ export default {
     hideNotif() {
       this.deleteSuccess = false;
     },
-     // sort funcs
-    sort(){
+    // sort funcs
+    sort() {
       console.log('sorted');
     },
     // filter
-    filter(){
+    filter() {
       console.log('filtered');
-    }
+    },
   },
   watch: {
     options: {
