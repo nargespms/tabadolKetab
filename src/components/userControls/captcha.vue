@@ -1,16 +1,13 @@
 <template>
   <div>
 
-     <signUpCom/>
   </div>
 </template>
 
 <script>
-import signUpCom from '../components/signUpCom/signUpCom.vue';
 
 export default {
-  name: 'signUp',
-  components: {signUpCom},
+  name: 'captcha',
   data() {
     return {
       data: [],
