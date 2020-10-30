@@ -3,6 +3,7 @@ export default {
   changing: 'تبادل',
   book: 'کتاب ',
   Dashboard: 'پنل مدیریت',
+  signUp: 'ثبت نام',
   edit:'ویرایش',
   delete:'حذف',
   preview:'مشاهده',
