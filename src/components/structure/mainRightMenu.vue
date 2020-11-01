@@ -153,6 +153,23 @@ export default {
             },
           ],
         },
+        {
+          action: 'mdi-ticket-percent',
+          title: 'discounts',
+          active: false,
+          items: [
+            {
+              title: 'addDiscount',
+              link: '/addDiscount',
+              icon: 'fas fa-plus',
+            },
+            {
+              title: 'discountsList',
+              link: '/discountsList',
+              icon: 'fa fa-table',
+            },
+          ],
+        },
       ],
     };
   },

@@ -14,9 +14,10 @@ export default {
   tickets: 'تیکت ‌ها',
   AddTicket: 'ایجاد تیکت',
   TicketsList: 'لیست تیکت ها ',
-
+  print:'پرینت',
+  filteredFileDl:'دریافت فایل فیلترشده',
   operation: 'عملیات',
-
+  excelDl:'دریافت اکسل',
   accept: 'تایید',
   reject: 'لغو',
   operationSuccessfullyOcured: 'عملیات با موفقیت انجام شد',
@@ -36,6 +37,14 @@ export default {
   messageType: 'نوع دسته بندی',
   sendSms:'ارسال پیامک',
   createdAt:'زمان ایجاد',
+  category:'دسته بندی',
+  type:'تایپ',
+  number:'تعداد',
+  amount:'مقدار',
+  usedNumber:'تعداد استفاده شده',
+  code :'کد',
+  description:'توضیحات',
+  user:'کاربر',
   id:'شناسه',
   // user
   fullName:'نام و نام خانوادگی',
@@ -75,5 +84,19 @@ export default {
   uploadeMore:'بارگزاری بیشتر',
   // tickets
   reply:'پاسخ',
+  // discounts
+  discounts:'تخفیف ها',
+  addDiscount:'ایجاد تخفیف',
+  discountsList:'لیست تخفیف ها',
+  deleteDiscount:'حذف تخفیف',
+  RUSureUWantToDeletThisdiscount:'آیا میخواهید این تخفیف را حذف نمایید؟',
+  categorySend:'دسته بندی ارسال',
+  fromDate:'از تاریخ',
+  toDate:'تا تاریخ',
+  cost:'مبلغ',
+  percent:'درصد',
+  discountType:'نوع تخفیف',
+  discountCode:'کد تخفیف',
+  discountMaxAmount:'سقف تخفیف',
 
 };

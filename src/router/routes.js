@@ -65,5 +65,16 @@ const routes = [
     name: 'ticketPage',
     component: () => import('../views/tickets/ticket.vue'),
   },
+  // discounts
+  {
+    path: '/addDiscount',
+    name: 'addDiscount',
+    component: () => import('../views/discount/addDiscount.vue'),
+  },
+  {
+    path: '/discountsList',
+    name: 'discountsList',
+    component: () => import('../views/discount/discountsList.vue'),
+  },
 ];
 export default routes;

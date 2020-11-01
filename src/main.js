@@ -3,6 +3,7 @@ import axios from 'axios';
 import VueI18n from 'vue-i18n';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
+import './plugins/mask';
 import router from './router/index.js';
 import messages from './i18n/vuetify';
 
