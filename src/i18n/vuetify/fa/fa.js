@@ -98,5 +98,7 @@ export default {
   discountType:'نوع تخفیف',
   discountCode:'کد تخفیف',
   discountMaxAmount:'سقف تخفیف',
+  noResultsText:'اطلاعاتی پیدا نشد',
+  loadingText:'در حال گرفتن اطلاعات ...',
 
 };

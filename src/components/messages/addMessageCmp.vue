@@ -31,7 +31,12 @@
               <v-radio :label="$t('allClients')" value="clients"></v-radio>
             </v-radio-group>
           </div>
-          <usersAutoComplete v-if="reciever === 'notAll'" />
+          <usersAutoComplete
+            ref="userAutocomplete"
+            :validate="userValidate"
+            dynamicClass="py-6"
+            v-if="reciever === 'notAll'"
+          />
           <v-text-field
             v-model="message.title"
             :rules="messageRules"
@@ -159,6 +164,7 @@ export default {
       reciever: 'notAll',
       Datevalidate: true,
       dateKey: 0,
+      userValidate: true,
     };
   },
   methods: {
@@ -170,6 +176,16 @@ export default {
     validate() {
       this.$refs.form.validate();
       console.log(this.$refs.datePicker.date);
+      // user validation
+      if (
+        this.$refs.userAutocomplete.users === null ||
+        this.$refs.userAutocomplete.users.length < 1
+      ) {
+        this.userValidate = false;
+      } else {
+        this.userValidate = true;
+      }
+
       if (
         this.$refs.datePicker.date.length < 1 ||
         this.$refs.datePicker.date === null
@@ -193,6 +209,7 @@ export default {
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
+      this.userValidate = true;
     },
     // date
     setDate(value) {

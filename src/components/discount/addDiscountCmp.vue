@@ -24,7 +24,7 @@
         </v-card-actions>
         <v-form class="pt-6 pa-6" ref="form" v-model="valid" lazy-validation>
           <v-row>
-            <v-col cols="12" md="4" class="pa-0 ">
+            <v-col cols="12" md="12" class="pa-0 ">
               <v-text-field
                 v-model="discount.title"
                 :rules="requireRule"
@@ -34,16 +34,16 @@
                 error-count="2"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="8" class="pa-0 pr-4">
-              <div class="d-flex">
-                <rangeDatePickerCmp
-                  ref="datePicker"
-                  :fromValidate="fromDateValidation"
-                  :toValidate="toDateValidation"
-                  :key="dateKey"
-                  @setDate="setDate"
-                />
-              </div>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="12" class="pa-0">
+              <rangeDatePickerCmp
+                ref="datePicker"
+                :fromValidate="fromDateValidation"
+                :toValidate="toDateValidation"
+                :key="dateKey"
+                @setDate="setDate"
+              />
             </v-col>
           </v-row>
           <v-row>
@@ -68,7 +68,7 @@
                 </template>
               </v-select>
             </v-col>
-            <v-col cols="12" md="6" class="pa-0 pr-4 ">
+            <v-col cols="12" md="6" class="pa-0 pr-0 pr-md-4 pr-lg-4">
               <v-text-field
                 v-model.number="discount.amount"
                 :rules="requireRule"
@@ -96,7 +96,7 @@
             <v-col
               cols="12"
               :md="discount.type === 'percent' ? '4' : '6'"
-              class="pa-0 pr-4"
+              class="pa-0 pr-md-4  pr-lg-4 pr-0"
             >
               <v-text-field
                 v-model="discount.preCode"
@@ -109,7 +109,7 @@
               v-if="discount.type === 'percent'"
               cols="12"
               :md="discount.type === 'percent' ? '4' : '6'"
-              class="pa-0 pr-4"
+              class="pa-0 pr-md-4  pr-lg-4 pr-0"
             >
               <v-text-field
                 v-model.number="discount.maxAmount"
@@ -120,10 +120,10 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6" class="pa-0">
+            <v-col cols="12" md="6" class="pa-0 pb-6 pa-md-0 pa-lg-0">
               <bookCatAutocomplete ref="bookCat" :validate="bookCatVallidate"
             /></v-col>
-            <v-col cols="12" md="6" class="pa-0 pr-4">
+            <v-col cols="12" md="6" class="pa-0 pr-0 pr-md-4 pr-lg-4 pb-4">
               <usersAutocomplete
                 ref="userAutocomplete"
                 :validate="userValidate"

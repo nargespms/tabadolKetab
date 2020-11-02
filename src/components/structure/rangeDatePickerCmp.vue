@@ -1,7 +1,12 @@
 <template>
-  <v-row no-gutters>
-    <v-col cols="12" md="6">
+  <v-row class="px-3 pb-6">
+    <v-col
+      cols="12"
+      md="6"
+      class=" pa-xl-0 pa-md-0  pa-sm-0 pt-0 pr-0 pl-0 pb-6 pb-sm-6"
+    >
       <date-picker
+        style="width:100%"
         v-model="date.fromDate"
         :placeholder="$t('fromDate')"
         :editable="true"
@@ -17,8 +22,9 @@
         {{ $t('thisFieldIsRequired') }}
       </p>
     </v-col>
-    <v-col cols="12" md="6">
+    <v-col cols="12" md="6" class="pa-0 pr-md-4 pr-xl-4 pr-sm-0">
       <date-picker
+        style="width:100%"
         v-model="date.toDate"
         :placeholder="$t('toDate')"
         :editable="true"
@@ -88,6 +94,7 @@ export default {
   border: 1px solid #aca6a6;
   border-radius: 4px;
   padding: 12px 50px 12px 16px;
+  width: 100%;
 }
 .costum-error {
   .vpd-input-group input {

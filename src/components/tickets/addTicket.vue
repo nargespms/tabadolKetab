@@ -57,7 +57,11 @@
             </template>
           </v-select>
 
-          <usersAutoComplete />
+          <usersAutoComplete
+            dynamicClass="py-6"
+            ref="userAutocomplete"
+            :validate="userValidate"
+          />
 
           <v-file-input
             outlined
@@ -120,6 +124,7 @@ export default {
         title: '',
         text: '',
       },
+      userValidate: true,
     };
   },
   methods: {
@@ -131,6 +136,15 @@ export default {
     // validate form
     validate() {
       this.$refs.form.validate();
+      // user validation
+      if (
+        this.$refs.userAutocomplete.users === null ||
+        this.$refs.userAutocomplete.users.length < 1
+      ) {
+        this.userValidate = false;
+      } else {
+        this.userValidate = true;
+      }
 
       if (this.$refs.form.validate()) {
         if (this.mode === 'addPage') {
@@ -145,6 +159,7 @@ export default {
     // reset form
     reset() {
       this.$refs.form.reset();
+      this.userValidate = true;
     },
     // notif hide
     hideNotif() {

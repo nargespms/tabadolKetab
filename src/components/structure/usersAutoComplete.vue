@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="dynamicClass">
     <v-autocomplete
       v-model="users"
       :disabled="isUpdating"
@@ -60,6 +60,10 @@ export default {
   props: {
     validate: {
       type: Boolean,
+    },
+    dynamicClass: {
+      type: String,
+      default: '',
     },
   },
   data() {
