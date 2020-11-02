@@ -1,47 +1,20 @@
 <template>
   <v-app>
-    <div>
-      <mainHeader @changeDraw="changeDraw" />
-    </div>
-
-    <v-main>
-      <v-container fluid>
-        <transition
-          appear
-          enter-active-class="animated fadeIn"
-          leave-active-class="animated fadeOut"
-          :duration="600"
-          mode="out-in"
-        >
-          <router-view></router-view>
-        </transition>
-      </v-container>
-    </v-main>
-    <mainFooter />
+    <transition
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+      :duration="600"
+      mode="out-in"
+    >
+      <router-view></router-view>
+    </transition>
   </v-app>
 </template>
 
 <script>
-import mainFooter from './components/structure/mainFooter.vue';
-import mainHeader from './components/structure/mainHeader.vue';
-
 export default {
   name: 'App',
-  components: {
-    mainFooter,
-    mainHeader,
-  },
-  data() {
-    return {
-      drawer: '', // Hide mobile side menu by default
-    };
-  },
-
-  methods: {
-    changeDraw(value) {
-      this.drawer = value;
-    },
-  },
 };
 </script>
 

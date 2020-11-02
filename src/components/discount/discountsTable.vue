@@ -209,6 +209,9 @@ export default {
     },
     printData() {
       // go to print page of this table
+      this.$router.push({
+        name: 'printDiscounts',
+      });
     },
     // sort funcs
     sort() {
