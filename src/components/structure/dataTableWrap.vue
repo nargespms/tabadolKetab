@@ -24,15 +24,6 @@
       :totalData="totalData"
       :loading="loading"
     />
-
-    <!-- <messagesTable
-      v-if="this.module === 'messages'"
-      :headers="headers"
-      :tableData="tableData"
-      :options="options"
-      :totalData="totalData"
-      :loading="loading"
-    /> -->
     <ticketsTable
       v-if="this.module === 'tickets'"
       :headers="headers"
@@ -49,6 +40,14 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <requestedBooksTable
+      v-if="this.module === 'requestedBooks'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
@@ -58,7 +57,7 @@ import clientsTable from '../users/clientsTable.vue';
 import bookCategoryTable from '../bookCategory/bookCategoryTable.vue';
 import ticketsTable from '../tickets/ticketsTable.vue';
 import discountsTable from '../discount/discountsTable.vue';
-// import messagesTable from '../messages/messagesTable.vue';
+import requestedBooksTable from '../requestedBook/requestedBooksTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -68,7 +67,7 @@ export default {
     bookCategoryTable,
     ticketsTable,
     discountsTable,
-    // messagesTable,
+    requestedBooksTable,
   },
   props: {
     headers: {
@@ -106,7 +105,7 @@ export default {
       ) {
         this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
       } else {
-        this.endpoint = 'http://jsonplaceholder.typicode.com/users';
+        this.endpoint = 'http://jsonplaceholder.typicode.com/posts';
       }
       this.$axios.get(this.endpoint).then(res => {
         console.log(res);

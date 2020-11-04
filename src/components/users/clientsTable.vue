@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div class="d-flex flex-row-reverse ma-4">
+      <v-btn
+        color="light-blue darken-2"
+        class="white--text"
+        @click="printData"
+        >{{ $t('print') }}</v-btn
+      >
+      <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
+        $t('filteredFileDl')
+      }}</v-btn>
+    </div>
     <v-data-table
       :headers="headers"
       :items="tableData"
@@ -140,6 +151,15 @@ export default {
     // filter
     filter() {
       console.log('filtered');
+    },
+    excelFile() {
+      // getData as excel file with filtered included
+    },
+    printData() {
+      // go to print page of this table
+      this.$router.push({
+        name: 'printClients',
+      });
     },
   },
   watch: {

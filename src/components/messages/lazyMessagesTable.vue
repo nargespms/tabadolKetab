@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div class="d-flex flex-row-reverse ma-4">
+      <v-btn
+        color="light-blue darken-2"
+        class="white--text"
+        @click="printData"
+        >{{ $t('print') }}</v-btn
+      >
+      <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
+        $t('filteredFileDl')
+      }}</v-btn>
+    </div>
     <v-toolbar color="teal " flat height="48">
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -26,7 +37,6 @@
             >fas fa-filter
           </v-icon>
         </th>
-        <th>{{ $t('summaryText') }}</th>
         <th>
           {{ $t('sendDate') }}
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
@@ -68,9 +78,6 @@
       </thead>
       <tbody>
         <tr v-for="item in tableData" :key="item.index">
-          <td>
-            {{ item.name }}
-          </td>
           <td>
             {{ item.name }}
           </td>
@@ -248,6 +255,15 @@ export default {
     // filter
     filter() {
       console.log('filtered');
+    },
+    excelFile() {
+      // getData as excel file with filtered included
+    },
+    printData() {
+      // go to print page of this table
+      this.$router.push({
+        name: 'printMessages',
+      });
     },
     getData() {
       this.$axios

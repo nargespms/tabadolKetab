@@ -6,6 +6,7 @@
     color="blue-grey darken-4"
     class="mainRightMenuWrap"
     dark
+    width="300"
   >
     <!-- simple  -->
     <v-list-item
@@ -166,6 +167,23 @@ export default {
             {
               title: 'discountsList',
               link: '/discountsList',
+              icon: 'fa fa-table',
+            },
+          ],
+        },
+        {
+          action: 'mdi-book-open-page-variant',
+          title: 'requestedBooks',
+          active: false,
+          items: [
+            {
+              title: 'addRequestedBooks',
+              link: '/addRequestedBooks',
+              icon: 'fas fa-plus',
+            },
+            {
+              title: 'requestedBooksList',
+              link: '/requestedBooksList',
               icon: 'fa fa-table',
             },
           ],

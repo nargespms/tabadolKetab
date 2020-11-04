@@ -8,7 +8,27 @@ const routes = [
         path:'discounts',
         name:'printDiscounts',
         component:()=> import('../views/print.vue'),
-      }
+      },
+      {
+        path:'staffs',
+        name:'printStaffs',
+        component:()=> import('../views/print.vue'),
+      },
+      {
+        path:'clients',
+        name:'printClients',
+        component:()=> import('../views/print.vue'),
+      },
+      {
+        path:'messages',
+        name:'printMessages',
+        component:()=> import('../views/print.vue'),
+      },
+      {
+        path:'tickets',
+        name:'printTickets',
+        component:()=> import('../views/print.vue'),
+      },
     ],
   },
   {
@@ -94,6 +114,18 @@ const routes = [
         name: 'discountsList',
         component: () => import('../views/discount/discountsList.vue'),
       },
+      // requested books
+      {
+        path: '/addRequestedBooks',
+        name: 'addRequestedBooks',
+        component: () => import('../views/requestBook/addRequestBook.vue'),
+      },
+      {
+        path: '/requestedBooksList',
+        name: 'requestedBooksList',
+        component: () => import('../views/requestBook/requestedBooksList.vue'),
+      },
+
    ],
   },
 ];

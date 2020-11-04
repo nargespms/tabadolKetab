@@ -21,19 +21,24 @@
       class="elevation-1 text-center ma-4"
       hide-default-header
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-icon color="white" @click="addStaff" v-bind="attrs" v-on="on"
-                >mdi-account-plus
+              <v-icon
+                color="white"
+                @click="addRequestedBook"
+                v-bind="attrs"
+                v-on="on"
+                >mdi-comment-plus-outline
               </v-icon>
             </template>
-            <span>{{ $t('AddUser') }}</span>
+            <span>{{ $t('addRequestedBooks') }}</span>
           </v-tooltip>
           <span class="pr-4 font-weight-medium white--text">
-            {{ $t('StaffsList') }}
+            {{ $t('requestedBooksList') }}
           </span>
         </v-toolbar>
       </template>
@@ -57,94 +62,45 @@
                 size="11"
                 class="pa-2"
                 @click="filter"
-                >fas fa-filter</v-icon
-              >
+                >fas fa-filter
+              </v-icon>
             </th>
           </tr>
         </thead>
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon color="grey darken-3" @click="deleteRecord(item)">
-          mdi-delete
+        <v-icon medium class="ma-2" @click="preview(item)">
+          mdi-eye
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog v-model="enableDelete" max-width="500px">
-      <promptDialog
-        :title="'deleteUser'"
-        :message="'RUSureUWantToDeletThisUser'"
-        :data="deletingItem"
-        @accept="acceptDelete"
-        @reject="closeDelete"
-      />
-    </v-dialog>
-    <successNotif
-      v-if="deleteSuccess"
-      :msg="'operationSuccessfullyOcured'"
-      @hideNotif="hideNotif"
-    />
   </div>
 </template>
 
 <script>
-import promptDialog from '../structure/promptDialog.vue';
-import successNotif from '../structure/successNotif.vue';
-
 export default {
-  name: 'staffTable',
-  components: {
-    promptDialog,
-    successNotif,
-  },
+  name: 'requestedBooksTable',
+
   props: {
-    headers: {
-      type: Array,
-    },
-    tableData: {
-      type: Array,
-    },
+    headers: { type: Array },
+    tableData: { type: Array },
     options: {
       type: Object,
     },
-    totalData: {
-      type: Number,
-    },
-    loading: {
-      type: Boolean,
-    },
+    totalData: { type: Number },
+    loading: { type: Boolean },
   },
   data() {
     return {
       innerOptions: this.options,
-      enableDelete: false,
-      deletingItem: {},
-      deleteSuccess: false,
     };
   },
   methods: {
-    addStaff() {
+    addRequestedBook() {
       this.$router.push({
-        path: `/users/addUser`,
+        name: 'addRequestedBooks',
       });
-    },
-    // methods for delete notif
-    deleteRecord(item) {
-      this.deletingItem = item;
-      this.enableDelete = true;
-    },
-    acceptDelete(value) {
-      console.log(`deleted ${value.name}`);
-      this.deleteSuccess = true;
-
-      this.closeDelete();
-    },
-    closeDelete() {
-      this.enableDelete = false;
-      this.deletingItem = {};
-    },
-    hideNotif() {
-      this.deleteSuccess = false;
     },
     // sort funcs
     sort() {
@@ -160,27 +116,9 @@ export default {
     printData() {
       // go to print page of this table
       this.$router.push({
-        name: 'printStaffs',
+        name: 'printRequestedBooks',
       });
-    },
-  },
-  watch: {
-    options: {
-      handler(newVal) {
-        this.innerOptions = newVal;
-      },
     },
   },
 };
 </script>
-
-<style lang="scss">
-.tableDataHead {
-  tr {
-    th {
-      border-top: thin solid rgba(0, 0, 0, 0.12);
-      border-right: thin solid rgba(0, 0, 0, 0.12);
-    }
-  }
-}
-</style>

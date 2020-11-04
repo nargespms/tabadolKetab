@@ -10,7 +10,7 @@ export default {
   AddBookCategory: ' ایجاد دسته بندی کتاب',
   BookCategoryList: ' لیست دسته بندی‌های کتاب',
   messages: 'پیام ‌ها',
-
+  landLane:'شماره ثابت',
   tickets: 'تیکت ‌ها',
   AddTicket: 'ایجاد تیکت',
   TicketsList: 'لیست تیکت ها ',
@@ -100,5 +100,11 @@ export default {
   discountMaxAmount:'سقف تخفیف',
   noResultsText:'اطلاعاتی پیدا نشد',
   loadingText:'در حال گرفتن اطلاعات ...',
-
+  // requested Books
+  requestedBooks:'کتاب‌های درخواستی',
+  addRequestedBooks:'ایجاد درخواست کتاب',
+  requestedBooksList:'لیست درخواست کتاب',
+  shabak:'شابک',
+  requestDate:'زمان درخواست',
+Nodataavailable:'داده ای برای نمایش وجود ندارد',
 };
