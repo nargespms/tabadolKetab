@@ -9,6 +9,6 @@ module.exports = {
         resourceRegExp: /^\.\/locale$/,
         contextRegExp: /moment$/
       })
-    ]
+      ]
   }
 };

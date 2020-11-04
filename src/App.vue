@@ -20,7 +20,7 @@ export default {
 
 <style lang="scss">
 @import '../node_modules/@aasaam/noto-font/dist/font-face.css';
-// @import '~/scss/variable.scss';
+@import '../node_modules/paper-css/paper.css';
 
 $body-font-family: 'aasaam-Noto', sans-serif;
 
