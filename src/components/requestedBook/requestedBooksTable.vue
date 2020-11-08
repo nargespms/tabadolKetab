@@ -73,15 +73,47 @@
         <v-icon medium class="ma-2" @click="preview(item)">
           mdi-eye
         </v-icon>
+        <v-icon medium class="ma-2" @click="changeStatusEnable(item)"
+          >mdi-book-open
+        </v-icon>
       </template>
     </v-data-table>
+    <v-dialog v-model="enablePreview" content-class="sh-0">
+      <showRequestedBook :item="previewItem" />
+    </v-dialog>
+    <v-dialog v-model="enableStatusChange" max-width="500px">
+      <multipleChoiseDialog
+        :title="'changeStatus'"
+        :message="
+          `${$t('chooseRequestedBookStatus')}\n${$t('bookNumber')}:${
+            changingStatusItem.id
+          }`
+        "
+        :data="changingStatusItem"
+        :buttons="changeStatusButs"
+        @changeStatus="changeStatus"
+      />
+    </v-dialog>
+    <successNotif
+      v-if="successNotif"
+      :msg="'operationSuccessfullyOcured'"
+      @hideNotif="hideNotif"
+    />
   </div>
 </template>
 
 <script>
+import showRequestedBook from './showRequestedBook.vue';
+import multipleChoiseDialog from '../structure/multipleChoiseDialog.vue';
+import successNotif from '../structure/successNotif.vue';
+
 export default {
   name: 'requestedBooksTable',
-
+  components: {
+    showRequestedBook,
+    multipleChoiseDialog,
+    successNotif,
+  },
   props: {
     headers: { type: Array },
     tableData: { type: Array },
@@ -94,6 +126,27 @@ export default {
   data() {
     return {
       innerOptions: this.options,
+      successNotif: false,
+      // preview
+      enablePreview: false,
+      previewItem: {},
+      // change status
+      enableStatusChange: false,
+      changingStatusItem: {},
+      changeStatusButs: [
+        {
+          name: 'inprogress',
+          color: 'purple',
+        },
+        {
+          name: 'available',
+          color: 'green',
+        },
+        {
+          name: 'unavailable',
+          color: 'red',
+        },
+      ],
     };
   },
   methods: {
@@ -101,6 +154,25 @@ export default {
       this.$router.push({
         name: 'addRequestedBooks',
       });
+    },
+    // methods for preview
+    preview(item) {
+      this.enablePreview = true;
+      this.previewItem = item;
+    },
+    // change status
+    changeStatusEnable(item) {
+      this.changingStatusItem = item;
+      this.enableStatusChange = true;
+    },
+    changeStatus(value) {
+      console.log(value);
+      this.enableStatusChange = false;
+      this.changingStatusItem = {};
+      this.successNotif = true;
+    },
+    hideNotif() {
+      this.successNotif = false;
     },
     // sort funcs
     sort() {
@@ -118,6 +190,18 @@ export default {
       this.$router.push({
         name: 'printRequestedBooks',
       });
+    },
+  },
+  watch: {
+    options: {
+      handler(newVal) {
+        this.innerOptions = newVal;
+      },
+    },
+    enablePreview(newVal) {
+      if (newVal === false) {
+        this.previewItem = {};
+      }
     },
   },
 };

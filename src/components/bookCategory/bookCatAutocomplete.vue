@@ -7,7 +7,7 @@
       outlined
       chips
       color="blue-grey lighten-2"
-      :label="$t('categorySend')"
+      :label="$t('category')"
       item-text="name"
       item-value="name"
       multiple
@@ -16,6 +16,7 @@
       :error="!validation"
       hide-details
       @change="sendValue"
+      :height="height"
     >
       <template v-slot:selection="data">
         <v-chip
@@ -46,6 +47,10 @@ export default {
   props: {
     validate: {
       type: Boolean,
+    },
+    height: {
+      type: Number,
+      default: undefined,
     },
   },
   data() {
