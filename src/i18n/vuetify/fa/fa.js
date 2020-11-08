@@ -19,6 +19,7 @@ export default {
   operation: 'عملیات',
   excelDl:'دریافت اکسل',
   accept: 'تایید',
+  send:'ارسال',
   reject: 'لغو',
   Nodataavailable:'داده ای برای نمایش وجود ندارد',
   changeStatus:'تغییر وضعیت',
@@ -128,5 +129,6 @@ export default {
   // credits
   credits:'اعتبارات',
   increaseCredit:'افزایش اعتبار',
+  costInToman:'مبلغ به تومان : ',
 
 };
