@@ -48,6 +48,14 @@ export default {
   description:'توضیحات',
   user:'کاربر',
   id:'شناسه',
+  // signup
+  introduction: 'نحوه آشنایی',
+  website:'وب سایت',
+  advertising:'تبلیغات',
+  friendsAndAcquaintances:'دوستان و آشنایان',
+  other:'سایر',
+  password:'گذرواژه',
+  confirmPassword:'تکرار گذرواژه',
   // user
   fullName:'نام و نام خانوادگی',
   avatar:'تصویر',
@@ -117,5 +125,8 @@ export default {
   author:'مولف',
   translator:'مترجم',
   searcher:'محقق',
+  // credits
+  credits:'اعتبارات',
+  increaseCredit:'افزایش اعتبار',
 
 };

@@ -209,9 +209,10 @@ export default {
     },
     printData() {
       // go to print page of this table
-      this.$router.push({
+      const routeData = this.$router.resolve({
         name: 'printDiscounts',
       });
+      window.open(routeData.href, '_blank');
     },
     // sort funcs
     sort() {

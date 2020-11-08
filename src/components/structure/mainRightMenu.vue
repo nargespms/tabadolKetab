@@ -188,6 +188,18 @@ export default {
             },
           ],
         },
+        {
+          action: 'mdi-credit-card-plus',
+          title: 'credits',
+          active: false,
+          items: [
+            {
+              title: 'increaseCredit',
+              link: '/increaseCredit',
+              icon: 'fas fa-plus',
+            },
+          ],
+        },
       ],
     };
   },

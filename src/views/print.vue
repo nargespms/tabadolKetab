@@ -373,6 +373,10 @@ export default {
       this.endpoint = 'https://jsonplaceholder.typicode.com/users';
       this.columns = this.messagesCols;
     }
+    if (this.$route.name === 'printRequestedBooks') {
+      this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
+      this.columns = this.ticketsCols;
+    }
     if (this.$route.name === 'printTickets') {
       this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
       this.columns = this.ticketsCols;

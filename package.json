@@ -11,6 +11,7 @@
     "@aasaam/noto-font": "0.0.8",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "google-libphonenumber": "^3.2.15",
     "paper-css": "^0.4.1",
     "v-mask": "^2.2.3",
     "vue": "^2.6.11",

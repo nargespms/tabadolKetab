@@ -159,9 +159,10 @@ export default {
     },
     printData() {
       // go to print page of this table
-      this.$router.push({
+      const routeData = this.$router.resolve({
         name: 'printStaffs',
       });
+      window.open(routeData.href, '_blank');
     },
   },
   watch: {

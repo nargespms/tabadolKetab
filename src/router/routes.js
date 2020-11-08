@@ -29,6 +29,11 @@ const routes = [
         name:'printTickets',
         component:()=> import('../views/print.vue'),
       },
+      {
+        path:'requestedBooks',
+        name:'printRequestedBooks',
+        component:()=> import('../views/print.vue'),
+      },
     ],
   },
   {
@@ -40,6 +45,11 @@ const routes = [
         path: '/dashboard',
         name:'dashboard',
         component: () => import('../views/dashboard.vue'),
+      },
+       {
+        path: '/signup',
+        name: 'signup',
+        component: () => import('../views/signUp.vue'),
       },
       {
         path: '/login',
@@ -124,6 +134,11 @@ const routes = [
         path: '/requestedBooksList',
         name: 'requestedBooksList',
         component: () => import('../views/requestBook/requestedBooksList.vue'),
+      },
+      {
+        path: '/increaseCredit',
+        name: 'increaseCredit',
+        component: () => import('../views/credit/increaseCredit.vue'),
       },
 
    ],
