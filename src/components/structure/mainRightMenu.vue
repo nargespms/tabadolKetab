@@ -104,6 +104,23 @@ export default {
           ],
         },
         {
+          action: 'mdi-book-open-variant',
+          title: 'book',
+          active: false,
+          items: [
+            {
+              title: 'addBook',
+              link: '/addBook',
+              icon: 'fas fa-plus',
+            },
+            {
+              title: 'bookList',
+              link: '/bookList',
+              icon: 'fa fa-table',
+            },
+          ],
+        },
+        {
           action: 'mdi-card-account-details-outline',
           title: 'BookCategory',
           active: false,

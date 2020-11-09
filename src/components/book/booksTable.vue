@@ -21,6 +21,7 @@
       class="elevation-1 text-center ma-4"
       hide-default-header
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
@@ -28,16 +29,16 @@
             <template v-slot:activator="{ on, attrs }">
               <v-icon
                 color="white"
-                @click="addDiscount"
+                @click="addRequestedBook"
                 v-bind="attrs"
                 v-on="on"
                 >mdi-comment-plus-outline
               </v-icon>
             </template>
-            <span>{{ $t('addDiscount') }}</span>
+            <span>{{ $t('addBook') }}</span>
           </v-tooltip>
           <span class="pr-4 font-weight-medium white--text">
-            {{ $t('discountsList') }}
+            {{ $t('bookList') }}
           </span>
         </v-toolbar>
       </template>
@@ -67,6 +68,16 @@
           </tr>
         </thead>
       </template>
+      <template v-slot:[`item.barcode`]="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon @click="printBarCode(item)" v-bind="attrs" v-on="on"
+              >mdi-barcode-scan</v-icon
+            >
+          </template>
+          {{ $t('barcodePrint') }}
+        </v-tooltip>
+      </template>
       <template v-slot:[`item.operation`]="{ item }">
         <div class="d-flex">
           <v-tooltip bottom>
@@ -74,16 +85,15 @@
               <v-icon
                 medium
                 class="ma-2"
+                @click="preview(item)"
                 v-bind="attrs"
                 v-on="on"
-                @click="preview(item)"
               >
                 mdi-eye
               </v-icon>
             </template>
             {{ $t('preview') }}
           </v-tooltip>
-
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-icon
@@ -91,45 +101,29 @@
                 class="ma-2"
                 color="grey darken-3"
                 @click="deleteRecord(item)"
-                v-on="on"
                 v-bind="attrs"
+                v-on="on"
               >
                 mdi-delete
               </v-icon>
             </template>
             {{ $t('delete') }}
           </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                medium
-                class="ma-2"
-                color="grey darken-3"
-                v-on="on"
-                v-bind="attrs"
-                @click="excelDownloadRecord(item)"
-              >
-                mdi-download
-              </v-icon>
-            </template>
-            {{ $t('excelDl') }}
-          </v-tooltip>
         </div>
       </template>
     </v-data-table>
     <v-dialog v-model="enablePreview" content-class="sh-0">
-      <showDiscount :item="previewItem" />
+      <showBook :item="previewItem" />
     </v-dialog>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
-        :title="'deleteDiscount'"
-        :message="'RUSureUWantToDeletThisdiscount'"
+        :title="'deleteBook'"
+        :message="'RUSureUWantToDeletThisBook'"
         :data="deletingItem"
         @accept="acceptDelete"
         @reject="closeDelete"
       />
     </v-dialog>
-
     <successNotif
       v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
@@ -139,16 +133,16 @@
 </template>
 
 <script>
+import showBook from './showBook.vue';
 import successNotif from '../structure/successNotif.vue';
 import promptDialog from '../structure/promptDialog.vue';
-import showDiscount from './showDiscount.vue';
 
 export default {
-  name: 'discountsTable',
+  name: 'booksTable',
   components: {
+    showBook,
     successNotif,
     promptDialog,
-    showDiscount,
   },
   props: {
     headers: { type: Array },
@@ -162,19 +156,19 @@ export default {
   data() {
     return {
       innerOptions: this.options,
-      // delete
-      enableDelete: false,
-      deletingItem: {},
       successNotif: false,
       // preview
       enablePreview: false,
       previewItem: {},
+      // delete
+      enableDelete: false,
+      deletingItem: {},
     };
   },
   methods: {
-    addDiscount() {
+    addRequestedBook() {
       this.$router.push({
-        name: 'addDiscount',
+        name: 'addBook',
       });
     },
     // methods for delete notif
@@ -192,27 +186,14 @@ export default {
       this.enableDelete = false;
       this.deletingItem = {};
     },
-    hideNotif() {
-      this.successNotif = false;
-    },
     // methods for preview
     preview(item) {
       this.enablePreview = true;
       this.previewItem = item;
     },
-    // excel download
-    excelDownloadRecord(item) {
-      console.log(item);
-    },
-    excelFile() {
-      // getData as excel file with filtered included
-    },
-    printData() {
-      // go to print page of this table
-      const routeData = this.$router.resolve({
-        name: 'printDiscounts',
-      });
-      window.open(routeData.href, '_blank');
+
+    hideNotif() {
+      this.successNotif = false;
     },
     // sort funcs
     sort() {
@@ -221,6 +202,22 @@ export default {
     // filter
     filter() {
       console.log('filtered');
+    },
+    excelFile() {
+      // getData as excel file with filtered included
+    },
+    printData() {
+      // go to print page of this table
+      const routeData = this.$router.resolve({
+        name: 'printBooks',
+      });
+      window.open(routeData.href, '_blank');
+    },
+    printBarCode(value) {
+      const routeData = this.$router.resolve({
+        path: `/print/barcode/${value.id}`,
+      });
+      window.open(routeData.href, '_blank');
     },
   },
   watch: {

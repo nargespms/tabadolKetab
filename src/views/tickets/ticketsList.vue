@@ -1,6 +1,5 @@
 <template>
   <dataTableWrap :headers="headers" :module="'tickets'" />
-
 </template>
 
 <script>
@@ -11,7 +10,7 @@ export default {
   components: {
     dataTableWrap,
   },
-  data () {
+  data() {
     return {
       headers: [
         {

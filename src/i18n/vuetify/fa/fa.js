@@ -130,5 +130,18 @@ export default {
   credits:'اعتبارات',
   increaseCredit:'افزایش اعتبار',
   costInToman:'مبلغ به تومان : ',
+  // book
+  addBook:'افزودن کتاب',
+  bookList:'لیست کتاب‌ها',
+  registerDate:'تاریخ ثبت ',
+  confirmRegisterDate:'تاریخ تایید ثبت',
+  tags:'برچسب‌ها',
+  mainPrice:'قیمت اصلی',
+  soldPrice:'قیمت فروخته شده',
+  confirmerUser:'کاربر تایید کننده',
+  barcode:'بارکد',
+  barcodePrint:'چاپ بارکد',
+  deleteBook:'حذف کتاب',
+  RUSureUWantToDeletThisBook:'آیا می خواهید این کتاب را حذف کنید؟',
 
 };
