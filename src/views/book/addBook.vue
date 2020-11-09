@@ -1,11 +1,16 @@
 <template>
   <div>
-    mdi-book-open-variant
+    <addBookCmp />
   </div>
 </template>
 
 <script>
+import addBookCmp from '../../components/book/addBookCmp.vue';
+
 export default {
   name: 'addBook',
+  components: {
+    addBookCmp,
+  },
 };
 </script>
