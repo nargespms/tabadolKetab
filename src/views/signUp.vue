@@ -1,6 +1,5 @@
 <template>
   <div>
-    signup
     <signUpCom />
   </div>
 </template>
@@ -16,7 +15,6 @@ export default {
       data: [],
     };
   },
-  mounted() {},
 };
 </script>
 
