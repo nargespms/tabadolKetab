@@ -63,7 +63,17 @@
           </tr>
         </thead>
       </template>
-
+      <template v-slot:[`item.avatar`]="{ item }">
+        <div class="pa-3 align-center">
+          {{ item.avatar }}
+          <v-avatar>
+            <img
+              src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+              :alt="item.id"
+            />
+          </v-avatar>
+        </div>
+      </template>
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon color="grey darken-3" @click="deleteRecord(item)">
           mdi-delete

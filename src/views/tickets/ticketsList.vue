@@ -44,13 +44,6 @@ export default {
           divider: true,
         },
         {
-          text: 'summaryText',
-          value: 'summaryText',
-          align: 'center',
-          body: 150,
-          divider: true,
-        },
-        {
           text: 'sender',
           value: 'sender',
           filterable: true,

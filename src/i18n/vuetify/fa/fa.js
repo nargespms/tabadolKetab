@@ -130,6 +130,10 @@ export default {
   credits:'اعتبارات',
   increaseCredit:'افزایش اعتبار',
   costInToman:'مبلغ به تومان : ',
+  creditList:'لیست اعتبارات',
+  transactionDate:'تاریخ تراکنش',
+  trackingCode:'کد رهگیری',
+  expDateCredit:'تاریخ انقضا اعتبار',
   // book
   addBook:'افزودن کتاب',
   bookList:'لیست کتاب‌ها',

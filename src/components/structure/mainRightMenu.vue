@@ -215,6 +215,11 @@ export default {
               link: '/increaseCredit',
               icon: 'fas fa-plus',
             },
+            {
+              title: 'creditList',
+              link: '/creditList',
+              icon: 'fas fa-table',
+            },
           ],
         },
       ],

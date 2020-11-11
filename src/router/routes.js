@@ -44,6 +44,11 @@ const routes = [
         name:'printBooks',
         component:()=> import('../views/print.vue'),
       },
+      {
+        path:'credit',
+        name:'printCredit',
+        component:()=> import('../views/print.vue'),
+      },
     ],
   },
 
@@ -160,6 +165,11 @@ const routes = [
         path: '/increaseCredit',
         name: 'increaseCredit',
         component: () => import('../views/credit/increaseCredit.vue'),
+      },
+      {
+        path: '/creditList',
+        name: 'creditList',
+        component: () => import('../views/credit/creditList.vue'),
       },
 
    ],

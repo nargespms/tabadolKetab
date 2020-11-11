@@ -51,7 +51,7 @@
             required
             :rules="requireRule"
             name="input-7-4"
-            :label="$t('summaryText')"
+            :label="$t('messageText')"
             v-model="message.text"
           ></v-textarea>
           <div class="d-flex align-center">
