@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <dataTableWrap :headers="headers" :module="'discounts'" />
-  </div>
+  <dataTableWrap :headers="headers" :module="'credit'" />
 </template>
 
 <script>
 import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
-  name: 'discountsList',
+  name: 'creditList',
   components: {
     dataTableWrap,
   },
@@ -23,52 +21,31 @@ export default {
           divider: true,
         },
         {
-          text: 'title',
-          value: 'title',
+          text: 'transactionDate',
+          value: 'transactionDate',
           align: 'center',
           filterable: true,
           divider: true,
         },
 
-        {
-          text: 'createdAt',
-          value: 'createdAt',
-          filterable: true,
-          align: 'center',
-          divider: true,
-        },
-        {
-          text: 'category',
-          value: 'category',
-          filterable: true,
-          align: 'center',
-          divider: true,
-        },
-        {
-          text: 'type',
-          value: 'type',
-          align: 'center',
-          filterable: true,
-          divider: true,
-        },
         {
           text: 'amount',
           value: 'amount',
           filterable: true,
-          align: 'left',
-          divider: true,
-        },
-
-        {
-          text: 'usedNumber',
-          value: 'usedNumber',
-          filterable: false,
-          align: 'left',
+          align: 'center',
+          body: 100,
           divider: true,
         },
         {
-          text: 'code',
-          value: 'code',
+          text: 'trackingCode',
+          value: 'trackingCode',
+          filterable: true,
+          align: 'center',
+          divider: true,
+        },
+        {
+          text: 'payType',
+          value: 'payType',
           filterable: true,
           align: 'center',
           divider: true,
@@ -76,15 +53,21 @@ export default {
         {
           text: 'description',
           value: 'description',
-          filterable: true,
+          filterable: false,
           align: 'center',
           divider: true,
-          body: 150,
         },
         {
           text: 'user',
           value: 'user',
-          filterable: true,
+          filterable: false,
+          align: 'center',
+          divider: true,
+        },
+        {
+          text: 'expDateCredit',
+          value: 'expDateCredit',
+          filterable: false,
           align: 'center',
           divider: true,
         },

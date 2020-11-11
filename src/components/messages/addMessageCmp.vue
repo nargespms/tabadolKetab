@@ -89,7 +89,7 @@
             :label="$t('attachments')"
           ></v-file-input>
           <v-row no-gutters>
-            <v-col cols="6" md="4">
+            <v-col cols="12" md="6">
               <v-checkbox
                 v-model="message.sms"
                 :label="$t('sendSms')"
@@ -97,8 +97,16 @@
                 class="col-6 col-md-4"
               ></v-checkbox>
             </v-col>
+            <v-col cols="12" md="6" v-if="message.sms">
+              <div class="alertMessage">
+                <p class="font-weight-black">
+                  <v-icon color="red"> fas fa-exclamation-triangle </v-icon>
+                  {{ $t('becauseOfSMsMessageDoesntDelete') }}
+                </p>
+              </div>
+            </v-col>
           </v-row>
-          <div class="justify-center d-flex">
+          <div class="justify-center d-flex pt-2">
             <v-btn
               :disabled="!valid"
               color="success"
@@ -220,3 +228,11 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.alertMessage {
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #ffdede;
+  border: 1px solid red;
+}
+</style>

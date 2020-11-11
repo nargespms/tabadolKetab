@@ -93,6 +93,7 @@ export default {
   CreateMessage: 'ایجاد پیام ',
   MessagesList: 'لیست پیام ها',
   uploadeMore:'بارگزاری بیشتر',
+  becauseOfSMsMessageDoesntDelete:'توجه داشته باشید به دلیل ارسال پیامک پیام قابل تغییر و یا حذف نیست.',
   // tickets
   reply:'پاسخ',
   // discounts

@@ -37,6 +37,14 @@ export default {
           divider: true,
         },
         {
+          text: 'status',
+          value: 'status',
+          filterable: true,
+          align: 'center',
+          body: 100,
+          divider: true,
+        },
+        {
           text: 'reciever',
           value: 'reciever',
           filterable: true,

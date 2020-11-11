@@ -36,9 +36,24 @@
       class="mt-2"
       no-action
       color="blue-grey lighten-3"
-      :prepend-icon="item.action"
       append-icon="fas fa-caret-down"
     >
+      <template v-slot:prependIcon>
+        <v-badge
+          v-if="item.badge"
+          :content="item.badge"
+          :color="item.badgeColor"
+          overlap
+        >
+          <v-icon class="pl-3">
+            {{ item.action }}
+          </v-icon>
+        </v-badge>
+        <v-icon v-else class="pl-3">
+          {{ item.action }}
+        </v-icon>
+      </template>
+
       <template v-slot:activator>
         <v-list-item-content>
           <v-list-item-title
@@ -141,6 +156,8 @@ export default {
           action: 'mdi-android-messages',
           title: 'messages',
           active: false,
+          badge: '6',
+          badgeColor: 'red',
           items: [
             {
               title: 'CreateMessage',
@@ -158,6 +175,8 @@ export default {
           action: 'mdi-ticket-account',
           title: 'tickets',
           active: false,
+          badge: '1',
+          badgeColor: 'red',
           items: [
             {
               title: 'AddTicket',
@@ -192,6 +211,8 @@ export default {
           action: 'mdi-book-open-page-variant',
           title: 'requestedBooks',
           active: false,
+          badge: 2,
+          badgeColor: 'green',
           items: [
             {
               title: 'addRequestedBooks',
