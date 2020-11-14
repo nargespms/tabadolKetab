@@ -9,7 +9,7 @@
       ></v-textarea>
       <div class="d-flex justify-center">
         <v-btn color="primary " width="200" @click="replyTicket">
-          {{ $t('reply') }}
+          {{ $t('send') }}
         </v-btn>
       </div>
     </v-col>

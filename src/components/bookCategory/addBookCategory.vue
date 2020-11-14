@@ -27,6 +27,8 @@
             :rules="titleRules"
             :label="$t('title')"
             required
+            outlined
+            class="pt-4"
           ></v-text-field>
           <v-checkbox
             v-model="bookCat.active"
@@ -58,7 +60,6 @@
   </v-row>
 </template>
 
-
 <script>
 import successNotif from '../structure/successNotif.vue';
 
@@ -89,8 +90,8 @@ export default {
       },
 
       titleRules: [
-        (v) => !!v || `${this.$t('thisFieldIsRequired')}`,
-        (v) => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
+        v => !!v || `${this.$t('thisFieldIsRequired')}`,
+        v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
       saveSuccess: false,
     };
@@ -98,15 +99,14 @@ export default {
   methods: {
     validate() {
       this.$refs.form.validate();
-      if(this.$refs.form.validate()) {
-
+      if (this.$refs.form.validate()) {
         if (this.mode === 'addPage') {
           this.saveSuccess = true;
-        this.reset();
-      }
-      this.$emit('savedSuccessfully');
-      }else {
-        this.valid = false
+          this.reset();
+        }
+        this.$emit('savedSuccessfully');
+      } else {
+        this.valid = false;
       }
     },
     reset() {

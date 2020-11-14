@@ -64,6 +64,16 @@
         </thead>
       </template>
 
+      <template v-slot:[`item.avatar`]="{ item }">
+        <div class="pa-3 align-center">
+          <v-avatar>
+            <img
+              src="https://cdn.vuetifyjs.com/images/john.jpg"
+              :alt="item.id"
+            />
+          </v-avatar>
+        </div>
+      </template>
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon color="grey darken-3" @click="deleteRecord(item)">
           mdi-delete

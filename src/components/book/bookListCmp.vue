@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <dataTableWrap :headers="headers" :module="'discounts'" />
-  </div>
+  <dataTableWrap :headers="headers" :module="'books'" />
 </template>
 
 <script>
-import dataTableWrap from '../../components/structure/dataTableWrap.vue';
+import dataTableWrap from '../structure/dataTableWrap.vue';
 
 export default {
-  name: 'discountsList',
+  name: 'bookListCmp',
   components: {
     dataTableWrap,
   },
@@ -16,84 +14,87 @@ export default {
     return {
       headers: [
         {
-          text: 'id',
-          value: 'id',
-          align: 'center',
-          filterable: true,
-          divider: true,
-        },
-        {
           text: 'title',
           value: 'title',
           align: 'center',
           filterable: true,
           divider: true,
         },
-
         {
-          text: 'createdAt',
-          value: 'createdAt',
-          filterable: true,
+          text: 'registerDate',
+          value: 'registerDate',
           align: 'center',
+          filterable: true,
           divider: true,
         },
         {
           text: 'category',
           value: 'category',
-          filterable: true,
-          align: 'center',
-          divider: true,
-        },
-        {
-          text: 'type',
-          value: 'type',
           align: 'center',
           filterable: true,
           divider: true,
         },
         {
-          text: 'amount',
-          value: 'amount',
-          filterable: true,
-          align: 'left',
-          divider: true,
-        },
-
-        {
-          text: 'usedNumber',
-          value: 'usedNumber',
-          filterable: false,
-          align: 'left',
-          divider: true,
-        },
-        {
-          text: 'code',
-          value: 'code',
-          filterable: true,
+          text: 'status',
+          value: 'status',
           align: 'center',
+          filterable: true,
           divider: true,
         },
         {
-          text: 'description',
-          value: 'description',
-          filterable: true,
+          text: 'tags',
+          value: 'tags',
           align: 'center',
+          filterable: true,
           divider: true,
-          body: 150,
+        },
+        {
+          text: 'mainPrice',
+          value: 'mainPrice',
+          align: 'center',
+          filterable: true,
+          divider: true,
+        },
+        {
+          text: 'soldPrice',
+          value: 'soldPrice',
+          align: 'center',
+          filterable: true,
+          divider: true,
+        },
+        {
+          text: 'confirmRegisterDate',
+          value: 'confirmRegisterDate',
+          align: 'center',
+          filterable: true,
+          divider: true,
         },
         {
           text: 'user',
           value: 'user',
-          filterable: true,
           align: 'center',
+          filterable: true,
+          divider: true,
+        },
+        {
+          text: 'confirmerUser',
+          value: 'confirmerUser',
+          align: 'center',
+          filterable: true,
+          divider: true,
+        },
+        {
+          text: 'barcode',
+          value: 'barcode',
+          align: 'center',
+          filterable: false,
           divider: true,
         },
         {
           text: 'operation',
           value: 'operation',
           align: 'center',
-          width: 250,
-          class: 'operationClass',
+          filterable: false,
           divider: true,
         },
       ],

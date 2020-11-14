@@ -75,8 +75,8 @@
                 medium
                 class="ma-2"
                 v-bind="attrs"
-                @click="preview(item)"
                 v-on="on"
+                @click="preview(item)"
               >
                 mdi-eye
               </v-icon>

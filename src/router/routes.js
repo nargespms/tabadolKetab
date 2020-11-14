@@ -5,9 +5,14 @@ const routes = [
     component: () => import('../layouts/printLayout'),
     children: [
       {
-        path: 'discounts',
-        name: 'printDiscounts',
-        component: () => import('../views/print.vue'),
+        path:'barcode/:bookId',
+        name:'bookBarcode',
+        component:()=> import ('../views/barcodePage.vue'),
+      },
+      {
+        path:'discounts',
+        name:'printDiscounts',
+        component:()=> import('../views/print.vue'),
       },
       {
         path: 'staffs',
@@ -34,8 +39,19 @@ const routes = [
         name: 'printRequestedBooks',
         component: () => import('../views/print.vue'),
       },
+      {
+        path:'books',
+        name:'printBooks',
+        component:()=> import('../views/print.vue'),
+      },
+      {
+        path:'credit',
+        name:'printCredit',
+        component:()=> import('../views/print.vue'),
+      },
     ],
   },
+
   {
     path: '/',
     name: 'default',
@@ -70,6 +86,16 @@ const routes = [
         path: '/users/clients',
         name: 'clientsList',
         component: () => import('../views/usersManagements/clientsList.vue'),
+      },
+      {
+        path: '/addBook',
+        name: 'addBook',
+        component: () => import('../views/book/addBook.vue'),
+      },
+      {
+        path: '/bookList',
+        name: 'bookList',
+        component: () => import('../views/book/bookList.vue'),
       },
       {
         path: '/addBookCat',
@@ -140,7 +166,17 @@ const routes = [
         name: 'increaseCredit',
         component: () => import('../views/credit/increaseCredit.vue'),
       },
+      {
+        path: '/creditList',
+        name: 'creditList',
+        component: () => import('../views/credit/creditList.vue'),
+      },
     ],
+      
+  }
+   ],
+
   },
+
 ];
 export default routes;

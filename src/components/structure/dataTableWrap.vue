@@ -48,6 +48,22 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <booksTable
+      v-if="this.module === 'books'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
+    <creditTable
+      v-if="this.module === 'credit'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
@@ -58,6 +74,8 @@ import bookCategoryTable from '../bookCategory/bookCategoryTable.vue';
 import ticketsTable from '../tickets/ticketsTable.vue';
 import discountsTable from '../discount/discountsTable.vue';
 import requestedBooksTable from '../requestedBook/requestedBooksTable.vue';
+import booksTable from '../book/booksTable.vue';
+import creditTable from '../credit/creditTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -68,6 +86,8 @@ export default {
     ticketsTable,
     discountsTable,
     requestedBooksTable,
+    booksTable,
+    creditTable,
   },
   props: {
     headers: {

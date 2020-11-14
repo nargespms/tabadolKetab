@@ -381,6 +381,14 @@ export default {
       this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
       this.columns = this.ticketsCols;
     }
+    if (this.$route.name === 'printBooks') {
+      this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
+      this.columns = this.ticketsCols;
+    }
+    if (this.$route.name === 'printCredit') {
+      this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
+      this.columns = this.ticketsCols;
+    }
     this.getData();
     // if(this.$router)
   },

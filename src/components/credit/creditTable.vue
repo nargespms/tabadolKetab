@@ -26,14 +26,14 @@
         <v-toolbar color="teal " flat height="48">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-icon color="white" @click="addClient" v-bind="attrs" v-on="on"
-                >mdi-account-plus
+              <v-icon color="white" @click="addCredit" v-bind="attrs" v-on="on"
+                >mdi-comment-plus-outline
               </v-icon>
             </template>
-            <span>{{ $t('AddUser') }}</span>
+            <span>{{ $t('addCredit') }}</span>
           </v-tooltip>
           <span class="pr-4 font-weight-medium white--text">
-            {{ $t('ClientsList') }}
+            {{ $t('creditList') }}
           </span>
         </v-toolbar>
       </template>
@@ -57,40 +57,27 @@
                 size="11"
                 class="pa-2"
                 @click="filter"
-                >fas fa-filter</v-icon
-              >
+                >fas fa-filter
+              </v-icon>
             </th>
           </tr>
         </thead>
       </template>
-      <template v-slot:[`item.avatar`]="{ item }">
-        <div class="pa-3 align-center">
-          {{ item.avatar }}
-          <v-avatar>
-            <img
-              src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
-              :alt="item.id"
-            />
-          </v-avatar>
-        </div>
+      <template v-slot:[`item.title`]="{ item }">
+        {{ item.title }}
       </template>
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon color="grey darken-3" @click="deleteRecord(item)">
-          mdi-delete
+        <v-icon medium class="ma-2" @click="preview(item)">
+          mdi-eye
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog v-model="enableDelete" max-width="500px">
-      <promptDialog
-        :title="'deleteUser'"
-        :message="'RUSureUWantToDeletThisUser'"
-        :data="deletingItem"
-        @accept="acceptDelete"
-        @reject="closeDelete"
-      />
+    <v-dialog v-model="enablePreview" content-class="sh-0">
+      <showCredit :item="previewItem" />
     </v-dialog>
+
     <successNotif
-      v-if="deleteSuccess"
+      v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
     />
@@ -98,61 +85,47 @@
 </template>
 
 <script>
-import promptDialog from '../structure/promptDialog.vue';
 import successNotif from '../structure/successNotif.vue';
+import showCredit from './showCredit.vue';
 
 export default {
-  name: 'clientsTable',
-  components: { promptDialog, successNotif },
-
+  name: 'ticketsTable',
+  components: {
+    successNotif,
+    showCredit,
+  },
   props: {
-    headers: {
-      type: Array,
-    },
-    tableData: {
-      type: Array,
-    },
+    headers: { type: Array },
+    tableData: { type: Array },
     options: {
       type: Object,
     },
-    totalData: {
-      type: Number,
-    },
-    loading: {
-      type: Boolean,
-    },
+    totalData: { type: Number },
+    loading: { type: Boolean },
   },
   data() {
     return {
       innerOptions: this.options,
-      enableDelete: false,
-      deletingItem: {},
-      deleteSuccess: false,
+      successNotif: false,
+      // preview
+      enablePreview: false,
+      previewItem: {},
     };
   },
   methods: {
-    addClient() {
+    addCredit() {
       this.$router.push({
-        path: `/users/addUser`,
+        name: 'addCredit',
       });
     },
-    // methods for delete notif
-    deleteRecord(item) {
-      this.deletingItem = item;
-      this.enableDelete = true;
-    },
-    acceptDelete(value) {
-      console.log(`deleted ${value.name}`);
-      this.deleteSuccess = true;
 
-      this.closeDelete();
-    },
-    closeDelete() {
-      this.enableDelete = false;
-      this.deletingItem = {};
-    },
     hideNotif() {
-      this.deleteSuccess = false;
+      this.successNotif = false;
+    },
+    // methods for preview
+    preview(item) {
+      this.enablePreview = true;
+      this.previewItem = item;
     },
     // sort funcs
     sort() {
@@ -168,7 +141,7 @@ export default {
     printData() {
       // go to print page of this table
       const routeData = this.$router.resolve({
-        name: 'printClients',
+        name: 'printCredit',
       });
       window.open(routeData.href, '_blank');
     },
@@ -179,17 +152,11 @@ export default {
         this.innerOptions = newVal;
       },
     },
+    enablePreview(newVal) {
+      if (newVal === false) {
+        this.previewItem = {};
+      }
+    },
   },
 };
 </script>
-
-<style lang="scss">
-.tableDataHead {
-  tr {
-    th {
-      border-top: thin solid rgba(0, 0, 0, 0.12);
-      border-right: thin solid rgba(0, 0, 0, 0.12);
-    }
-  }
-}
-</style>

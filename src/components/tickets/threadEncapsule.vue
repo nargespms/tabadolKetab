@@ -6,7 +6,7 @@
         :color="
           data.createdBy.role === 'client'
             ? 'cyan lighten-4'
-            : 'light-blue lighten-4'
+            : 'indigo lighten-4'
         "
       >
         <div class="ticketInfo pa-4">

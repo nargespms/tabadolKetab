@@ -65,7 +65,7 @@
       </template>
       <template v-slot:[`item.title`]="{ item }">
         <router-link :to="`/ticketsList/${item.id}`" class="black--text">
-          {{ item.title }}l</router-link
+          {{ item.title }}</router-link
         >
       </template>
       <template v-slot:[`item.operation`]="{ item }">
