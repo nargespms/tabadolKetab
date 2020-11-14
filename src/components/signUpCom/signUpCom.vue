@@ -37,18 +37,19 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
-                <nationalId />
+                <nationalId @setNationalId="setNationalId" />
               </v-col>
               <v-col cols="12" md="6">
-                <mobilePhone />
+                <mobilePhone @setMobilePhone="setMobilePhone" />
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
                 <v-text-field
                   v-model="register.phone"
-                  :rules="nameRules"
+                  :rules="phoneRules"
                   :label="$t('phone')"
+                  v-mask="'###########'"
                   required
                   outlined
                   error-count="2"
@@ -56,6 +57,7 @@
               </v-col>
               <v-col cols="12" md="6">
                 <v-select
+                  v-model="register.introductionType"
                   :items="introductionType"
                   :label="$t('introduction')"
                   outlined
@@ -76,33 +78,43 @@
               </v-col>
             </v-row>
             <passwords />
-            <v-checkbox
-              v-model="register.rules"
-              required
-              color="success"
-              class="col-6 col-md-4"
-            >
-              <template v-slot:label>
-                <div>
-                  من
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <a
-                        target="_blank"
-                        href="http://vuetifyjs.com"
-                        @click.stop
-                        v-on="on"
-                      >
-                        قوانین
-                      </a>
-                    </template>
-                    مطالعه قوانین سایت
-                  </v-tooltip>
-                  سایت را قبول می نمایم
-                </div>
-              </template>
-            </v-checkbox>
-            <captcha />
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-checkbox
+                  v-model="register.rules"
+                  required
+                  :rules="checkRule"
+                  color="info"
+                >
+                  <template v-slot:label>
+                    <div>
+                      من
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <a
+                            target="_blank"
+                            href="http://vuetifyjs.com"
+                            @click.stop
+                            v-on="on"
+                          >
+                            قوانین
+                          </a>
+                        </template>
+                        مطالعه قوانین سایت
+                      </v-tooltip>
+                      سایت را قبول می نمایم
+                    </div>
+                  </template>
+                </v-checkbox>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-row>
+                  <v-col cols="12" md="12">
+                    <captcha @setCaptcha="setCaptcha" />
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
             <div class="justify-center d-flex">
               <v-btn
                 :disabled="!valid"
@@ -112,7 +124,6 @@
               >
                 {{ $t('save') }}
               </v-btn>
-
               <v-btn color="error" class="mr-4" @click="reset"
                 >{{ $t('resetForm') }}
               </v-btn>
@@ -134,7 +145,7 @@ import successNotif from '../structure/successNotif.vue';
 import passwords from '../userControls/passwords.vue';
 import mobilePhone from '../userControls/mobilePhone.vue';
 import nationalId from '../userControls/nationalId.vue';
-import captcha from '../userControls/captch.vue';
+import captcha from '../userControls/captcha.vue';
 
 export default {
   name: 'signUpCom',
@@ -153,6 +164,11 @@ export default {
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
+      phoneRules: [
+        v => !!v || `${this.$t('thisFieldIsRequired')}`,
+        v => (v && v.length >= 11) || `${this.$t('minCharaters11')}`,
+      ],
+      checkRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       introductionType: [
         'website',
         'advertising',
@@ -162,10 +178,13 @@ export default {
       register: {
         firstName: '',
         lastName: '',
-        phone: '',
+        phone: null,
+        nationalId: null,
+        mobilePhone: null,
         introductionType: null,
         rules: false,
       },
+      captcha: '',
     };
   },
   methods: {
@@ -174,10 +193,18 @@ export default {
       if (this.$refs.form.validate()) {
         this.saveSuccess = true;
         this.reset();
-        console.log('ok');
       } else {
         this.valid = false;
       }
+    },
+    setCaptcha(value) {
+      this.captcha = value;
+    },
+    setNationalId(value) {
+      this.register.nationalId = value;
+    },
+    setMobilePhone(value) {
+      this.register.mobilePhone = value;
     },
     reset() {
       this.$refs.form.reset();
@@ -189,5 +216,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss"></style>

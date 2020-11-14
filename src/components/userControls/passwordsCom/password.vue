@@ -5,6 +5,7 @@
       :label="$t('password')"
       required
       outlined
+      @input="submitPassword"
       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
       :rules="passwordRules"
       :type="show1 ? 'text' : 'password'"
@@ -26,8 +27,10 @@ export default {
       ],
     };
   },
-  mounted() {},
+  methods: {
+    submitPassword() {
+      this.$emit('setPassword', this.password);
+    },
+  },
 };
 </script>
-
-<style lang="scss"></style>

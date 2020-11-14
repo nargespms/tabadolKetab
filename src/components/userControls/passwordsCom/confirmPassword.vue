@@ -16,6 +16,11 @@
 <script>
 export default {
   name: 'confirmPassword',
+  props: {
+    password: {
+      type: String,
+    },
+  },
   data() {
     return {
       show1: false,
@@ -23,11 +28,9 @@ export default {
       confirmPasswordRules: [
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 8) || `${this.$t('minCharaters8')}`,
+        v => v === this.password || `${this.$t('passwordsDoNotMatch')}`,
       ],
     };
   },
-  mounted() {},
 };
 </script>
-
-<style lang="scss"></style>

@@ -2,10 +2,10 @@
   <div>
     <v-row>
       <v-col cols="12" md="6">
-        <password />
+        <password @setPassword="setPassword" />
       </v-col>
       <v-col cols="12" md="6">
-        <confirmPassword />
+        <confirmPassword :password="password" />
       </v-col>
     </v-row>
   </div>
@@ -23,11 +23,13 @@ export default {
   },
   data() {
     return {
-      data: [],
+      password: '',
     };
   },
-  mounted() {},
+  methods: {
+    setPassword(value) {
+      this.password = value;
+    },
+  },
 };
 </script>
-
-<style lang="scss"></style>

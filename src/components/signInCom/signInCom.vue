@@ -1,0 +1,90 @@
+<template>
+  <v-row no-gutters class="justify-center">
+    <v-col cols="12" sm="6" md="8">
+      <v-card class="pa-4">
+        <v-card-actions class="teal">
+          <v-card-title class="white--text pa-0">
+            <span>
+              {{ $t('Login') }}
+            </span>
+          </v-card-title>
+        </v-card-actions>
+        <v-form class="pt-6" ref="form" v-model="valid">
+          <v-container>
+            <nationalId @setNationalId="setNationalId" />
+            <password />
+            <v-row>
+              <v-col cols="12" md="12">
+                <v-row>
+                  <v-col cols="12" md="12">
+                    <captcha @setCaptcha="setCaptcha" />
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+            <div class="justify-center d-flex">
+              <v-btn
+                :disabled="!valid"
+                color="success"
+                class="mr-4"
+                @click="validate"
+              >
+                {{ $t('save') }}
+              </v-btn>
+            </div>
+          </v-container>
+        </v-form>
+      </v-card>
+    </v-col>
+    <successNotif
+      v-if="saveSuccess"
+      :msg="'operationSuccessfullyOcured'"
+      @hideNotif="hideNotif"
+    />
+  </v-row>
+</template>
+
+<script>
+import successNotif from '../structure/successNotif.vue';
+import password from '../userControls/passwordsCom/password.vue';
+import nationalId from '../userControls/nationalId.vue';
+import captcha from '../userControls/captcha.vue';
+
+export default {
+  name: 'signInCom',
+  components: {
+    successNotif,
+    password,
+    nationalId,
+    captcha,
+  },
+  data() {
+    return {
+      saveSuccess: false,
+      nationalId: null,
+      captcha: '',
+      valid: false,
+    };
+  },
+  methods: {
+    validate() {
+      this.$refs.form.validate();
+      if (this.$refs.form.validate()) {
+        this.saveSuccess = true;
+      } else {
+        this.valid = false;
+      }
+    },
+    setCaptcha(value) {
+      this.captcha = value;
+    },
+    setNationalId(value) {
+      this.nationalId = value;
+    },
+    // notif hide
+    hideNotif() {
+      this.saveSuccess = false;
+    },
+  },
+};
+</script>
