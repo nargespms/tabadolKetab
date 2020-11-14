@@ -23,7 +23,7 @@
       :loading-text="$t('loadingText')"
     >
       <template v-slot:top>
-        <v-toolbar color="teal " flat height="48">
+        <v-toolbar color="teal" flat height="48">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-icon color="white" @click="addStaff" v-bind="attrs" v-on="on"

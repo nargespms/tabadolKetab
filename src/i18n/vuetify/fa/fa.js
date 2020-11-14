@@ -49,7 +49,7 @@ export default {
   sendSms: 'ارسال پیامک',
   createdAt: 'زمان ایجاد',
   category: 'دسته بندی',
-  type: 'تایپ',
+  type: 'نوع',
   number: 'تعداد',
   amount: 'مقدار',
   usedNumber: 'تعداد استفاده شده',
@@ -175,5 +175,9 @@ export default {
   recycle:'بازیافت',
   UndergraduatePrice:'قیمت کارشناسی',
   weeklyDiscount:'تخفیف هفتگی',
+  previewMore:'مشاهده بیشتر ',
+  invalidPhrase:'عبارت قابل قبول نیست',
+  legalCharsAreEngCharNum:'کارکترهای مجاز حروف انگلیسی و اعدادانگلیسی هستند',
+  notSelectedMeanAll:'اگر کاربری انتخاب نشود به معنای تمامی کاربران است.',
 
 };

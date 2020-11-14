@@ -8,6 +8,24 @@
     dark
     width="300"
   >
+    <v-list color="teal">
+      <v-list-item class="px-2">
+        <v-list-item-avatar>
+          <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
+        </v-list-item-avatar>
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title class="fn18 pa-4">
+              مدیر تبادل
+            </v-list-item-title>
+            <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item>
+    </v-list>
+
+    <v-divider></v-divider>
+
     <!-- simple  -->
     <v-list-item
       v-for="item in simpleItems"

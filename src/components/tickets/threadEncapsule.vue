@@ -33,6 +33,25 @@
         <div class="ticketDesc pa-4">
           {{ data.description }}
         </div>
+        <v-card
+          v-if="data.createdBy.role === 'client'"
+          class="attachments pa-2 d-flex  justify-space-between flex-column"
+          width="160"
+          height="125"
+        >
+          <v-icon color="grey " x-large class="d-flex">
+            mdi-file-document
+          </v-icon>
+          <v-card-actions class="grey lighten-2">
+            <v-spacer></v-spacer>
+            <span>
+              {{ attachments.name }}
+            </span>
+            <v-icon left color="primary" medium class="pointer"
+              >mdi-download
+            </v-icon>
+          </v-card-actions>
+        </v-card>
       </v-card>
     </v-col>
   </v-row>
@@ -46,6 +65,13 @@ export default {
       type: Object,
     },
   },
+  data() {
+    return {
+      attachments: {
+        name: 'file.txt',
+      },
+    };
+  },
 };
 </script>
 
@@ -53,5 +79,8 @@ export default {
 .ticketDesc {
   border-right: 1px solid #bfbfbf;
   border-radius: 0 !important;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>

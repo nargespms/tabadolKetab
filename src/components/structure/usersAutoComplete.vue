@@ -14,8 +14,9 @@
       :required="true"
       :rules="requireRules"
       :error="!validation"
-      hide-details
       @change="sendValue"
+      :hint="hint"
+      :persistent-hint="persistentHint"
     >
       <template v-slot:selection="data">
         <v-chip
@@ -64,6 +65,14 @@ export default {
     dynamicClass: {
       type: String,
       default: '',
+    },
+    hint: {
+      type: String,
+      default: '',
+    },
+    persistentHint: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

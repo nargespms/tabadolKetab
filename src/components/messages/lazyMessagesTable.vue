@@ -77,7 +77,11 @@
         <th>{{ $t('operation') }}</th>
       </thead>
       <tbody>
-        <tr v-for="item in tableData" :key="item.index">
+        <tr
+          v-for="item in tableData"
+          :key="item.index"
+          :class="item.name === 'Ervin Howell' ? 'grey lighten-2' : ''"
+        >
           <td>
             {{ item.name }}
           </td>

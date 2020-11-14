@@ -1,9 +1,9 @@
 const routes = [
   {
-    path: '/print',
-    name: 'printLayout',
-    component: () => import('../layouts/printLayout'),
-    children: [
+    path:'/print',
+    name:'printLayout',
+    component:()=>import('../layouts/printLayout'),
+    children:[
       {
         path:'barcode/:bookId',
         name:'bookBarcode',
@@ -15,29 +15,29 @@ const routes = [
         component:()=> import('../views/print.vue'),
       },
       {
-        path: 'staffs',
-        name: 'printStaffs',
-        component: () => import('../views/print.vue'),
+        path:'staffs',
+        name:'printStaffs',
+        component:()=> import('../views/print.vue'),
       },
       {
-        path: 'clients',
-        name: 'printClients',
-        component: () => import('../views/print.vue'),
+        path:'clients',
+        name:'printClients',
+        component:()=> import('../views/print.vue'),
       },
       {
-        path: 'messages',
-        name: 'printMessages',
-        component: () => import('../views/print.vue'),
+        path:'messages',
+        name:'printMessages',
+        component:()=> import('../views/print.vue'),
       },
       {
-        path: 'tickets',
-        name: 'printTickets',
-        component: () => import('../views/print.vue'),
+        path:'tickets',
+        name:'printTickets',
+        component:()=> import('../views/print.vue'),
       },
       {
-        path: 'requestedBooks',
-        name: 'printRequestedBooks',
-        component: () => import('../views/print.vue'),
+        path:'requestedBooks',
+        name:'printRequestedBooks',
+        component:()=> import('../views/print.vue'),
       },
       {
         path:'books',
@@ -54,15 +54,15 @@ const routes = [
 
   {
     path: '/',
-    name: 'default',
+    name:'default',
     component: () => import('../layouts/default.vue'),
-    children: [
+    children:[
       {
         path: '/dashboard',
-        name: 'dashboard',
+        name:'dashboard',
         component: () => import('../views/dashboard.vue'),
       },
-      {
+       {
         path: '/signup',
         name: 'signup',
         component: () => import('../views/signUp.vue'),
@@ -171,11 +171,8 @@ const routes = [
         name: 'creditList',
         component: () => import('../views/credit/creditList.vue'),
       },
-    ],
-      
-  }
-   ],
 
+   ],
   },
 
 ];

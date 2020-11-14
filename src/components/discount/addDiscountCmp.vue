@@ -101,7 +101,14 @@
               <v-text-field
                 v-model="discount.preCode"
                 :label="$t('discountCode')"
+                :rules="prefix"
                 outlined
+                :hint="
+                  this.discount.preCode
+                    ? `${$t('legalCharsAreEngCharNum')}`
+                    : ''
+                "
+                persistent-hint
               ></v-text-field>
             </v-col>
 
@@ -127,6 +134,8 @@
               <usersAutocomplete
                 ref="userAutocomplete"
                 :validate="userValidate"
+                :hint="`${$t('notSelectedMeanAll')}`"
+                :persistentHint="true"
               />
             </v-col>
           </v-row>
@@ -187,7 +196,12 @@ export default {
         title: '',
       },
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-
+      prefix: [
+        value => {
+          const pattern = /^[a-z][a-z0-9]*$/i;
+          return pattern.test(value) || `${this.$t('invalidPhrase')}`;
+        },
+      ],
       // rangepcker data
       dateKey: 0,
       fromDateValidation: true,
