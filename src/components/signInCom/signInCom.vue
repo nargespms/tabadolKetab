@@ -35,6 +35,9 @@
           </v-container>
         </v-form>
       </v-card>
+      <p class="primary--text registerLink" @click="registerLink">
+        آیا حساب کاربری ندارید؟ همین الان ثبت نام کنید
+      </p>
     </v-col>
     <successNotif
       v-if="saveSuccess"
@@ -88,6 +91,16 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    registerLink() {
+      this.$router.push({ name: 'signup' });
+    },
   },
 };
 </script>
+<style lang="scss">
+.registerLink {
+  cursor: pointer;
+  text-align: center;
+  padding: 8px;
+}
+</style>

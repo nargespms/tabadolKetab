@@ -1,7 +1,7 @@
 export default {
   Login: 'ورود',
-  changing: 'تبادل',
-  book: 'کتاب ',
+  changing: ' مرکز تبادل',
+  book: ' کتاب ',
   Dashboard: 'پنل مدیریت',
   edit: 'ویرایش',
   delete: 'حذف',
@@ -179,5 +179,6 @@ export default {
   invalidPhrase:'عبارت قابل قبول نیست',
   legalCharsAreEngCharNum:'کارکترهای مجاز حروف انگلیسی و اعدادانگلیسی هستند',
   notSelectedMeanAll:'اگر کاربری انتخاب نشود به معنای تمامی کاربران است.',
+  enter:'ورود',
 
 };

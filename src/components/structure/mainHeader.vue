@@ -1,17 +1,33 @@
 <template>
   <div>
-    <v-app-bar app color="grey darken-4" class="white--text">
-      <v-app-bar-nav-icon
-        v-if="$route.name !== 'login' && $route.name !== 'signup'"
-        class="white--text"
-        @click="changeDrawer"
-      ></v-app-bar-nav-icon>
+    <div>
+      <v-app-bar
+        app
+        color="grey darken-4"
+        class="white--text justify-space-between navBar "
+      >
+        <div>
+          <v-app-bar-nav-icon
+            v-if="$route.name !== 'login' && $route.name !== 'signup'"
+            class="white--text "
+            @click="changeDrawer"
+          ></v-app-bar-nav-icon>
 
-      <span class="red--text text--darken-4">{{ $t('changing') }} &nbsp; </span>
+          <span class="red--text text--darken-4"
+            >{{ $t('changing') }} &nbsp;
+          </span>
 
-      <span class="white--text">{{ $t('book') }} &nbsp; </span>
-    </v-app-bar>
-    {{ $route.path }}
+          <span class="white--text">{{ $t('book') }} &nbsp; </span>
+        </div>
+        <div class=" pl-6 enterPannel" @click="enterPannel">
+          <v-icon color="white">mdi-account-key</v-icon>
+          <span class="white--text">
+            {{ $t('enter') }}
+          </span>
+        </div>
+      </v-app-bar>
+    </div>
+
     <mainRightMenu
       v-if="$route.name !== 'login' && $route.name !== 'signup'"
       :drawer="drawer"
@@ -43,9 +59,24 @@ export default {
       console.log(value);
       this.drawer = value;
     },
+    enterPannel() {
+      this.$router.push({
+        name: 'login',
+      });
+    },
   },
   mounted() {
     console.log(this.$route);
   },
 };
 </script>
+<style lang="scss">
+.enterPannel {
+  cursor: pointer;
+}
+.navBar {
+  .v-toolbar__content {
+    justify-content: space-between;
+  }
+}
+</style>

@@ -10,6 +10,18 @@
       <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
       }}</v-btn>
+      <v-btn
+        class="ml-4 white--text"
+        color="blue lighten-1"
+        @click="changeType('publicMessage')"
+        >{{ $t('publicMessage') }}</v-btn
+      >
+      <v-btn
+        class="ml-4 white--text"
+        color="indigo lighten-1"
+        @click="changeType('privateMessage')"
+        >{{ $t('privateMessage') }}</v-btn
+      >
     </div>
     <v-toolbar color="teal " flat height="48">
       <v-tooltip bottom>
@@ -21,7 +33,7 @@
         <span>{{ $t('CreateMessage') }}</span>
       </v-tooltip>
       <span class="pr-4 font-weight-medium white--text">
-        {{ $t('MessagesList') }}
+        {{ $t(tableName) }}
       </span>
     </v-toolbar>
     <v-progress-linear
@@ -213,6 +225,7 @@ export default {
       // preview
       enablePreview: false,
       previewItem: {},
+      tableName: 'publicMessage',
     };
   },
 
@@ -288,6 +301,9 @@ export default {
           this.tableData.push(...res.data);
           this.loadingMore = false;
         });
+    },
+    changeType(name) {
+      this.tableName = name;
     },
   },
   watch: {

@@ -74,11 +74,20 @@
           </v-avatar>
         </div>
       </template>
+
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon color="grey darken-3" @click="deleteRecord(item)">
           mdi-delete
         </v-icon>
       </template>
+      <!-- <template v-slot:[`footer`]="{ props }">
+        {{ props }}
+        <v-pagination
+          :v-model="props.options.page"
+          :length="props.pagination.pageCount"
+          :total-visible="7"
+        ></v-pagination>
+      </template> -->
     </v-data-table>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog

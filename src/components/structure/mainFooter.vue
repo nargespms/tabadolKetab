@@ -1,9 +1,7 @@
 <template>
   <v-footer app class="grey darken-4">
     <!-- -->
-    <span class="white--text">
-      footer
-    </span>
+    <span class="white--text pa-4"> </span>
   </v-footer>
 </template>
 
