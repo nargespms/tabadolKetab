@@ -1,6 +1,6 @@
 <template>
   <div>
-    ticketID {{ $route.params.ticketId }}
+    <!-- ticketID {{ $route.params.ticketId }} -->
     <ticketCmp />
   </div>
 </template>

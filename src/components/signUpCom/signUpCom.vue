@@ -192,6 +192,9 @@ export default {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
         this.saveSuccess = true;
+        this.$router.push({
+          name: 'dashboard',
+        });
         this.reset();
       } else {
         this.valid = false;
