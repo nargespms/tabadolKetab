@@ -261,6 +261,23 @@ export default {
             },
           ],
         },
+        {
+          action: 'fas fa-motorcycle',
+          title: 'post',
+          active: false,
+          items: [
+            {
+              title: 'postRequest',
+              link: '/postRequest',
+              icon: 'fas fa-plus',
+            },
+            {
+              title: 'postList',
+              link: '/postList',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
       ],
     };
   },

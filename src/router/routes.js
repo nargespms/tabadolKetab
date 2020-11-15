@@ -176,6 +176,16 @@ const routes = [
         name: 'creditList',
         component: () => import('../views/credit/creditList.vue'),
       },
+      {
+        path: '/postRequest',
+        name: 'postRequest',
+        component: () => import('../views/post/postRequest.vue'),
+      },
+      {
+        path: '/postList',
+        name: 'postList',
+        component: () => import('../views/post/postList.vue'),
+      },
 
    ],
   },

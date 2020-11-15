@@ -41,10 +41,16 @@ a {
 .fn13 {
   font-size: 13px;
 }
+.fn18 {
+  font-size: 18px !important;
+}
 .fn12 {
   font-size: 12px;
 }
 .clear {
   overflow: auto;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>

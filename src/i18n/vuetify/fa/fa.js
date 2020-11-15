@@ -181,5 +181,12 @@ export default {
   notSelectedMeanAll:'اگر کاربری انتخاب نشود به معنای تمامی کاربران است.',
   enter:'ورود',
   exit:'خروج',
+  // post
+  post:'پیک',
+  postRequest:'درخواست پیک',
+  postList:'لیست درخواست های پیک',
+  select:'انتخاب',
+  selectAddress:'انتخاب آدرس',
+  editAddress:'ویرایش آدرس',
 
 };

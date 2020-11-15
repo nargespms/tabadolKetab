@@ -212,7 +212,6 @@ export default {
     promptDialog,
     messageShow,
   },
-  props: {},
   data() {
     return {
       isLoading: true,
