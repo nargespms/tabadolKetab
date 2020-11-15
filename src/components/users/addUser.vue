@@ -77,42 +77,38 @@
                 </v-select>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12" md="6">
+                <email />
+              </v-col>
+              <v-col cols="12" md="6">
+                adss
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="6">
+                ad23
+              </v-col>
+              <v-col cols="12" md="6">
+                adss44
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="6">
+                ad235555
+              </v-col>
+              <v-col cols="12" md="6">
+                adss44xxx
+              </v-col>
+            </v-row>
             <passwords />
             <v-row>
-              <v-col cols="12" md="12">
+              <v-col cols="12" md="6">
                 <v-checkbox
-                  v-model="register.rules"
+                  v-model="active"
+                  :label="$t('activeinactive')"
                   required
-                  :rules="checkRule"
-                  color="info"
-                >
-                  <template v-slot:label>
-                    <div>
-                      من
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                          <a
-                            target="_blank"
-                            href="http://vuetifyjs.com"
-                            @click.stop
-                            v-on="on"
-                          >
-                            قوانین
-                          </a>
-                        </template>
-                        مطالعه قوانین سایت
-                      </v-tooltip>
-                      سایت را قبول می نمایم
-                    </div>
-                  </template>
-                </v-checkbox>
-              </v-col>
-              <v-col cols="12" md="12">
-                <v-row>
-                  <v-col cols="12" md="12">
-                    <captcha @setCaptcha="setCaptcha" />
-                  </v-col>
-                </v-row>
+                ></v-checkbox>
               </v-col>
             </v-row>
             <div class="justify-center d-flex">
@@ -145,7 +141,7 @@ import successNotif from '../structure/successNotif.vue';
 import passwords from '../userControls/passwords.vue';
 import mobilePhone from '../userControls/mobilePhone.vue';
 import nationalId from '../userControls/nationalId.vue';
-import captcha from '../userControls/captcha.vue';
+import email from '../userControls/email.vue';
 
 export default {
   name: 'signUpCom',
@@ -154,7 +150,7 @@ export default {
     passwords,
     mobilePhone,
     nationalId,
-    captcha,
+    email,
   },
   data() {
     return {
@@ -185,6 +181,7 @@ export default {
         rules: false,
       },
       captcha: '',
+      active: '',
     };
   },
   methods: {
@@ -192,9 +189,6 @@ export default {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
         this.saveSuccess = true;
-        this.$router.push({
-          name: 'dashboard',
-        });
         this.reset();
       } else {
         this.valid = false;

@@ -78,6 +78,11 @@ const routes = [
         component: () => import('../views/dashboard.vue'),
       },
       {
+        path: '/users/adduser',
+        name: 'adduser',
+        component: () => import('../views/usersManagements/addUser.vue'),
+      },
+      {
         path: '/users/staffs',
         name: 'staffsList',
         component: () => import('../views/usersManagements/staffsList.vue'),
