@@ -180,5 +180,6 @@ export default {
   legalCharsAreEngCharNum:'کارکترهای مجاز حروف انگلیسی و اعدادانگلیسی هستند',
   notSelectedMeanAll:'اگر کاربری انتخاب نشود به معنای تمامی کاربران است.',
   enter:'ورود',
+  exit:'خروج',
 
 };

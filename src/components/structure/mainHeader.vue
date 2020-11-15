@@ -19,10 +19,20 @@
 
           <span class="white--text">{{ $t('book') }} &nbsp; </span>
         </div>
-        <div class=" pl-6 enterPannel" @click="enterPannel">
+        <div
+          class=" pl-6 enterPannel"
+          @click="enterPannel"
+          v-if="$route.name === 'login' || $route.name === 'signup'"
+        >
           <v-icon color="white">mdi-account-key</v-icon>
           <span class="white--text">
             {{ $t('enter') }}
+          </span>
+        </div>
+        <div class=" pl-6 enterPannel" @click="exitPannel" v-else>
+          <v-icon color="white">mdi-exit-to-app</v-icon>
+          <span class="white--text">
+            {{ $t('exit') }}
           </span>
         </div>
       </v-app-bar>
@@ -60,6 +70,11 @@ export default {
       this.drawer = value;
     },
     enterPannel() {
+      this.$router.push({
+        name: 'login',
+      });
+    },
+    exitPannel() {
       this.$router.push({
         name: 'login',
       });
