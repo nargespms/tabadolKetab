@@ -1,6 +1,6 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <v-col cols="12" sm="6" md="8">
+    <v-col cols="12" sm="8" md="6">
       <v-card class="pa-4">
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
