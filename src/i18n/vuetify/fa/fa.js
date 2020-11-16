@@ -196,5 +196,10 @@ export default {
   numbersOnly:'کاراکترهای مجاز فقط اعداد میباشند',
   reqisterDate:'تاریخ ثبت',
   chooseAtLeastOneBook:'حداقل یک کتاب را انتخاب نمایید',
+  deletePostRequest:'حذف درخواست پست',
+  RUSureUWantToDeletThisPostRequest:'آیا میخواهید این درخواست پست را حذف نمایید؟',
+  price:'مبلغ',
+  recieverPhoneNumber:'تلفن همراه گیرنده',
+  recieverLandLane:'تلفن ثابت گیرنده',
 
 };

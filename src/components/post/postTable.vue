@@ -28,16 +28,16 @@
             <template v-slot:activator="{ on, attrs }">
               <v-icon
                 color="white"
-                @click="addDiscount"
+                @click="addPostRequest"
                 v-bind="attrs"
                 v-on="on"
-                >mdi-ticket-percent
+                >fa fa-plus
               </v-icon>
             </template>
-            <span>{{ $t('addDiscount') }}</span>
+            <span>{{ $t('postRequest') }}</span>
           </v-tooltip>
           <span class="pr-4 font-weight-medium white--text">
-            {{ $t('discountsList') }}
+            {{ $t('postList') }}
           </span>
         </v-toolbar>
       </template>
@@ -67,6 +67,9 @@
           </tr>
         </thead>
       </template>
+      <template v-slot:[`item.title`]="{ item }">
+        {{ item.title }}
+      </template>
       <template v-slot:[`item.operation`]="{ item }">
         <div class="d-flex">
           <v-tooltip bottom>
@@ -75,8 +78,8 @@
                 medium
                 class="ma-2"
                 v-bind="attrs"
-                v-on="on"
                 @click="preview(item)"
+                v-on="on"
               >
                 mdi-eye
               </v-icon>
@@ -99,31 +102,16 @@
             </template>
             {{ $t('delete') }}
           </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                medium
-                class="ma-2"
-                color="grey darken-3"
-                v-on="on"
-                v-bind="attrs"
-                @click="excelDownloadRecord(item)"
-              >
-                mdi-download
-              </v-icon>
-            </template>
-            {{ $t('excelDl') }}
-          </v-tooltip>
         </div>
       </template>
     </v-data-table>
     <v-dialog v-model="enablePreview" content-class="sh-0">
-      <showDiscount :item="previewItem" />
+      <showPostRequest :item="previewItem" />
     </v-dialog>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
-        :title="'deleteDiscount'"
-        :message="'RUSureUWantToDeletThisdiscount'"
+        :title="'deletePostRequest'"
+        :message="'RUSureUWantToDeletThisPostRequest'"
         :data="deletingItem"
         @accept="acceptDelete"
         @reject="closeDelete"
@@ -141,15 +129,10 @@
 <script>
 import successNotif from '../structure/successNotif.vue';
 import promptDialog from '../structure/promptDialog.vue';
-import showDiscount from './showDiscount.vue';
+import showPostRequest from './showPostRequest.vue';
 
 export default {
-  name: 'discountsTable',
-  components: {
-    successNotif,
-    promptDialog,
-    showDiscount,
-  },
+  name: 'postTable',
   props: {
     headers: { type: Array },
     tableData: { type: Array },
@@ -158,6 +141,11 @@ export default {
     },
     totalData: { type: Number },
     loading: { type: Boolean },
+  },
+  components: {
+    successNotif,
+    promptDialog,
+    showPostRequest,
   },
   data() {
     return {
@@ -172,9 +160,9 @@ export default {
     };
   },
   methods: {
-    addDiscount() {
+    addPostRequest() {
       this.$router.push({
-        name: 'addDiscount',
+        name: 'postRequest',
       });
     },
     // methods for delete notif
@@ -200,20 +188,6 @@ export default {
       this.enablePreview = true;
       this.previewItem = item;
     },
-    // excel download
-    excelDownloadRecord(item) {
-      console.log(item);
-    },
-    excelFile() {
-      // getData as excel file with filtered included
-    },
-    printData() {
-      // go to print page of this table
-      const routeData = this.$router.resolve({
-        name: 'printDiscounts',
-      });
-      window.open(routeData.href, '_blank');
-    },
     // sort funcs
     sort() {
       console.log('sorted');
@@ -221,6 +195,16 @@ export default {
     // filter
     filter() {
       console.log('filtered');
+    },
+    excelFile() {
+      // getData as excel file with filtered included
+    },
+    printData() {
+      // go to print page of this table
+      const routeData = this.$router.resolve({
+        name: 'printPostRequest',
+      });
+      window.open(routeData.href, '_blank');
     },
   },
   watch: {

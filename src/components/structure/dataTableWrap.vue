@@ -64,6 +64,14 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <postTable
+      v-if="this.module === 'post'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
@@ -76,6 +84,7 @@ import discountsTable from '../discount/discountsTable.vue';
 import requestedBooksTable from '../requestedBook/requestedBooksTable.vue';
 import booksTable from '../book/booksTable.vue';
 import creditTable from '../credit/creditTable.vue';
+import postTable from '../post/postTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -88,6 +97,7 @@ export default {
     requestedBooksTable,
     booksTable,
     creditTable,
+    postTable,
   },
   props: {
     headers: {

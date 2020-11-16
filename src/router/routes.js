@@ -49,6 +49,11 @@ const routes = [
         name:'printCredit',
         component:()=> import('../views/print.vue'),
       },
+      {
+        path:'postRequest',
+        name:'printPostRequest',
+        component:()=> import('../views/print.vue'),
+      },
     ],
   },
 

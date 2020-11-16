@@ -27,7 +27,7 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-icon color="white" @click="addTicket" v-bind="attrs" v-on="on"
-                >mdi-comment-plus-outline
+                >mdi-ticket-account
               </v-icon>
             </template>
             <span>{{ $t('AddTicket') }}</span>

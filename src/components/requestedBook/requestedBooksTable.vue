@@ -32,7 +32,7 @@
                 @click="addRequestedBook"
                 v-bind="attrs"
                 v-on="on"
-                >mdi-comment-plus-outline
+                >mdi-book-open-variant
               </v-icon>
             </template>
             <span>{{ $t('addRequestedBooks') }}</span>

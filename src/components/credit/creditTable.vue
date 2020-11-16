@@ -27,7 +27,7 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-icon color="white" @click="addCredit" v-bind="attrs" v-on="on"
-                >mdi-comment-plus-outline
+                >mdi-credit-card-plus
               </v-icon>
             </template>
             <span>{{ $t('addCredit') }}</span>
