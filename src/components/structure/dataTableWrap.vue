@@ -72,6 +72,14 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <forbiddenBookTable
+      v-if="this.module === 'forbiddenBook'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
@@ -85,6 +93,7 @@ import requestedBooksTable from '../requestedBook/requestedBooksTable.vue';
 import booksTable from '../book/booksTable.vue';
 import creditTable from '../credit/creditTable.vue';
 import postTable from '../post/postTable.vue';
+import forbiddenBookTable from '../forbiddenBook/forbiddenBookTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -98,6 +107,7 @@ export default {
     booksTable,
     creditTable,
     postTable,
+    forbiddenBookTable,
   },
   props: {
     headers: {

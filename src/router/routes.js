@@ -54,6 +54,11 @@ const routes = [
         name:'printPostRequest',
         component:()=> import('../views/print.vue'),
       },
+      {
+        path:'forbiddenBook',
+        name:'printForbiddenBook',
+        component:()=> import('../views/print.vue'),
+      },
     ],
   },
 

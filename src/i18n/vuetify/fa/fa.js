@@ -205,5 +205,7 @@ export default {
   forbiddenBook:'کتاب ممنوعه',
   addForbiddenBook:'افزودن کتاب ممنوعه',
   forbiddenBookList:'لیست کتاب های ممنوعه',
+  deleteForbiddenBook:'حذف کتاب ممنوعه',
+  RUSureUWantToDeletThisForbiddenBook:'آیا می خواهید این کتاب ممنوعه را حذف نمایید',
 
 };

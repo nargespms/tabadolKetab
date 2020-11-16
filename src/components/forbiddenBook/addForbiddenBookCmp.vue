@@ -38,8 +38,8 @@
           <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
               <v-text-field
-                v-model="forbiddenBook.author"
-                :label="$t('author')"
+                v-model="forbiddenBook.writer"
+                :label="$t('writer')"
                 outlined
                 error-count="1"
               ></v-text-field>
