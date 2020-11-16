@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-row class="px-2 justify-end">
-      <v-col cols="12" md="2" align="center" class="pa-0">
-        <div class="d-flex flex-column  pa-2">
+      <v-col cols="12" md="4" align="center" class="pa-0">
+        <div class="d-flex flex-row-reverse  pa-2">
           <v-btn
             color="green"
             class="white--text"
@@ -10,7 +10,7 @@
             :disabled="request.length < 1"
             >{{ $t('postRequest') }}</v-btn
           >
-          <div v-if="request.length < 1" class="warnReq mt-3">
+          <div v-if="request.length < 1" class="warnReq ml-3">
             <v-icon color="red"> fas fa-exclamation-triangle </v-icon>
             {{ $t('chooseAtLeastOneBook') }}
           </div>
@@ -201,5 +201,7 @@ export default {
   padding: 8px;
   border: 1px solid red;
   border-radius: 3px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 </style>
