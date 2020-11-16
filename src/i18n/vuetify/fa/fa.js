@@ -184,9 +184,15 @@ export default {
   // post
   post:'پیک',
   postRequest:'درخواست پیک',
+  return :'بازگشت',
   postList:'لیست درخواست های پیک',
   select:'انتخاب',
   selectAddress:'انتخاب آدرس',
   editAddress:'ویرایش آدرس',
+  addAddress:' افزودن آدرس جدید',
+  address:'آدرس',
+  postalCode:'کدپستی',
+  confirmAddress:'تایید آدرس',
+  numbersOnly:'کاراکترهای مجاز فقط اعداد میباشند',
 
 };

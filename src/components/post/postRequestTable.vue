@@ -1,9 +1,13 @@
 <template>
   <div>
     <div class="d-flex flex-row-reverse ma-4">
-      <v-btn color="green" class="white--text" @click="addressModal">{{
-        $t('postRequest')
-      }}</v-btn>
+      <v-btn
+        color="green"
+        class="white--text"
+        @click="addressModal"
+        :disabled="request.length < 1"
+        >{{ $t('postRequest') }}</v-btn
+      >
     </div>
     <v-toolbar color="teal " flat height="48">
       <v-icon color="white">fas fa-motorcycle</v-icon>
@@ -67,12 +71,16 @@
       >
         {{ $t('uploadeMore') }}
       </v-btn>
-      <v-btn color="green" class="white--text ma-2" @click="addressModal">{{
-        $t('postRequest')
-      }}</v-btn>
+      <v-btn
+        color="green"
+        class="white--text ma-2"
+        @click="addressModal"
+        :disabled="request.length < 1"
+        >{{ $t('postRequest') }}</v-btn
+      >
     </div>
     <v-dialog v-model="addressModalEnable" max-width="500px">
-      <addressCmp />
+      <addressCmp @hideAddressList="hideAddressList" state="list" />
     </v-dialog>
     <successNotif
       v-if="successNotif"
@@ -99,7 +107,7 @@ export default {
       isLoading: true,
       loadingMore: false,
       tableData: [],
-      addressModalEnable: true,
+      addressModalEnable: false,
     };
   },
   methods: {
@@ -138,6 +146,10 @@ export default {
     },
     addressModal() {
       this.addressModalEnable = true;
+    },
+    hideAddressList() {
+      this.addressModalEnable = false;
+      this.successNotif = true;
     },
   },
 
