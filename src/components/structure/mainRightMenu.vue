@@ -278,6 +278,23 @@ export default {
             },
           ],
         },
+        {
+          action: 'fas fa-ban',
+          title: 'forbiddenBook',
+          active: false,
+          items: [
+            {
+              title: 'addForbiddenBook',
+              link: '/addForbiddenBook',
+              icon: 'fas fa-plus',
+            },
+            {
+              title: 'forbiddenBookList',
+              link: '/forbiddenBookList',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
       ],
     };
   },

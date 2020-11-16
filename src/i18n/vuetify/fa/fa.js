@@ -201,5 +201,9 @@ export default {
   price:'مبلغ',
   recieverPhoneNumber:'تلفن همراه گیرنده',
   recieverLandLane:'تلفن ثابت گیرنده',
+  // forbiddenBook
+  forbiddenBook:'کتاب ممنوعه',
+  addForbiddenBook:'افزودن کتاب ممنوعه',
+  forbiddenBookList:'لیست کتاب های ممنوعه',
 
 };
