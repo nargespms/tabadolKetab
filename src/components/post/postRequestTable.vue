@@ -162,6 +162,7 @@ export default {
     hideAddressList() {
       this.addressModalEnable = false;
       this.successNotif = true;
+      this.request = [];
     },
   },
 
