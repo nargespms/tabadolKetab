@@ -41,7 +41,11 @@
       color="primary"
       indeterminate
     ></v-progress-linear>
-    <table v-if="!isLoading" class="generalTable ">
+    <table
+      v-if="!isLoading"
+      class="generalTable "
+      :class="$vuetify.breakpoint.lg ? '' : 'tableMobileScroll'"
+    >
       <thead class="grey lighten-2">
         <th>
           {{ $t('title') }}
@@ -331,5 +335,10 @@ export default {
     text-align: center;
     padding: 8px;
   }
+}
+.tableMobileScroll {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 </style>

@@ -1,14 +1,22 @@
 <template>
   <div>
-    <div class="d-flex flex-row-reverse ma-4">
-      <v-btn
-        color="green"
-        class="white--text"
-        @click="addressModal"
-        :disabled="request.length < 1"
-        >{{ $t('postRequest') }}</v-btn
-      >
-    </div>
+    <v-row class="px-2 justify-end">
+      <v-col cols="12" md="2" align="center" class="pa-0">
+        <div class="d-flex flex-column  pa-2">
+          <v-btn
+            color="green"
+            class="white--text"
+            @click="addressModal"
+            :disabled="request.length < 1"
+            >{{ $t('postRequest') }}</v-btn
+          >
+          <div v-if="request.length < 1" class="warnReq mt-3">
+            <v-icon color="red"> fas fa-exclamation-triangle </v-icon>
+            {{ $t('chooseAtLeastOneBook') }}
+          </div>
+        </div>
+      </v-col>
+    </v-row>
     <v-toolbar color="teal " flat height="48">
       <v-icon color="white">fas fa-motorcycle</v-icon>
       <span class="pr-4 font-weight-medium white--text">
@@ -20,7 +28,11 @@
       color="primary"
       indeterminate
     ></v-progress-linear>
-    <table v-if="!isLoading" class="generalTable ">
+    <table
+      v-if="!isLoading"
+      class="generalTable "
+      :class="$vuetify.breakpoint.xs ? 'tableMobileScroll' : ''"
+    >
       <thead class="grey lighten-2">
         <th>
           {{ $t('select') }}
@@ -47,7 +59,7 @@
       <tbody>
         <tr v-for="item in tableData" :key="item.index">
           <td class="d-flex justify-center">
-            <v-checkbox @click="postRequest(item)"></v-checkbox>
+            <v-checkbox :value="item" v-model="request"></v-checkbox>
           </td>
           <td>
             {{ item.name }}
@@ -163,8 +175,10 @@ export default {
 .generalTable {
   border: thin solid rgba(0, 0, 0, 0.12);
   width: 100%;
+
   border-collapse: collapse;
   margin-bottom: 8px;
+
   th {
     border: thin solid rgba(0, 0, 0, 0.12);
     font-weight: normal;
@@ -177,5 +191,15 @@ export default {
     text-align: center;
     padding: 4px;
   }
+}
+.tableMobileScroll {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.warnReq {
+  padding: 8px;
+  border: 1px solid red;
+  border-radius: 3px;
 }
 </style>

@@ -194,5 +194,7 @@ export default {
   postalCode:'کدپستی',
   confirmAddress:'تایید آدرس',
   numbersOnly:'کاراکترهای مجاز فقط اعداد میباشند',
+  reqisterDate:'تاریخ ثبت',
+  chooseAtLeastOneBook:'حداقل یک کتاب را انتخاب نمایید',
 
 };
