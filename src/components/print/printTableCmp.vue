@@ -1,5 +1,5 @@
 <template>
-  <div class="A5 pa-6">
+  <div class="A4 pa-6">
     <table class="generalTable sheet padding-25mm ">
       <thead>
         <th v-for="col in columns" :key="col.index">

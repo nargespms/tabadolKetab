@@ -389,10 +389,11 @@ export default {
       this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
       this.columns = this.ticketsCols;
     }
-    if (this.$route.name === 'printPostRequest') {
+    if (this.$route.name === 'printPostRequests') {
       this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
       this.columns = this.ticketsCols;
     }
+
     if (this.$route.name === 'printForbiddenBook') {
       this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
       this.columns = this.ticketsCols;

@@ -207,5 +207,11 @@ export default {
   forbiddenBookList:'لیست کتاب های ممنوعه',
   deleteForbiddenBook:'حذف کتاب ممنوعه',
   RUSureUWantToDeletThisForbiddenBook:'آیا می خواهید این کتاب ممنوعه را حذف نمایید',
+  date:'تاریخ',
+  // post form
+  fullname:'نام و نام خانوادگی',
+  numbersOfBook:'تعداد کتاب',
+  postSentDate:'تاریخ ارسال پیک',
+
 
 };

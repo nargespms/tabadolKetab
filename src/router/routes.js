@@ -51,8 +51,13 @@ const routes = [
       },
       {
         path:'postRequest',
-        name:'printPostRequest',
+        name:'printPostRequests',
         component:()=> import('../views/print.vue'),
+      },
+      {
+        path:'postRequest/:postId',
+        name:'printPostRequest',
+        component:()=> import('../views/printForm.vue'),
       },
       {
         path:'forbiddenBook',
