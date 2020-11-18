@@ -5,11 +5,17 @@
       :label="!phone ? $t('mobilephone') : $t('phone')"
       :rules="mobilePhoneRules"
       v-mask="'###########'"
-      @input="checkTel"
+      @update:error="checkTel"
+      debounce="1500"
       required
       outlined
       error-count="2"
-    ></v-text-field>
+      ref="phoneInput"
+      :error-messages="
+        !valid && mobilePhone.length > 0 ? `${this.$t('InvalidPhone')}` : ''
+      "
+    >
+    </v-text-field>
   </div>
 </template>
 
@@ -29,18 +35,21 @@ export default {
       mobilePhoneRules: [
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 11) || `${this.$t('minCharaters11')}`,
-        v => (v && this.valid) || `${this.$t('InvalidPhone')}`,
       ],
       mobilePhone: '',
-      valid: false,
+      valid: true,
     };
   },
   methods: {
     checkTel() {
-      const number = phoneUtil.parseAndKeepRawInput(this.mobilePhone, 'IR');
-      const completeNum = phoneUtil.format(number, PNF.E164);
-      this.valid = phoneUtil.isValidNumber(phoneUtil.parse(completeNum));
-      this.$emit('setMobilePhone', this.mobilePhone);
+      console.log('biroon');
+      if (this.$refs.phoneInput.validate()) {
+        const number = phoneUtil.parseAndKeepRawInput(this.mobilePhone, 'IR');
+        const completeNum = phoneUtil.format(number, PNF.E164);
+        this.valid = phoneUtil.isValidNumber(phoneUtil.parse(completeNum));
+        console.log(this.valid);
+        this.$emit('setMobilePhone', this.mobilePhone);
+      }
     },
   },
 };
