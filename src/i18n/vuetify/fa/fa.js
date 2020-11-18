@@ -222,5 +222,11 @@ export default {
   logsList:'لیست وقایع',
   module:'ماژول',
   ip:'آی پی',
+  invoices:'فاکتورها',
+  addInvoice:'افزودن فاکتور',
+  invoicesList:'لیست فاکتورها',
+  invoiceNumber:'شماره فاکتور',
+  registeredUser:'کاربر ثبت',
+  totalPrice:'مبلغ کل',
 
 };

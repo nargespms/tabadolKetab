@@ -313,8 +313,13 @@ export default {
           active: false,
           items: [
             {
-              title: 'logsList',
-              link: '/logsList',
+              title: 'addInvoice',
+              link: '/addInvoice',
+              icon: 'fas fa-plus',
+            },
+            {
+              title: 'invoicesList',
+              link: '/invoicesList',
               icon: 'fas fa-table',
             },
           ],

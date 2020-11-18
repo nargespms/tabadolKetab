@@ -398,6 +398,10 @@ export default {
       this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
       this.columns = this.ticketsCols;
     }
+    if (this.$route.name === 'printInvoices') {
+      this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
+      this.columns = this.ticketsCols;
+    }
     this.getData();
     // if(this.$router)
   },

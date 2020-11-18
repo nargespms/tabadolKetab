@@ -64,6 +64,11 @@ const routes = [
         name:'printForbiddenBook',
         component:()=> import('../views/print.vue'),
       },
+      {
+        path:'invoices',
+        name:'printInvoices',
+        component:()=> import('../views/print.vue'),
+      },
     ],
   },
 
@@ -215,6 +220,16 @@ const routes = [
         path: '/logsList',
         name: 'logsList',
         component: () => import('../views/logs/logsList.vue'),
+      },
+      {
+        path: '/addInvoice',
+        name: 'addInvoice',
+        component: () => import('../views/invoices/addInvoice.vue'),
+      },
+      {
+        path: '/invoicesList',
+        name: 'invoicesList',
+        component: () => import('../views/invoices/invoicesList.vue'),
       },
 
    ],

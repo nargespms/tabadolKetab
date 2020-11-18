@@ -80,6 +80,14 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <invoicesTable
+      v-if="this.module === 'invoices'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
@@ -94,6 +102,7 @@ import booksTable from '../book/booksTable.vue';
 import creditTable from '../credit/creditTable.vue';
 import postTable from '../post/postTable.vue';
 import forbiddenBookTable from '../forbiddenBook/forbiddenBookTable.vue';
+import invoicesTable from '../invoices/invoicesTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -108,6 +117,7 @@ export default {
     creditTable,
     postTable,
     forbiddenBookTable,
+    invoicesTable,
   },
   props: {
     headers: {
