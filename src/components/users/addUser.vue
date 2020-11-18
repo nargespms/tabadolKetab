@@ -45,20 +45,12 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
-                <v-text-field
-                  v-model="register.phone"
-                  :rules="phoneRules"
-                  :label="$t('phone')"
-                  v-mask="'###########'"
-                  required
-                  outlined
-                  error-count="2"
-                ></v-text-field>
+                <mobilePhone :phone="true" @setMobilePhone="setPhone" />
               </v-col>
               <v-col cols="12" md="6">
                 <v-select
                   v-model="register.introductionType"
-                  :items="register.introductionType"
+                  :items="introductionType"
                   :label="$t('introduction')"
                   outlined
                   clearable
@@ -77,14 +69,15 @@
                 </v-select>
               </v-col>
             </v-row>
-            <!-- <v-row>
+
+            <v-row>
               <v-col cols="12" md="6">
-                <email />
+                <email @setEmail="setEmail" />
               </v-col>
               <v-col cols="12" md="6">
                 <v-select
                   v-model="register.roleType"
-                  :items="register.roleType"
+                  :items="roleType"
                   :label="$t('roll')"
                   outlined
                   clearable
@@ -102,8 +95,9 @@
                   </template>
                 </v-select>
               </v-col>
-            </v-row> -->
-            <!-- <v-row>
+            </v-row>
+
+            <v-row>
               <v-col cols="12" md="6">
                 <v-textarea
                   outlined
@@ -118,12 +112,14 @@
                   v-model="register.postalCode"
                   :label="$t('postalCode')"
                   v-mask="'###########'"
+                  :rules="postalCodeRules"
                   outlined
                   error-count="2"
                 ></v-text-field>
               </v-col>
-            </v-row> -->
-            <!-- <v-row>
+            </v-row>
+
+            <v-row>
               <v-col cols="12" md="6">
                 <v-textarea
                   outlined
@@ -141,12 +137,12 @@
                   :label="$t('avatar')"
                 ></v-file-input>
               </v-col>
-            </v-row> -->
+            </v-row>
             <passwords />
             <v-row>
               <v-col cols="12" md="6">
                 <v-checkbox
-                  v-model="active"
+                  v-model="register.active"
                   :label="$t('activeinactive')"
                   required
                 ></v-checkbox>
@@ -182,7 +178,7 @@ import successNotif from '../structure/successNotif.vue';
 import passwords from '../userControls/passwords.vue';
 import mobilePhone from '../userControls/mobilePhone.vue';
 import nationalId from '../userControls/nationalId.vue';
-// import email from '../userControls/email.vue';
+import email from '../userControls/email.vue';
 
 export default {
   name: 'signUpCom',
@@ -191,7 +187,7 @@ export default {
     passwords,
     mobilePhone,
     nationalId,
-    // email,
+    email,
   },
   data() {
     return {
@@ -204,29 +200,15 @@ export default {
       postalCodeRules: [
         v => (v && v.length >= 10) || `${this.$t('minCharaters10')}`,
       ],
-      phoneRules: [
-        v => !!v || `${this.$t('thisFieldIsRequired')}`,
-        v => (v && v.length >= 11) || `${this.$t('minCharaters11')}`,
-      ],
       checkRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-
-      register: {
-        firstName: '',
-        lastName: '',
-        phone: null,
-        nationalId: null,
-        mobilePhone: null,
-        introductionType: [
-          'website',
-          'advertising',
-          'friendsAndAcquaintances',
-          'other',
-        ],
-        roleType: ['client', 'admin'],
-        address: '',
-        postalCode: '',
-        description: '',
-      },
+      introductionType: [
+        'website',
+        'advertising',
+        'friendsAndAcquaintances',
+        'other',
+      ],
+      roleType: ['client', 'admin'],
+      register: {},
       captcha: '',
       active: '',
     };
@@ -241,6 +223,9 @@ export default {
         this.valid = false;
       }
     },
+    setEmail(value) {
+      this.register.email = value;
+    },
     setCaptcha(value) {
       this.captcha = value;
     },
@@ -249,6 +234,9 @@ export default {
     },
     setMobilePhone(value) {
       this.register.mobilePhone = value;
+    },
+    setPhone(value) {
+      this.register.phone = value;
     },
     reset() {
       this.$refs.form.reset();

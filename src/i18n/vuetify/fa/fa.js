@@ -36,7 +36,7 @@ export default {
   save: 'ذخیره',
   title: 'عنوان',
   captcha: 'کد امنیتی',
-  InvalidMobile: 'موبایل وارد شده مامعتبر می باشد',
+  InvalidPhone: 'شماره تلفن وارد شده مامعتبر می باشد',
   InvalidEmail: 'ایمیل نامعتبر می باشد',
   InvalidNationalCode: 'کد ملی وارد شده نامعتبر می باشد',
   deleteBookCategory: 'حذف دسته بندی کتاب',

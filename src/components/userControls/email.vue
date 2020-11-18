@@ -3,6 +3,7 @@
     <v-text-field
       v-model="email"
       :rules="[rules.required, rules.email]"
+      @input="submitEmail"
       required
       outlined
       error-count="2"
@@ -28,7 +29,9 @@ export default {
     };
   },
   methods: {
-    checkTel() {},
+    submitEmail() {
+      this.$emit('setEmail', this.email);
+    },
   },
 };
 </script>

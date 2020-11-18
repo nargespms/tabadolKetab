@@ -2,7 +2,7 @@
   <div>
     <v-text-field
       v-model="mobilePhone"
-      :label="$t('mobilephone')"
+      :label="!phone ? $t('mobilephone') : $t('phone')"
       :rules="mobilePhoneRules"
       v-mask="'###########'"
       @input="checkTel"
@@ -19,12 +19,17 @@ const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance()
 
 export default {
   name: 'mobilePhone',
+  props: {
+    phone: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       mobilePhoneRules: [
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 11) || `${this.$t('minCharaters11')}`,
-        v => (v && this.valid) || `${this.$t('InvalidMobile')}`,
+        v => (v && this.valid) || `${this.$t('InvalidPhone')}`,
       ],
       mobilePhone: '',
       valid: false,
