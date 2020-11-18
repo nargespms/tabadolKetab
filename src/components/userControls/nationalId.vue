@@ -8,6 +8,7 @@
       @input="checkNationalId"
       required
       outlined
+      :autofocus="autofocus"
       error-count="2"
     ></v-text-field>
   </div>
@@ -16,6 +17,11 @@
 <script>
 export default {
   name: 'nationalId',
+  props: {
+    autofocus: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       nationalIdRules: [

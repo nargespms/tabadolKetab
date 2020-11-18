@@ -45,15 +45,7 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
-                <v-text-field
-                  v-model="register.phone"
-                  :rules="phoneRules"
-                  :label="$t('phone')"
-                  v-mask="'###########'"
-                  required
-                  outlined
-                  error-count="2"
-                ></v-text-field>
+                <mobilePhone :phone="true" @setMobilePhone="setPhone" />
               </v-col>
               <v-col cols="12" md="6">
                 <v-select
@@ -77,35 +69,80 @@
                 </v-select>
               </v-col>
             </v-row>
-            <!-- <v-row>
+
+            <v-row>
               <v-col cols="12" md="6">
-                <email />
+                <email @setEmail="setEmail" />
               </v-col>
               <v-col cols="12" md="6">
-                adss
+                <v-select
+                  v-model="register.roleType"
+                  :items="roleType"
+                  :label="$t('roll')"
+                  outlined
+                  clearable
+                  hide-selected
+                >
+                  <template v-slot:item="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                </v-select>
               </v-col>
-            </v-row> -->
-            <!-- <v-row>
+            </v-row>
+
+            <v-row>
               <v-col cols="12" md="6">
-                ad23
+                <v-textarea
+                  outlined
+                  required
+                  name="input-7-4"
+                  :label="$t('address')"
+                  v-model="register.address"
+                ></v-textarea>
               </v-col>
               <v-col cols="12" md="6">
-                adss44
+                <v-text-field
+                  v-model="register.postalCode"
+                  :label="$t('postalCode')"
+                  v-mask="'###########'"
+                  :rules="postalCodeRules"
+                  outlined
+                  error-count="2"
+                ></v-text-field>
               </v-col>
-            </v-row> -->
-            <!-- <v-row>
+            </v-row>
+
+            <v-row>
               <v-col cols="12" md="6">
-                ad235555
+                <v-textarea
+                  outlined
+                  required
+                  name="input-7-4"
+                  :label="$t('description')"
+                  v-model="register.description"
+                ></v-textarea>
               </v-col>
               <v-col cols="12" md="6">
-                adss44xxx
+                <v-file-input
+                  outlined
+                  show-size
+                  prepend-icon="mdi-image"
+                  :label="$t('avatar')"
+                ></v-file-input>
               </v-col>
-            </v-row> -->
+            </v-row>
             <passwords />
             <v-row>
               <v-col cols="12" md="6">
                 <v-checkbox
-                  v-model="active"
+                  v-model="register.active"
                   :label="$t('activeinactive')"
                   required
                 ></v-checkbox>
@@ -141,7 +178,7 @@ import successNotif from '../structure/successNotif.vue';
 import passwords from '../userControls/passwords.vue';
 import mobilePhone from '../userControls/mobilePhone.vue';
 import nationalId from '../userControls/nationalId.vue';
-// import email from '../userControls/email.vue';
+import email from '../userControls/email.vue';
 
 export default {
   name: 'signUpCom',
@@ -150,7 +187,7 @@ export default {
     passwords,
     mobilePhone,
     nationalId,
-    // email,
+    email,
   },
   data() {
     return {
@@ -160,9 +197,8 @@ export default {
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
-      phoneRules: [
-        v => !!v || `${this.$t('thisFieldIsRequired')}`,
-        v => (v && v.length >= 11) || `${this.$t('minCharaters11')}`,
+      postalCodeRules: [
+        v => (v && v.length >= 10) || `${this.$t('minCharaters10')}`,
       ],
       checkRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       introductionType: [
@@ -171,15 +207,8 @@ export default {
         'friendsAndAcquaintances',
         'other',
       ],
-      register: {
-        firstName: '',
-        lastName: '',
-        phone: null,
-        nationalId: null,
-        mobilePhone: null,
-        introductionType: null,
-        rules: false,
-      },
+      roleType: ['client', 'admin'],
+      register: {},
       captcha: '',
       active: '',
     };
@@ -194,6 +223,9 @@ export default {
         this.valid = false;
       }
     },
+    setEmail(value) {
+      this.register.email = value;
+    },
     setCaptcha(value) {
       this.captcha = value;
     },
@@ -202,6 +234,9 @@ export default {
     },
     setMobilePhone(value) {
       this.register.mobilePhone = value;
+    },
+    setPhone(value) {
+      this.register.phone = value;
     },
     reset() {
       this.$refs.form.reset();

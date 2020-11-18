@@ -45,15 +45,7 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
-                <v-text-field
-                  v-model="register.phone"
-                  :rules="phoneRules"
-                  :label="$t('phone')"
-                  v-mask="'###########'"
-                  required
-                  outlined
-                  error-count="2"
-                ></v-text-field>
+                <mobilePhone :phone="true" @setMobilePhone="setPhone" />
               </v-col>
               <v-col cols="12" md="6">
                 <v-select
@@ -175,15 +167,7 @@ export default {
         'friendsAndAcquaintances',
         'other',
       ],
-      register: {
-        firstName: '',
-        lastName: '',
-        phone: null,
-        nationalId: null,
-        mobilePhone: null,
-        introductionType: null,
-        rules: false,
-      },
+      register: {},
       captcha: '',
     };
   },
@@ -208,6 +192,9 @@ export default {
     },
     setMobilePhone(value) {
       this.register.mobilePhone = value;
+    },
+    setPhone(value) {
+      this.register.phone = value;
     },
     reset() {
       this.$refs.form.reset();

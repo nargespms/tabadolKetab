@@ -11,7 +11,7 @@
         </v-card-actions>
         <v-form class="pt-6" ref="form" v-model="valid">
           <v-container>
-            <nationalId @setNationalId="setNationalId" />
+            <nationalId :autofocus="true" @setNationalId="setNationalId" />
             <password />
             <v-row>
               <v-col cols="12" md="12">
