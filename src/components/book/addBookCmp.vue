@@ -204,6 +204,7 @@
                 outlined
                 required
                 :rules="requireRule"
+                v-model="book.status"
               >
                 <template v-slot:item="{ item }">
                   <span>

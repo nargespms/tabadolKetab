@@ -86,6 +86,20 @@
             </template>
             {{ $t('preview') }}
           </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                medium
+                class="ma-2"
+                v-bind="attrs"
+                @click="printForm(item)"
+                v-on="on"
+              >
+                mdi-printer
+              </v-icon>
+            </template>
+            {{ $t('print') }}
+          </v-tooltip>
 
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -157,6 +171,8 @@ export default {
       // preview
       enablePreview: false,
       previewItem: {},
+      // print item
+      printtingItem: {},
     };
   },
   methods: {
@@ -188,6 +204,13 @@ export default {
       this.enablePreview = true;
       this.previewItem = item;
     },
+    printForm(item) {
+      this.printtingItem = item;
+      const routeLink = this.$router.resolve({
+        path: `print/postRequest/${item.id}`,
+      });
+      window.open(routeLink.href, '_blank');
+    },
     // sort funcs
     sort() {
       console.log('sorted');
@@ -202,7 +225,7 @@ export default {
     printData() {
       // go to print page of this table
       const routeData = this.$router.resolve({
-        name: 'printPostRequest',
+        name: 'printPostRequests',
       });
       window.open(routeData.href, '_blank');
     },

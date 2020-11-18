@@ -207,10 +207,20 @@ export default {
   recieverPhoneNumber: 'تلفن همراه گیرنده',
   recieverLandLane: 'تلفن ثابت گیرنده',
   // forbiddenBook
-  forbiddenBook: 'کتاب ممنوعه',
-  addForbiddenBook: 'افزودن کتاب ممنوعه',
-  forbiddenBookList: 'لیست کتاب های ممنوعه',
-  deleteForbiddenBook: 'حذف کتاب ممنوعه',
-  RUSureUWantToDeletThisForbiddenBook:
-    'آیا می خواهید این کتاب ممنوعه را حذف نمایید',
+  forbiddenBook:'کتاب ممنوعه',
+  addForbiddenBook:'افزودن کتاب ممنوعه',
+  forbiddenBookList:'لیست کتاب های ممنوعه',
+  deleteForbiddenBook:'حذف کتاب ممنوعه',
+  RUSureUWantToDeletThisForbiddenBook:'آیا می خواهید این کتاب ممنوعه را حذف نمایید',
+  date:'تاریخ',
+  // post form
+  fullname:'نام و نام خانوادگی',
+  numbersOfBook:'تعداد کتاب',
+  postSentDate:'تاریخ ارسال پیک',
+  // logs
+  logs:'وقایع',
+  logsList:'لیست وقایع',
+  module:'ماژول',
+  ip:'آی پی',
+
 };
