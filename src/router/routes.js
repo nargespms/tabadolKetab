@@ -201,7 +201,7 @@ const routes = [
         name: 'postList',
         component: () => import('../views/post/postList.vue'),
       },
- {
+      {
         path: '/addForbiddenBook',
         name: 'addForbiddenBook',
         component: () => import('../views/forbiddenBook/addForbiddenBook.vue'),
@@ -210,6 +210,11 @@ const routes = [
         path: '/forbiddenBookList',
         name: 'forbiddenBookList',
         component: () => import('../views/forbiddenBook/forbiddenBookList.vue'),
+      },
+      {
+        path: '/logsList',
+        name: 'logsList',
+        component: () => import('../views/logs/logsList.vue'),
       },
 
    ],

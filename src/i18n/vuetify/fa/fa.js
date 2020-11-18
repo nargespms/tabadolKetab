@@ -212,6 +212,11 @@ export default {
   fullname:'نام و نام خانوادگی',
   numbersOfBook:'تعداد کتاب',
   postSentDate:'تاریخ ارسال پیک',
+  // logs
+  logs:'وقایع',
+  logsList:'لیست وقایع',
+  module:'ماژول',
+  ip:'آی پی',
 
 
 };

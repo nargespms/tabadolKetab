@@ -295,6 +295,18 @@ export default {
             },
           ],
         },
+        {
+          action: 'mdi-history',
+          title: 'logs',
+          active: false,
+          items: [
+            {
+              title: 'logsList',
+              link: '/logsList',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
       ],
     };
   },
