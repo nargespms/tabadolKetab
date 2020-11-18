@@ -307,6 +307,18 @@ export default {
             },
           ],
         },
+        {
+          action: 'fas fa-file-invoice-dollar',
+          title: 'invoices',
+          active: false,
+          items: [
+            {
+              title: 'logsList',
+              link: '/logsList',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
       ],
     };
   },
