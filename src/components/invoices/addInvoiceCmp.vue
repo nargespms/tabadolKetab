@@ -35,11 +35,7 @@
               ></v-text-field
             ></v-col>
             <v-col cols="12" md="6">
-              <usersAutocomplete
-                ref="userAutocomplete"
-                :validate="true"
-                :height="32"
-              />
+              <usersAutocomplete :validate="true" :height="32" />
             </v-col>
           </v-row>
 
