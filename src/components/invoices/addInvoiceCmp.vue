@@ -43,10 +43,10 @@
             </v-col>
           </v-row>
 
-          <div class="justify-center d-flex">
+          <div class="justify-center d-flex mb-4">
             <v-btn
               :disabled="!valid"
-              color="success"
+              color="primary"
               class="mr-4"
               @click="addItem"
             >
@@ -54,6 +54,31 @@
             </v-btn>
           </div>
         </v-form>
+        <v-divider class="ma-4" v-if="invoiceItems.length > 0"></v-divider>
+        <v-row class="pa-2">
+          <invoiceItems
+            v-if="invoiceItems.length > 0"
+            :data="invoiceItems"
+            :deletable="true"
+            @deleteItem="deleteItem"
+            :name="'invoiceItems'"
+          />
+        </v-row>
+        <v-row v-if="invoiceItems.length > 0" class="pa-2">
+          <v-col>
+            <v-textarea
+              outlined
+              name="input-7-4"
+              :label="$t('description')"
+              v-model="invoice.desc"
+            ></v-textarea>
+          </v-col>
+        </v-row>
+        <div v-if="invoiceItems.length > 0" class="justify-center d-flex mb-4">
+          <v-btn color="success" class="mr-4 px-16" @click="addInvoice">
+            {{ $t('register') }}
+          </v-btn>
+        </div>
       </v-card>
     </v-col>
     <notifMessage
@@ -74,12 +99,14 @@
 <script>
 import usersAutocomplete from '../structure/usersAutoComplete.vue';
 import notifMessage from '../structure/notifMessage.vue';
+import invoiceItems from './invoiceItems.vue';
 
 export default {
   name: 'addInvoiceCmp',
   components: {
     usersAutocomplete,
     notifMessage,
+    invoiceItems,
   },
   data() {
     return {
@@ -88,6 +115,8 @@ export default {
       errorMsg: false,
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       barcode: '',
+      invoiceItems: [],
+      invoice: {},
     };
   },
   methods: {
@@ -104,7 +133,13 @@ export default {
       // it should add item to invoice item
       if (this.barcode.length === 9) {
         this.reset();
-        this.saveSuccess = true;
+        const item = {
+          bookName: 'ملت عشق',
+          barcode: '121314156',
+          mainPrice: '22000000',
+          priceWithDiscount: '1100000',
+        };
+        this.invoiceItems.push(item);
       } else {
         this.errorMsg = true;
       }
@@ -114,6 +149,9 @@ export default {
         this.valid = false;
       }
     },
+    deleteItem(item) {
+      this.invoiceItems.pop(item);
+    },
     // reset form
     reset() {
       this.$refs.form.reset();
@@ -121,6 +159,11 @@ export default {
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
+    },
+    addInvoice() {
+      console.log(this.invoiceItems, this.invoice);
+      this.invoice.desc = '';
+      this.saveSuccess = true;
     },
   },
 };

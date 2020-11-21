@@ -229,5 +229,10 @@ export default {
   registeredUser:'کاربر ثبت',
   totalPrice:'مبلغ کل',
   someThingWentWrong:'متاسفانه مشکلی پیش آمده',
-
+  // invoice
+  radif:'ردیف',
+  bookPrice:'قیمت کتاب',
+  priceWithDiscount:'قیمت با تخفیف',
+  invoiceItems:'آیتم های فاکتور',
+  register:'ثبت',
 };
