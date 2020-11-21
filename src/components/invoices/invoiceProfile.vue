@@ -100,7 +100,7 @@
             </table>
           </v-col>
         </v-row>
-        <v-row class="pa-5">
+        <!-- <v-row class="pa-5">
           <div class="postGuide">
             <span class="blue--text text--accent-3">
               <v-icon color="primary">fas fa-motorcycle</v-icon>
@@ -111,7 +111,7 @@
               میباشد.
             </span>
           </div>
-        </v-row>
+        </v-row> -->
         <div class="justify-center d-flex mb-4">
           <v-btn color="primary" class="mr-4 px-16" @click="printInvoice">
             <v-icon> mdi-printer</v-icon>
