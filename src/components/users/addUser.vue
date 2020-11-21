@@ -10,7 +10,7 @@
           </v-card-title>
         </v-card-actions>
 
-        <v-form class="pt-6" ref="form" v-model="valid">
+        <v-form class="pt-6" ref="form" v-model="valid" lazy-validation>
           <v-container>
             <v-row>
               <v-col cols="12" md="6">
@@ -20,7 +20,6 @@
                   :label="$t('name')"
                   required
                   outlined
-                  autofocus
                   error-count="2"
                 ></v-text-field>
               </v-col>
@@ -192,8 +191,8 @@ export default {
   },
   data() {
     return {
-      saveSuccess: false,
       valid: true,
+      saveSuccess: false,
       nameRules: [
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
