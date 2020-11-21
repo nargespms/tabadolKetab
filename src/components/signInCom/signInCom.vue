@@ -39,16 +39,17 @@
         آیا حساب کاربری ندارید؟ همین الان ثبت نام کنید
       </p>
     </v-col>
-    <successNotif
+    <notifMessage
       v-if="saveSuccess"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </v-row>
 </template>
 
 <script>
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import password from '../userControls/passwordsCom/password.vue';
 import nationalId from '../userControls/nationalId.vue';
 import captcha from '../userControls/captcha.vue';
@@ -56,7 +57,7 @@ import captcha from '../userControls/captcha.vue';
 export default {
   name: 'signInCom',
   components: {
-    successNotif,
+    notifMessage,
     password,
     nationalId,
     captcha,

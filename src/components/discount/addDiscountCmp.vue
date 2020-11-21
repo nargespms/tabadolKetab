@@ -136,6 +136,7 @@
                 :validate="userValidate"
                 :hint="`${$t('notSelectedMeanAll')}`"
                 :persistentHint="true"
+                :height="32"
               />
             </v-col>
           </v-row>
@@ -165,10 +166,11 @@
           </div>
         </v-form>
       </v-card>
-      <successNotif
+      <notifMessage
         v-if="saveSuccess"
         :msg="'operationSuccessfullyOcured'"
         @hideNotif="hideNotif"
+        :type="'success'"
       />
     </v-col>
   </v-row>
@@ -177,13 +179,13 @@
 <script>
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
 import usersAutocomplete from '../structure/usersAutoComplete.vue';
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
 
 export default {
   name: 'addDiscountCmp',
   components: {
-    successNotif,
+    notifMessage,
     bookCatAutocomplete,
     usersAutocomplete,
     rangeDatePickerCmp,

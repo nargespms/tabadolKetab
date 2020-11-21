@@ -94,10 +94,11 @@
         @changeStatus="changeStatus"
       />
     </v-dialog>
-    <successNotif
+    <notifMessage
       v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </div>
 </template>
@@ -105,14 +106,14 @@
 <script>
 import showRequestedBook from './showRequestedBook.vue';
 import multipleChoiseDialog from '../structure/multipleChoiseDialog.vue';
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 
 export default {
   name: 'requestedBooksTable',
   components: {
     showRequestedBook,
     multipleChoiseDialog,
-    successNotif,
+    notifMessage,
   },
   props: {
     headers: { type: Array },

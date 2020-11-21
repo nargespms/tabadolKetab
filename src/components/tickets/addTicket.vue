@@ -86,23 +86,24 @@
           </div>
         </v-form>
       </v-card>
-      <successNotif
+      <notifMessage
         v-if="saveSuccess"
         :msg="'operationSuccessfullyOcured'"
         @hideNotif="hideNotif"
+        :type="'success'"
       />
     </v-col>
   </v-row>
 </template>
 
 <script>
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import usersAutoComplete from '../structure/usersAutoComplete.vue';
 
 export default {
   name: 'addTicket',
   components: {
-    successNotif,
+    notifMessage,
     usersAutoComplete,
   },
   props: {

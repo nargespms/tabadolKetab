@@ -276,23 +276,24 @@
         </v-form>
       </v-card>
     </v-col>
-    <successNotif
+    <notifMessage
       v-if="saveSuccess"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </v-row>
 </template>
 
 <script>
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
 import tagsAutocomplete from '../tags/tagsAutocomplete.vue';
 
 export default {
   name: 'addBookCmp',
   components: {
-    successNotif,
+    notifMessage,
     bookCatAutocomplete,
     tagsAutocomplete,
   },

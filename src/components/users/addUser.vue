@@ -165,16 +165,17 @@
         </v-form>
       </v-card>
     </v-col>
-    <successNotif
+    <notifMessage
       v-if="saveSuccess"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </v-row>
 </template>
 
 <script>
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import passwords from '../userControls/passwords.vue';
 import mobilePhone from '../userControls/mobilePhone.vue';
 import nationalId from '../userControls/nationalId.vue';
@@ -183,7 +184,7 @@ import email from '../userControls/email.vue';
 export default {
   name: 'signUpCom',
   components: {
-    successNotif,
+    notifMessage,
     passwords,
     mobilePhone,
     nationalId,

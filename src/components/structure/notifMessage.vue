@@ -6,11 +6,16 @@
     right
     app
     light
-    color="success"
+    :color="type === 'success' ? 'success' : 'error'"
     elevation="24"
     @input="hideNotif"
   >
-    <v-icon color="white"> mdi-check-circle-outline </v-icon>
+    <v-icon v-if="type === 'success'" color="white">
+      mdi-check-circle-outline
+    </v-icon>
+    <v-icon v-if="type === 'error'" color="white">
+      fas fa-exclamation-triangle
+    </v-icon>
     <span class="white--text">
       {{ $t(msg) }}
     </span>
@@ -19,9 +24,12 @@
 
 <script>
 export default {
-  name: 'successNotif',
+  name: 'notifMessage',
   props: {
     msg: {
+      type: String,
+    },
+    type: {
       type: String,
     },
   },

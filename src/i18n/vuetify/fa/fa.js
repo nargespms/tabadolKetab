@@ -228,5 +228,6 @@ export default {
   invoiceNumber:'شماره فاکتور',
   registeredUser:'کاربر ثبت',
   totalPrice:'مبلغ کل',
+  someThingWentWrong:'متاسفانه مشکلی پیش آمده',
 
 };

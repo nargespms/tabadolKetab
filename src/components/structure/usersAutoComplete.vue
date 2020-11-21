@@ -17,6 +17,7 @@
       @change="sendValue"
       :hint="hint"
       :persistent-hint="persistentHint"
+      :height="height"
     >
       <template v-slot:selection="data">
         <v-chip
@@ -73,6 +74,10 @@ export default {
     persistentHint: {
       type: Boolean,
       default: false,
+    },
+    height: {
+      type: Number,
+      default: undefined,
     },
   },
   data() {

@@ -84,24 +84,25 @@
         @savedSuccessfully="editBookSuccess"
       />
     </v-dialog>
-    <successNotif
+    <notifMessage
       v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </div>
 </template>
 
 <script>
 import promptDialog from '../structure/promptDialog.vue';
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import addBookCategory from './addBookCategory.vue';
 
 export default {
   name: 'bookCategoryTable',
   components: {
     promptDialog,
-    successNotif,
+    notifMessage,
     addBookCategory,
   },
   props: {

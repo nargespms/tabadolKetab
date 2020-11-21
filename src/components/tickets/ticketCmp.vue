@@ -44,10 +44,11 @@
       </template>
       <ticketReply :key="componentKey" @replyTicket="replyTicket" />
     </v-col>
-    <successNotif
+    <notifMessage
       v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </v-row>
 </template>
@@ -55,14 +56,14 @@
 <script>
 import threadEncapsule from './threadEncapsule.vue';
 import ticketReply from './ticketReply.vue';
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 
 export default {
   name: 'ticketCmp',
   components: {
     threadEncapsule,
     ticketReply,
-    successNotif,
+    notifMessage,
   },
   data() {
     return {

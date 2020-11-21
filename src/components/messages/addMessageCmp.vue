@@ -123,23 +123,24 @@
         </v-form>
       </v-card>
     </v-col>
-    <successNotif
+    <notifMessage
       v-if="saveSuccess"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </v-row>
 </template>
 
 <script>
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import dataPickerCmp from '../structure/datePickerCmp.vue';
 import usersAutoComplete from '../structure/usersAutoComplete.vue';
 
 export default {
   name: 'addMessageCmp',
   components: {
-    successNotif,
+    notifMessage,
     dataPickerCmp,
     usersAutoComplete,
   },

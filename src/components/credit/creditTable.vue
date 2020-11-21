@@ -76,22 +76,23 @@
       <showCredit :item="previewItem" />
     </v-dialog>
 
-    <successNotif
+    <notifMessage
       v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </div>
 </template>
 
 <script>
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import showCredit from './showCredit.vue';
 
 export default {
   name: 'ticketsTable',
   components: {
-    successNotif,
+    notifMessage,
     showCredit,
   },
   props: {

@@ -98,23 +98,24 @@
         @reject="closeDelete"
       />
     </v-dialog>
-    <successNotif
+    <notifMessage
       v-if="deleteSuccess"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </div>
 </template>
 
 <script>
 import promptDialog from '../structure/promptDialog.vue';
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 
 export default {
   name: 'staffTable',
   components: {
     promptDialog,
-    successNotif,
+    notifMessage,
   },
   props: {
     headers: {

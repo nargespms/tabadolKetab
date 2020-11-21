@@ -124,24 +124,25 @@
         @reject="closeDelete"
       />
     </v-dialog>
-    <successNotif
+    <notifMessage
       v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </div>
 </template>
 
 <script>
 import showBook from './showBook.vue';
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import promptDialog from '../structure/promptDialog.vue';
 
 export default {
   name: 'booksTable',
   components: {
     showBook,
-    successNotif,
+    notifMessage,
     promptDialog,
   },
   props: {

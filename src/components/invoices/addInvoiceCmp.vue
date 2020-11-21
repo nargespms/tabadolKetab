@@ -5,66 +5,52 @@
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
             <span>
-              {{ $t('addForbiddenBook') }}
+              {{ $t('addInvoice') }}
             </span>
           </v-card-title>
           <v-spacer></v-spacer>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon color="white" @click="forbiddenBookList">
-                  fa fa-table</v-icon
-                >
+                <v-icon color="white" @click="invoiceList"> fa fa-table</v-icon>
               </v-btn>
             </template>
             <span>
-              {{ $t('forbiddenBookList') }}
+              {{ $t('invoicesList') }}
             </span>
           </v-tooltip>
         </v-card-actions>
-        <v-form class="pt-6 pa-6" ref="form" v-model="valid" lazy-validation>
+        <v-form class="pt-6" ref="form" v-model="valid" lazy-validation>
           <v-row>
-            <v-col cols="12" md="12" class="pa-0 ">
+            <v-col cols="12" md="6">
               <v-text-field
-                v-model="forbiddenBook.title"
+                v-model="barcode"
                 :rules="requireRule"
-                :label="$t('title')"
+                :label="$t('barcode')"
                 required
                 outlined
+                v-mask="'#########'"
                 error-count="1"
-              ></v-text-field>
+                @keydown.enter="addItem"
+              ></v-text-field
+            ></v-col>
+            <v-col cols="12" md="6">
+              <usersAutocomplete
+                ref="userAutocomplete"
+                :validate="true"
+                :height="32"
+              />
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="12" md="6" class="pa-0 ">
-              <v-text-field
-                v-model="forbiddenBook.writer"
-                :label="$t('writer')"
-                outlined
-                error-count="1"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-              <v-text-field
-                v-model="forbiddenBook.shabak"
-                :label="$t('shabak')"
-                outlined
-                error-count="1"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+
           <div class="justify-center d-flex">
             <v-btn
               :disabled="!valid"
               color="success"
               class="mr-4"
-              @click="validate"
+              @click="addItem"
             >
-              {{ $t('save') }}
-            </v-btn>
-
-            <v-btn color="error" class="mr-4" @click="reset"
-              >{{ $t('resetForm') }}
+              {{ $t('addBook') }}
             </v-btn>
           </div>
         </v-form>
@@ -76,37 +62,54 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="errorMsg"
+      :msg="'someThingWentWrong'"
+      @hideNotif="hideNotif"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
 <script>
+import usersAutocomplete from '../structure/usersAutoComplete.vue';
 import notifMessage from '../structure/notifMessage.vue';
 
 export default {
-  name: 'addForbiddenBookCmp',
+  name: 'addInvoiceCmp',
   components: {
+    usersAutocomplete,
     notifMessage,
   },
   data() {
     return {
       valid: true,
       saveSuccess: false,
+      errorMsg: false,
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-      forbiddenBook: {},
+      barcode: '',
     };
   },
   methods: {
-    forbiddenBookList() {
+    invoiceList() {
       this.$router.push({
-        name: 'forbiddenBookList',
+        name: 'invoicesList',
       });
+      // validate form
     },
-    validate() {
+    addItem() {
       this.$refs.form.validate();
-
+      console.log(this.barcode);
+      // the barcode should check via back and if it was successfull
+      // it should add item to invoice item
+      if (this.barcode.length === 9) {
+        this.reset();
+        this.saveSuccess = true;
+      } else {
+        this.errorMsg = true;
+      }
       if (this.$refs.form.validate()) {
         this.saveSuccess = true;
-        this.reset();
       } else {
         this.valid = false;
       }

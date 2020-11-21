@@ -130,23 +130,24 @@
       />
     </v-dialog>
 
-    <successNotif
+    <notifMessage
       v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </div>
 </template>
 
 <script>
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import promptDialog from '../structure/promptDialog.vue';
 import showDiscount from './showDiscount.vue';
 
 export default {
   name: 'discountsTable',
   components: {
-    successNotif,
+    notifMessage,
     promptDialog,
     showDiscount,
   },

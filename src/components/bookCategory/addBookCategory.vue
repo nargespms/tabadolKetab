@@ -52,21 +52,22 @@
         </v-form>
       </v-card>
     </v-col>
-    <successNotif
+    <notifMessage
       v-if="saveSuccess"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
     />
   </v-row>
 </template>
 
 <script>
-import successNotif from '../structure/successNotif.vue';
+import notifMessage from '../structure/notifMessage.vue';
 
 export default {
   name: 'addBookCategory',
   components: {
-    successNotif,
+    notifMessage,
   },
   props: {
     mode: {
