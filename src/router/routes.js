@@ -231,6 +231,11 @@ const routes = [
         name: 'invoicesList',
         component: () => import('../views/invoices/invoicesList.vue'),
       },
+      {
+        path: '/invoicesList/:invoiceId',
+        name: 'invoicesList',
+        component: () => import('../views/invoices/invoice.vue'),
+      },
 
    ],
   },

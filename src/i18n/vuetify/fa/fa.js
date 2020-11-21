@@ -235,4 +235,5 @@ export default {
   priceWithDiscount:'قیمت با تخفیف',
   invoiceItems:'آیتم های فاکتور',
   register:'ثبت',
+  invoicePreview:'مشاهده فاکتور',
 };

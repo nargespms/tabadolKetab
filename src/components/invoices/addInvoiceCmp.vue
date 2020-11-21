@@ -120,7 +120,6 @@ export default {
       this.$router.push({
         name: 'invoicesList',
       });
-      // validate form
     },
     addItem() {
       this.$refs.form.validate();
