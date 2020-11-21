@@ -20,6 +20,38 @@
             </span>
           </v-tooltip>
         </v-card-actions>
+        <v-row>
+          <v-col cols="12" md="8" class="px-5 py-3">
+            <div>
+              <p>
+                <span class="font-weight-black"> {{ $t('fullname') }} : </span>
+                <span>
+                  {{ invoice.clientName }}
+                </span>
+              </p>
+              <p>
+                <span class="font-weight-black"> {{ $t('address') }} : </span>
+                <span>
+                  {{ invoice.address }}
+                </span>
+              </p>
+            </div>
+          </v-col>
+          <v-col cols="12" md="4">
+            <p>
+              <span class="font-weight-black"> {{ $t('phone') }} : </span>
+              <span>
+                {{ invoice.phone }}
+              </span>
+            </p>
+            <p>
+              <span class="font-weight-black"> {{ $t('postalCode') }} : </span>
+              <span>
+                {{ invoice.postalCode }}
+              </span>
+            </p>
+          </v-col>
+        </v-row>
         <v-row class="pa-2">
           <invoiceItems
             v-if="!isLoading"
@@ -27,6 +59,65 @@
             :deletable="false"
           />
         </v-row>
+        <v-row class="pa-5">
+          <v-col cols="12" md="6" class="pa-0">
+            <table class="generalTable ">
+              <tr>
+                <th class="text-right">{{ $t('booksPrice') }}</th>
+                <td>{{ invoice.booksPrice }}</td>
+              </tr>
+              <tr>
+                <th class="text-right">{{ $t('cashier') }}</th>
+                <td>{{ invoice.cashier }}</td>
+              </tr>
+              <tr>
+                <th class="text-right">{{ $t('remainedCredit') }}</th>
+                <td>{{ invoice.remainedCredit }}</td>
+              </tr>
+            </table>
+          </v-col>
+
+          <v-col cols="12" md="6" class="pa-0"
+            ><table class="generalTable ">
+              <tr>
+                <th class="text-right">
+                  {{ $t('booksPriceWithoutDiscount') }}
+                </th>
+                <td>
+                  {{ invoice.booksPriceWithoutDiscount }}
+                </td>
+              </tr>
+              <tr>
+                <th class="text-right">{{ $t('clientName') }}</th>
+                <td>{{ invoice.clientName }}</td>
+              </tr>
+              <tr>
+                <th class="text-right">{{ $t('issueDate') }}</th>
+                <td>
+                  {{ new Date(invoice.issueDate).toLocaleDateString('fa') }}
+                </td>
+              </tr>
+            </table>
+          </v-col>
+        </v-row>
+        <v-row class="pa-5">
+          <div class="postGuide">
+            <span class="blue--text text--accent-3">
+              <v-icon color="primary">fas fa-motorcycle</v-icon>
+              هزینه پیک به صورت نقدی دریافت میشود و مبلغ آن
+              <span>
+                20000 تومان
+              </span>
+              میباشد.
+            </span>
+          </div>
+        </v-row>
+        <div class="justify-center d-flex mb-4">
+          <v-btn color="primary" class="mr-4 px-16" @click="printInvoice">
+            <v-icon> mdi-printer</v-icon>
+            {{ $t('print') }}
+          </v-btn>
+        </div>
       </v-card>
     </v-col>
   </v-row>
@@ -44,6 +135,17 @@ export default {
     return {
       isLoading: true,
       invoiceItems: [],
+      invoice: {
+        issueDate: '2020-11-24T20:30:00.000Z',
+        clientName: 'علی مشتری',
+        cashier: 'علی تبادلیان',
+        phone: '۰۹۱۲۶۷۸۹۳۴۵',
+        postalCode: '1234567895236',
+        booksPriceWithoutDiscount: '125000 ریال',
+        remainedCredit: '20000 ریال',
+        booksPrice: '20000 ریال',
+        address: 'شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷',
+      },
     };
   },
   methods: {
@@ -51,6 +153,12 @@ export default {
       this.$router.push({
         name: 'invoicesList',
       });
+    },
+    printInvoice() {
+      const routeData = this.$router.resolve({
+        name: 'printInvoice',
+      });
+      window.open(routeData.href, '_blank');
     },
   },
   mounted() {
@@ -78,3 +186,22 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.generalTable {
+  border: thin solid rgba(0, 0, 0, 0.12);
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+  th,
+  td {
+    border: thin solid rgba(0, 0, 0, 0.12);
+    font-weight: normal;
+    padding: 8px;
+  }
+}
+.postGuide {
+  border: 1px solid #2979ff;
+  padding: 4px 12px;
+  border-radius: 3px;
+}
+</style>

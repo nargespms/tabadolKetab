@@ -69,6 +69,11 @@ const routes = [
         name:'printInvoices',
         component:()=> import('../views/print.vue'),
       },
+      {
+        path:'invoices/:invoiceId',
+        name:'printInvoice',
+        component:()=> import('../views/printForm.vue'),
+      },
     ],
   },
 

@@ -236,4 +236,10 @@ export default {
   invoiceItems:'آیتم های فاکتور',
   register:'ثبت',
   invoicePreview:'مشاهده فاکتور',
+  booksPrice:'قیمت کتاب ها',
+  cashier:'صندوقدار',
+  remainedCredit:'اعتبار باقی مانده',
+  booksPriceWithoutDiscount:'قیمت کتاب ها بدون تخفیف',
+  clientName:'نام مشتری',
+  issueDate:'تاریخ صدور',
 };
