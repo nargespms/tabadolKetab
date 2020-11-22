@@ -32,6 +32,7 @@
                 v-mask="'#########'"
                 error-count="1"
                 @keydown.enter="addItem"
+                autofocus
               ></v-text-field
             ></v-col>
             <v-col cols="12" md="6">

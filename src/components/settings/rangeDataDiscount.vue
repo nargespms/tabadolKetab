@@ -33,7 +33,7 @@
         {{ $t('discountPercent') }}
       </span>
       <v-text-field
-        v-model="rangeDate.percent"
+        v-model.lazy="rangeDate.percent"
         :rules="requireRule"
         required
         outlined
