@@ -41,8 +41,7 @@
         :hint="this.rangeDate.percent ? `${rangeDate.percent}${$t('%')}` : ''"
         :persistentHint="rangeDate.percent ? true : false"
         error-count="1"
-        @input="sendValue"
-        debounce="2000"
+        @blur="sendValue"
       >
       </v-text-field>
     </div>
