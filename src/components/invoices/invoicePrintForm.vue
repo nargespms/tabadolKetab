@@ -1,18 +1,18 @@
 <template>
   <div class="invoicePrint">
     <v-row class="pa-2">
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="4" class="align-self-center">
         <span class="font-weight-black">
           {{ invoice.number }}
         </span>
       </v-col>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="4" class="align-self-center">
         <span class="font-weight-black">
           {{ $t('changing') }} {{ $t('book') }}
         </span>
       </v-col>
       <v-col cols="12" md="4">
-        <img :src="'../../assets/images/tabadollogo1.jpg'" />
+        <img src="../../assets/tabadollogo1.png" />
       </v-col>
     </v-row>
     <v-row class="pa-2">
