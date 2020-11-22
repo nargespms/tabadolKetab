@@ -324,6 +324,18 @@ export default {
             },
           ],
         },
+        {
+          action: 'fas fa-cogs',
+          title: 'settings',
+          active: false,
+          items: [
+            {
+              title: 'generalSettings',
+              link: '/generalSettings',
+              icon: 'fas fa-cog',
+            },
+          ],
+        },
       ],
     };
   },

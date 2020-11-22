@@ -241,6 +241,11 @@ const routes = [
         name: 'invoicesList',
         component: () => import('../views/invoices/invoice.vue'),
       },
+      {
+        path: '/generalSettings',
+        name: 'generalSettings',
+        component: () => import('../views/general/settings.vue'),
+      },
 
    ],
   },

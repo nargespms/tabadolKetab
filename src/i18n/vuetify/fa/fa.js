@@ -242,4 +242,18 @@ export default {
   booksPriceWithoutDiscount:'قیمت کتاب ها بدون تخفیف',
   clientName:'نام مشتری',
   issueDate:'تاریخ صدور',
+  // settings
+  settings:'تنظیمات',
+  generalSettings:'تنظیمات عمومی',
+  numberOfFreePostOfBook:'تعداد کتاب های رایگان برای پیک',
+  postPrice:'قیمت پیک',
+  creditExpireTimeFromSellBook:'زمان انقضا اعتبار از فروش کتاب (روز)',
+  day:'روز',
+  tabadolWageForSell:'کارمزد تبادل برای فروش(درصدی)',
+  discountForRangeDate:'تخفیف بازه زمانی کتاب برای فروش',
+  add:'افزودن',
+  discountPercent:'درصد تخفیف',
+  from:'از',
+  to:'تا',
+  rangeDate:'بازه زمانی',
 };
