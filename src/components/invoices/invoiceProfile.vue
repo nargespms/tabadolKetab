@@ -140,7 +140,7 @@ export default {
         clientName: 'علی مشتری',
         cashier: 'علی تبادلیان',
         phone: '۰۹۱۲۶۷۸۹۳۴۵',
-        postalCode: '1234567895236',
+        postalCode: '۱۴۷۵۲۳۶۸۶۳۴',
         booksPriceWithoutDiscount: '125000 ریال',
         remainedCredit: '20000 ریال',
         booksPrice: '20000 ریال',
