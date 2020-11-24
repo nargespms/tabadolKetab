@@ -1,7 +1,7 @@
 <template>
   <div>
     <bookSearchForm />
-    <bookFilterSearch />
+    <bookFilterSearch class="mt-6" />
     <booksSearchResults />
   </div>
 </template>

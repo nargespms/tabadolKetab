@@ -2,9 +2,9 @@
   <v-row no-gutters class="justify-center">
     <v-col cols="12" md="11">
       <v-card class="pa-4">
-        <v-card-actions class="teal">
+        <v-card-actions class="teal pointer" @click="show = !show">
           <v-card-title class="white--text pa-0">
-            <span @click="show = !show" class="pointer">
+            <span class="pointer">
               {{ $t('bookSearch') }}
             </span>
           </v-card-title>

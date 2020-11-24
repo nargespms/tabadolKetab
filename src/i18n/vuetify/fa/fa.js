@@ -259,4 +259,10 @@ export default {
   // booksearch
   bookSearch:'جستجو کتاب',
   search:'جستجو',
+  filter:'فیلتر',
+  filterOn:'اعمال فیلتر',
+  existedBooks:'کتابهای موجود',
+  discountedBooks:'کتابهای تخفیف دار',
+  numberAreInToman:'اعداد قیمت به تومان میباشند',
+  priceRange:'بازه قیمت ',
 };
