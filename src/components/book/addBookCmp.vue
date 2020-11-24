@@ -168,8 +168,16 @@
                   class="pr-6"
                   :rules="requireRule"
                 >
-                  <v-radio :label="$t('yes')" :value="true"></v-radio>
-                  <v-radio :label="$t('no')" :value="false"></v-radio>
+                  <v-radio
+                    :label="$t('yes')"
+                    :value="true"
+                    color="green"
+                  ></v-radio>
+                  <v-radio
+                    :label="$t('no')"
+                    :value="false"
+                    color="red"
+                  ></v-radio>
                 </v-radio-group></div
             ></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">

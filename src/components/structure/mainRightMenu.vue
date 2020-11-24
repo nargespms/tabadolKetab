@@ -116,6 +116,11 @@ export default {
           action: 'mdi-view-dashboard',
           link: '/dashboard',
         },
+        {
+          title: 'bookSearch',
+          action: 'mdi-magnify',
+          link: '/bookSearch',
+        },
       ],
       groupItems: [
         {

@@ -256,4 +256,7 @@ export default {
   from:'از',
   to:'تا',
   rangeDate:'بازه زمانی',
+  // booksearch
+  bookSearch:'جستجو کتاب',
+  search:'جستجو',
 };

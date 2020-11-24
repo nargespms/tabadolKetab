@@ -246,6 +246,11 @@ const routes = [
         name: 'generalSettings',
         component: () => import('../views/general/settings.vue'),
       },
+      {
+        path: '/bookSearch',
+        name: 'bookSearch',
+        component: () => import('../views/general/bookSearch.vue'),
+      },
 
    ],
   },
