@@ -7,6 +7,23 @@
       :data="searchResult"
       class="mt-6"
     />
+    <v-row no-gutters class="justify-center mt-6">
+      <v-col cols="12" md="11">
+        <v-card v-if="searchResult.length === 0">
+          <div class="justify-center d-flex pa-5 flex-column  align-center">
+            <p class="font-weight-black grey--text text--darken-2">
+              <v-icon>
+                mdi-database-search
+              </v-icon>
+              {{ $t('noResultsText') }}
+            </p>
+            <v-btn color="success" class="mr-4 px-8" @click="reqBook">
+              {{ $t('addRequestedBooks') }}
+            </v-btn>
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -28,6 +45,11 @@ export default {
     };
   },
   methods: {
+    reqBook() {
+      this.$router.push({
+        name: 'addRequestedBooks',
+      });
+    },
     searchBook() {
       this.searchResult = [
         {
