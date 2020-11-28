@@ -19,6 +19,9 @@
 
           <span class="white--text">{{ $t('book') }} &nbsp; </span>
         </div>
+        <!-- <div v-if="$route.name !== 'login' || $route.name !== 'signup'">
+
+        </div> -->
         <div
           class=" pl-6 enterPannel"
           @click="enterPannel"
@@ -29,11 +32,19 @@
             {{ $t('enter') }}
           </span>
         </div>
-        <div class=" pl-6 enterPannel" @click="exitPannel" v-else>
-          <v-icon color="white">mdi-exit-to-app</v-icon>
-          <span class="white--text">
-            {{ $t('exit') }}
-          </span>
+        <div class="pl-6 enterPannel d-flex" v-else>
+          <div class="pl-3 shoppingBasket" @click="shoppingBag">
+            <v-icon color="white">fas fa-shopping-basket</v-icon>
+            <span class="white--text">
+              {{ $t('shoppingBasket') }}
+            </span>
+          </div>
+          <div @click="exitPannel" class="pr-4">
+            <v-icon color="white">mdi-exit-to-app</v-icon>
+            <span class="white--text">
+              {{ $t('exit') }}
+            </span>
+          </div>
         </div>
       </v-app-bar>
     </div>
@@ -61,6 +72,11 @@ export default {
     };
   },
   methods: {
+    shoppingBag() {
+      this.$router.push({
+        name: 'shoppingBag',
+      });
+    },
     changeDrawer() {
       this.drawer = !this.drawer;
       this.$emit('changeDraw', this.drawer);
@@ -90,5 +106,8 @@ export default {
   .v-toolbar__content {
     justify-content: space-between;
   }
+}
+.shoppingBasket {
+  border-left: 1px solid #888;
 }
 </style>

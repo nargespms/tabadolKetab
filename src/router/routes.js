@@ -251,6 +251,11 @@ const routes = [
         name: 'bookSearch',
         component: () => import('../views/general/bookSearch.vue'),
       },
+      {
+        path: '/shoppingBag',
+        name: 'shoppingBag',
+        component: () => import('../views/general/shoppingBag.vue'),
+      },
 
    ],
   },

@@ -269,4 +269,15 @@ export default {
   priceRange:'بازه قیمت ',
   searchResult:'نتایج جستجو',
   buy:'خرید',
+  // shpping basket
+  shoppingBasket:'سبد خرید',
+  sendWay:'نحوه ارسال',
+  recieveInPerson:'دریافت حضوری',
+  tipox:'تیپاکس',
+  tabadolPost:'پست تبادل',
+  payMethod:'نحوه پرداخت',
+  creditPay:'پرداخت از اعتبار',
+  onlinePay:'پرداخت آنلاین',
+  presentPay:'پرداخت در محل ',
+  pay:'پرداخت',
 };

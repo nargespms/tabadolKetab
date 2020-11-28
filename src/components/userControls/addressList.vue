@@ -63,6 +63,7 @@
 <script>
 export default {
   name: 'addressList',
+
   data() {
     return {
       selectedAddress: {},

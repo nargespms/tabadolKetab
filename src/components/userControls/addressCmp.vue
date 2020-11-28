@@ -1,24 +1,32 @@
 <template>
   <v-card>
-    <v-toolbar color="teal " flat height="48">
+    <v-toolbar
+      color="teal "
+      flat
+      height="48"
+      class="pointer"
+      @click="show = !show"
+    >
       <span class="pr-4 font-weight-medium white--text">
         {{ $t('selectAddress') }}
       </span>
     </v-toolbar>
-    <addressInput
-      v-if="mode === 'add' || mode === 'edit'"
-      :mode="mode"
-      :data="edittingItem"
-      @saveAddress="saveAddress"
-      @returnToList="returnToList"
-    />
-
-    <addressList
-      v-if="mode === 'list'"
-      @editAddress="editAddress"
-      @addNewAddress="addNewAddress"
-      @hideAddressList="hideAddressList"
-    />
+    <v-expand-transition>
+      <addressInput
+        v-if="mode === 'add' || mode === 'edit'"
+        :mode="mode"
+        :data="edittingItem"
+        @saveAddress="saveAddress"
+        @returnToList="returnToList"
+      />
+      <addressList
+        v-show="expand ? show : true"
+        v-if="mode === 'list'"
+        @editAddress="editAddress"
+        @addNewAddress="addNewAddress"
+        @hideAddressList="hideAddressList"
+      />
+    </v-expand-transition>
   </v-card>
 </template>
 
@@ -32,6 +40,9 @@ export default {
     state: {
       type: String,
     },
+    expand: {
+      type: Boolean,
+    },
   },
   components: {
     addressList,
@@ -39,6 +50,7 @@ export default {
   },
   data() {
     return {
+      show: false,
       mode: this.state,
       edittingItem: {},
     };
