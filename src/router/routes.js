@@ -256,6 +256,11 @@ const routes = [
         name: 'shoppingBag',
         component: () => import('../views/general/shoppingBag.vue'),
       },
+      {
+        path: '/tags',
+        name: 'tags',
+        component: () => import('../views/tags/tags.vue'),
+      },
 
    ],
   },

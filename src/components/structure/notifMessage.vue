@@ -6,7 +6,7 @@
     right
     app
     light
-    :color="type === 'success' ? 'success' : 'error'"
+    :color="type === 'success' ? 'success' : 'red darken-2'"
     elevation="24"
     @input="hideNotif"
   >

@@ -280,4 +280,12 @@ export default {
   onlinePay:'پرداخت آنلاین',
   presentPay:'پرداخت در محل ',
   pay:'پرداخت',
+  // tags
+  addANDlistTAGS:'ایجاد و لیست برچسب ها',
+  addTag:'افزودن تگ',
+  pleaseFillTheInput:'لطفا قسمت مورد نظر را پر کنید',
+  activeTags:'برچسب های فعال',
+  inactiveTags:'برچسب های غیرفعال',
+  deActiveTags:'غیرفعال کردن برچسب',
+  RUSureUWantToDeactiveThisTag:'آیا میخواهید این تگ را غیر فعال کنید؟',
 };

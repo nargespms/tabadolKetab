@@ -341,6 +341,18 @@ export default {
             },
           ],
         },
+        {
+          action: 'fas fa-tags',
+          title: 'tags',
+          active: false,
+          items: [
+            {
+              title: 'addANDlistTAGS',
+              link: '/tags',
+              icon: 'fas fa-tag',
+            },
+          ],
+        },
       ],
     };
   },
