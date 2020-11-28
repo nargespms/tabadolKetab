@@ -145,6 +145,8 @@ export default {
   credits: 'اعتبارات',
   increaseCredit: 'افزایش اعتبار',
   costInToman: 'مبلغ به تومان : ',
+  toman:'تومان',
+  rial:'ریال',
   creditList: 'لیست اعتبارات',
   transactionDate: 'تاریخ تراکنش',
   trackingCode: 'کد رهگیری',
@@ -265,4 +267,6 @@ export default {
   discountedBooks:'کتابهای تخفیف دار',
   numberAreInToman:'اعداد قیمت به تومان میباشند',
   priceRange:'بازه قیمت ',
+  searchResult:'نتایج جستجو',
+  buy:'خرید',
 };

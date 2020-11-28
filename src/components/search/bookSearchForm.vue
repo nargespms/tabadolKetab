@@ -149,6 +149,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.reset();
         this.show = false;
+        this.$emit('searchBook');
       } else {
         this.valid = false;
       }

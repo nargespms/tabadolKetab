@@ -94,6 +94,7 @@ export default {
     filterBook() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
+        this.$emit('filterSearch');
         this.show = false;
       } else {
         this.valid = false;
