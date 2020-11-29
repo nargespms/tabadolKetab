@@ -50,12 +50,10 @@ export default {
   },
   methods: {
     checkTel() {
-      console.log('biroon');
       if (this.$refs.phoneInput.validate()) {
         const number = phoneUtil.parseAndKeepRawInput(this.mobilePhone, 'IR');
         const completeNum = phoneUtil.format(number, PNF.E164);
         this.valid = phoneUtil.isValidNumber(phoneUtil.parse(completeNum));
-        console.log(this.valid);
         this.$emit('setMobilePhone', this.mobilePhone);
       }
     },
