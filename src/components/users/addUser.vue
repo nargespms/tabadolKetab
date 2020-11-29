@@ -39,12 +39,19 @@
                 <nationalId @setNationalId="setNationalId" />
               </v-col>
               <v-col cols="12" md="6">
-                <mobilePhone @setMobilePhone="setMobilePhone" />
+                <mobilePhone
+                  @setMobilePhone="setMobilePhone"
+                  :validate="true"
+                />
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
-                <mobilePhone :phone="true" @setMobilePhone="setPhone" />
+                <mobilePhone
+                  :phone="true"
+                  @setMobilePhone="setPhone"
+                  :validate="true"
+                />
               </v-col>
               <v-col cols="12" md="6">
                 <v-select

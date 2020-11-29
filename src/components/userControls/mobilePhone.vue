@@ -3,11 +3,13 @@
     <v-text-field
       v-model="mobilePhone"
       :label="!phone ? $t('mobilephone') : $t('phone')"
-      :rules="mobilePhoneRules"
+      :rules="
+        validate ? mobilePhoneRules : mobilePhone.length > 0 ? phoneRules : []
+      "
       v-mask="'###########'"
       @update:error="checkTel"
       debounce="1500"
-      required
+      :required="validate"
       outlined
       error-count="2"
       ref="phoneInput"
@@ -29,11 +31,17 @@ export default {
     phone: {
       type: Boolean,
     },
+    validate: {
+      type: Boolean,
+    },
   },
   data() {
     return {
       mobilePhoneRules: [
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
+        v => (v && v.length >= 11) || `${this.$t('minCharaters11')}`,
+      ],
+      phoneRules: [
         v => (v && v.length >= 11) || `${this.$t('minCharaters11')}`,
       ],
       mobilePhone: '',

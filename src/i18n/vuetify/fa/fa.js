@@ -298,6 +298,6 @@ export default {
   addAuthor:'افزودن مولف',
   // publishers
   publishers:'ناشران',
-  addPublisher:'افزودن ناشران',
+  addPublisher:'افزودن ناشر',
   publishersList:'لیست ناشران',
 };
