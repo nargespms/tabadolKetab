@@ -101,7 +101,6 @@ export default {
         title: '',
         active: true,
       },
-
       saveSuccess: false,
     };
   },
