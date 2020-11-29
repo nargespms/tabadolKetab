@@ -20,6 +20,15 @@
             </span>
           </v-tooltip>
         </v-card-actions>
+        <div v-if="mode === 'edit'" class="alertMessage mt-3">
+          <p class="font-weight-black">
+            <v-icon color="red"> fas fa-exclamation-triangle </v-icon>
+            <span>
+              توجه داشته باشید با ویرایش مولف اطلاعاتی که به این مولف اختصاص
+              داشته ، تغییر میکند
+            </span>
+          </p>
+        </div>
         <v-form class="pt-6 pa-6" ref="form" v-model="valid" lazy-validation>
           <v-row>
             <v-col cols="12" md="12" class="pa-0 ">
@@ -34,8 +43,6 @@
               <v-checkbox
                 v-model="author.active"
                 :label="$t('activeinactive')"
-                required
-                :rules="requireRule"
               ></v-checkbox>
             </v-col>
           </v-row>
@@ -73,11 +80,29 @@ export default {
   components: {
     notifMessage,
   },
+  props: {
+    mode: {
+      type: String,
+    },
+    title: {
+      type: String,
+      default: '',
+    },
+    active: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       valid: true,
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-      author: {},
+      author: {
+        title: '',
+        active: true,
+      },
+
+      saveSuccess: false,
     };
   },
   methods: {
@@ -88,7 +113,11 @@ export default {
       this.$refs.form.validate();
 
       if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
+        if (this.mode === 'edit') {
+          this.$emit('editAuthor', this.author);
+        } else {
+          this.saveSuccess = true;
+        }
         this.reset();
       } else {
         this.valid = false;
@@ -102,5 +131,27 @@ export default {
       this.saveSuccess = false;
     },
   },
+  mounted() {
+    if (this.mode === 'edit') {
+      this.author.active = this.active;
+      this.author.title = this.title;
+    }
+  },
+  watch: {
+    active(newVal) {
+      this.author.active = newVal;
+    },
+    title(newVal) {
+      this.author.title = newVal;
+    },
+  },
 };
 </script>
+<style lang="scss">
+.alertMessage {
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #ffdede;
+  border: 1px solid red;
+}
+</style>
