@@ -288,4 +288,8 @@ export default {
   inactiveTags:'برچسب های غیرفعال',
   deActiveTags:'غیرفعال کردن برچسب',
   RUSureUWantToDeactiveThisTag:'آیا میخواهید این تگ را غیر فعال کنید؟',
+  restore:'بازیابی',
+  deactivate:'غیرفعال کردن',
+  ActivateTags:'بازیابی تگ',
+  RUSureUWantToactiveThisTag:'آیا میخواهید این تگ رو بازیابی کنید؟',
 };

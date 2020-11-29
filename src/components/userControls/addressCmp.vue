@@ -11,22 +11,21 @@
         {{ $t('selectAddress') }}
       </span>
     </v-toolbar>
-    <v-expand-transition>
-      <addressInput
-        v-if="mode === 'add' || mode === 'edit'"
-        :mode="mode"
-        :data="edittingItem"
-        @saveAddress="saveAddress"
-        @returnToList="returnToList"
-      />
-      <addressList
-        v-show="expand ? show : true"
-        v-if="mode === 'list'"
-        @editAddress="editAddress"
-        @addNewAddress="addNewAddress"
-        @hideAddressList="hideAddressList"
-      />
-    </v-expand-transition>
+
+    <addressInput
+      v-if="mode === 'add' || mode === 'edit'"
+      :mode="mode"
+      :data="edittingItem"
+      @saveAddress="saveAddress"
+      @returnToList="returnToList"
+    />
+    <addressList
+      v-show="expand ? show : true"
+      v-if="mode === 'list'"
+      @editAddress="editAddress"
+      @addNewAddress="addNewAddress"
+      @hideAddressList="hideAddressList"
+    />
   </v-card>
 </template>
 
