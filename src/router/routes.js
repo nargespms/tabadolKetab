@@ -261,6 +261,26 @@ const routes = [
         name: 'tags',
         component: () => import('../views/tags/tags.vue'),
       },
+      {
+        path: '/addAuthor',
+        name: 'addAuthor',
+        component: () => import('../views/author/addAuthor.vue'),
+      },
+      {
+        path: '/authorsList',
+        name: 'authorsList',
+        component: () => import('../views/author/authorList.vue'),
+      },
+      {
+        path: '/addPublisher',
+        name: 'addPublisher',
+        component: () => import('../views/publisher/addPublisher.vue'),
+      },
+      {
+        path: '/publishersList',
+        name: 'publishersList',
+        component: () => import('../views/publisher/publishersList.vue'),
+      },
 
    ],
   },

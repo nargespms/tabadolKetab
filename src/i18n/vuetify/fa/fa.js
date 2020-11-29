@@ -292,4 +292,12 @@ export default {
   deactivate:'غیرفعال کردن',
   ActivateTags:'بازیابی تگ',
   RUSureUWantToactiveThisTag:'آیا میخواهید این تگ رو بازیابی کنید؟',
+  // authors
+  authors:'مولفان',
+  authorsList:'لیست مولف ها ',
+  addAuthor:'افزودن مولف',
+  // publishers
+  publishers:'ناشران',
+  addPublisher:'افزودن ناشران',
+  publishersList:'لیست ناشران',
 };

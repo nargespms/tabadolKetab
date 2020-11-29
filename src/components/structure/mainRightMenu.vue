@@ -353,6 +353,40 @@ export default {
             },
           ],
         },
+        {
+          action: 'mdi-account-group',
+          title: 'authors',
+          active: false,
+          items: [
+            {
+              title: 'addAuthor',
+              link: '/addAuthor',
+              icon: 'mdi-account-edit',
+            },
+            {
+              title: 'authorsList',
+              link: '/authorsList',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
+        {
+          action: 'fas fa-building ',
+          title: 'publishers',
+          active: false,
+          items: [
+            {
+              title: 'addPublisher',
+              link: '/addPublisher',
+              icon: 'mdi-account-edit',
+            },
+            {
+              title: 'publishersList',
+              link: '/publishersList',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
       ],
     };
   },
