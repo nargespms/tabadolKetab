@@ -154,16 +154,16 @@ export default {
   },
   mounted() {
     if (this.mode === 'edit') {
-      this.author.active = this.active;
-      this.author.title = this.title;
+      this.publisher.active = this.active;
+      this.publisher.title = this.title;
     }
   },
   watch: {
     active(newVal) {
-      this.author.active = newVal;
+      this.publisher.active = newVal;
     },
     title(newVal) {
-      this.author.title = newVal;
+      this.publisher.title = newVal;
     },
   },
 };

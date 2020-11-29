@@ -96,6 +96,14 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <publishersTable
+      v-if="this.module === 'publishers'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
@@ -112,6 +120,7 @@ import postTable from '../post/postTable.vue';
 import forbiddenBookTable from '../forbiddenBook/forbiddenBookTable.vue';
 import invoicesTable from '../invoices/invoicesTable.vue';
 import authorTable from '../author/authorTable.vue';
+import publishersTable from '../publisher/publishersTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -128,6 +137,7 @@ export default {
     forbiddenBookTable,
     invoicesTable,
     authorTable,
+    publishersTable,
   },
   props: {
     headers: {
@@ -156,7 +166,11 @@ export default {
       console.log(page);
       console.log(itemsPerPage);
       console.log(sortBy);
-      if (this.module === 'bookCats' || this.module === 'authors') {
+      if (
+        this.module === 'bookCats' ||
+        this.module === 'authors' ||
+        this.module === 'publishers'
+      ) {
         this.endpoint = 'http://jsonplaceholder.typicode.com/todos';
       } else if (
         this.module === 'messages' ||
