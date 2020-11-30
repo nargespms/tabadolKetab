@@ -176,6 +176,40 @@ export default {
           ],
         },
         {
+          action: 'mdi-account-group',
+          title: 'authors',
+          active: false,
+          items: [
+            {
+              title: 'addAuthor',
+              link: '/addAuthor',
+              icon: 'mdi-account-edit',
+            },
+            {
+              title: 'authorsList',
+              link: '/authorsList',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
+        {
+          action: 'fas fa-building ',
+          title: 'publishers',
+          active: false,
+          items: [
+            {
+              title: 'addPublisher',
+              link: '/addPublisher',
+              icon: 'mdi-account-edit',
+            },
+            {
+              title: 'publishersList',
+              link: '/publishersList',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
+        {
           action: 'mdi-android-messages',
           title: 'messages',
           active: false,
@@ -250,18 +284,18 @@ export default {
           ],
         },
         {
-          action: 'mdi-credit-card-plus',
-          title: 'credits',
+          action: 'fas fa-ban',
+          title: 'forbiddenBook',
           active: false,
           items: [
             {
-              title: 'increaseCredit',
-              link: '/increaseCredit',
+              title: 'addForbiddenBook',
+              link: '/addForbiddenBook',
               icon: 'fas fa-plus',
             },
             {
-              title: 'creditList',
-              link: '/creditList',
+              title: 'forbiddenBookList',
+              link: '/forbiddenBookList',
               icon: 'fas fa-table',
             },
           ],
@@ -283,31 +317,20 @@ export default {
             },
           ],
         },
+
         {
-          action: 'fas fa-ban',
-          title: 'forbiddenBook',
+          action: 'mdi-credit-card-plus',
+          title: 'credits',
           active: false,
           items: [
             {
-              title: 'addForbiddenBook',
-              link: '/addForbiddenBook',
+              title: 'increaseCredit',
+              link: '/increaseCredit',
               icon: 'fas fa-plus',
             },
             {
-              title: 'forbiddenBookList',
-              link: '/forbiddenBookList',
-              icon: 'fas fa-table',
-            },
-          ],
-        },
-        {
-          action: 'mdi-history',
-          title: 'logs',
-          active: false,
-          items: [
-            {
-              title: 'logsList',
-              link: '/logsList',
+              title: 'creditList',
+              link: '/creditList',
               icon: 'fas fa-table',
             },
           ],
@@ -329,18 +352,7 @@ export default {
             },
           ],
         },
-        {
-          action: 'fas fa-cogs',
-          title: 'settings',
-          active: false,
-          items: [
-            {
-              title: 'generalSettings',
-              link: '/generalSettings',
-              icon: 'fas fa-cog',
-            },
-          ],
-        },
+
         {
           action: 'fas fa-tags',
           title: 'tags',
@@ -354,36 +366,26 @@ export default {
           ],
         },
         {
-          action: 'mdi-account-group',
-          title: 'authors',
+          action: 'mdi-history',
+          title: 'logs',
           active: false,
           items: [
             {
-              title: 'addAuthor',
-              link: '/addAuthor',
-              icon: 'mdi-account-edit',
-            },
-            {
-              title: 'authorsList',
-              link: '/authorsList',
+              title: 'logsList',
+              link: '/logsList',
               icon: 'fas fa-table',
             },
           ],
         },
         {
-          action: 'fas fa-building ',
-          title: 'publishers',
+          action: 'fas fa-cogs',
+          title: 'settings',
           active: false,
           items: [
             {
-              title: 'addPublisher',
-              link: '/addPublisher',
-              icon: 'mdi-account-edit',
-            },
-            {
-              title: 'publishersList',
-              link: '/publishersList',
-              icon: 'fas fa-table',
+              title: 'generalSettings',
+              link: '/generalSettings',
+              icon: 'fas fa-cog',
             },
           ],
         },
