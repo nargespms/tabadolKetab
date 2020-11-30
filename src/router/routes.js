@@ -1,93 +1,93 @@
 const routes = [
   {
-    path:'/print',
-    name:'printLayout',
-    component:()=>import('../layouts/printLayout'),
-    children:[
+    path: '/print',
+    name: 'printLayout',
+    component: () => import('../layouts/printLayout'),
+    children: [
       {
-        path:'barcode/:bookId',
-        name:'bookBarcode',
-        component:()=> import ('../views/barcodePage.vue'),
+        path: 'barcode/:bookId',
+        name: 'bookBarcode',
+        component: () => import('../views/barcodePage.vue'),
       },
       {
-        path:'discounts',
-        name:'printDiscounts',
-        component:()=> import('../views/print.vue'),
+        path: 'discounts',
+        name: 'printDiscounts',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'staffs',
-        name:'printStaffs',
-        component:()=> import('../views/print.vue'),
+        path: 'staffs',
+        name: 'printStaffs',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'clients',
-        name:'printClients',
-        component:()=> import('../views/print.vue'),
+        path: 'clients',
+        name: 'printClients',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'messages',
-        name:'printMessages',
-        component:()=> import('../views/print.vue'),
+        path: 'messages',
+        name: 'printMessages',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'tickets',
-        name:'printTickets',
-        component:()=> import('../views/print.vue'),
+        path: 'tickets',
+        name: 'printTickets',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'requestedBooks',
-        name:'printRequestedBooks',
-        component:()=> import('../views/print.vue'),
+        path: 'requestedBooks',
+        name: 'printRequestedBooks',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'books',
-        name:'printBooks',
-        component:()=> import('../views/print.vue'),
+        path: 'books',
+        name: 'printBooks',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'credit',
-        name:'printCredit',
-        component:()=> import('../views/print.vue'),
+        path: 'credit',
+        name: 'printCredit',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'postRequest',
-        name:'printPostRequests',
-        component:()=> import('../views/print.vue'),
+        path: 'postRequest',
+        name: 'printPostRequests',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'postRequest/:postId',
-        name:'printPostRequest',
-        component:()=> import('../views/printForm.vue'),
+        path: 'postRequest/:postId',
+        name: 'printPostRequest',
+        component: () => import('../views/printForm.vue'),
       },
       {
-        path:'forbiddenBook',
-        name:'printForbiddenBook',
-        component:()=> import('../views/print.vue'),
+        path: 'forbiddenBook',
+        name: 'printForbiddenBook',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'invoices',
-        name:'printInvoices',
-        component:()=> import('../views/print.vue'),
+        path: 'invoices',
+        name: 'printInvoices',
+        component: () => import('../views/print.vue'),
       },
       {
-        path:'invoices/:invoiceId',
-        name:'printInvoice',
-        component:()=> import('../views/printForm.vue'),
+        path: 'invoices/:invoiceId',
+        name: 'printInvoice',
+        component: () => import('../views/printForm.vue'),
       },
     ],
   },
 
   {
     path: '/',
-    name:'default',
+    name: 'default',
     component: () => import('../layouts/default.vue'),
-    children:[
+    children: [
       {
         path: '/dashboard',
-        name:'dashboard',
+        name: 'dashboard',
         component: () => import('../views/dashboard.vue'),
       },
-       {
+      {
         path: '/signup',
         name: 'signup',
         component: () => import('../views/signUp.vue'),
@@ -96,11 +96,6 @@ const routes = [
         path: '/login',
         name: 'login',
         component: () => import('../views/signIn.vue'),
-      },
-      {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: () => import('../views/dashboard.vue'),
       },
       {
         path: '/users/adduser',
@@ -116,6 +111,11 @@ const routes = [
         path: '/users/clients',
         name: 'clientsList',
         component: () => import('../views/usersManagements/clientsList.vue'),
+      },
+      {
+        path: '/users/profile/:userId',
+        name: 'profile',
+        component: () => import('../views/usersManagements/profile.vue'),
       },
       {
         path: '/addBook',
@@ -251,9 +251,7 @@ const routes = [
         name: 'bookSearch',
         component: () => import('../views/general/bookSearch.vue'),
       },
-
-   ],
+    ],
   },
-
 ];
 export default routes;
