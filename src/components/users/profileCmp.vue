@@ -3,7 +3,7 @@
     <div class="d-flex flex-row-reverse ma-4">
       <v-btn>{{ $t('changePassword') }}</v-btn>
       <v-btn class="ml-4">
-        {{ $t('filteredFileDl') }}
+        {{ $t('edit') }}
       </v-btn>
     </div>
     <div class="elevation-1 text-center ma-4">
