@@ -114,7 +114,7 @@
                 class="mr-4"
                 @click="validate"
               >
-                {{ $t('save') }}
+                {{ $t('registeration') }}
               </v-btn>
               <v-btn color="error" class="mr-4" @click="reset"
                 >{{ $t('resetForm') }}

@@ -331,4 +331,5 @@ export default {
   postListPreview:'نمایش لیست پیک',
   discountsCategory:'تخفیف های دسته بندی',
   pleaseFillRoleTitle:'عنوان نقش را وارد نمایید',
+  registeration:'ثبت نام',
 };

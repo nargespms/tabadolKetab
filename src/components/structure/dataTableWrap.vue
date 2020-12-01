@@ -112,6 +112,14 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <accessLevelTable
+      v-if="this.module === 'accessLevelList'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
@@ -130,6 +138,7 @@ import invoicesTable from '../invoices/invoicesTable.vue';
 import authorTable from '../author/authorTable.vue';
 import publishersTable from '../publisher/publishersTable.vue';
 import ordersTable from '../orders/ordersTable.vue';
+import accessLevelTable from '../accessLevel/accessLevelTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -148,6 +157,7 @@ export default {
     authorTable,
     publishersTable,
     ordersTable,
+    accessLevelTable,
   },
   props: {
     headers: {

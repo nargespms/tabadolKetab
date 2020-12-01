@@ -29,7 +29,7 @@
                 class="mr-4"
                 @click="validate"
               >
-                {{ $t('save') }}
+                {{ $t('enter') }}
               </v-btn>
             </div>
           </v-container>

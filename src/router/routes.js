@@ -306,6 +306,11 @@ const routes = [
         name: 'accessLevelList',
         component: () => import('../views/accessLevel/accessLevelList.vue'),
       },
+      {
+        path: '/accessLevelList/:role',
+        name: 'accessLevelPage',
+        component: () => import('../views/accessLevel/accessLevelCreation.vue'),
+      },
     ],
   },
 ];
