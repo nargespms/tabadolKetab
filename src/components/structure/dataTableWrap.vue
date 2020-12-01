@@ -104,6 +104,14 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <ordersTable
+      v-if="this.module === 'orders'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
   </div>
 </template>
 
@@ -121,6 +129,7 @@ import forbiddenBookTable from '../forbiddenBook/forbiddenBookTable.vue';
 import invoicesTable from '../invoices/invoicesTable.vue';
 import authorTable from '../author/authorTable.vue';
 import publishersTable from '../publisher/publishersTable.vue';
+import ordersTable from '../orders/ordersTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -138,6 +147,7 @@ export default {
     invoicesTable,
     authorTable,
     publishersTable,
+    ordersTable,
   },
   props: {
     headers: {

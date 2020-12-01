@@ -7,7 +7,7 @@
       class="generalTable "
       :class="$vuetify.breakpoint.lg ? '' : 'tableMobileScroll'"
     >
-      <thead>
+      <thead class="grey lighten-2">
         <th>
           {{ $t('radif') }}
         </th>

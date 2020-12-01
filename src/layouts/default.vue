@@ -74,4 +74,22 @@ a {
 .clear {
   overflow: auto;
 }
+.generalTable {
+  border: thin solid rgba(0, 0, 0, 0.12);
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+  th,
+  td {
+    border: thin solid rgba(0, 0, 0, 0.12);
+    font-weight: normal;
+    text-align: center;
+    padding: 8px;
+  }
+}
+.tableMobileScroll {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
 </style>

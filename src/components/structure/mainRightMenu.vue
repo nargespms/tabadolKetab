@@ -159,7 +159,7 @@ export default {
           ],
         },
         {
-          action: 'mdi-card-account-details-outline',
+          action: 'fas fa-object-group',
           title: 'BookCategory',
           active: false,
           items: [
@@ -265,6 +265,18 @@ export default {
           ],
         },
         {
+          action: 'fas fa-cart-arrow-down',
+          title: 'orders',
+          active: false,
+          items: [
+            {
+              title: 'ordersList',
+              link: '/ordersList',
+              icon: 'fa fa-table',
+            },
+          ],
+        },
+        {
           action: 'mdi-book-open-page-variant',
           title: 'requestedBooks',
           active: false,
@@ -313,6 +325,23 @@ export default {
             {
               title: 'postList',
               link: '/postList',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
+        {
+          action: 'fas fa-users-cog',
+          title: 'accessLevel',
+          active: false,
+          items: [
+            {
+              title: 'accessLevelCreation',
+              link: '/accessLevelCreation',
+              icon: 'fas fa-user-cog',
+            },
+            {
+              title: 'accessLevelList',
+              link: '/accessLevelList',
               icon: 'fas fa-table',
             },
           ],

@@ -1,0 +1,177 @@
+{
+  "discount": {
+    "name": "discounts",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi-ticket-percent",
+    "items": [
+      {
+        "name": "addORdelete"
+      }
+    ]
+  },
+  "invoices": {
+    "name": "invoices",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "fas fa-file-invoice-dollar ",
+    "items": [
+      {
+        "name": "add"
+      },
+      {
+        "name": "delete"
+      },
+      {
+        "name": "previewAll"
+      }
+    ]
+  },
+  "forbiddenBook": {
+    "name": "forbiddenBook",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "fas fa-ban",
+    "items": [
+      {
+        "name": "addORdelete"
+      }
+    ]
+  },
+  "user": {
+    "name": "users",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi-account-group",
+    "items": [
+      {
+        "name": "addORedit"
+      },
+      {
+        "name": "delete"
+      }
+    ]
+  },
+  "forbiddenBook": {
+    "name": "forbiddenBook",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "fas fa-ban",
+    "items": [
+      {
+        "name": "addORdelete"
+      }
+    ]
+  },
+
+  "book": {
+    "name": "book",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi-book-open-variant",
+    "items": [
+      {
+        "name": "addORedit"
+      },
+      {
+        "name": "delete"
+      }
+    ]
+  },
+
+  "tickets": {
+    "name": "tickets",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi-ticket-account",
+    "items": [
+      {
+        "name": "addORdelete"
+      }
+    ]
+  },
+
+  "transactions": {
+    "name": "transactions",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi-credit-card-plus",
+    "items": [
+      {
+        "name": "preview"
+      }
+    ]
+  },
+  "category": {
+    "name": "category",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "fas fa-object-group",
+    "items": [
+      {
+        "name": "addORedit"
+      }
+    ]
+  },
+  "discountsCategory": {
+    "name": "discountsCategory",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi-ticket-percent",
+    "items": [
+      {
+        "name": "addORdelete"
+      }
+    ]
+  },
+  "logs": {
+    "name": "logs",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": " mdi-history",
+    "items": [
+      {
+        "name": "preview"
+      }
+    ]
+  },
+  "tags": {
+    "name": "tags",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "fas fa-tags",
+    "items": [
+      {
+        "name": "addOReditORdelete"
+      }
+    ]
+  },
+  "messages": {
+    "name": "messages",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi mdi-android-messages",
+    "items": [
+      {
+        "name": "addORedit"
+      },
+      {
+        "name": "delete"
+      }
+    ]
+  },
+  "ordersList": {
+    "name": "ordersList",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "fas fa-cart-arrow-down",
+    "items": [
+      {
+        "name": "previewAll"
+      },
+      {
+        "name": "postListPreview"
+      }
+    ]
+  }
+}

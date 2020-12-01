@@ -46,7 +46,7 @@
 import VuePersianDatetimePicker from 'vue-persian-datetime-picker';
 
 export default {
-  name: 'datePickerCmp',
+  name: 'rangeDatePickerCmp',
   props: {
     fromValidate: {
       type: Boolean,

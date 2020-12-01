@@ -73,7 +73,7 @@
                 </span>
               </template>
             </v-select>
-            <dataPickerCmp
+            <datePickerCmp
               class="d-flex align-self-baseline pr-4 flex-column"
               ref="datePicker"
               :componenKey="dateKey"
@@ -134,14 +134,14 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import dataPickerCmp from '../structure/datePickerCmp.vue';
+import datePickerCmp from '../structure/datePickerCmp.vue';
 import usersAutoComplete from '../structure/usersAutoComplete.vue';
 
 export default {
   name: 'addMessageCmp',
   components: {
     notifMessage,
-    dataPickerCmp,
+    datePickerCmp,
     usersAutoComplete,
   },
   props: {

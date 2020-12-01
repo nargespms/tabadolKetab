@@ -286,6 +286,26 @@ const routes = [
         name: 'publishersList',
         component: () => import('../views/publisher/publishersList.vue'),
       },
+      {
+        path: '/ordersList',
+        name: 'ordersList',
+        component: () => import('../views/orders/ordersList.vue'),
+      },
+      {
+        path: '/ordersList/:orderId',
+        name: 'orderPage',
+        component: () => import('../views/orders/orderPage.vue'),
+      },
+      {
+        path: '/accessLevelCreation',
+        name: 'accessLevelCreation',
+        component: () => import('../views/accessLevel/accessLevelCreation.vue'),
+      },
+      {
+        path: '/accessLevelList',
+        name: 'accessLevelList',
+        component: () => import('../views/accessLevel/accessLevelList.vue'),
+      },
     ],
   },
 ];
