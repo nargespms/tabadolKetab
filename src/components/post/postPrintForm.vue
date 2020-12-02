@@ -1,5 +1,5 @@
 <template>
-  <div class="A4 pa-6">
+  <div class="A5 pa-6">
     <div class="sheet padding-25mm ">
       <div class="br-3 fn18 pa-8">
         <v-row>
@@ -54,20 +54,7 @@
             </p>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="12" md="12" class="ma-auto text-center">
-            <v-icon color="black" large>mdi-blur</v-icon>
-            <v-icon color="black" large> mdi-blur</v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large>mdi-blur </v-icon>
-          </v-col>
-        </v-row>
+
         <v-row>
           <v-col cols="12" md="12">
             <span>
@@ -87,20 +74,7 @@
             <p class="mt-8 pa-3 pb-16 br-1-b">{{ $t('description') }} :</p>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="12" md="12" class="ma-auto text-center">
-            <v-icon color="black" large>mdi-blur</v-icon>
-            <v-icon color="black" large> mdi-blur</v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large> mdi-blur </v-icon>
-            <v-icon color="black" large>mdi-blur </v-icon>
-          </v-col>
-        </v-row>
+
         <v-row>
           <v-col cols="12" md="12">
             <div class=" d-flex align-center ">
@@ -122,6 +96,12 @@
               ></v-radio>
             </div>
           </v-col>
+        </v-row>
+        <v-row class="py-12">
+          <v-col cols="12" md="6" class="text-center">
+            امضا درخواست کننده</v-col
+          >
+          <v-col cols="12" md="6" class="text-center"> امضا تحویل گیرنده</v-col>
         </v-row>
       </div>
     </div>

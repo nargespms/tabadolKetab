@@ -38,6 +38,8 @@
                 name="input-7-4"
                 :label="$t('description')"
                 v-model="credit.desc"
+                counter
+                :rules="rules"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -48,7 +50,7 @@
               class="mr-4"
               @click="validate"
             >
-              {{ $t('send') }}
+              {{ $t('increaseCredit') }}
             </v-btn>
 
             <v-btn color="error" class="mr-4" @click="reset"
@@ -83,6 +85,7 @@ export default {
       saveSuccess: false,
       credit: {},
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
+      rules: [v => (v && v.length >= 15) || `${this.$t('minCharaters15')}`],
       userValidate: true,
     };
   },

@@ -358,7 +358,7 @@ export default {
               icon: 'fas fa-plus',
             },
             {
-              title: 'creditList',
+              title: 'transactionsList',
               link: '/creditList',
               icon: 'fas fa-table',
             },

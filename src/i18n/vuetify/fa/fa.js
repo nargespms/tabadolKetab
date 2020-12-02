@@ -31,6 +31,7 @@ export default {
   minCharaters8: 'حداقل تعداد حروف ۸ عدد میباشد',
   minCharaters10: 'حداقل تعداد حروف ۱۰ عدد میباشد',
   minCharaters11: 'حداقل تعداد حروف ۱۱ عدد میباشد',
+  minCharaters15: 'حداقل تعداد حروف ۱۵ عدد میباشد',
   activeinactive: 'فعال - غیرفعال',
   resetForm: 'پاک کردن فرم',
   save: 'ذخیره',
@@ -152,6 +153,8 @@ export default {
   transactionDate: 'تاریخ تراکنش',
   trackingCode: 'کد رهگیری',
   expDateCredit: 'تاریخ انقضا اعتبار',
+  transactionsList:'لیست تراکنش ها ',
+  payType:'نوع پرداخت',
   // book
   addBook: 'افزودن کتاب',
   bookList: 'لیست کتاب‌ها',
@@ -207,8 +210,12 @@ export default {
   RUSureUWantToDeletThisPostRequest:
     'آیا میخواهید این درخواست پست را حذف نمایید؟',
   price: 'مبلغ',
-  recieverPhoneNumber: 'تلفن همراه گیرنده',
-  recieverLandLane: 'تلفن ثابت گیرنده',
+  userPhoneNumber: 'تلفن همراه کاربر',
+  userLandLane: 'تلفن ثابت کاربر',
+  receivesend:'دریافت / ارسال',
+  DONE:'انجام شده ',
+  UNDONE:'انجام نشده',
+  RETURNED:'بازگشتی',
   // forbiddenBook
   forbiddenBook: 'کتاب ممنوعه',
   addForbiddenBook: 'افزودن کتاب ممنوعه',

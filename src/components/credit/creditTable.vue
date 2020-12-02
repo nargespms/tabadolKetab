@@ -33,7 +33,7 @@
             <span>{{ $t('addCredit') }}</span>
           </v-tooltip>
           <span class="pr-4 font-weight-medium white--text">
-            {{ $t('creditList') }}
+            {{ $t('transactionsList') }}
           </span>
         </v-toolbar>
       </template>

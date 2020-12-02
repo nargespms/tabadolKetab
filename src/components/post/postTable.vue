@@ -10,6 +10,10 @@
       <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
       }}</v-btn>
+      <span class="pl-4">
+        {{ $t('status') }} :
+        <span v-for="s in status" :key="s.index"> {{ $t(s) }}, </span>
+      </span>
     </div>
     <v-data-table
       :headers="headers"
@@ -165,6 +169,7 @@ export default {
   data() {
     return {
       innerOptions: this.options,
+      status: ['DONE', 'UNDONE', 'CANCEL', 'RETURNED'],
       // delete
       enableDelete: false,
       deletingItem: {},
