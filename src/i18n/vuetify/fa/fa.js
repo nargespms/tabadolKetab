@@ -256,6 +256,8 @@ export default {
   booksPriceWithoutDiscount: 'قیمت کتاب ها بدون تخفیف',
   clientName: 'نام مشتری',
   issueDate: 'تاریخ صدور',
+  deleteInvoice:'حذف فاکتور',
+  RUSureUWantToDeletThisInvoice:'آیا میخواهید این فاکتور را حذف نمایید؟',
   // settings
   settings: 'تنظیمات',
   generalSettings: 'تنظیمات عمومی',

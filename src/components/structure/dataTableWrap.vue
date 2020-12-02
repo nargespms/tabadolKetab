@@ -172,7 +172,6 @@ export default {
   },
   methods: {
     getUsers() {
-      console.log('getUserCalled');
       const { page, itemsPerPage, sortBy } = this.options;
       console.log(page);
       console.log(itemsPerPage);

@@ -65,17 +65,65 @@
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon medium class="ma-2" @click="preview(item)">
-          mdi-eye
-        </v-icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              @click="preview(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-eye
+            </v-icon>
+          </template>
+          {{ $t('preview') }}
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              color="grey darken-3"
+              @click="deleteRecord(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          {{ $t('delete') }}
+        </v-tooltip>
       </template>
     </v-data-table>
+    <v-dialog v-model="enableDelete" max-width="500px">
+      <promptDialog
+        :title="'deleteInvoice'"
+        :message="'RUSureUWantToDeletThisInvoice'"
+        :data="deletingItem"
+        @accept="acceptDelete"
+        @reject="closeDelete"
+      />
+    </v-dialog>
+    <notifMessage
+      v-if="successNotif"
+      :msg="'operationSuccessfullyOcured'"
+      @hideNotif="hideNotif"
+      :type="'success'"
+    />
   </div>
 </template>
 
 <script>
+import promptDialog from '../structure/promptDialog.vue';
+import notifMessage from '../structure/notifMessage.vue';
+
 export default {
   name: 'invoicesTable',
+  components: {
+    promptDialog,
+    notifMessage,
+  },
   props: {
     headers: { type: Array },
     tableData: { type: Array },
@@ -87,7 +135,11 @@ export default {
   },
   data() {
     return {
+      successNotif: false,
       innerOptions: this.options,
+      // delete
+      enableDelete: false,
+      deletingItem: {},
     };
   },
   methods: {
@@ -101,6 +153,24 @@ export default {
       this.$router.push({
         path: `invoicesList/${item.id}`,
       });
+    },
+    // methods for delete notif
+    deleteRecord(item) {
+      this.deletingItem = item;
+      this.enableDelete = true;
+    },
+    acceptDelete(value) {
+      console.log(`deleted ${value.name}`);
+      this.successNotif = true;
+
+      this.closeDelete();
+    },
+    closeDelete() {
+      this.enableDelete = false;
+      this.deletingItem = {};
+    },
+    hideNotif() {
+      this.successNotif = false;
     },
     // sort funcs
     sort() {
