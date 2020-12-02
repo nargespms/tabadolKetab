@@ -36,7 +36,11 @@
               ></v-text-field
             ></v-col>
             <v-col cols="12" md="6">
-              <usersAutocomplete :validate="true" :height="32" />
+              <usersAutocomplete
+                ref="userAutocomplete"
+                :validate="userValidate"
+                :height="32"
+              />
             </v-col>
           </v-row>
 
@@ -85,8 +89,8 @@
       :type="'success'"
     />
     <notifMessage
-      v-if="errorMsg"
-      :msg="'someThingWentWrong'"
+      v-if="errorEnable"
+      :msg="errorMsg"
       @hideNotif="hideNotif"
       :type="'error'"
     />
@@ -109,11 +113,14 @@ export default {
     return {
       valid: true,
       saveSuccess: false,
-      errorMsg: false,
+      errorEnable: false,
+      errorMsg: '',
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       barcode: '',
       invoiceItems: [],
       invoice: {},
+      // user validation
+      userValidate: true,
     };
   },
   methods: {
@@ -125,9 +132,22 @@ export default {
     addItem() {
       this.$refs.form.validate();
       console.log(this.barcode);
+      // user validation
+      if (
+        this.$refs.userAutocomplete.users === null ||
+        this.$refs.userAutocomplete.users.length < 1
+      ) {
+        this.userValidate = false;
+      } else {
+        this.userValidate = true;
+      }
       // the barcode should check via back and if it was successfull
       // it should add item to invoice item
-      if (this.barcode.length === 9) {
+      if (
+        this.$refs.form.validate() &&
+        this.barcode.length === 9 &&
+        this.userValidate
+      ) {
         this.reset();
         const item = {
           bookName: 'ملت عشق',
@@ -137,14 +157,11 @@ export default {
         };
         this.invoiceItems.push(item);
       } else {
-        this.errorMsg = true;
-      }
-      if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-      } else {
-        this.valid = false;
+        this.errorEnable = true;
+        this.errorMsg = 'pleaseFillTheInput';
       }
     },
+
     deleteItem(item) {
       this.invoiceItems.pop(item);
     },
@@ -160,6 +177,7 @@ export default {
       console.log(this.invoiceItems, this.invoice);
       this.invoice.desc = '';
       this.saveSuccess = true;
+      // this.$router.push({ path: `/invoicesList/${response.id}` });
     },
   },
 };

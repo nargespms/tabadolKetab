@@ -243,7 +243,7 @@ const routes = [
       },
       {
         path: '/invoicesList/:invoiceId',
-        name: 'invoicesList',
+        name: 'invoice',
         component: () => import('../views/invoices/invoice.vue'),
       },
       {

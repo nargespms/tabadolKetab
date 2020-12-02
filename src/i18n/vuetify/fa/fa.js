@@ -209,6 +209,9 @@ export default {
   deletePostRequest: 'حذف درخواست پست',
   RUSureUWantToDeletThisPostRequest:
     'آیا میخواهید این درخواست پست را حذف نمایید؟',
+  deleteAddress: 'حذف  آدرس',
+  RUSureUWantToDeletThisAddress:
+    'آیا میخواهید این  آدرس را حذف نمایید؟',
   price: 'مبلغ',
   userPhoneNumber: 'تلفن همراه کاربر',
   userLandLane: 'تلفن ثابت کاربر',
@@ -339,4 +342,5 @@ export default {
   discountsCategory:'تخفیف های دسته بندی',
   pleaseFillRoleTitle:'عنوان نقش را وارد نمایید',
   registeration:'ثبت نام',
+  guide:'راهنما',
 };

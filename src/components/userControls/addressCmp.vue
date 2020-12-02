@@ -4,9 +4,17 @@
       color="teal "
       flat
       height="48"
-      class="pointer"
+      class="pointer "
       @click="show = !show"
     >
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon color="white" v-bind="attrs" v-on="on">
+            mdi-comment-question-outline
+          </v-icon>
+        </template>
+        <span> حداکثر تعداد آدرس ۳ میباشد </span>
+      </v-tooltip>
       <span class="pr-4 font-weight-medium white--text">
         {{ $t('selectAddress') }}
       </span>
@@ -24,6 +32,7 @@
       v-if="mode === 'list'"
       @editAddress="editAddress"
       @addNewAddress="addNewAddress"
+      @deleteAddress="deleteAddress"
       @hideAddressList="hideAddressList"
     />
   </v-card>
@@ -58,6 +67,9 @@ export default {
     editAddress(item) {
       this.edittingItem = item;
       this.mode = 'edit';
+    },
+    deleteAddress(item) {
+      console.log(`delete${item.id}`);
     },
     addNewAddress() {
       this.mode = 'add';

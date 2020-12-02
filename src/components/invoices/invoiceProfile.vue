@@ -158,6 +158,7 @@ export default {
       const routeData = this.$router.resolve({
         name: 'printInvoice',
       });
+      console.log(routeData);
       window.open(routeData.href, '_blank');
     },
   },

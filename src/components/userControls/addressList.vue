@@ -7,14 +7,35 @@
             <v-radio @click="itemSelect(item)" :value="item.id"></v-radio>
 
             <v-list-item-content class="text-right  ">
-              <v-list-item-title class="pa-2">
-                <v-icon>mdi-google-maps</v-icon>
-                {{ item.address }}
-              </v-list-item-title>
-              <v-list-item-subtitle class="pa-2">
-                <v-icon>mdi-mailbox</v-icon>
-                {{ item.postalCode }}
-              </v-list-item-subtitle>
+              <v-row>
+                <v-col cols="12" lg="10">
+                  <v-list-item-title class="pa-2">
+                    <v-icon>mdi-google-maps</v-icon>
+                    {{ item.address }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle class="pa-2">
+                    <v-icon>mdi-mailbox</v-icon>
+                    {{ item.postalCode }}
+                  </v-list-item-subtitle>
+                </v-col>
+                <v-col cols="12" lg="2" class="d-flex align-self-center">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon
+                        medium
+                        class="ma-2"
+                        color="grey darken-3"
+                        @click="deleteRecord(item)"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        mdi-delete
+                      </v-icon>
+                    </template>
+                    {{ $t('delete') }}
+                  </v-tooltip>
+                </v-col>
+              </v-row>
               <div
                 class="primary--text  pointer px-2"
                 @click="editAddress(item)"
@@ -31,12 +52,20 @@
         </template>
       </v-radio-group>
       <v-list-item class=" ma-0 br-t-g">
-        <div @click="addNewAddress" class="pointer ">
+        <v-btn
+          text
+          :disabled="addresses.length >= 3"
+          @click="addNewAddress"
+          class="fn13 primary--text"
+        >
           <v-icon color="primary" class="pl-4">mdi-map-marker-plus</v-icon>
-          <span class="fn13 primary--text">
+          <span v-if="addresses.length < 3">
             {{ $t('addAddress') }}
           </span>
-        </div>
+          <span class="fn13 " v-else>
+            حداکثر تعداد آدرس ۳ میباشد
+          </span>
+        </v-btn>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -57,13 +86,26 @@
         </v-tooltip>
       </v-list-item>
     </v-list>
+    <v-dialog v-model="enableDelete" max-width="500px">
+      <promptDialog
+        :title="'deleteAddress'"
+        :message="'RUSureUWantToDeletThisAddress'"
+        :data="deletingItem"
+        @accept="acceptDelete"
+        @reject="closeDelete"
+      />
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
+import promptDialog from '../structure/promptDialog.vue';
+
 export default {
   name: 'addressList',
-
+  components: {
+    promptDialog,
+  },
   data() {
     return {
       selectedAddress: {},
@@ -84,6 +126,9 @@ export default {
           postalCode: '1234567895236',
         },
       ],
+      // delete
+      enableDelete: false,
+      deletingItem: {},
     };
   },
   methods: {
@@ -98,6 +143,22 @@ export default {
     },
     confirmPostRequest() {
       this.$emit('hideAddressList');
+    },
+
+    // methods for delete notif
+    deleteRecord(item) {
+      this.deletingItem = item;
+      this.enableDelete = true;
+    },
+    acceptDelete(value) {
+      console.log(`deleted ${value.name}`);
+      this.$emit('deleteAddress', value);
+
+      this.closeDelete();
+    },
+    closeDelete() {
+      this.enableDelete = false;
+      this.deletingItem = {};
     },
   },
 };

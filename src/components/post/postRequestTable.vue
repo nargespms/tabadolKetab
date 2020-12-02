@@ -120,7 +120,7 @@ export default {
       isLoading: true,
       loadingMore: false,
       tableData: [],
-      addressModalEnable: false,
+      addressModalEnable: true,
     };
   },
   methods: {
