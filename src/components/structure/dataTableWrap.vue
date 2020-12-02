@@ -56,14 +56,7 @@
       :totalData="totalData"
       :loading="loading"
     />
-    <creditTable
-      v-if="this.module === 'credit'"
-      :headers="headers"
-      :tableData="tableData"
-      :options="options"
-      :totalData="totalData"
-      :loading="loading"
-    />
+
     <postTable
       v-if="this.module === 'post'"
       :headers="headers"
@@ -131,7 +124,6 @@ import ticketsTable from '../tickets/ticketsTable.vue';
 import discountsTable from '../discount/discountsTable.vue';
 import requestedBooksTable from '../requestedBook/requestedBooksTable.vue';
 import booksTable from '../book/booksTable.vue';
-import creditTable from '../credit/creditTable.vue';
 import postTable from '../post/postTable.vue';
 import forbiddenBookTable from '../forbiddenBook/forbiddenBookTable.vue';
 import invoicesTable from '../invoices/invoicesTable.vue';
@@ -150,7 +142,6 @@ export default {
     discountsTable,
     requestedBooksTable,
     booksTable,
-    creditTable,
     postTable,
     forbiddenBookTable,
     invoicesTable,

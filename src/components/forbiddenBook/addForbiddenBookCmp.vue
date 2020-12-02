@@ -37,12 +37,12 @@
           </v-row>
           <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
-              <v-text-field
-                v-model="forbiddenBook.writer"
-                :label="$t('writer')"
-                outlined
-                error-count="1"
-              ></v-text-field>
+              <authorAutocomplete
+                :validate="true"
+                :placeHolder="'writer'"
+                :height="36"
+                @sendValue="getWriter"
+              />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <v-text-field
@@ -81,11 +81,13 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
+import authorAutocomplete from '../author/authorAutocomplete.vue';
 
 export default {
   name: 'addForbiddenBookCmp',
   components: {
     notifMessage,
+    authorAutocomplete,
   },
   data() {
     return {
@@ -100,6 +102,9 @@ export default {
       this.$router.push({
         name: 'forbiddenBookList',
       });
+    },
+    getWriter(value) {
+      console.log(value);
     },
     validate() {
       this.$refs.form.validate();

@@ -55,36 +55,40 @@
                 ref="bookCat"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-              <v-text-field
-                v-model="book.writer"
-                :label="$t('writer')"
-                outlined
-              ></v-text-field>
+              <authorAutocomplete
+                :validate="true"
+                :placeHolder="'writer'"
+                :height="36"
+                @sendValue="getWriter"
+              />
             </v-col>
           </v-row>
-          <v-row>
+          <v-row class="pb-7">
             <v-col cols="12" md="6" class="pa-0 ">
-              <v-text-field
-                v-model="book.author"
-                :label="$t('author')"
-                outlined
-              ></v-text-field>
+              <authorAutocomplete
+                :validate="true"
+                :placeHolder="'author'"
+                :height="36"
+                @sendValue="getAuthor"
+              />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-              <v-text-field
-                v-model="book.translator"
-                :label="$t('translator')"
-                outlined
-              ></v-text-field>
+              <authorAutocomplete
+                :validate="true"
+                :placeHolder="'translator'"
+                :height="36"
+                @sendValue="getTranslator"
+              />
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
-              <v-text-field
-                v-model="book.searcher"
-                :label="$t('searcher')"
-                outlined
-              ></v-text-field>
+              <authorAutocomplete
+                :validate="true"
+                :placeHolder="'searcher'"
+                :height="36"
+                @sendValue="getSearcher"
+              />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <v-text-field
@@ -118,13 +122,13 @@
               </v-select>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row class="pb-7">
             <v-col cols="12" md="6" class="pa-0 ">
-              <v-text-field
-                v-model="book.publisher"
-                :label="$t('publisher')"
-                outlined
-              ></v-text-field>
+              <publisherAutocomplete
+                :required="false"
+                :height="36"
+                @sendValue="getPublisher"
+              />
             </v-col>
             <v-col
               cols="12"
@@ -297,6 +301,8 @@
 import notifMessage from '../structure/notifMessage.vue';
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
 import tagsAutocomplete from '../tags/tagsAutocomplete.vue';
+import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
+import authorAutocomplete from '../author/authorAutocomplete.vue';
 
 export default {
   name: 'addBookCmp',
@@ -304,6 +310,8 @@ export default {
     notifMessage,
     bookCatAutocomplete,
     tagsAutocomplete,
+    publisherAutocomplete,
+    authorAutocomplete,
   },
   data() {
     return {
@@ -326,7 +334,22 @@ export default {
     getBookCat(value) {
       console.log(value);
     },
+    getPublisher(value) {
+      console.log(value);
+    },
     getTag(value) {
+      console.log(value);
+    },
+    getWriter(value) {
+      console.log(value);
+    },
+    getSearcher(value) {
+      console.log(value);
+    },
+    getTranslator(value) {
+      console.log(value);
+    },
+    getAuthor(value) {
       console.log(value);
     },
     // validate form
