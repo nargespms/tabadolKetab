@@ -343,4 +343,7 @@ export default {
   pleaseFillRoleTitle:'عنوان نقش را وارد نمایید',
   registeration:'ثبت نام',
   guide:'راهنما',
+  USERREGISTER:'ثبت کاربر',
+  CONFIRMED:'تایید شده و منتشرشده',
+  RECIEVED:'دریافت شده ',
 };

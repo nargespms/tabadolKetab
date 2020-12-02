@@ -14,4 +14,4 @@
 ☐ Add Ticket
   ☐ choose users should be require ( v-autocomplete validation)
 ☐ Add map (lat / long)
-
+☐ lazy load for autocompletes

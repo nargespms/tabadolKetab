@@ -102,28 +102,17 @@
                 {{ $t('discountForRangeDate') }}
               </span>
             </v-col>
-            <v-col>
-              <v-btn color="success" @click="addNewRange">
-                <v-icon color="white" small class="pl-3">
-                  fas fa-plus
-                </v-icon>
-                <span color="white">
-                  {{ $t('add') }}
-                </span>
-              </v-btn>
-            </v-col>
           </v-row>
           <v-row>
-            <template v-for="n in rangeNumber">
-              <v-col
-                cols="12"
-                :md="12 / rangeNumber"
-                :class="rangeNumber > 1 ? 'pr-5' : ''"
-                :key="n"
-              >
-                <rangeDataDiscount @setDateRange="setDateRange" />
-              </v-col>
-            </template>
+            <v-col cols="12" lg="4">
+              <rangeDateDiscount @setDateRange="setDateRange" />
+            </v-col>
+            <v-col cols="12" lg="4" class="pr-5">
+              <rangeDateDiscount @setDateRange="setDateRange" />
+            </v-col>
+            <v-col cols="12" lg="4" class="pr-5">
+              <rangeDateDiscount @setDateRange="setDateRange" />
+            </v-col>
           </v-row>
           <div class="justify-center d-flex ">
             <v-btn
@@ -149,13 +138,13 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import rangeDataDiscount from './rangeDataDiscount.vue';
+import rangeDateDiscount from './rangeDateDiscount.vue';
 
 export default {
   name: 'generalSettings',
   components: {
     notifMessage,
-    rangeDataDiscount,
+    rangeDateDiscount,
   },
   data() {
     return {
@@ -163,7 +152,6 @@ export default {
       saveSuccess: false,
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       settings: {},
-      rangeNumber: 1,
       dateRange: [],
     };
   },
@@ -189,9 +177,7 @@ export default {
     moneyFormat(value) {
       return new Intl.NumberFormat('es-ES').format(value);
     },
-    addNewRange() {
-      this.rangeNumber += 1;
-    },
+
     setDateRange(value) {
       this.dateRange.push(value);
       console.log(value);
