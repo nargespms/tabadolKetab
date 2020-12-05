@@ -350,4 +350,6 @@ export default {
   USERREGISTER:'ثبت کاربر',
   CONFIRMED:'تایید شده و منتشرشده',
   RECIEVED:'دریافت شده ',
+  // billing
+  billing:'مالی',
 };
