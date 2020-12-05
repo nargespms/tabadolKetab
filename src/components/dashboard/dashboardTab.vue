@@ -13,13 +13,13 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item in items" :key="item.tab">
-        <v-card flat>
-          <usersStatusCard v-if="item.tab === 'users'" />
+        <v-card flat class="pa-4">
+          <usersStatusCards v-if="item.tab === 'users'" />
           <ticketsStatusCard v-if="item.tab === 'tickets'" />
+          <booksStatusCard v-if="item.tab === 'book'" />
           <discountsStatusCard v-if="item.tab === 'discounts'" />
           <postsStatusCard v-if="item.tab === 'post'" />
           <billingStatusCard v-if="item.tab === 'billing'" />
-          <booksStatusCard v-if="item.tab === 'book'" />
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import usersStatusCard from './usersStatusCard.vue';
+import usersStatusCards from './usersStatusCards.vue';
 import ticketsStatusCard from './ticketsStatusCard.vue';
 import discountsStatusCard from './discountsStatusCard.vue';
 import postsStatusCard from './postsStatusCard.vue';
@@ -37,7 +37,7 @@ import booksStatusCard from './booksStatusCard.vue';
 export default {
   name: 'dashboardTab',
   components: {
-    usersStatusCard,
+    usersStatusCards,
     ticketsStatusCard,
     discountsStatusCard,
     postsStatusCard,
