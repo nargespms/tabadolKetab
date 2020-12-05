@@ -43,6 +43,10 @@
             >
               <v-icon color="white">fas fa-shopping-basket</v-icon>
             </v-badge>
+            <v-icon v-if="!bagLength" color="white"
+              >fas fa-shopping-basket</v-icon
+            >
+
             <span class="white--text">
               {{ $t('shoppingBasket') }}
             </span>

@@ -127,6 +127,7 @@ export default {
   discountCode: 'کد تخفیف',
   discountMaxAmount: 'سقف تخفیف',
   noResultsText: 'اطلاعاتی پیدا نشد',
+  noBooksSelected: '  کتابی انتخاب نشده است ',
   loadingText: 'در حال گرفتن اطلاعات ...',
   noDiscount:'تخفیف ندارد',
   // requested Books

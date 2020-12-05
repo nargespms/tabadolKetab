@@ -29,6 +29,11 @@
         </th>
       </thead>
       <tbody>
+        <tr v-if="items.length === 0">
+          <td colspan="6" class="pa-4 grey--text">
+            {{ $t('noBooksSelected') }}
+          </td>
+        </tr>
         <tr v-for="(item, index) in items" :key="index">
           <td>
             {{ index + 1 }}
