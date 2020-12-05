@@ -377,4 +377,10 @@ export default {
   todaypostsRequestsNumber:'تعداد درخواست های پیک امروز',
   recievedPostsNumber:'تعداد تحویل پست',
   todayRecievedPostsNumber:'تعداد تحویل پست امروز',
+  existedBooksCredit:'ارزش کتاب های موجود',
+  usersCreditSumFromboooksTrade:'مجموع اعتبار کاربران از فروش کتاب',
+  usersCreditSumCache:'مجموع اعتبار کاربران  به صورت واریز نقدی',
+  todayExpiredSum:'مجموع اعتبار منقضی امروز',
+  totalExpireSum:'مجموع اعتبار منقضی کل',
+  todayOnlineShop:'خرید آنلاین امروز',
 };
