@@ -58,6 +58,7 @@ export default {
           mainPrice: '۶۵۰۰۰',
           priceWithDiscount: '۶۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=19',
+          barcode: '45678900',
         },
         {
           id: 2,
@@ -65,6 +66,7 @@ export default {
           mainPrice: '۴۰۰۰۰',
           priceWithDiscount: '۳۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=20',
+          barcode: '45678900',
         },
         {
           id: 3,
@@ -72,6 +74,7 @@ export default {
           mainPrice: '۵۰۰۰۰',
           priceWithDiscount: '۴۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=21',
+          barcode: '45678900',
         },
         {
           id: 4,
@@ -86,6 +89,7 @@ export default {
           mainPrice: '۶۵۰۰۰',
           priceWithDiscount: '۶۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=15',
+          barcode: '45678900',
         },
         {
           id: 6,
@@ -93,6 +97,7 @@ export default {
           mainPrice: '۴۰۰۰۰',
           priceWithDiscount: '۳۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=16',
+          barcode: '45678900',
         },
       ];
     },
@@ -104,6 +109,7 @@ export default {
           mainPrice: '۶۵۰۰۰',
           priceWithDiscount: '۶۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=15',
+          barcode: '45678900',
         },
         {
           id: 6,
@@ -111,6 +117,7 @@ export default {
           mainPrice: '۴۰۰۰۰',
           priceWithDiscount: '۳۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=16',
+          barcode: '45678900',
         },
         {
           id: 7,
@@ -118,12 +125,14 @@ export default {
           mainPrice: '۵۰۰۰۰',
           priceWithDiscount: '۴۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=17',
+          barcode: '45678900',
         },
         {
           id: 8,
           name: 'مردی به نام اوه  ',
           mainPrice: '۶۵۰۰۰',
           image: 'https://picsum.photos/500/300?image=18',
+          barcode: '45678900',
         },
         {
           id: 3,
@@ -131,6 +140,7 @@ export default {
           mainPrice: '۵۰۰۰۰',
           priceWithDiscount: '۴۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=21',
+          barcode: '45678900',
         },
         {
           id: 4,
@@ -138,6 +148,7 @@ export default {
           mainPrice: '۶۵۰۰۰',
           priceWithDiscount: '۶۰۰۰۰',
           image: 'https://picsum.photos/500/300?image=22',
+          barcode: '45678900',
         },
       ];
     },

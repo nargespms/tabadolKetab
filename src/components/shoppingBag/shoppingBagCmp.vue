@@ -2,7 +2,7 @@
   <v-row class="justify-center">
     <v-col cols="12" lg="11">
       <v-card class="pb-3">
-        <v-card-actions class="teal pointer" @click="show = !show">
+        <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
             <span>
               <v-icon color="white">fas fa-shopping-basket</v-icon>
@@ -19,6 +19,7 @@
                 :data="items"
                 :deletable="true"
                 @deleteItem="deleteItem"
+                :key="itemsKey"
               />
             </v-col>
           </v-row>
@@ -148,6 +149,7 @@ export default {
       addressModalEnable: false,
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       totalPrice: 12000000,
+      itemsKey: 0,
     };
   },
   methods: {
@@ -155,7 +157,11 @@ export default {
       this.addressModalEnable = false;
     },
     deleteItem(item) {
-      this.items.pop(item);
+      this.$store.commit('bookShop/removeFromBag', item, {
+        module: 'bookShop',
+      });
+      // this.itemsKey = +1;
+      this.getItems();
     },
     moneyFormat(value) {
       return new Intl.NumberFormat('es-ES').format(value);
@@ -163,29 +169,13 @@ export default {
     pay() {
       this.$refs.form.validate();
     },
+    getItems() {
+      this.items = [...this.$store.state.bookShop.bag];
+      this.isLoading = false;
+    },
   },
   mounted() {
-    this.items = [
-      {
-        bookName: 'ملت عشق',
-        barcode: '121314156',
-        mainPrice: '22000000',
-        priceWithDiscount: '1100000',
-      },
-      {
-        bookName: ' جین ایر',
-        barcode: '45678900',
-        mainPrice: '7900000',
-        priceWithDiscount: '560000',
-      },
-      {
-        bookName: ' دیوانه ای بالای بام ',
-        barcode: '678900342',
-        mainPrice: '20000',
-        priceWithDiscount: '15000',
-      },
-    ];
-    this.isLoading = false;
+    this.getItems();
   },
 };
 </script>

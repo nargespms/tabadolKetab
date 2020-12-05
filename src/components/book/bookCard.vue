@@ -42,7 +42,13 @@
       <p v-if="book.priceWithDiscount" class=" primary--text">
         {{ book.priceWithDiscount }} {{ $t('rial') }}
       </p>
-      <v-btn color="blue lighten-1" class="px-6" absolute bottom>
+      <v-btn
+        color="blue lighten-1"
+        class="px-6"
+        absolute
+        bottom
+        @click="addToBag(book)"
+      >
         <v-icon color="white">
           fas fa-shopping-cart
         </v-icon>
@@ -60,6 +66,13 @@ export default {
   props: {
     book: {
       type: Object,
+    },
+  },
+  methods: {
+    addToBag(book) {
+      this.$store.commit('bookShop/addToBag', book, {
+        module: 'bookShop',
+      });
     },
   },
 };

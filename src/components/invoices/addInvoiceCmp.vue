@@ -150,7 +150,7 @@ export default {
       ) {
         this.reset();
         const item = {
-          bookName: 'ملت عشق',
+          name: 'ملت عشق',
           barcode: '121314156',
           mainPrice: '22000000',
           priceWithDiscount: '1100000',

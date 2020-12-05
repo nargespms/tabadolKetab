@@ -18,7 +18,9 @@
     "vue-i18n": "^8.21.1",
     "vue-persian-datetime-picker": "^2.4.0",
     "vue-router": "^3.4.5",
-    "vuetify": "^2.2.11"
+    "vuetify": "^2.2.11",
+    "vuex": "^3.6.0",
+    "vuex-persistedstate": "^4.0.0-beta.1"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",

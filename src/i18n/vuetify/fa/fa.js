@@ -128,6 +128,7 @@ export default {
   discountMaxAmount: 'سقف تخفیف',
   noResultsText: 'اطلاعاتی پیدا نشد',
   loadingText: 'در حال گرفتن اطلاعات ...',
+  noDiscount:'تخفیف ندارد',
   // requested Books
   requestedBooks: 'کتاب‌های درخواستی',
   addRequestedBooks: 'ایجاد درخواست کتاب',

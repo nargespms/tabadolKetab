@@ -34,7 +34,15 @@
         </div>
         <div class="pl-6 enterPannel d-flex" v-else>
           <div class="pl-3 shoppingBasket" @click="shoppingBag">
-            <v-icon color="white">fas fa-shopping-basket</v-icon>
+            <v-badge
+              v-if="bagLength"
+              :content="bagLength"
+              color="red"
+              bordered
+              left
+            >
+              <v-icon color="white">fas fa-shopping-basket</v-icon>
+            </v-badge>
             <span class="white--text">
               {{ $t('shoppingBasket') }}
             </span>
@@ -94,6 +102,14 @@ export default {
       this.$router.push({
         name: 'login',
       });
+    },
+  },
+  computed: {
+    bagLength() {
+      if (this.$store.state.bookShop.bag.length) {
+        return this.$store.state.bookShop.bag.length;
+      }
+      return false;
     },
   },
 };

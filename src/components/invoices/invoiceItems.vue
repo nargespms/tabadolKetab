@@ -18,11 +18,12 @@
           {{ $t('bookName') }}
         </th>
         <th>
-          {{ $t('priceWithDiscount') }}
-        </th>
-        <th>
           {{ $t('mainPrice') }}
         </th>
+        <th>
+          {{ $t('priceWithDiscount') }}
+        </th>
+
         <th v-if="deletable">
           {{ $t('operation') }}
         </th>
@@ -36,14 +37,21 @@
             {{ item.barcode }}
           </td>
           <td>
-            {{ item.bookName }}
-          </td>
-          <td>
-            {{ item.priceWithDiscount }}
+            {{ item.name }}
           </td>
           <td>
             {{ item.mainPrice }}
           </td>
+          <td>
+            <span v-if="item.priceWithDiscount">
+              {{ item.priceWithDiscount }}
+            </span>
+            <span v-else>
+              <v-icon color="red">mdi-close-circle-outline</v-icon>
+              {{ $t('noDiscount') }}
+            </span>
+          </td>
+
           <td v-if="deletable">
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">

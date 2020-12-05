@@ -96,19 +96,19 @@ export default {
   mounted() {
     this.invoiceItems = [
       {
-        bookName: 'ملت عشق',
+        name: 'ملت عشق',
         barcode: '121314156',
         mainPrice: '22000000',
         priceWithDiscount: '1100000',
       },
       {
-        bookName: ' جین ایر',
+        name: ' جین ایر',
         barcode: '45678900',
         mainPrice: '7900000',
         priceWithDiscount: '560000',
       },
       {
-        bookName: ' دیوانه ای بالای بام ',
+        name: ' دیوانه ای بالای بام ',
         barcode: '678900342',
         mainPrice: '20000',
         priceWithDiscount: '15000',

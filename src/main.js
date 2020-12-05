@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify';
 import './plugins/mask';
 import router from './router/index.js';
 import messages from './i18n/vuetify';
+import store from './store'
 
 Vue.use(VueI18n);
 
@@ -28,5 +29,6 @@ new Vue({
   i18n,
   axios,
   router,
+  store,
   render: h => h(App),
 }).$mount('#app');
