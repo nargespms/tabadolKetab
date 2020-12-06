@@ -45,7 +45,7 @@
               <v-textarea
                 outlined
                 name="input-7-4"
-                :label="$t('messageText')"
+                :label="$t('address')"
                 v-model="publisher.address"
               ></v-textarea>
               <v-col cols="12" md="6">
