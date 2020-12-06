@@ -381,6 +381,18 @@ export default {
             },
           ],
         },
+        {
+          action: 'mdi-finance',
+          title: 'financialReport',
+          active: false,
+          items: [
+            {
+              title: 'financialReport',
+              link: '/financialReport',
+              icon: 'fas fa-table',
+            },
+          ],
+        },
 
         {
           action: 'fas fa-tags',

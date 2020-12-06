@@ -20,6 +20,7 @@
           <discountsStatusCard v-if="item.tab === 'discounts'" />
           <postsStatusCard v-if="item.tab === 'post'" />
           <billingStatusCard v-if="item.tab === 'billing'" />
+          <financialReportWrap class="mt-8" v-if="item.tab === 'billing'" />
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -33,6 +34,7 @@ import discountsStatusCard from './discountsStatusCard.vue';
 import postsStatusCard from './postsStatusCard.vue';
 import billingStatusCard from './billingStatusCard.vue';
 import booksStatusCard from './booksStatusCard.vue';
+import financialReportWrap from '../report/financialReportWrap.vue';
 
 export default {
   name: 'dashboardTab',
@@ -43,6 +45,7 @@ export default {
     postsStatusCard,
     billingStatusCard,
     booksStatusCard,
+    financialReportWrap,
   },
   data() {
     return {

@@ -234,17 +234,17 @@ const routes = [
       {
         path: '/addInvoice',
         name: 'addInvoice',
-        component: () => import('../views/invoices/addInvoice.vue'),
+        component: () => import('../views/billing/addInvoice.vue'),
       },
       {
         path: '/invoicesList',
         name: 'invoicesList',
-        component: () => import('../views/invoices/invoicesList.vue'),
+        component: () => import('../views/billing/invoicesList.vue'),
       },
       {
         path: '/invoicesList/:invoiceId',
         name: 'invoice',
-        component: () => import('../views/invoices/invoice.vue'),
+        component: () => import('../views/billing/invoice.vue'),
       },
       {
         path: '/generalSettings',
@@ -310,6 +310,11 @@ const routes = [
         path: '/accessLevelList/:role',
         name: 'accessLevelPage',
         component: () => import('../views/accessLevel/accessLevelCreation.vue'),
+      },
+      {
+        path: '/financialReport',
+        name: 'financialReport',
+        component: () => import('../views/billing/financialReport.vue'),
       },
     ],
   },
