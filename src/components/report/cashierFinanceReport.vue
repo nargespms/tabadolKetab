@@ -18,6 +18,12 @@
             :key="dateKey"
             @setDate="setDate"
           />
+          <span>
+            <v-icon small color="red"> fas fa-exclamation-triangle </v-icon>
+            <span>
+              بازه زمانی حداکثر تا سه ماه میباشد
+            </span>
+          </span>
         </v-col>
         <v-col cols="12" md="2">
           <usersAutoComplete
