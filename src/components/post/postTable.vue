@@ -123,9 +123,7 @@
         </div>
       </template>
     </v-data-table>
-    <v-dialog v-model="enablePreview" content-class="sh-0">
-      <showPostRequest :item="previewItem" />
-    </v-dialog>
+
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
         :title="'deletePostRequest'"
@@ -148,7 +146,6 @@
 <script>
 import notifMessage from '../structure/notifMessage.vue';
 import promptDialog from '../structure/promptDialog.vue';
-import showPostRequest from './showPostRequest.vue';
 
 export default {
   name: 'postTable',
@@ -164,7 +161,6 @@ export default {
   components: {
     notifMessage,
     promptDialog,
-    showPostRequest,
   },
   data() {
     return {
@@ -174,9 +170,7 @@ export default {
       enableDelete: false,
       deletingItem: {},
       successNotif: false,
-      // preview
-      enablePreview: false,
-      previewItem: {},
+
       // print item
       printtingItem: {},
     };
@@ -207,8 +201,9 @@ export default {
     },
     // methods for preview
     preview(item) {
-      this.enablePreview = true;
-      this.previewItem = item;
+      this.$router.push({
+        path: `/ordersList/${item.id}`,
+      });
     },
     printForm(item) {
       this.printtingItem = item;
@@ -241,11 +236,6 @@ export default {
       handler(newVal) {
         this.innerOptions = newVal;
       },
-    },
-    enablePreview(newVal) {
-      if (newVal === false) {
-        this.previewItem = {};
-      }
     },
   },
 };
