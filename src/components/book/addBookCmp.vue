@@ -356,10 +356,7 @@ export default {
     validate() {
       this.$refs.form.validate();
       // book category validation
-      if (
-        this.$refs.bookCat.bookCats.length < 1 ||
-        this.$refs.bookCat.bookCats === null
-      ) {
+      if (this.$refs.bookCat.model === null) {
         this.bookCatVallidate = false;
       } else {
         this.bookCatVallidate = true;

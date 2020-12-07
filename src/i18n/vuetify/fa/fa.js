@@ -391,4 +391,5 @@ export default {
   categoryName :'نام دسته بندی',
   cash:'نقدی',
   credit:'اعتباری',
+  noDataText:'اطلاعاتی یافت نشد',
 };
