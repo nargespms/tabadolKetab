@@ -13,7 +13,6 @@
       item-value="symbol"
       :label="$t('category')"
       outlined
-      :height="height"
       @change="sendValue"
     >
       <template v-slot:no-data>

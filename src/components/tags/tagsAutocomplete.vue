@@ -1,23 +1,30 @@
 <template>
   <div>
     <v-autocomplete
-      v-model="tags"
-      :disabled="isUpdating"
-      :items="tagsOption"
-      outlined
+      v-model="model"
+      :items="items"
+      :loading="isLoading"
+      :search-input.sync="search"
       chips
-      color="blue-grey lighten-2"
-      :label="$t('tags')"
-      item-text="title"
-      item-value="id"
-      multiple
-      :required="true"
-      :rules="requireRules"
-      :error="!validation"
       hide-details
+      item-text="name"
+      item-value="symbol"
+      :label="$t(placeHolder)"
+      outlined
       @change="sendValue"
-      :height="height"
+      :required="validate"
+      :rules="requireRules"
+      multiple
     >
+      <template v-slot:no-data>
+        <v-list-item>
+          <v-list-item-title>
+            {{ $t('noDataText') }}
+            (حداقل یک حرف را وارد نمایید)
+          </v-list-item-title>
+        </v-list-item>
+      </template>
+
       <template v-slot:selection="data">
         <v-chip
           v-bind="data.attrs"
@@ -26,13 +33,14 @@
           @click="data.select"
           @click:close="remove(data.item)"
         >
-          {{ data.item.title }}
+          {{ data.item.name }}
         </v-chip>
       </template>
-      <template v-slot:item="data">
-        <template>
-          <v-list-item-content v-text="data.item.title"></v-list-item-content>
-        </template>
+      <template v-slot:item="{ item }">
+        <v-list-item-content>
+          <v-list-item-title v-text="item.name"></v-list-item-title>
+          <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle>
+        </v-list-item-content>
       </template>
     </v-autocomplete>
     <p v-if="!validation" class="red--text fn13">
@@ -43,53 +51,60 @@
 
 <script>
 export default {
-  name: 'tagsAutocomplete',
+  name: 'authorAutocomplete',
   props: {
-    validate: {
-      type: Boolean,
+    placeHolder: {
+      type: String,
     },
     height: {
       type: Number,
       default: undefined,
     },
+    validate: {
+      type: Boolean,
+    },
   },
   data() {
     return {
-      validation: this.validate,
-      isUpdating: false,
+      isLoading: false,
+      items: [],
+      model: null,
+      search: null,
       requireRules: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-      tags: [],
-      tagsOption: [
-        { title: 'کتاب پیشنهاد ما', id: ' 1' },
-        { title: 'کتاب ما', id: ' 12' },
-        { title: 'اهدایی', id: ' 13' },
-        { title: 'منقضی', id: ' 14' },
-
-        { title: 'Britta Holt', id: '25' },
-        { title: 'Jane Smith ', id: '26' },
-        { title: 'John Smith', id: '27' },
-        { title: 'Sandra Williams', id: '28 ' },
-      ],
+      validation: this.validate,
     };
   },
   methods: {
-    remove(item) {
-      const index = this.tags.indexOf(item.id);
-      if (index >= 0) this.tags.splice(index, 1);
-    },
     sendValue() {
-      this.$emit('getTag', this.tags);
-      if (this.tags.length > 0) {
+      if (this.model && this.model.length > 0) {
+        this.$emit('sendValue', this.model);
         this.validation = true;
       }
     },
+    remove(item) {
+      const index = this.model.indexOf(item.symbol);
+      if (index >= 0) this.model.splice(index, 1);
+    },
   },
   watch: {
-    isUpdating(val) {
-      if (val) {
+    // eslint-disable-next-line no-unused-vars
+    search(val) {
+      // Items have already been loaded
+      if (this.items.length > 0) return;
+
+      this.isLoading = true;
+
+      // Lazily load input items
+      fetch('https://api.coingecko.com/api/v3/coins/list')
+        .then(res => res.clone().json())
+        .then(res => {
+          this.items = res;
+        })
+        .catch(err => {
+          console.log(err);
+        })
         // eslint-disable-next-line no-return-assign
-        setTimeout(() => (this.isUpdating = false), 3000);
-      }
+        .finally(() => (this.isLoading = false));
     },
     validate(newVal) {
       this.validation = newVal;
