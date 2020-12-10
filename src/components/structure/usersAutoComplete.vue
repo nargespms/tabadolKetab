@@ -1,24 +1,34 @@
 <template>
-  <div :class="dynamicClass">
+  <div>
     <v-autocomplete
-      v-model="users"
-      :disabled="isUpdating"
-      :items="people"
-      outlined
+      v-model="model"
+      :items="items"
+      :loading="isLoading"
+      :search-input.sync="search"
       chips
-      color="blue-grey lighten-2"
-      :label="$t('chooseUserorS')"
       item-text="name"
-      item-value="name"
-      multiple
-      :required="true"
+      item-value="symbol"
+      :label="$t(placeHolder)"
+      outlined
+      :height="height"
+      @change="sendValue"
+      :required="validate"
       :rules="requireRules"
       :error="!validation"
-      @change="sendValue"
+      multiple
+      :dynamicClass="dynamicClass"
       :hint="hint"
-      :persistent-hint="persistentHint"
-      :height="height"
+      :persistentHint="persistentHint"
     >
+      <template v-slot:no-data>
+        <v-list-item>
+          <v-list-item-title>
+            {{ $t('noDataText') }}
+            (حداقل یک حرف را وارد نمایید)
+          </v-list-item-title>
+        </v-list-item>
+      </template>
+
       <template v-slot:selection="data">
         <v-chip
           v-bind="data.attrs"
@@ -27,27 +37,14 @@
           @click="data.select"
           @click:close="remove(data.item)"
         >
-          <v-avatar left>
-            <v-img :src="data.item.avatar"></v-img>
-          </v-avatar>
           {{ data.item.name }}
         </v-chip>
       </template>
-      <template v-slot:item="data">
-        <template v-if="typeof data.item !== 'object'">
-          <v-list-item-content v-text="data.item"></v-list-item-content>
-        </template>
-        <template v-else>
-          <v-list-item-avatar>
-            <img :src="data.item.avatar" />
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title v-html="data.item.name"></v-list-item-title>
-            <v-list-item-subtitle
-              v-html="data.item.group"
-            ></v-list-item-subtitle>
-          </v-list-item-content>
-        </template>
+      <template v-slot:item="{ item }">
+        <v-list-item-content>
+          <v-list-item-title v-text="item.name"></v-list-item-title>
+          <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle>
+        </v-list-item-content>
       </template>
     </v-autocomplete>
     <p v-if="!validation" class="red--text fn13">
@@ -58,14 +55,20 @@
 
 <script>
 export default {
-  name: 'usersAutoComplete',
+  name: 'authorAutocomplete',
   props: {
+    placeHolder: {
+      type: String,
+    },
+    height: {
+      type: Number,
+      default: undefined,
+    },
     validate: {
       type: Boolean,
     },
     dynamicClass: {
-      type: String,
-      default: '',
+      type: Boolean,
     },
     hint: {
       type: String,
@@ -75,57 +78,48 @@ export default {
       type: Boolean,
       default: false,
     },
-    height: {
-      type: Number,
-      default: undefined,
-    },
   },
   data() {
-    const srcs = {
-      1: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-      2: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-      3: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-      4: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-      5: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-    };
     return {
-      validation: this.validate,
-      isUpdating: false,
+      isLoading: false,
+      items: [],
+      model: null,
+      search: null,
       requireRules: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-      users: [],
-      people: [
-        { header: 'Group 1' },
-        { name: 'Sandra Adams', group: 'Group 1', avatar: srcs[1] },
-        { name: 'Ali Connors', group: 'Group 1', avatar: srcs[2] },
-        { name: 'Trevor Hansen', group: 'Group 1', avatar: srcs[3] },
-        { name: 'Tucker Smith', group: 'Group 1', avatar: srcs[2] },
-        { divider: true },
-        { header: 'Group 2' },
-        { name: 'Britta Holt', group: 'Group 2', avatar: srcs[4] },
-        { name: 'Jane Smith ', group: 'Group 2', avatar: srcs[5] },
-        { name: 'John Smith', group: 'Group 2', avatar: srcs[1] },
-        { name: 'Sandra Williams', group: 'Group 2', avatar: srcs[3] },
-      ],
+      validation: this.validate,
     };
   },
   methods: {
-    remove(item) {
-      const index = this.users.indexOf(item.name);
-      if (index >= 0) this.users.splice(index, 1);
-    },
     sendValue() {
-      this.$emit('setUser', this.users);
-      if (this.users.length > 0) {
+      if (this.model && this.model.length > 0) {
+        this.$emit('setUser', this.model);
         this.validation = true;
       }
     },
+    remove(item) {
+      const index = this.model.indexOf(item.symbol);
+      if (index >= 0) this.model.splice(index, 1);
+    },
   },
   watch: {
-    isUpdating(val) {
-      if (val) {
+    // eslint-disable-next-line no-unused-vars
+    search(val) {
+      // Items have already been loaded
+      if (this.items.length > 0) return;
+
+      this.isLoading = true;
+
+      // Lazily load input items
+      fetch('https://api.coingecko.com/api/v3/coins/list')
+        .then(res => res.clone().json())
+        .then(res => {
+          this.items = res;
+        })
+        .catch(err => {
+          console.log(err);
+        })
         // eslint-disable-next-line no-return-assign
-        setTimeout(() => (this.isUpdating = false), 3000);
-      }
+        .finally(() => (this.isLoading = false));
     },
     validate(newVal) {
       this.validation = newVal;

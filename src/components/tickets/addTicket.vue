@@ -58,9 +58,10 @@
           </v-select>
 
           <usersAutoComplete
-            dynamicClass="py-6"
             ref="userAutocomplete"
             :validate="userValidate"
+            class="py-6"
+            :placeHolder="'users'"
           />
 
           <v-file-input
@@ -139,8 +140,8 @@ export default {
       this.$refs.form.validate();
       // user validation
       if (
-        this.$refs.userAutocomplete.users === null ||
-        this.$refs.userAutocomplete.users.length < 1
+        this.$refs.userAutocomplete.model === null ||
+        this.$refs.userAutocomplete.model.length < 1
       ) {
         this.userValidate = false;
       } else {

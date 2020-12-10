@@ -32,7 +32,7 @@
         </v-list-item-content>
       </template>
     </v-autocomplete>
-    <p v-if="!validation" class="red--text fn13">
+    <p v-if="validation" class="red--text fn13">
       {{ $t('thisFieldIsRequired') }}
     </p>
   </div>

@@ -37,16 +37,12 @@
           </v-row>
           <v-row>
             <v-col cols="12" md="6" class="pa-0 pb-6">
-              <bookCatAutocomplete
-                :validate="true"
-                :height="36"
-                @sendValue="getBookCat"
+              <bookCatAutocomplete :validate="true" @sendValue="getBookCat"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
                 :validate="true"
                 :placeHolder="'writer'"
-                :height="36"
                 @sendValue="getWriter"
               />
             </v-col>
@@ -56,7 +52,6 @@
               <authorAutocomplete
                 :validate="true"
                 :placeHolder="'author'"
-                :height="36"
                 @sendValue="getAuthor"
               />
             </v-col>
@@ -64,7 +59,6 @@
               <authorAutocomplete
                 :validate="true"
                 :placeHolder="'translator'"
-                :height="36"
                 @sendValue="getTranslator"
               />
             </v-col>
@@ -72,9 +66,8 @@
           <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
-                :validate="true"
+                :validate="false"
                 :placeHolder="'searcher'"
-                :height="36"
                 @sendValue="getSearcher"
               />
             </v-col>

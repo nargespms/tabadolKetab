@@ -13,7 +13,7 @@
       outlined
       @change="sendValue"
       :required="validate"
-      :rules="requireRules"
+      :rules="validate ? requireRules : []"
       multiple
     >
       <template v-slot:no-data>
@@ -43,7 +43,7 @@
         </v-list-item-content>
       </template>
     </v-autocomplete>
-    <p v-if="!validation" class="red--text fn13">
+    <p v-if="validation && model" class="red--text fn13">
       {{ $t('thisFieldIsRequired') }}
     </p>
   </div>

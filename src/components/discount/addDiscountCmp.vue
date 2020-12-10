@@ -131,12 +131,12 @@
               <bookCatAutocomplete ref="bookCat" :validate="bookCatVallidate"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-0 pr-md-4 pr-lg-4 pb-4">
-              <usersAutocomplete
+              <usersAutoComplete
                 ref="userAutocomplete"
                 :validate="userValidate"
+                :placeHolder="'users'"
                 :hint="`${$t('notSelectedMeanAll')}`"
                 :persistentHint="true"
-                :height="32"
               />
             </v-col>
           </v-row>
@@ -178,7 +178,7 @@
 
 <script>
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
-import usersAutocomplete from '../structure/usersAutoComplete.vue';
+import usersAutoComplete from '../structure/usersAutoComplete.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
 
@@ -187,7 +187,7 @@ export default {
   components: {
     notifMessage,
     bookCatAutocomplete,
-    usersAutocomplete,
+    usersAutoComplete,
     rangeDatePickerCmp,
   },
   data() {

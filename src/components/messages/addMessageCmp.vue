@@ -34,8 +34,9 @@
           <usersAutoComplete
             ref="userAutocomplete"
             :validate="userValidate"
-            dynamicClass="py-6"
+            class="py-6"
             v-if="reciever === 'notAll'"
+            :placeHolder="'users'"
           />
           <v-text-field
             v-model="message.title"
@@ -187,8 +188,8 @@ export default {
       console.log(this.$refs.datePicker.date);
       // user validation
       if (
-        this.$refs.userAutocomplete.users === null ||
-        this.$refs.userAutocomplete.users.length < 1
+        this.$refs.userAutocomplete.model === null ||
+        this.$refs.userAutocomplete.model.length < 1
       ) {
         this.userValidate = false;
       } else {

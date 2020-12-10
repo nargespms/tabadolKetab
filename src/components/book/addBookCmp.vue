@@ -55,7 +55,7 @@
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
-                :validate="true"
+                :validate="false"
                 :placeHolder="'writer'"
                 @sendValue="getWriter"
               />
@@ -64,14 +64,14 @@
           <v-row class="pb-7">
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
-                :validate="true"
+                :validate="false"
                 :placeHolder="'author'"
                 @sendValue="getAuthor"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
-                :validate="true"
+                :validate="false"
                 :placeHolder="'translator'"
                 @sendValue="getTranslator"
               />
@@ -80,7 +80,7 @@
           <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
-                :validate="true"
+                :validate="false"
                 :placeHolder="'searcher'"
                 @sendValue="getSearcher"
               />
@@ -120,7 +120,7 @@
           <v-row class="pb-7">
             <v-col cols="12" md="6" class="pa-0 ">
               <publisherAutocomplete
-                :validate="true"
+                :validate="false"
                 :placeHolder="'publisher'"
                 @sendValue="getPublisher"
               />
