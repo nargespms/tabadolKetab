@@ -59,7 +59,7 @@
 
           <usersAutoComplete
             ref="userAutocomplete"
-            :validate="userValidate"
+            :isRequired="userValidate"
             class="py-6"
             :placeHolder="'users'"
           />
@@ -143,9 +143,9 @@ export default {
         this.$refs.userAutocomplete.model === null ||
         this.$refs.userAutocomplete.model.length < 1
       ) {
-        this.userValidate = false;
-      } else {
         this.userValidate = true;
+      } else {
+        this.userValidate = false;
       }
 
       if (this.$refs.form.validate()) {
