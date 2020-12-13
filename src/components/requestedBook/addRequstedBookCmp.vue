@@ -36,28 +36,28 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6" class="pa-0 pb-6">
-              <bookCatAutocomplete :validate="true" @sendValue="getBookCat"
+            <v-col cols="12" md="6" class="pa-0">
+              <bookCatAutocomplete :isRequire="false" @sendValue="getBookCat"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
-                :validate="true"
+                :isRequire="false"
                 :placeHolder="'writer'"
                 @sendValue="getWriter"
               />
             </v-col>
           </v-row>
-          <v-row class="pb-7">
+          <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
-                :validate="true"
+                :isRequire="false"
                 :placeHolder="'author'"
                 @sendValue="getAuthor"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
-                :validate="true"
+                :isRequire="false"
                 :placeHolder="'translator'"
                 @sendValue="getTranslator"
               />
@@ -66,7 +66,7 @@
           <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
-                :validate="false"
+                :isRequire="false"
                 :placeHolder="'searcher'"
                 @sendValue="getSearcher"
               />
