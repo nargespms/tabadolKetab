@@ -38,7 +38,7 @@
           <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
-                :validate="true"
+                :isRequired="false"
                 :placeHolder="'writer'"
                 :height="36"
                 @sendValue="getWriter"
