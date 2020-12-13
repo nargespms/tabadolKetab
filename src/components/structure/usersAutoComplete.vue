@@ -12,9 +12,8 @@
       outlined
       :height="height"
       @change="sendValue"
-      :required="validate"
-      :rules="requireRules"
-      :error="!validation"
+      :required="isRequired"
+      :rules="isRequired ? requireRules : []"
       multiple
       :dynamicClass="dynamicClass"
       :hint="hint"
@@ -47,9 +46,6 @@
         </v-list-item-content>
       </template>
     </v-autocomplete>
-    <p v-if="!validation" class="red--text fn13">
-      {{ $t('thisFieldIsRequired') }}
-    </p>
   </div>
 </template>
 
@@ -64,7 +60,7 @@ export default {
       type: Number,
       default: undefined,
     },
-    validate: {
+    isRequired: {
       type: Boolean,
     },
     dynamicClass: {
@@ -86,14 +82,14 @@ export default {
       model: null,
       search: null,
       requireRules: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-      validation: this.validate,
+      localRequire: this.isRequired,
     };
   },
   methods: {
     sendValue() {
       if (this.model && this.model.length > 0) {
         this.$emit('setUser', this.model);
-        this.validation = true;
+        this.localRequire = true;
       }
     },
     remove(item) {
@@ -121,8 +117,8 @@ export default {
         // eslint-disable-next-line no-return-assign
         .finally(() => (this.isLoading = false));
     },
-    validate(newVal) {
-      this.validation = newVal;
+    isRequired(newVal) {
+      this.localRequire = newVal;
     },
   },
 };

@@ -33,7 +33,7 @@
           </div>
           <usersAutoComplete
             ref="userAutocomplete"
-            :validate="userValidate"
+            :isRequired="userValidate"
             class="py-6"
             v-if="reciever === 'notAll'"
             :placeHolder="'users'"
@@ -186,14 +186,16 @@ export default {
     validate() {
       this.$refs.form.validate();
       console.log(this.$refs.datePicker.date);
-      // user validation
-      if (
-        this.$refs.userAutocomplete.model === null ||
-        this.$refs.userAutocomplete.model.length < 1
-      ) {
-        this.userValidate = false;
-      } else {
-        this.userValidate = true;
+      if (this.reciever === 'notAll') {
+        // user validation
+        if (
+          this.$refs.userAutocomplete.model === null ||
+          this.$refs.userAutocomplete.model.length < 1
+        ) {
+          this.userValidate = true;
+        } else {
+          this.userValidate = false;
+        }
       }
 
       if (
