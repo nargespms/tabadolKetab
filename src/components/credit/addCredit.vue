@@ -30,8 +30,9 @@
               ></v-text-field>
               <usersAutoComplete
                 ref="userAutocomplete"
-                :validate="userValidate"
+                :isRequired="userValidate"
                 dynamicClass="pb-7"
+                :placeHolder="'users'"
               />
               <v-textarea
                 outlined
@@ -97,9 +98,9 @@ export default {
         this.$refs.userAutocomplete.users === null ||
         this.$refs.userAutocomplete.users.length < 1
       ) {
-        this.userValidate = false;
-      } else {
         this.userValidate = true;
+      } else {
+        this.userValidate = false;
       }
 
       if (this.$refs.form.validate() && this.userValidate) {
