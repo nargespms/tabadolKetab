@@ -7,13 +7,14 @@
       :search-input.sync="search"
       chips
       clearable
-      hide-details
       hide-selected
       item-text="name"
       item-value="symbol"
       :label="$t('category')"
       outlined
       @change="sendValue"
+      :require="isRequire"
+      :rules="isRequire ? requireRules : []"
     >
       <template v-slot:no-data>
         <v-list-item>
@@ -32,9 +33,6 @@
         </v-list-item-content>
       </template>
     </v-autocomplete>
-    <p v-if="validation" class="red--text fn13">
-      {{ $t('thisFieldIsRequired') }}
-    </p>
   </div>
 </template>
 
@@ -45,7 +43,7 @@ export default {
     height: {
       type: Number,
     },
-    validate: {
+    isRequire: {
       type: Boolean,
     },
   },
@@ -55,14 +53,15 @@ export default {
       items: [],
       model: null,
       search: null,
-      validation: this.validate,
+      localRequire: this.isRequire,
+      requireRules: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
     };
   },
   methods: {
     sendValue() {
       if (this.model && this.model.length > 0) {
         this.$emit('setBookCat', this.model);
-        this.validation = true;
+        this.localRequire = true;
       }
     },
   },
@@ -86,8 +85,8 @@ export default {
         // eslint-disable-next-line no-return-assign
         .finally(() => (this.isLoading = false));
     },
-    validate(newVal) {
-      this.validation = newVal;
+    isRequire(newVal) {
+      this.localRequire = newVal;
     },
   },
 };

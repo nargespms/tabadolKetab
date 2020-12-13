@@ -4,8 +4,8 @@
     absolute
     top
     right
-    app
     light
+    app
     :color="type === 'success' ? 'success' : 'red darken-2'"
     elevation="24"
     @input="hideNotif"

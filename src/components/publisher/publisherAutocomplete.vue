@@ -43,9 +43,6 @@
         </v-list-item-content>
       </template>
     </v-autocomplete>
-    <p v-if="validation" class="red--text fn13">
-      {{ $t('thisFieldIsRequired') }}
-    </p>
   </div>
 </template>
 
@@ -60,7 +57,7 @@ export default {
       type: Number,
       default: undefined,
     },
-    validate: {
+    isRequire: {
       type: Boolean,
     },
   },
@@ -71,14 +68,14 @@ export default {
       model: null,
       search: null,
       requireRules: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-      validation: this.validate,
+      localRequire: this.isRequire,
     };
   },
   methods: {
     sendValue() {
       if (this.model && this.model.length > 0) {
         this.$emit('sendValue', this.model);
-        this.validation = true;
+        this.localRequire = true;
       }
     },
     remove(item) {
@@ -106,8 +103,8 @@ export default {
         // eslint-disable-next-line no-return-assign
         .finally(() => (this.isLoading = false));
     },
-    validate(newVal) {
-      this.validation = newVal;
+    isRequire(newVal) {
+      this.localRequire = newVal;
     },
   },
 };

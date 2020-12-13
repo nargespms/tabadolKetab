@@ -49,13 +49,13 @@
           <v-row>
             <v-col cols="12" md="6" class="pa-0 pb-6">
               <bookCatAutocomplete
-                :validate="bookCatVallidate"
+                :isRequire="bookCatVallidate"
                 @sendValue="getBookCat"
                 ref="bookCat"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
-                :validate="false"
+                :isRequire="false"
                 :placeHolder="'writer'"
                 @sendValue="getWriter"
               />
@@ -64,14 +64,14 @@
           <v-row class="pb-7">
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
-                :validate="false"
+                :isRequire="false"
                 :placeHolder="'author'"
                 @sendValue="getAuthor"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
-                :validate="false"
+                :isRequire="false"
                 :placeHolder="'translator'"
                 @sendValue="getTranslator"
               />
@@ -80,7 +80,7 @@
           <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
-                :validate="false"
+                :isRequire="false"
                 :placeHolder="'searcher'"
                 @sendValue="getSearcher"
               />
@@ -120,7 +120,7 @@
           <v-row class="pb-7">
             <v-col cols="12" md="6" class="pa-0 ">
               <publisherAutocomplete
-                :validate="false"
+                :isRequire="false"
                 :placeHolder="'publisher'"
                 @sendValue="getPublisher"
               />
@@ -131,7 +131,7 @@
               class="pa-0 pr-md-4  pr-lg-4 pr-0 pb-6 pb-md-0"
             >
               <tagsAutocomplete
-                :validate="true"
+                :isRequire="true"
                 :placeHolder="'tags'"
                 @sendValue="getTag"
               />
@@ -352,9 +352,9 @@ export default {
       this.$refs.form.validate();
       // book category validation
       if (this.$refs.bookCat.model === null) {
-        this.bookCatVallidate = false;
-      } else {
         this.bookCatVallidate = true;
+      } else {
+        this.bookCatVallidate = false;
       }
       if (this.$refs.form.validate()) {
         this.saveSuccess = true;

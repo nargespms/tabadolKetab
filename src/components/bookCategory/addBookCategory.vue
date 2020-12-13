@@ -52,10 +52,11 @@
         </v-form>
       </v-card>
     </v-col>
+
     <notifMessage
       v-if="saveSuccess"
-      :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :msg="'operationSuccessfullyOcured'"
       :type="'success'"
     />
   </v-row>
