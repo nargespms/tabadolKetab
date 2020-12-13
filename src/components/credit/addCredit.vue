@@ -31,8 +31,8 @@
               <usersAutoComplete
                 ref="userAutocomplete"
                 :isRequired="userValidate"
-                dynamicClass="pb-7"
                 :placeHolder="'users'"
+                dynamicClass="pb-7"
               />
               <v-textarea
                 outlined

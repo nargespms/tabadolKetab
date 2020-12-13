@@ -20,28 +20,27 @@
             </span>
           </v-tooltip>
         </v-card-actions>
-        <v-form class="pt-6" ref="form" v-model="valid" lazy-validation>
+        <v-form
+          class="pt-6"
+          ref="form"
+          v-model="valid"
+          lazy-validation
+          onSubmit="return false;"
+        >
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
                 v-model="barcode"
-                :rules="requireRule"
+                :rules="barcodeRules"
                 :label="$t('barcode')"
                 required
                 outlined
                 v-mask="'#########'"
-                error-count="1"
+                error-count="2"
                 @keydown.enter="addItem"
                 autofocus
               ></v-text-field
             ></v-col>
-            <v-col cols="12" md="6">
-              <usersAutocomplete
-                ref="userAutocomplete"
-                :validate="userValidate"
-                :height="32"
-              />
-            </v-col>
           </v-row>
 
           <div class="justify-center d-flex mb-4">
@@ -56,6 +55,7 @@
           </div>
         </v-form>
         <v-divider class="ma-4" v-if="invoiceItems.length > 0"></v-divider>
+
         <v-row class="pa-2">
           <invoiceItems
             v-if="invoiceItems.length > 0"
@@ -65,21 +65,35 @@
             :name="'invoiceItems'"
           />
         </v-row>
-        <v-row v-if="invoiceItems.length > 0" class="pa-2">
-          <v-col>
-            <v-textarea
-              outlined
-              name="input-7-4"
-              :label="$t('description')"
-              v-model="invoice.desc"
-            ></v-textarea>
-          </v-col>
-        </v-row>
-        <div v-if="invoiceItems.length > 0" class="justify-center d-flex mb-4">
-          <v-btn color="success" class="mr-4 px-16" @click="addInvoice">
-            {{ $t('register') }}
-          </v-btn>
-        </div>
+        <v-form class="pt-6" ref="form2" v-model="valid2" lazy-validation>
+          <v-row v-if="invoiceItems.length > 0" class="pa-2">
+            <v-col cols="12" md="6">
+              <v-textarea
+                outlined
+                name="input-7-4"
+                :label="$t('description')"
+                v-model="invoice.desc"
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12" md="6">
+              <usersAutocomplete
+                ref="userAutocomplete"
+                :isRequired="userValidate"
+                :placeHolder="'users'"
+                @setUser="setUser"
+                :key="usersKey"
+              />
+            </v-col>
+          </v-row>
+          <div
+            v-if="invoiceItems.length > 0"
+            class="justify-center d-flex mb-4"
+          >
+            <v-btn color="success" class="mr-4 px-16" @click="addInvoice">
+              {{ $t('register') }}
+            </v-btn>
+          </div>
+        </v-form>
       </v-card>
     </v-col>
     <notifMessage
@@ -112,18 +126,29 @@ export default {
   data() {
     return {
       valid: true,
+      valid2: true,
       saveSuccess: false,
       errorEnable: false,
       errorMsg: '',
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
+      barcodeRules: [
+        v => (v && v.length === 9) || `${this.$t('Charaters9')}`,
+        v => !!v || `${this.$t('thisFieldIsRequired')}`,
+      ],
+
       barcode: '',
       invoiceItems: [],
       invoice: {},
       // user validation
       userValidate: true,
+      users: [],
+      usersKey: 0,
     };
   },
   methods: {
+    setUser(value) {
+      this.users.push(value);
+    },
     invoiceList() {
       this.$router.push({
         name: 'invoicesList',
@@ -132,22 +157,10 @@ export default {
     addItem() {
       this.$refs.form.validate();
       console.log(this.barcode);
-      // user validation
-      if (
-        this.$refs.userAutocomplete.users === null ||
-        this.$refs.userAutocomplete.users.length < 1
-      ) {
-        this.userValidate = false;
-      } else {
-        this.userValidate = true;
-      }
+
       // the barcode should check via back and if it was successfull
       // it should add item to invoice item
-      if (
-        this.$refs.form.validate() &&
-        this.barcode.length === 9 &&
-        this.userValidate
-      ) {
+      if (this.$refs.form.validate() && this.barcode.length === 9) {
         this.reset();
         const item = {
           name: 'ملت عشق',
@@ -174,9 +187,24 @@ export default {
       this.saveSuccess = false;
     },
     addInvoice() {
+      this.$refs.form2.validate();
+      // user validation
+      if (
+        this.$refs.userAutocomplete.model === null ||
+        this.$refs.userAutocomplete.model.length < 1
+      ) {
+        this.userValidate = true;
+      } else {
+        this.userValidate = false;
+      }
+      if (this.$refs.form2.validate()) {
+        this.users = [];
+        this.usersKey = +1;
+        this.invoice.desc = '';
+        this.invoiceItems = [];
+        this.saveSuccess = true;
+      }
       console.log(this.invoiceItems, this.invoice);
-      this.invoice.desc = '';
-      this.saveSuccess = true;
       // this.$router.push({ path: `/invoicesList/${response.id}` });
     },
   },
