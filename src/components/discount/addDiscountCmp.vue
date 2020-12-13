@@ -128,12 +128,12 @@
           </v-row>
           <v-row>
             <v-col cols="12" md="6" class="pa-0 pb-6 pa-md-0 pa-lg-0">
-              <bookCatAutocomplete ref="bookCat" :validate="bookCatVallidate"
+              <bookCatAutocomplete ref="bookCat" :isRequire="bookCatVallidate"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-0 pr-md-4 pr-lg-4 pb-4">
               <usersAutoComplete
                 ref="userAutocomplete"
-                :validate="userValidate"
+                :isRequired="userValidate"
                 :placeHolder="'users'"
                 :hint="`${$t('notSelectedMeanAll')}`"
                 :persistentHint="true"
@@ -248,9 +248,9 @@ export default {
       }
       // book category validation
       if (this.$refs.bookCat.model === null) {
-        this.bookCatVallidate = false;
-      } else {
         this.bookCatVallidate = true;
+      } else {
+        this.bookCatVallidate = false;
       }
 
       // user validation
@@ -258,9 +258,9 @@ export default {
         this.$refs.userAutocomplete.users === null ||
         this.$refs.userAutocomplete.users.length < 1
       ) {
-        this.userValidate = false;
-      } else {
         this.userValidate = true;
+      } else {
+        this.userValidate = false;
       }
 
       if (this.toDateValidation && this.fromDateValidation) {
