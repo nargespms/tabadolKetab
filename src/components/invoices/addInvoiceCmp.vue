@@ -39,8 +39,14 @@
                 error-count="2"
                 @keydown.enter="addItem"
                 autofocus
-              ></v-text-field
-            ></v-col>
+              >
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+              </v-text-field></v-col
+            >
           </v-row>
 
           <div class="justify-center d-flex mb-4">

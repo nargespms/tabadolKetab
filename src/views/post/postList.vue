@@ -63,6 +63,7 @@ export default {
           align: 'center',
           body: 100,
           divider: true,
+          icon: ' 🧑‍💻',
         },
         {
           text: 'status',
@@ -77,6 +78,7 @@ export default {
           filterable: true,
           align: 'center',
           divider: true,
+          icon: ' 🧑‍💻',
         },
         {
           text: 'userLandLane',
@@ -84,6 +86,7 @@ export default {
           filterable: true,
           align: 'center',
           divider: true,
+          icon: ' 🧑‍💻',
         },
         {
           text: 'description',
@@ -92,6 +95,7 @@ export default {
           align: 'center',
           body: 100,
           divider: true,
+          icon: ' 🧑‍💻',
         },
         {
           text: 'user',
@@ -108,6 +112,7 @@ export default {
           width: 250,
           class: 'operationClass',
           divider: true,
+          icon: ' 🧑‍💻',
         },
       ],
     };

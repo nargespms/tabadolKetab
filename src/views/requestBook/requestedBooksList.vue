@@ -19,6 +19,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'shabak',
@@ -33,6 +34,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'category',
@@ -40,6 +42,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'status',
@@ -47,6 +50,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'user',
@@ -68,6 +72,7 @@ export default {
           align: 'center',
           filterable: false,
           divider: true,
+          icon: '👨‍💼',
         },
       ],
     };

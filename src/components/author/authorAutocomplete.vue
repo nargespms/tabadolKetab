@@ -75,7 +75,7 @@ export default {
     sendValue() {
       if (this.model && this.model.length > 0) {
         this.$emit('sendValue', this.model);
-        this.validation = true;
+        this.localRequire = true;
       }
     },
     remove(item) {

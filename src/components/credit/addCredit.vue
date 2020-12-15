@@ -27,13 +27,24 @@
                     : ''
                 "
                 persistent-hint
-              ></v-text-field>
-              <usersAutoComplete
-                ref="userAutocomplete"
-                :isRequired="userValidate"
-                :placeHolder="'users'"
-                dynamicClass="pb-7"
-              />
+              >
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+              </v-text-field>
+              <div>
+                <span class="fn-25">
+                  🧑‍💻
+                </span>
+                <usersAutoComplete
+                  ref="userAutocomplete"
+                  :isRequired="userValidate"
+                  :placeHolder="'users'"
+                  dynamicClass="pb-7"
+                />
+              </div>
               <v-textarea
                 outlined
                 name="input-7-4"

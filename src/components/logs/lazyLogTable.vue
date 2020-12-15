@@ -1,5 +1,8 @@
 <template>
   <div>
+    <span class="fn-25">
+      🧑‍💻
+    </span>
     <v-toolbar color="teal " flat height="48">
       <span class="pr-4 font-weight-medium white--text">
         {{ $t('logsList') }}

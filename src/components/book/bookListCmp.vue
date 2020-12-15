@@ -19,6 +19,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'registerDate',
@@ -26,6 +27,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'category',
@@ -33,6 +35,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'status',
@@ -40,6 +43,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'tags',
@@ -47,6 +51,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'mainPrice',
@@ -54,6 +59,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'soldPrice',
@@ -61,6 +67,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'confirmRegisterDate',
@@ -68,6 +75,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'user',

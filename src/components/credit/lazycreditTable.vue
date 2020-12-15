@@ -40,37 +40,60 @@
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
           </v-icon>
+          <span class="fn-25">
+            👨‍💼
+          </span>
         </th>
         <th>
           {{ $t('transactionDate') }}
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
           </v-icon>
+          <span class="fn-25">
+            👨‍💼
+          </span>
         </th>
         <th>
           {{ $t('amount') }}
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
           </v-icon>
+          <span class="fn-25">
+            👨‍💼
+          </span>
         </th>
         <th>
           {{ $t('trackingCode') }}
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
           </v-icon>
+          <span class="fn-25">
+            👨‍💼
+          </span>
         </th>
-        <th>{{ $t('payType') }}</th>
+        <th>
+          {{ $t('payType') }}
+          <span class="fn-25">
+            👨‍💼
+          </span>
+        </th>
         <th>
           {{ $t('sender') }}
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
           </v-icon>
+          <span class="fn-25">
+            👨‍💼
+          </span>
         </th>
         <th>
           {{ $t('description') }}
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
           </v-icon>
+          <span class="fn-25">
+            👨‍💼
+          </span>
         </th>
         <th>
           {{ $t('user') }}
@@ -83,6 +106,9 @@
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
           </v-icon>
+          <span class="fn-25">
+            👨‍💼
+          </span>
         </th>
         <th>{{ $t('operation') }}</th>
       </thead>

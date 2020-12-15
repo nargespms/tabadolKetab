@@ -34,6 +34,7 @@ export default {
           filterable: true,
           align: 'center',
           divider: true,
+          icon: ' 🧑‍💻',
         },
         {
           text: 'client',
@@ -41,6 +42,7 @@ export default {
           filterable: true,
           align: 'center',
           divider: true,
+          icon: ' 🧑‍💻',
         },
         {
           text: 'totalPrice',

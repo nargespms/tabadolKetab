@@ -1,6 +1,9 @@
 <template>
   <div>
     <v-row class="px-2 justify-end">
+      <span class="fn-25">
+        👨‍💼
+      </span>
       <v-col cols="12" md="4" align="center" class="pa-0">
         <div class="d-flex flex-row-reverse  pa-2">
           <v-btn

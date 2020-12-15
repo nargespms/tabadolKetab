@@ -12,8 +12,8 @@
       :label="$t(placeHolder)"
       outlined
       @change="sendValue"
-      :required="validate"
-      :rules="validate ? requireRules : []"
+      :required="isRequire"
+      :rules="isRequire ? requireRules : []"
       multiple
     >
       <template v-slot:no-data>

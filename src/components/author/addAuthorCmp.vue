@@ -39,7 +39,13 @@
                 required
                 outlined
                 error-count="1"
-              ></v-text-field>
+              >
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+              </v-text-field>
               <v-checkbox
                 v-model="author.active"
                 :label="$t('activeinactive')"

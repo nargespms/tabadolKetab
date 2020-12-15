@@ -30,7 +30,12 @@
                 required
                 outlined
                 error-count="1"
-              ></v-text-field>
+                ><template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template></v-text-field
+              >
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <v-text-field
@@ -90,7 +95,15 @@
                 v-model="book.shabak"
                 :label="$t('shabak')"
                 outlined
-              ></v-text-field>
+                required
+                :rules="requireRule"
+              >
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+              </v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -130,11 +143,16 @@
               md="6"
               class="pa-0 pr-md-4  pr-lg-4 pr-0 pb-6 pb-md-0"
             >
-              <tagsAutocomplete
-                :isRequire="true"
-                :placeHolder="'tags'"
-                @sendValue="getTag"
-              />
+              <div class="flex">
+                <span class="fn-25">
+                  🧑‍💻
+                </span>
+                <tagsAutocomplete
+                  :isRequire="true"
+                  :placeHolder="'tags'"
+                  @sendValue="getTag"
+                />
+              </div>
             </v-col>
           </v-row>
           <v-row>
@@ -161,6 +179,7 @@
                 <span class="font-weight-black">
                   {{ $t('bookDonation') }} :
                 </span>
+
                 <v-radio-group
                   v-model="book.bookDonation"
                   row
@@ -180,10 +199,16 @@
                 </v-radio-group></div
             ></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-              <v-checkbox
-                v-model="book.weeklyDiscount"
-                :label="$t('weeklyDiscount')"
-              ></v-checkbox>
+              <div class="flex">
+                <span class="fn-25">
+                  🧑‍💻
+                </span>
+                <v-checkbox
+                  v-model="book.weeklyDiscount"
+                  :label="$t('weeklyDiscount')"
+                >
+                </v-checkbox>
+              </div>
             </v-col>
           </v-row>
           <v-row>
@@ -202,7 +227,18 @@
                       )}`
                     : ''
                 "
-              ></v-text-field>
+              >
+                <template v-slot:prepend>
+                  <span class="fn-25">
+                    🧑‍💻
+                  </span>
+                </template>
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+              </v-text-field>
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <v-select
@@ -221,6 +257,16 @@
                 <template v-slot:selection="{ item }">
                   <span>
                     {{ $t(item) }}
+                  </span>
+                </template>
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+                <template v-slot:prepend>
+                  <span class="fn-25">
+                    🧑‍💻
                   </span>
                 </template>
               </v-select>

@@ -68,6 +68,9 @@
                 @click="filter"
                 >fas fa-filter
               </v-icon>
+              <span class="fn-25">
+                {{ h.icon }}
+              </span>
             </th>
           </tr>
         </thead>
