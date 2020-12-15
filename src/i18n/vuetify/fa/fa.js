@@ -389,4 +389,5 @@ export default {
     cash: 'نقدی',
     credit: 'اعتباری',
     noDataText: 'اطلاعاتی یافت نشد',
+    itemsPerPageText: 'تست',
 };

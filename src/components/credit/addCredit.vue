@@ -95,8 +95,8 @@ export default {
       this.$refs.form.validate();
       // user validate
       if (
-        this.$refs.userAutocomplete.users === null ||
-        this.$refs.userAutocomplete.users.length < 1
+        this.$refs.userAutocomplete.model === null ||
+        this.$refs.userAutocomplete.model.length < 1
       ) {
         this.userValidate = true;
       } else {

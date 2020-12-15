@@ -59,6 +59,9 @@
                 @click="filter"
                 >fas fa-filter
               </v-icon>
+              <span class="fn-25">
+                {{ h.icon }}
+              </span>
             </th>
           </tr>
         </thead>
@@ -68,6 +71,7 @@
           {{ item.title }}</router-link
         >
       </template>
+
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon medium class="ma-2" @click="preview(item)">
           mdi-eye

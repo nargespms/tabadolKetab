@@ -99,6 +99,11 @@
                       {{ $t(item) }}
                     </span>
                   </template>
+                  <template v-slot:prepend>
+                    <span class="fn-25">
+                      🧑‍💻
+                    </span>
+                  </template>
                 </v-select>
               </v-col>
             </v-row>
@@ -111,7 +116,13 @@
                   name="input-7-4"
                   :label="$t('address')"
                   v-model="register.address"
-                ></v-textarea>
+                >
+                  <template v-slot:prepend>
+                    <span class="fn-25">
+                      🧑‍💻
+                    </span>
+                  </template>
+                </v-textarea>
               </v-col>
               <v-col cols="12" md="6">
                 <v-textarea
@@ -120,7 +131,13 @@
                   name="input-7-4"
                   :label="$t('description')"
                   v-model="register.description"
-                ></v-textarea>
+                >
+                  <template v-slot:prepend>
+                    <span class="fn-25">
+                      🧑‍💻
+                    </span>
+                  </template></v-textarea
+                >
               </v-col>
             </v-row>
 
@@ -133,7 +150,13 @@
                   :rules="postalCodeRules"
                   outlined
                   error-count="2"
-                ></v-text-field>
+                >
+                  <template v-slot:prepend>
+                    <span class="fn-25">
+                      🧑‍💻
+                    </span>
+                  </template>
+                </v-text-field>
               </v-col>
               <v-col cols="12" md="6">
                 <v-file-input
@@ -141,7 +164,8 @@
                   show-size
                   prepend-icon="mdi-image"
                   :label="$t('avatar')"
-                ></v-file-input>
+                >
+                </v-file-input>
               </v-col>
             </v-row>
             <passwords />
@@ -151,7 +175,13 @@
                   v-model="register.active"
                   :label="$t('activeinactive')"
                   required
-                ></v-checkbox>
+                >
+                  <template v-slot:prepend>
+                    <span class="fn-25">
+                      🧑‍💻
+                    </span>
+                  </template>
+                </v-checkbox>
               </v-col>
             </v-row>
             <div class="justify-center d-flex">

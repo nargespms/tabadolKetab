@@ -41,6 +41,9 @@ a {
 .fn13 {
   font-size: 13px;
 }
+.fn-25 {
+  font-size: 25px;
+}
 .fn18 {
   font-size: 18px !important;
 }

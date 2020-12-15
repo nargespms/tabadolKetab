@@ -1,5 +1,11 @@
 <template>
   <div>
+    <span class="fn-25">
+      🧑‍💻
+    </span>
+    <span class="fn-25">
+      👨‍🔧
+    </span>
     <v-data-table
       :headers="headers"
       :items="tableData"

@@ -1,5 +1,8 @@
 <template>
   <v-row no-gutters class="justify-center">
+    <span class="fn-25">
+      🧑‍💻
+    </span>
     <v-col cols="12" sm="6" md="9">
       <v-card class="pa-4">
         <v-card-actions class="teal">
@@ -32,7 +35,12 @@
                 required
                 outlined
                 error-count="2"
-              ></v-text-field>
+                ><template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template></v-text-field
+              >
             </v-col>
           </v-row>
           <v-row>
@@ -66,6 +74,11 @@
                     {{ $t(item) }}
                   </span>
                 </template>
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
               </v-select>
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-0 pr-md-4 pr-lg-4">
@@ -77,7 +90,12 @@
                 outlined
                 error-count="1"
                 v-mask="'##########'"
-              ></v-text-field>
+                ><template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template></v-text-field
+              >
             </v-col>
           </v-row>
           <v-row>
@@ -255,8 +273,8 @@ export default {
 
       // user validation
       if (
-        this.$refs.userAutocomplete.users === null ||
-        this.$refs.userAutocomplete.users.length < 1
+        this.$refs.userAutocomplete.model === null ||
+        this.$refs.userAutocomplete.model.length < 1
       ) {
         this.userValidate = true;
       } else {

@@ -1,5 +1,15 @@
 <template>
   <v-row no-gutters class="justify-center">
+    <span class="fn-25">
+      🧑‍💻
+    </span>
+
+    <span class="fn-25">
+      👨‍💼
+    </span>
+    <span class="fn-25">
+      👨‍🔧
+    </span>
     <v-col cols="12" sm="6" md="8">
       <v-card class="pa-4">
         <v-card-actions class="teal">
@@ -29,7 +39,13 @@
             required
             outlined
             error-count="2"
-          ></v-text-field>
+          >
+            <template v-slot:prepend-inner>
+              <span class="red--text">
+                *
+              </span>
+            </template>
+          </v-text-field>
           <v-textarea
             outlined
             required
@@ -37,7 +53,13 @@
             name="input-7-4"
             :label="$t('messageText')"
             v-model="ticket.text"
-          ></v-textarea>
+          >
+            <template v-slot:prepend-inner>
+              <span class="red--text">
+                *
+              </span>
+            </template>
+          </v-textarea>
           <v-select
             :items="departments"
             :label="$t('department')"
@@ -55,14 +77,30 @@
                 {{ $t(item) }}
               </span>
             </template>
+            <template v-slot:prepend>
+              <span class="fn-25">
+                👨‍💼
+              </span>
+            </template>
+            <template v-slot:prepend-inner>
+              <span class="red--text">
+                *
+              </span>
+            </template>
           </v-select>
+          <div class="flex">
+            <span class="fn-25">
+              🧑‍💻
+            </span>
 
-          <usersAutoComplete
-            ref="userAutocomplete"
-            :isRequired="userValidate"
-            class="py-6"
-            :placeHolder="'users'"
-          />
+            <usersAutoComplete
+              ref="userAutocomplete"
+              :isRequired="userValidate"
+              class="py-6"
+              :placeHolder="'users'"
+            >
+            </usersAutoComplete>
+          </div>
 
           <v-file-input
             outlined

@@ -19,6 +19,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'title',
@@ -26,6 +27,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
 
         {
@@ -35,6 +37,7 @@ export default {
           align: 'center',
           body: 100,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'status',
@@ -50,6 +53,7 @@ export default {
           filterable: true,
           align: 'center',
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'sender',
@@ -72,6 +76,7 @@ export default {
           width: 250,
           class: 'operationClass',
           divider: true,
+          icon: '👨‍💼',
         },
       ],
     };

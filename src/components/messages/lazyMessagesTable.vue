@@ -48,12 +48,18 @@
     >
       <thead class="grey lighten-2">
         <th>
+          <span class="fn-25">
+            👨‍💼
+          </span>
           {{ $t('title') }}
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
           </v-icon>
         </th>
         <th>
+          <span class="fn-25">
+            👨‍💼
+          </span>
           {{ $t('sendDate') }}
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
@@ -73,6 +79,9 @@
         </th>
         <th>{{ $t('attachments') }}</th>
         <th>
+          <span class="fn-25">
+            👨‍💼
+          </span>
           {{ $t('sender') }}
           <v-icon color="grey" size="11" class="pa-2" @click="filter"
             >fas fa-filter
@@ -90,7 +99,7 @@
             >fas fa-filter
           </v-icon>
         </th>
-        <th>{{ $t('operation') }}</th>
+        <th><span class="fn-25"> 👨‍💼 </span>{{ $t('operation') }}</th>
       </thead>
       <tbody>
         <tr
