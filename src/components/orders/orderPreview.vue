@@ -81,6 +81,11 @@
                     {{ $t(item) }}
                   </span>
                 </template>
+                <template v-slot:prepend>
+                  <span class="fn-25">
+                    🧑‍💻
+                  </span>
+                </template>
               </v-select>
             </v-col>
             <v-col cols="12" md="4">
@@ -93,7 +98,9 @@
             </v-col>
             <v-col cols="12" md="4" class="text-left">
               <span class=" primary--text">
-                *این دو فیلد برای admin است
+                <span class="fn-25">
+                  🧑‍💻
+                </span>
               </span>
             </v-col>
           </v-row>

@@ -34,6 +34,7 @@ export default {
           filterable: true,
           align: 'center',
           divider: true,
+          icon: '🧑‍💻',
         },
         {
           text: 'createdAt',
@@ -55,6 +56,7 @@ export default {
           filterable: true,
           align: 'center',
           divider: true,
+          icon: '🧑‍💻',
         },
         {
           text: 'price',

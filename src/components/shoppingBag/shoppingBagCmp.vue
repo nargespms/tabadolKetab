@@ -68,6 +68,9 @@
                   <span class="fn13">
                     {{ $t('selectAddress') }}
                   </span>
+                  <span class="fn13 black--text">
+                    (شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷)
+                  </span>
                 </div>
                 <v-dialog v-model="addressModalEnable" max-width="500px">
                   <addressCmp @hideAddressList="hideAddressList" state="list" />
