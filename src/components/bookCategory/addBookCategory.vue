@@ -35,7 +35,13 @@
             required
             outlined
             class="pt-4"
-          ></v-text-field>
+          >
+            <template v-slot:prepend-inner>
+              <span class="red--text">
+                *
+              </span>
+            </template>
+          </v-text-field>
           <v-checkbox
             v-model="bookCat.active"
             :label="$t('activeinactive')"

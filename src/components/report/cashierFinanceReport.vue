@@ -28,8 +28,8 @@
         <v-col cols="12" md="2">
           <usersAutoComplete
             ref="userAutocomplete"
-            :validate="userValidate"
-            :height="36"
+            :isRequired="userValidate"
+            :placeHolder="'users'"
           />
         </v-col>
         <v-col cols="12" md="2">
@@ -160,9 +160,9 @@ export default {
         this.$refs.userAutocomplete.model === null ||
         this.$refs.userAutocomplete.model.length < 1
       ) {
-        this.userValidate = false;
-      } else {
         this.userValidate = true;
+      } else {
+        this.userValidate = false;
       }
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation

@@ -230,7 +230,7 @@ export default {
       // bookCategory vlidate
       bookCatVallidate: true,
       // user validation
-      userValidate: true,
+      userValidate: false,
     };
   },
 
@@ -271,16 +271,6 @@ export default {
         this.bookCatVallidate = false;
       }
 
-      // user validation
-      if (
-        this.$refs.userAutocomplete.model === null ||
-        this.$refs.userAutocomplete.model.length < 1
-      ) {
-        this.userValidate = true;
-      } else {
-        this.userValidate = false;
-      }
-
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation
         if (this.$refs.form.validate()) {
@@ -298,7 +288,6 @@ export default {
       this.toDateValidation = true;
       this.fromDateValidation = true;
       this.bookCatVallidate = true;
-      this.userValidate = true;
     },
     // notification hide
     hideNotif() {

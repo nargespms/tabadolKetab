@@ -9,6 +9,9 @@
       :class="!valid ? 'costum-error pt-2' : ''"
     >
       <div slot="label">
+        <span v-if="!validate" class="red--text">
+          *
+        </span>
         <v-icon color="primary" size="26" class="mt-3">mdi-calendar</v-icon>
       </div>
     </date-picker>

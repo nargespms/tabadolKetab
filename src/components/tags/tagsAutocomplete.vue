@@ -41,6 +41,11 @@
           <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle>
         </v-list-item-content>
       </template>
+      <template v-if="isRequire" v-slot:prepend-inner>
+        <span class="red--text">
+          *
+        </span>
+      </template>
     </v-autocomplete>
   </div>
 </template>

@@ -51,7 +51,12 @@
             required
             outlined
             error-count="2"
-          ></v-text-field>
+            ><template v-slot:prepend-inner>
+              <span class="red--text">
+                *
+              </span>
+            </template></v-text-field
+          >
 
           <v-textarea
             outlined
@@ -60,7 +65,13 @@
             name="input-7-4"
             :label="$t('messageText')"
             v-model="message.text"
-          ></v-textarea>
+          >
+            <template v-slot:prepend-inner>
+              <span class="red--text">
+                *
+              </span>
+            </template>
+          </v-textarea>
           <div class="d-flex align-center">
             <v-select
               :items="messageType"
@@ -77,6 +88,11 @@
               <template v-slot:selection="{ item }">
                 <span>
                   {{ $t(item) }}
+                </span>
+              </template>
+              <template v-slot:prepend-inner>
+                <span class="red--text">
+                  *
                 </span>
               </template>
             </v-select>

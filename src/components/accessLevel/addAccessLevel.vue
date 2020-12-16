@@ -22,7 +22,12 @@
                 error-count="1"
                 height="32"
                 min-height="32"
-              ></v-text-field>
+                ><template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template></v-text-field
+              >
             </v-col>
           </v-row>
           <v-row>
