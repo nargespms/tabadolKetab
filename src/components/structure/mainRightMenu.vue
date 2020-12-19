@@ -140,6 +140,16 @@ export default {
               link: '/users/clients',
               icon: 'fa fa-table',
             },
+            {
+              title: 'roleCreation',
+              link: '/accessLevelCreation',
+              icon: 'fas fa-user-cog',
+            },
+            {
+              title: 'roleList',
+              link: '/accessLevelList',
+              icon: 'mdi-account-group',
+            },
           ],
         },
         {
@@ -336,12 +346,12 @@ export default {
           active: false,
           items: [
             {
-              title: 'accessLevelCreation',
+              title: 'roleCreation',
               link: '/accessLevelCreation',
               icon: 'fas fa-user-cog',
             },
             {
-              title: 'accessLevelList',
+              title: 'roleList',
               link: '/accessLevelList',
               icon: 'fas fa-table',
             },

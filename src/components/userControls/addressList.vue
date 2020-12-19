@@ -82,7 +82,7 @@
               <v-icon color="white"> mdi-checkbox-marked-outline</v-icon>
             </v-btn>
           </template>
-          {{ $t('postRequest') }}
+          {{ $t('bookSendReq') }}
         </v-tooltip>
       </v-list-item>
     </v-list>

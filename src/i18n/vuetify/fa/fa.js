@@ -10,7 +10,7 @@ export default {
     AddBookCategory: ' ایجاد دسته بندی کتاب',
     BookCategoryList: ' لیست دسته بندی‌های کتاب',
     messages: 'پیام ‌ها',
-    landLane: 'شماره ثابت',
+    landLane: 'شماره تلفن ثابت',
     tickets: 'تیکت ‌ها',
     AddTicket: 'ایجاد تیکت',
     TicketsList: 'لیست تیکت ها ',
@@ -390,4 +390,8 @@ export default {
     credit: 'اعتباری',
     noDataText: 'اطلاعاتی یافت نشد',
     itemsPerPageText: 'تست',
+    bookSendReq: 'درخواست ارسال کتاب',
+    roleCreation: 'ایجاد نقش',
+    roleList: 'لیست نقش ها',
+
 };

@@ -27,6 +27,7 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
+          icon: '👨‍💼',
         },
         {
           text: 'requestDate',

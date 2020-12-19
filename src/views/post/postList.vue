@@ -63,7 +63,6 @@ export default {
           align: 'center',
           body: 100,
           divider: true,
-          icon: ' 🧑‍💻',
         },
         {
           text: 'status',

@@ -11,7 +11,7 @@
             class="white--text"
             @click="addressModal"
             :disabled="request.length < 1"
-            >{{ $t('postRequest') }}</v-btn
+            >{{ $t('bookSendReq') }}</v-btn
           >
           <div v-if="request.length < 1" class="warnReq ml-3">
             <v-icon color="red"> fas fa-exclamation-triangle </v-icon>
@@ -23,7 +23,7 @@
     <v-toolbar color="teal " flat height="48">
       <v-icon color="white">fas fa-motorcycle</v-icon>
       <span class="pr-4 font-weight-medium white--text">
-        {{ $t('postRequest') }}
+        {{ $t('bookSendReq') }}
       </span>
     </v-toolbar>
     <v-progress-linear
