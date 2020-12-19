@@ -12,7 +12,7 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="3">
-              <v-avatar size="128">
+              <v-avatar size="160">
                 <img
                   src="https://cdn.vuetifyjs.com/images/john.jpg"
                   alt="John"
