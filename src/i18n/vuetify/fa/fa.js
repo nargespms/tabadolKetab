@@ -57,6 +57,7 @@ export default {
   code: 'کد',
   description: 'توضیحات',
   user: 'کاربر',
+  profile: 'پروفایل',
   id: 'شناسه',
   // signup
   signUp: 'ثبت نام',
