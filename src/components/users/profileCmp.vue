@@ -29,7 +29,7 @@
                 <v-simple-table>
                   <template v-slot:default>
                     <tbody>
-                      <tr v-for="item in desserts" :key="item.name">
+                      <tr v-for="item in info" :key="item.name">
                         <td>{{ item.name }}</td>
                         <td>{{ item.value }}</td>
                       </tr>
@@ -51,7 +51,7 @@ export default {
 
   data() {
     return {
-      desserts: [
+      info: [
         {
           name: 'نام',
           value: 'علی',
