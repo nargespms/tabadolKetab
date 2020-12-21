@@ -14,7 +14,7 @@
           <v-list-item-avatar>
             <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
           </v-list-item-avatar>
-          <v-list-item link>
+          <v-list-item link to="users/profile/1">
             <v-list-item-content>
               <v-list-item-title class="fn18 pa-4">
                 مدیر تبادل

@@ -92,6 +92,8 @@ export default {
   lastName: 'نام خانوادگی',
   deleteUser: 'حذف کاربر',
   RUSureUWantToDeletThisUser: 'آیا میخواهید این کاربر را حذف نمایید؟',
+  personalInformation: 'مشخصات',
+  imageEditing: 'ویرایش تصویر',
   // messages
   summaryText: 'خلاصه پیام',
   sendDate: 'زمان ارسال',
