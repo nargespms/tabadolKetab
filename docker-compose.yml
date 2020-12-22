@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  vkann:
+  tabadol:
     container_name: tabadol_front
     image: docker-hub.aasaam.com:5600/tabadolfront:latest
    
