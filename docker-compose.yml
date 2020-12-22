@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  vkann:
+    container_name: tabadol_front
+    image: docker-hub.aasaam.com:5600/tabadolfront:latest
+   
+    volumes:
+      - ../aasaam_crm/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../aasaam_crm/nginx/mime.types:/etc/nginx/mime.types:ro
+      - files-storage:/storage/files:ro
+
+    ports:
+      - 8080:8080
+   
+
+ volumes:
+  files-storage:

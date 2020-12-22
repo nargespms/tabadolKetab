@@ -1,0 +1,32 @@
+
+FROM nginx:1 as build-stage
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app    
+
+# Bundle app source
+COPY ./app /usr/src/app
+
+
+
+# Install app dependencies
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt install -y nodejs \
+    && echo 'cache = "/tmp/npm"' > /root/.npmrc \
+    && npm install \
+    && npm update -g \
+    && apt update -y \
+    && apt upgrade -y \
+    && npm run build \ 
+    && apt install nginx -y \
+    && apt  remove nodejs -y \
+    && rm -r /var/lib/apt/lists/* && rm -rf /tmp && mkdir /tmp && chmod 777 /tmp && truncate -s 0 /var/log/*.log \
+    && rm -rf /app/var/cache/npm
+
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+
+
+
+
+# STOPSIGNAL SIGTERM
+EXPOSE 8080

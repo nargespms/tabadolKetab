@@ -1,0 +1,22 @@
+image: docker:stable
+
+services:
+  - docker:dind
+
+stages:
+  - build
+
+variables:
+  DOCKER_DRIVER: overlay2
+  # DOCKER_HOST: tcp://localhost:2375
+  CONTAINER_RELEASE_IMAGE_AASAAM: $AASAAM_REGISTRY_HUB_NAME/tabadolfront:latest
+
+before_script:
+  - docker login -u $AASAAM_REGISTRY_USER -p $AASAAM_REGISTRY_PASSWORD $AASAAM_REGISTRY_HUB_ENDPOINT
+
+build:
+  stage: build
+  script:
+    - docker build -f Dockerfile -t $CONTAINER_RELEASE_IMAGE_AASAAM .
+    - docker push $CONTAINER_RELEASE_IMAGE_AASAAM
+    - docker rmi $CONTAINER_RELEASE_IMAGE_AASAAM
