@@ -1,11 +1,12 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="12" md="6">
+      <v-col cols="12" :md="mode ? '12' : '6'">
         <password @setPassword="setPassword" />
+        <confirmPassword :password="password" v-if="mode == 'edit'" />
       </v-col>
       <v-col cols="12" md="6">
-        <confirmPassword :password="password" />
+        <confirmPassword :password="password" v-if="mode !== 'edit'" />
       </v-col>
     </v-row>
   </div>
@@ -17,6 +18,11 @@ import confirmPassword from './passwordsCom/confirmPassword.vue';
 
 export default {
   name: 'Passwords',
+  props: {
+    mode: {
+      type: String,
+    },
+  },
   components: {
     password,
     confirmPassword,

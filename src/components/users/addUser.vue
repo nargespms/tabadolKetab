@@ -1,13 +1,24 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <v-col cols="12" sm="6" md="8">
+    <v-col cols="12" :md="mode ? '12' : '8'" :sm="mode ? '12' : '6'">
       <v-card class="pa-4">
-        <v-card-actions class="teal">
+        <v-card-actions class="teal" v-if="mode !== 'edit'">
           <v-card-title class="white--text pa-0">
             <span>
               {{ $t('signUp') }}
             </span>
           </v-card-title>
+          <v-spacer></v-spacer>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon color="white" @click="ClientsList"> fa fa-table</v-icon>
+              </v-btn>
+            </template>
+            <span>
+              {{ $t('ClientsList') }}
+            </span>
+          </v-tooltip>
         </v-card-actions>
 
         <v-form class="pt-6" ref="form" v-model="valid" lazy-validation>
@@ -168,7 +179,7 @@
                 </v-file-input>
               </v-col>
             </v-row>
-            <passwords />
+            <passwords v-if="mode !== 'edit'" />
             <v-row>
               <v-col cols="12" md="6">
                 <v-checkbox
@@ -218,7 +229,12 @@ import nationalId from '../userControls/nationalId.vue';
 import email from '../userControls/email.vue';
 
 export default {
-  name: 'signUpCom',
+  name: 'addUser',
+  props: {
+    mode: {
+      type: String,
+    },
+  },
   components: {
     notifMessage,
     passwords,
@@ -251,6 +267,11 @@ export default {
     };
   },
   methods: {
+    ClientsList() {
+      this.$router.push({
+        name: 'clientsList',
+      });
+    },
     validate() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {

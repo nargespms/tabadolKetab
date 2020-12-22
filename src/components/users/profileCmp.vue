@@ -11,33 +11,66 @@
         </v-card-actions>
         <v-container>
           <v-row>
-            <v-col cols="12" md="3">
+            <v-tabs vertical color="teal">
               <v-avatar size="160">
                 <img
                   src="https://cdn.vuetifyjs.com/images/john.jpg"
                   alt="John"
                 />
               </v-avatar>
-              <v-btn class="mr-4 d-block ma-4">{{ $t('edit') }} </v-btn>
-              <v-btn class="mr-4 d-block ma-4"
-                >{{ $t('changePassword') }}
-              </v-btn>
-            </v-col>
+              <v-btn text>{{ $t('imageEditing') }} </v-btn>
+              <v-tab>
+                {{ $t('personalInformation') }}
+              </v-tab>
+              <v-tab>
+                {{ $t('edit') }}
+              </v-tab>
+              <v-tab>
+                {{ $t('changePassword') }}
+              </v-tab>
 
-            <v-col cols="12" md="9">
-              <template>
-                <v-simple-table>
-                  <template v-slot:default>
-                    <tbody>
-                      <tr v-for="item in info" :key="item.name">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.value }}</td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              </template>
-            </v-col>
+              <v-tab-item>
+                <v-card flat>
+                  <v-card-text>
+                    <template>
+                      <v-simple-table>
+                        <template v-slot:default>
+                          <tbody>
+                            <tr v-for="item in info" :key="item.name">
+                              <td>{{ item.name }}</td>
+                              <td>{{ item.value }}</td>
+                            </tr>
+                          </tbody>
+                        </template>
+                      </v-simple-table>
+                    </template>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+              <v-tab-item>
+                <v-card flat>
+                  <v-card-text>
+                    <editUser :mode="'edit'" />
+                    <addUser />
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+              <v-tab-item>
+                <v-card flat>
+                  <v-card-text>
+                    <passwords :mode="'edit'" />
+                    <div class="justify-center d-flex">
+                      <v-btn color="success" class="mr-4">
+                        {{ $t('save') }}
+                      </v-btn>
+                      <v-btn color="error" class="mr-4"
+                        >{{ $t('resetForm') }}
+                      </v-btn>
+                    </div>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+            </v-tabs>
           </v-row>
         </v-container>
       </v-card>
@@ -46,11 +79,20 @@
 </template>
 
 <script>
+import editUser from './addUser.vue';
+import passwords from '../userControls/passwords.vue';
+
 export default {
   name: 'profilecmp',
 
+  components: {
+    editUser,
+    passwords,
+  },
   data() {
     return {
+      valid: true,
+      saveSuccess: false,
       info: [
         {
           name: 'نام',
@@ -107,7 +149,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.v-btn {
+.v-btn,
+.v-tab {
   letter-spacing: inherit;
 }
 </style>
