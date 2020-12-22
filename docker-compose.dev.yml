@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  tabadol:
+    container_name: tabadol_front
+    image: registry.aasaam.org:5600/tabadolfront:latest
+  
+    volumes:
+      - ./nginx/dev.conf:/etc/nginx/nginx.conf
+      - ./nginx/mime.types:/etc/nginx/mime.types
+      - files-storage:/storage/files:ro
+      - ./app:/usr/src/app
+    ports:
+      - 80:80
+   
+
+ volumes:
+  files-storage:
+    
