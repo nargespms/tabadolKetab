@@ -52,14 +52,31 @@
       }
     ]
   },
-  "forbiddenBook": {
-    "name": "forbiddenBook",
+  "author": {
+    "name": "authors",
     "headerColor": "blue darken-2",
     "bgColor": "#0288D1",
-    "icon": "fas fa-ban",
+    "icon": "mdi-account-group",
     "items": [
       {
-        "name": "addORdelete"
+        "name": "addORedit"
+      },
+      {
+        "name": "delete"
+      }
+    ]
+  },
+  "publisher": {
+    "name": "publishers",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi-account-group",
+    "items": [
+      {
+        "name": "addORedit"
+      },
+      {
+        "name": "delete"
       }
     ]
   },

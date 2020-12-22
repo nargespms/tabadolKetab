@@ -18,36 +18,19 @@
       lazy-validation
     >
       <template v-for="item in module.items">
-        <div :key="item.index" class="d-flex flex-column">
-          <span class="pb-3 font-weight-medium">
-            <v-icon>
-              mdi-format-list-checks
-            </v-icon>
-            {{ $t(item.name) }}
-          </span>
-          <v-btn-toggle mandatory>
-            <v-btn
-              activeClass="green accent-3 innerEl"
-              @change="changeAccess(item, true)"
-            >
-              <span>{{ $t('yes') }}</span>
-              <!-- <v-icon>mdi-check-all</v-icon> -->
-            </v-btn>
-            <v-btn
-              activeClass="red darken-1 innerEl"
-              @change="changeAccess(item, false)"
-            >
-              <span>{{ $t('no') }}</span>
-              <!-- <v-icon>mdi-cancel</v-icon> -->
-            </v-btn>
-          </v-btn-toggle>
-        </div>
+        <roleAccessBut
+          :item="item"
+          :key="item.index"
+          @changeAccess="changeAccess"
+        />
       </template>
     </v-form>
   </v-card>
 </template>
 
 <script>
+import roleAccessBut from './roleAccessBut.vue';
+
 export default {
   name: 'moduleAccessConfig',
   props: {
@@ -55,10 +38,14 @@ export default {
       type: Object,
     },
   },
+  components: {
+    roleAccessBut,
+  },
   data() {
     return {
       valid: true,
       toggle: [],
+      state: undefined,
     };
   },
   methods: {
