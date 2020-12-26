@@ -12,5 +12,6 @@ services:
       - ./app:/usr/src/app
     ports:
       - 80:80
+    command: tail -f /dev/null
 volumes:
   files-storage:
