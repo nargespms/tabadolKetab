@@ -29,4 +29,4 @@ COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 
 # STOPSIGNAL SIGTERM
-EXPOSE 8084
+EXPOSE 8080
