@@ -11,7 +11,7 @@ services:
       - files-storage:/storage/files:ro
 
     ports:
-      - 8080:80
+      - 8084:8084
 
 volumes:
   files-storage:

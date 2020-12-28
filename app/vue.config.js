@@ -1,14 +1,13 @@
-const webpack = require('webpack')
-
+const webpack = require('webpack');
 
 module.exports = {
-  transpileDependencies: ['vuetify', 'axios', 'i18n'],
-   configureWebpack: {
+  transpileDependencies: ['vuetify', 'i18n'],
+  configureWebpack: {
     plugins: [
       new webpack.IgnorePlugin({
         resourceRegExp: /^\.\/locale$/,
-        contextRegExp: /moment$/
-      })
-      ]
-  }
+        contextRegExp: /moment$/,
+      }),
+    ],
+  },
 };

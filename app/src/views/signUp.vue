@@ -1,6 +1,6 @@
 <template>
   <div>
-    <signUpCom />
+    <signUpCom state="register" />
   </div>
 </template>
 

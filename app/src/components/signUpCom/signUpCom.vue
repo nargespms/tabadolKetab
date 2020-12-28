@@ -45,6 +45,31 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
+                <v-select
+                  v-model="register.gender"
+                  :items="gender"
+                  :label="$t('gender')"
+                  outlined
+                  clearable
+                  hide-selected
+                  :rules="checkRule"
+                  required
+                >
+                  <template v-slot:item="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                </v-select>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="6">
                 <mobilePhone :phone="true" @setMobilePhone="setPhone" />
               </v-col>
               <v-col cols="12" md="6">
@@ -149,6 +174,11 @@ export default {
     nationalId,
     captcha,
   },
+  props: {
+    state: {
+      type: String,
+    },
+  },
   data() {
     return {
       saveSuccess: false,
@@ -168,31 +198,44 @@ export default {
         'friendsAndAcquaintances',
         'other',
       ],
+      gender: ['male', 'female', 'other'],
       register: {},
-      captcha: '',
+      captcha: {},
     };
   },
   methods: {
     validate() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-        this.$router.push({
-          name: 'dashboard',
-        });
+        this.$axios
+          .post('/v1/api/tabaadol-e-ketaab/register', {
+            captcha: this.captcha,
+            ...this.register,
+          })
+          .then(res => {
+            if (res.status === 200) {
+              this.saveSuccess = true;
+              this.$router.push({
+                name: 'dashboard',
+              });
+            }
+            console.log(res);
+          });
+
         this.reset();
       } else {
         this.valid = false;
       }
     },
     setCaptcha(value) {
+      console.log(value);
       this.captcha = value;
     },
     setNationalId(value) {
       this.register.nationalId = value;
     },
     setMobilePhone(value) {
-      this.register.mobilePhone = value;
+      this.register.mobile = value;
     },
     setPhone(value) {
       this.register.phone = value;

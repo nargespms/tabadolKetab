@@ -56,4 +56,8 @@ a {
 .pointer {
   cursor: pointer;
 }
+.v-btn,
+.v-tab {
+  letter-spacing: inherit;
+}
 </style>

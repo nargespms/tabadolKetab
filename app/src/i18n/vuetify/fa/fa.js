@@ -399,4 +399,8 @@ export default {
   bookSendReq: 'درخواست ارسال کتاب',
   roleCreation: 'ایجاد نقش',
   roleList: 'لیست نقش ها',
+  gender: 'جنسیت',
+  male: 'مذکر',
+  female: 'مونث',
+  via: 'از طریق',
 };

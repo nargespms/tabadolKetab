@@ -1,8 +1,9 @@
 import axios from 'axios';
 import Qs from 'qs';
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   // baseURL: process.env.BASE_URL ? process.env.BASE_URL : '/',
+  baseURL: 'http://127.0.0.1:9010',
   paramsSerializer: params => {
     // Qs is already included in the Axios package
     return Qs.stringify(params, {
@@ -11,10 +12,10 @@ const axiosInstance = axios.create({
     });
   },
 });
-console.log(axiosInstance);
+
 // eslint-disable-next-line no-unused-vars
-export default ({ app, router, Vue }) => {
-  Vue.prototype.$axios = axiosInstance;
-  // ^ ^ ^ this will allow you to use this.$axios
-  //       so you won't necessarily have to import axios in each vue file
-};
+// export default ({ app, router, Vue }) => {
+//   Vue.prototype.$axios = axiosInstance;
+//   // ^ ^ ^ this will allow you to use this.$axios
+//   //       so you won't necessarily have to import axios in each vue file
+// };

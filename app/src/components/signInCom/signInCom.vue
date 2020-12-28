@@ -9,9 +9,30 @@
             </span>
           </v-card-title>
         </v-card-actions>
-        <v-form class="pt-6" ref="form" v-model="valid">
+        <v-form ref="form" v-model="valid">
           <v-container>
-            <nationalId :autofocus="true" @setNationalId="setNationalId" />
+            <v-tabs v-model="tab" class="pb-3 mb-6" color="teal" grow>
+              <v-tab v-for="item in items" :key="item.tab">
+                {{ $t('via') }}
+                {{ $t(item.tab) }}
+              </v-tab>
+            </v-tabs>
+
+            <v-tabs-items v-model="tab">
+              <v-tab-item v-for="item in items" :key="item.tab">
+                <nationalId
+                  v-if="item.tab === 'nationalId'"
+                  :autofocus="true"
+                  @setNationalId="setNationalId"
+                />
+                <email
+                  :autofocus="true"
+                  v-if="item.tab === 'email'"
+                  @setEmail="setEmail"
+                />
+              </v-tab-item>
+            </v-tabs-items>
+
             <password />
             <v-row>
               <v-col cols="12" md="12">
@@ -53,6 +74,7 @@ import notifMessage from '../structure/notifMessage.vue';
 import password from '../userControls/passwordsCom/password.vue';
 import nationalId from '../userControls/nationalId.vue';
 import captcha from '../userControls/captcha.vue';
+import email from '../userControls/email.vue';
 
 export default {
   name: 'signInCom',
@@ -61,6 +83,7 @@ export default {
     password,
     nationalId,
     captcha,
+    email,
   },
   data() {
     return {
@@ -68,6 +91,14 @@ export default {
       nationalId: null,
       captcha: '',
       valid: false,
+      tab: null,
+      items: [
+        { tab: 'nationalId', icon: 'mdi-account' },
+        {
+          tab: 'email',
+          icon: 'mdi-ticket-account',
+        },
+      ],
     };
   },
   methods: {
@@ -87,6 +118,9 @@ export default {
     },
     setNationalId(value) {
       this.nationalId = value;
+    },
+    setEmail(value) {
+      this.email = value;
     },
     // notif hide
     hideNotif() {

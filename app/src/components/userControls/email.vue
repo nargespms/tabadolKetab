@@ -15,6 +15,11 @@
 <script>
 export default {
   name: 'email',
+  props: {
+    autofocus: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       rules: {
