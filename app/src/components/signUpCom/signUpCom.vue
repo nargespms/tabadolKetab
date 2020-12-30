@@ -22,7 +22,12 @@
                   outlined
                   autofocus
                   error-count="2"
-                ></v-text-field>
+                  ><template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template></v-text-field
+                >
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field
@@ -32,7 +37,12 @@
                   required
                   outlined
                   error-count="2"
-                ></v-text-field>
+                  ><template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template></v-text-field
+                >
               </v-col>
             </v-row>
             <v-row>
@@ -40,7 +50,10 @@
                 <nationalId @setNationalId="setNationalId" />
               </v-col>
               <v-col cols="12" md="6">
-                <mobilePhone @setMobilePhone="setMobilePhone" />
+                <mobilePhone
+                  :validate="true"
+                  @setMobilePhone="setMobilePhone"
+                />
               </v-col>
             </v-row>
             <v-row>
@@ -65,7 +78,15 @@
                       {{ $t(item) }}
                     </span>
                   </template>
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template>
                 </v-select>
+              </v-col>
+              <v-col cols="12" md="6">
+                <email :isRequire="false" @setEmail="setEmail" />
               </v-col>
             </v-row>
             <v-row>
@@ -91,10 +112,15 @@
                       {{ $t(item) }}
                     </span>
                   </template>
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template>
                 </v-select>
               </v-col>
             </v-row>
-            <passwords />
+            <passwords @setPass="setPass" />
             <v-row>
               <v-col cols="12" md="12">
                 <v-checkbox
@@ -127,7 +153,7 @@
               <v-col cols="12" md="12">
                 <v-row>
                   <v-col cols="12" md="12">
-                    <captcha @setCaptcha="setCaptcha" />
+                    <captcha :key="captchaKey" @setCaptcha="setCaptcha" />
                   </v-col>
                 </v-row>
               </v-col>
@@ -155,6 +181,12 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
@@ -164,6 +196,7 @@ import passwords from '../userControls/passwords.vue';
 import mobilePhone from '../userControls/mobilePhone.vue';
 import nationalId from '../userControls/nationalId.vue';
 import captcha from '../userControls/captcha.vue';
+import email from '../userControls/email.vue';
 
 export default {
   name: 'signUpCom',
@@ -173,6 +206,7 @@ export default {
     mobilePhone,
     nationalId,
     captcha,
+    email,
   },
   props: {
     state: {
@@ -182,6 +216,8 @@ export default {
   data() {
     return {
       saveSuccess: false,
+      error: false,
+      errorMsg: '',
       valid: true,
       nameRules: [
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
@@ -198,9 +234,10 @@ export default {
         'friendsAndAcquaintances',
         'other',
       ],
-      gender: ['male', 'female', 'other'],
+      gender: ['MALE', 'FEMALE', 'OTHER'],
       register: {},
       captcha: {},
+      captchaKey: 0,
     };
   },
   methods: {
@@ -215,14 +252,28 @@ export default {
           .then(res => {
             if (res.status === 200) {
               this.saveSuccess = true;
+              console.log(res.data);
+              this.$store.commit('bookShop/userEnter', res.data.user, {
+                module: 'bookShop',
+              });
               this.$router.push({
                 name: 'dashboard',
               });
             }
             console.log(res);
+          })
+          .catch(e => {
+            if (e.response.status === 409) {
+              this.error = true;
+              this.errorMsg = 'mobileOrNationalIdRegistered';
+              this.captchaKey = +1;
+            }
+            if (e.response.status === 403) {
+              this.error = true;
+              this.errorMsg = 'invalidCaptcha';
+              this.captchaKey = +2;
+            }
           });
-
-        this.reset();
       } else {
         this.valid = false;
       }
@@ -240,12 +291,21 @@ export default {
     setPhone(value) {
       this.register.phone = value;
     },
+    setPass(value) {
+      this.register.password = value;
+    },
+    setEmail(value) {
+      this.register.email = value;
+    },
     reset() {
       this.$refs.form.reset();
     },
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
+    },
+    hideError() {
+      this.error = false;
     },
   },
 };

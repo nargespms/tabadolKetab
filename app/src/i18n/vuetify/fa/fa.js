@@ -28,6 +28,7 @@ export default {
   captchaDoNotMatch: 'کد امنیتی صحیح نمی باشد',
   thisFieldIsRequired: 'تکمیل این بخش الزامی است',
   minCharaters3: 'حداقل تعداد حروف ۳ عدد میباشد',
+  minCharaters6: 'حداقل تعداد حروف ۶ عدد میباشد',
   minCharaters8: 'حداقل تعداد حروف ۸ عدد میباشد',
   Charaters9: ' تعداد حروف مجاز  ۹ عدد میباشد',
   minCharaters10: 'حداقل تعداد حروف ۱۰ عدد میباشد',
@@ -71,6 +72,9 @@ export default {
   password: 'گذرواژه',
   confirmPassword: 'تکرار گذرواژه',
   changePassword: 'تغییر گذرواژه',
+  mobileOrNationalIdRegistered: 'شماره ملی یا تلفن همراه تکراری است',
+  invalidCaptcha: 'تصویر امنیتی نادرست است',
+  getNewCaptcha: 'تعویض تصویر امنیتی',
   // user
   fullName: 'نام و نام خانوادگی',
   avatar: 'تصویر',
@@ -400,7 +404,8 @@ export default {
   roleCreation: 'ایجاد نقش',
   roleList: 'لیست نقش ها',
   gender: 'جنسیت',
-  male: 'مذکر',
-  female: 'مونث',
+  MALE: 'مذکر',
+  FEMALE: 'مونث',
+  OTHER: 'سایر',
   via: 'از طریق',
 };

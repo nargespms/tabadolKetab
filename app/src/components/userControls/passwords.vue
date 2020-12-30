@@ -35,6 +35,7 @@ export default {
   methods: {
     setPassword(value) {
       this.password = value;
+      this.$emit('setPass', value);
     },
   },
 };

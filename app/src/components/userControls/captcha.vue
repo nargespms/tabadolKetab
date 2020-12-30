@@ -1,7 +1,24 @@
 <template>
   <v-row>
     <v-col class="ma-auto" cols="12" md="6" align="center" justify="center">
-      <div v-html="capImg"></div>
+      <div class="d-flex justify-center">
+        <span v-html="capImg"></span>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              class="d-flex align-self-center"
+              medium
+              color="teal"
+              @click="getCaptcha"
+              v-bind="attrs"
+              v-on="on"
+            >
+              fas fa-undo
+            </v-icon>
+          </template>
+          {{ $t('getNewCaptcha') }}
+        </v-tooltip>
+      </div>
       <v-text-field
         v-model="captcha.value"
         :rules="captchaRules"
@@ -22,7 +39,7 @@ export default {
     return {
       captchaRules: [
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
-        v => v === this.value || `${this.$t('captchaDoNotMatch')}`,
+        v => (v && v.length >= 6) || `${this.$t('minCharaters6')}`,
       ],
       captcha: {
         value: '',

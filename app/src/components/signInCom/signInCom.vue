@@ -27,6 +27,7 @@
                 />
                 <email
                   :autofocus="true"
+                  :isRequire="true"
                   v-if="item.tab === 'email'"
                   @setEmail="setEmail"
                 />

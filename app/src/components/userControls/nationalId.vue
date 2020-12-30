@@ -10,7 +10,13 @@
       outlined
       :autofocus="autofocus"
       error-count="2"
-    ></v-text-field>
+    >
+      <template v-slot:prepend-inner>
+        <span class="red--text">
+          *
+        </span>
+      </template>
+    </v-text-field>
   </div>
 </template>
 

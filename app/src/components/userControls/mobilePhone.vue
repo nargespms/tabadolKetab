@@ -17,6 +17,11 @@
         !valid && mobilePhone.length > 0 ? `${this.$t('InvalidPhone')}` : ''
       "
     >
+      <template v-if="validate" v-slot:prepend-inner>
+        <span class="red--text">
+          *
+        </span>
+      </template>
     </v-text-field>
   </div>
 </template>
