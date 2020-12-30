@@ -134,10 +134,9 @@ export default {
       this.edittingItem = item;
       this.enableEdit = true;
     },
-    editAuthor(item) {
+    editAuthor() {
       this.enableEdit = false;
       this.successNotif = true;
-      console.log(item);
     },
     // methods for preview
     preview(item) {

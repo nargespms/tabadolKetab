@@ -5,7 +5,7 @@
         :label="$t('addTag')"
         outlined
         @keyup.enter="addTag"
-        v-model="tag"
+        v-model="tag.title"
         required
         :rules="requireRule"
         ref="tag"
@@ -47,7 +47,10 @@ export default {
   },
   data() {
     return {
-      tag: '',
+      tag: {
+        title: '',
+        deleted: false,
+      },
       errorEnable: false,
       errorMsg: '',
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
@@ -56,6 +59,11 @@ export default {
   methods: {
     addTag() {
       if (this.$refs.tag.validate()) {
+        this.$axios
+          .post('/v1/api/tabaadol-e-ketaab/tags', { ...this.tag })
+          .then(res => {
+            console.log(res);
+          });
         this.$emit('addTag', this.tag);
         this.tag = '';
       } else {

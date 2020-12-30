@@ -56,9 +56,9 @@
               ></v-textarea>
               <v-col cols="12" md="6">
                 <mobilePhone
+                  :validate="false"
                   :phone="true"
                   @setMobilePhone="setPhone"
-                  :validate="false"
                 />
               </v-col>
               <v-checkbox
@@ -122,7 +122,7 @@ export default {
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       saveSuccess: false,
       publisher: {
-        active: true,
+        active: false,
         title: '',
       },
     };
@@ -141,11 +141,26 @@ export default {
 
       if (this.$refs.form.validate()) {
         if (this.mode === 'edit') {
-          this.$emit('editPublisher', this.publisher);
+          this.$axios
+            .put(`/v1/api/tabaadol-e-ketaab/publisher/${this.publisher.id}`, {
+              ...this.publisher,
+            })
+            .then(res => {
+              console.log(res.data);
+            });
+          this.$emit('editPublisher');
         } else {
+          this.$axios
+            .post('/v1/api/tabaadol-e-ketaab/publisher', {
+              ...this.publisher,
+            })
+            .then(res => {
+              console.log(res.data);
+            });
           this.saveSuccess = true;
         }
         this.reset();
+        this.publisher.active = false;
       } else {
         this.valid = false;
       }

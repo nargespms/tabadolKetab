@@ -105,7 +105,7 @@ export default {
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       author: {
         title: '',
-        active: true,
+        active: false,
       },
       saveSuccess: false,
     };
@@ -119,11 +119,24 @@ export default {
 
       if (this.$refs.form.validate()) {
         if (this.mode === 'edit') {
-          this.$emit('editAuthor', this.author);
+          this.$axios
+            .put(`/v1/api/tabaadol-e-ketaab/author/${this.author.id}`, {
+              ...this.author,
+            })
+            .then(res => {
+              console.log(res.data);
+            });
+          this.$emit('editAuthor');
         } else {
+          this.$axios
+            .post('/v1/api/tabaadol-e-ketaab/author', { ...this.author })
+            .then(res => {
+              console.log(res.data);
+            });
           this.saveSuccess = true;
         }
         this.reset();
+        this.author.active = false;
       } else {
         this.valid = false;
       }

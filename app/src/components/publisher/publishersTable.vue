@@ -138,10 +138,9 @@ export default {
       this.edittingItem = item;
       this.enableEdit = true;
     },
-    editPublisher(item) {
+    editPublisher() {
       this.enableEdit = false;
       this.successNotif = true;
-      console.log(item);
     },
     // methods for preview
     preview(item) {

@@ -25,9 +25,7 @@
                 :key="item.index"
                 class="d-flex float-right ml-4 mb-4 mt-4"
               >
-                <v-card-title>
-                  {{ item.title }}
-                </v-card-title>
+                <v-card-title> {{ item.title }}ff </v-card-title>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-tooltip bottom>
