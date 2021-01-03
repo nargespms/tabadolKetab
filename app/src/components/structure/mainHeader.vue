@@ -62,7 +62,11 @@
     </div>
 
     <mainRightMenu
-      v-if="$route.name !== 'login' && $route.name !== 'signup'"
+      v-if="
+        $route.name !== 'login' &&
+          $route.name !== 'signup' &&
+          $route.name !== 'admin-login'
+      "
       :drawer="drawer"
       :state="drawer"
       @changeState="changeState"
@@ -103,6 +107,10 @@ export default {
       });
     },
     exitPannel() {
+      this.$axios.get('​/v1​/api​/tabaadol-e-ketaab​/log-out');
+      this.$store.commit('bookShop/userEnter', null, {
+        module: 'bookShop',
+      });
       this.$router.push({
         name: 'login',
       });

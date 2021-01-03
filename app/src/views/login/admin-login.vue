@@ -5,13 +5,10 @@
 </template>
 
 <script>
-import signInCom from '../components/signInCom/signInCom.vue';
+import signInCom from '../../components/signInCom/signInCom.vue';
 
 export default {
-  name: 'signIn',
+  name: 'admin-login',
   components: { signInCom },
-  data() {
-    return {};
-  },
 };
 </script>

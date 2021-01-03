@@ -75,6 +75,10 @@ export default {
   mobileOrNationalIdRegistered: 'شماره ملی یا تلفن همراه تکراری است',
   invalidCaptcha: 'تصویر امنیتی نادرست است',
   getNewCaptcha: 'تعویض تصویر امنیتی',
+  incorrectPasswordOrNationalId: 'کدملی و یا رمز عبور صحیح نیست',
+  incorrectPasswordOrmobile: 'موبایل و یا رمز عبور صحیح نیست',
+  incorrectCaptcha: 'تصویر امنیتی صحیح نمیباشد',
+  mobile: 'شماره همراه',
   // user
   fullName: 'نام و نام خانوادگی',
   avatar: 'تصویر',

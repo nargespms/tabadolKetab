@@ -9,57 +9,36 @@
             </span>
           </v-card-title>
         </v-card-actions>
-        <v-form ref="form" v-model="valid">
-          <v-container>
-            <v-tabs v-model="tab" class="pb-3 mb-6" color="teal" grow>
-              <v-tab v-for="item in items" :key="item.tab">
-                {{ $t('via') }}
-                {{ $t(item.tab) }}
-              </v-tab>
-            </v-tabs>
 
-            <v-tabs-items v-model="tab">
-              <v-tab-item v-for="item in items" :key="item.tab">
-                <nationalId
-                  v-if="item.tab === 'nationalId'"
-                  :autofocus="true"
-                  @setNationalId="setNationalId"
-                />
-                <email
-                  :autofocus="true"
-                  :isRequire="true"
-                  v-if="item.tab === 'email'"
-                  @setEmail="setEmail"
-                />
-              </v-tab-item>
-            </v-tabs-items>
+        <v-container>
+          <v-tabs v-model="tab" class="pb-3 mb-6" color="teal" grow>
+            <v-tab v-for="item in items" :key="item.tab">
+              {{ $t('via') }}
+              {{ $t(item.tab) }}
+            </v-tab>
+          </v-tabs>
 
-            <password />
-            <v-row>
-              <v-col cols="12" md="12">
-                <v-row>
-                  <v-col cols="12" md="12">
-                    <captcha @setCaptcha="setCaptcha" />
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row>
-            <div class="justify-center d-flex">
-              <v-btn
-                :disabled="!valid"
-                color="success"
-                class="mr-4"
-                @click="validate"
-              >
-                {{ $t('enter') }}
-              </v-btn>
-            </div>
-          </v-container>
-        </v-form>
+          <v-tabs-items v-model="tab">
+            <v-tab-item v-for="item in items" :key="item.tab">
+              <template v-if="item.tab === 'nationalId'">
+                <nationalIdLogin
+                  :endpoint="endpoint"
+                  @error404="error404"
+                  @error406="error406"
+                />
+              </template>
+
+              <template v-if="item.tab === 'mobile'">
+                <mobileLogin
+                  :endpoint="endpoint"
+                  @error406="error406"
+                  @error404="mobileError404"
+                />
+              </template>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-container>
       </v-card>
-      <p class="primary--text registerLink" @click="registerLink">
-        آیا حساب کاربری ندارید؟ همین الان ثبت نام کنید
-      </p>
     </v-col>
     <notifMessage
       v-if="saveSuccess"
@@ -67,24 +46,26 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import password from '../userControls/passwordsCom/password.vue';
-import nationalId from '../userControls/nationalId.vue';
-import captcha from '../userControls/captcha.vue';
-import email from '../userControls/email.vue';
+import mobileLogin from './mobileLogin.vue';
+import nationalIdLogin from './nationalIdLogin.vue';
 
 export default {
   name: 'signInCom',
   components: {
     notifMessage,
-    password,
-    nationalId,
-    captcha,
-    email,
+    mobileLogin,
+    nationalIdLogin,
   },
   data() {
     return {
@@ -93,43 +74,47 @@ export default {
       captcha: '',
       valid: false,
       tab: null,
+      error: false,
+      errorMsg: '',
       items: [
-        { tab: 'nationalId', icon: 'mdi-account' },
+        { tab: 'nationalId', icon: 'mdi-account', require: true },
         {
-          tab: 'email',
+          tab: 'mobile',
           icon: 'mdi-ticket-account',
+          require: true,
         },
       ],
+      endpoint: '',
     };
   },
   methods: {
-    validate() {
-      this.$refs.form.validate();
-      if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-        this.$router.push({
-          name: 'dashboard',
-        });
-      } else {
-        this.valid = false;
-      }
+    error404() {
+      this.error = true;
+      this.errorMsg = 'incorrectPasswordOrNationalId';
     },
-    setCaptcha(value) {
-      this.captcha = value;
+    mobileError404() {
+      this.error = true;
+      this.errorMsg = 'incorrectPasswordOrmobile';
     },
-    setNationalId(value) {
-      this.nationalId = value;
+    error406() {
+      this.error = true;
+      this.errorMsg = 'incorrectCaptcha';
     },
-    setEmail(value) {
-      this.email = value;
-    },
+
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
     },
-    registerLink() {
-      this.$router.push({ name: 'signup' });
+    hideError() {
+      this.error = false;
     },
+  },
+  mounted() {
+    if (this.$route.name === 'admin-login') {
+      this.endpoint = '/v1/api/tabaadol-e-ketaab/staff/sign-in';
+    } else {
+      this.endpoint = '/v1/api/tabaadol-e-ketaab/client/sign-in';
+    }
   },
 };
 </script>

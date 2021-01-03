@@ -100,7 +100,12 @@ const routes = [
       {
         path: '/login',
         name: 'login',
-        component: () => import('../views/signIn.vue'),
+        component: () => import('../views/login/signIn.vue'),
+      },
+      {
+        path: '/admin-login',
+        name: 'admin-login',
+        component: () => import('../views/login/admin-login.vue'),
       },
       {
         path: '/users/adduser',

@@ -2,16 +2,16 @@
   <div>
     <v-text-field
       v-model="nationalId"
-      :rules="nationalIdRules"
+      :rules="isRequired ? nationalIdRules : notRequireRule"
       :label="$t('nationalId')"
       v-mask="'##########'"
       @input="checkNationalId"
-      required
+      :required="isRequired"
       outlined
       :autofocus="autofocus"
       error-count="2"
     >
-      <template v-slot:prepend-inner>
+      <template v-if="isRequired" v-slot:prepend-inner>
         <span class="red--text">
           *
         </span>
@@ -27,9 +27,17 @@ export default {
     autofocus: {
       type: Boolean,
     },
+    isRequire: {
+      type: Boolean,
+    },
   },
   data() {
     return {
+      isRequired: this.isRequire,
+      notRequireRule: [
+        v => (v && v.length >= 10) || `${this.$t('minCharaters10')}`,
+        v => (v && this.valid) || `${this.$t('InvalidNationalCode')}`,
+      ],
       nationalIdRules: [
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 10) || `${this.$t('minCharaters10')}`,
@@ -50,6 +58,11 @@ export default {
       this.valid =
         (sum < 2 && check === sum) || (sum >= 2 && check + sum === 11);
       this.$emit('setNationalId', this.nationalId);
+    },
+  },
+  watch: {
+    isRequire(newVal) {
+      this.isRequired = newVal;
     },
   },
 };

@@ -266,12 +266,12 @@ export default {
             if (e.response.status === 409) {
               this.error = true;
               this.errorMsg = 'mobileOrNationalIdRegistered';
-              this.captchaKey = +1;
+              this.captchaKey += 1;
             }
             if (e.response.status === 403) {
               this.error = true;
               this.errorMsg = 'invalidCaptcha';
-              this.captchaKey = +2;
+              this.captchaKey += 2;
             }
           });
       } else {
