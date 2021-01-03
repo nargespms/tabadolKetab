@@ -22,7 +22,7 @@ services:
 
   tabadol_api:
     container_name: tabadol_api
-    image: ${TABADOLـBACK_IMAGE}
+    image: registry.aasaam.org:5600/tabadol:latest
     networks:
       - back-network
       - front-network
@@ -33,7 +33,7 @@ services:
       - NODE_ENV=PRODUCTION
       - POSTGRES_URI=postgres://example:example@tabadol_postgres:5432/tabadol_postgres
       - REDIS_URI=redis://tabadol_redis:6379
-      - API_PUBLIC_URL=http://127.0.0.1:9010
+      - API_PUBLIC_URL=http://127.0.0.1:800
     volumes:
       - files-storage:/storage/files
 
@@ -46,7 +46,7 @@ services:
       - files-storage:/storage/files:ro
       - ./app:/usr/src/app
     ports:
-      - 800:8080
+      - 800:800
     networks:
       - front-network
     command: tail -f /dev/null
@@ -56,3 +56,4 @@ networks:
   front-network:
 volumes:
   files-storage:
+  db-data:
