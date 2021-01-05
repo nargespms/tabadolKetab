@@ -3,7 +3,7 @@ import Qs from 'qs';
 
 export const axiosInstance = axios.create({
   // baseURL: process.env.BASE_URL ? process.env.BASE_URL : '/',
-  baseURL: 'http://127.0.0.1:800',
+  baseURL: 'http://localhost:8085',
   paramsSerializer: params => {
     // Qs is already included in the Axios package
     return Qs.stringify(params, {

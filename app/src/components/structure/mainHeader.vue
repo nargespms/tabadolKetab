@@ -107,7 +107,7 @@ export default {
       });
     },
     exitPannel() {
-      this.$axios.get('​/v1​/api​/tabaadol-e-ketaab​/log-out');
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/log-out');
       this.$store.commit('bookShop/userEnter', null, {
         module: 'bookShop',
       });

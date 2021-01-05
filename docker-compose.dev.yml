@@ -33,7 +33,7 @@ services:
       - NODE_ENV=PRODUCTION
       - POSTGRES_URI=postgres://example:example@tabadol_postgres:5432/tabadol_postgres
       - REDIS_URI=redis://tabadol_redis:6379
-      - API_PUBLIC_URL=http://127.0.0.1:800
+      - API_PUBLIC_URL=http://127.0.0.1:8081
     volumes:
       - files-storage:/storage/files
 
@@ -42,11 +42,10 @@ services:
     image: ${TABADOL_FRONT_IMAGE}
     volumes:
       - ./nginx/dev.conf:/etc/nginx/nginx.conf
-      - ./nginx/mime.types:/etc/nginx/mime.types
       - files-storage:/storage/files:ro
       - ./app:/usr/src/app
     ports:
-      - 800:800
+      - 8085:80
     networks:
       - front-network
     command: tail -f /dev/null
