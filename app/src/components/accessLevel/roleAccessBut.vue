@@ -32,6 +32,9 @@ export default {
     item: {
       type: Object,
     },
+    mode: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -42,6 +45,15 @@ export default {
     changeAccess(item, status) {
       this.$emit('changeAccess', item, status);
     },
+  },
+  mounted() {
+    if (this.mode === 'edit') {
+      if (this.item.value === false) {
+        this.state = 1;
+      } else if (this.item.value === true) {
+        this.state = 0;
+      }
+    }
   },
 };
 </script>

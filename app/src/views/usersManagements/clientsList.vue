@@ -1,6 +1,10 @@
 <template>
   <div>
-    <dataTableWrap :headers="headers" :module="'clientsList'" />
+    <dataTableWrap
+      :headers="headers"
+      :module="'clientsList'"
+      :endpoint="'/v1/api/tabaadol-e-ketaab/client/list'"
+    />
   </div>
 </template>
 
@@ -14,7 +18,7 @@ export default {
   },
   data() {
     return {
-        headers: [
+      headers: [
         {
           text: 'avatar',
           align: 'center',
@@ -26,17 +30,66 @@ export default {
           text: 'fullName',
           align: 'center',
           sortable: true,
-          filterable:true,
+          filterable: true,
+          filterType: 'text',
           value: 'fullName',
           divider: true,
         },
-        { text: 'mobilephone', value: 'mobilephone', align: 'left', filterable:true, divider: true },
-        { text: 'phone', value: 'phone', align: 'left', filterable:true, divider: true },
-        { text: 'roll', value: 'roll', align: 'center', filterable:true, divider: true },
-        { text: 'email', value: 'email', align: 'left', filterable:true, divider: true },
-        { text: 'nationalId', value: 'nationalId', align: 'center', filterable:true, divider: true },
-        { text: 'status', value: 'status', align: 'center', filterable:true, divider: true },
-        { text: 'createdAt', value: 'createdAt', align: 'center', filterable:true, divider: true },
+        {
+          text: 'mobilephone',
+          value: 'mobilephone',
+          align: 'left',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
+        {
+          text: 'phone',
+          value: 'phone',
+          align: 'left',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
+        {
+          text: 'roll',
+          value: 'roll',
+          align: 'center',
+          filterable: true,
+          divider: true,
+        },
+        {
+          text: 'email',
+          value: 'email',
+          align: 'left',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
+        {
+          text: 'nationalId',
+          value: 'nationalId',
+          align: 'center',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
+        {
+          text: 'status',
+          value: 'status',
+          align: 'center',
+          filterable: true,
+          filterType: 'staticDropDown',
+          divider: true,
+        },
+        {
+          text: 'createdAt',
+          value: 'createdAt',
+          align: 'center',
+          filterable: true,
+          filtertype: 'date',
+          divider: true,
+        },
         {
           text: 'operation',
           value: 'operation',

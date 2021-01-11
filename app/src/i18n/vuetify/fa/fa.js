@@ -93,6 +93,7 @@ export default {
   Users: 'کاربران',
   AddUser: 'افزودن کاربر',
   StaffsList: 'لیست کارمندان',
+  staff: 'کارمند',
   ClientsList: 'لیست مشتری ها',
   username: 'نام کاربری',
   userName: 'نام کاربر',
@@ -241,6 +242,7 @@ export default {
   RUSureUWantToDeletThisForbiddenBook:
     'آیا می خواهید این کتاب ممنوعه را حذف نمایید',
   date: 'تاریخ',
+  repeatedBook: 'عنوان کتاب تکراری است',
   // post form
   fullname: 'نام و نام خانوادگی',
   numbersOfBook: 'تعداد کتاب',
@@ -320,14 +322,21 @@ export default {
   deactivate: 'غیرفعال کردن',
   ActivateTags: 'بازیابی تگ',
   RUSureUWantToactiveThisTag: 'آیا میخواهید این تگ رو بازیابی کنید؟',
+  repeatedTag: 'برچسب تکراری است',
   // authors
   authors: 'مولفان',
   authorsList: 'لیست مولف ها ',
   addAuthor: 'افزودن مولف',
+  repeatedAuthor: 'نام مولف تکراری است',
+  deleteAuthor: 'حذف مولف',
+  RUSureUWantToDeletThisAuthor: 'آیا میخواهید این مولف را حذف نمایید؟',
   // publishers
   publishers: 'ناشران',
   addPublisher: 'افزودن ناشر',
   publishersList: 'لیست ناشران',
+  repeatedPublisher: 'نام ناشر تکراری است',
+  deletePublisher: 'حذف ناشر',
+  RUSureUWantToDeletThisPublisher: 'آیا میخواهید این ناشر را حذف نمایید؟',
   // orders
   orders: 'سفارشات',
   ordersList: 'لیست سفارشات',
@@ -362,6 +371,7 @@ export default {
   USERREGISTER: 'ثبت کاربر',
   CONFIRMED: 'تایید شده و منتشرشده',
   RECIEVED: 'دریافت شده ',
+  roles: 'نقش ها',
   // billing
   billing: 'مالی',
   allUsersNumber: 'تعداد تمام کاربران',
@@ -412,4 +422,8 @@ export default {
   FEMALE: 'مونث',
   OTHER: 'سایر',
   via: 'از طریق',
+  active: 'فعال',
+  inactive: 'غیرفعال',
+  unKnown: 'مشخص نشده ',
+  accessDenied: 'متاسفانه شما دسترسی ندارید',
 };

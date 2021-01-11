@@ -46,44 +46,71 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon
-                v-if="h.sortable"
-                :key="h.index"
-                color="grey"
-                @click="sort"
-              >
-                mdi-menu-down
-              </v-icon>
-              {{ $t(h.text) }}
-              <v-icon
-                v-if="h.filterable"
-                color="grey"
-                size="11"
-                class="pa-2"
-                @click="filter"
-                >fas fa-filter
-              </v-icon>
+              <tableHeaderCell
+                :data="h"
+                :items="h.text === 'status' ? statusItems : []"
+                @filterCol="filterCol"
+              />
             </th>
           </tr>
         </thead>
       </template>
 
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+      </template>
+
+      <template v-slot:[`item.active`]="{ item }">
+        <span v-if="item.active">
+          <v-icon color="success" class="pa-2">mdi-account-check </v-icon>
+          {{ $t('active') }}
+        </span>
+        <span v-else>
+          <v-icon color="error" class="pa-2">
+            mdi-account-alert
+          </v-icon>
+          {{ $t('inactive') }}
+        </span>
+      </template>
+
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon
-          medium
-          class="ma-2"
-          color="grey darken-3"
-          @click="editRecord(item)"
-        >
-          mdi-pencil
-        </v-icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              v-bind="attrs"
+              v-on="on"
+              medium
+              class="ma-2"
+              color="grey darken-3"
+              @click="editRecord(item)"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+          {{ $t('edit') }}
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              color="grey darken-3"
+              @click="deleteRecord(item)"
+              v-bind="attrs"
+              v-on="on"
+              :disabled="item.deleted"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          {{ $t('delete') }}
+        </v-tooltip>
       </template>
     </v-data-table>
     <v-dialog v-model="enableEdit" content-class="sh-0">
       <addPublisherCmp
         :mode="'edit'"
-        :title="edittingItem.title"
-        :active="edittingItem.completed"
+        :data="edittingItem"
         @editPublisher="editPublisher"
       />
     </v-dialog>
@@ -94,18 +121,31 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <v-dialog v-model="enableDelete" max-width="500px">
+      <promptDialog
+        :title="'deleteAuthor'"
+        :message="'RUSureUWantToDeletThisAuthor'"
+        :data="deletingItem"
+        @accept="acceptDelete"
+        @reject="closeDelete"
+      />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
 import addPublisherCmp from './addPublisherCmp.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
+import promptDialog from '../structure/promptDialog.vue';
 
 export default {
   name: 'publishersTable',
   components: {
     notifMessage,
     addPublisherCmp,
+    tableHeaderCell,
+    promptDialog,
   },
   props: {
     headers: { type: Array },
@@ -123,6 +163,18 @@ export default {
       // edit
       enableEdit: false,
       edittingItem: {},
+      // delete
+      enableDelete: false,
+      deletingItem: {},
+      // filter
+      statusItems: [
+        { text: 'active', value: true },
+        {
+          text: 'inactive',
+          value: false,
+        },
+      ],
+      filter: {},
     };
   },
   methods: {
@@ -140,6 +192,7 @@ export default {
     },
     editPublisher() {
       this.enableEdit = false;
+      this.reloadTable();
       this.successNotif = true;
     },
     // methods for preview
@@ -152,8 +205,22 @@ export default {
       console.log('sorted');
     },
     // filter
-    filter() {
-      console.log('filtered');
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+        tableSearch: this.tableSearch,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
     excelFile() {
       // getData as excel file with filtered included
@@ -164,6 +231,26 @@ export default {
         name: 'printPublisher',
       });
       window.open(routeData.href, '_blank');
+    },
+    // delete
+    deleteRecord(item) {
+      this.deletingItem = item;
+      this.enableDelete = true;
+    },
+    acceptDelete(value) {
+      this.$axios
+        .delete(`/v1/api/tabaadol-e-ketaab/publisher/${value.id}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.reloadTable();
+            this.successNotif = true;
+            this.closeDelete();
+          }
+        });
+    },
+    closeDelete() {
+      this.enableDelete = false;
+      this.deletingItem = {};
     },
   },
 };

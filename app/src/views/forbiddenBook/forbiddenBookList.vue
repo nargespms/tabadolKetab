@@ -1,5 +1,9 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'forbiddenBook'" />
+  <dataTableWrap
+    :headers="headers"
+    :module="'forbiddenBook'"
+    :endpoint="'/v1/api/tabaadol-e-ketaab/forbidden-books/list'"
+  />
 </template>
 
 <script>
@@ -14,17 +18,11 @@ export default {
     return {
       headers: [
         {
-          text: 'id',
-          value: 'id',
-          align: 'center',
-          filterable: true,
-          divider: true,
-        },
-        {
           text: 'title',
           value: 'title',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
         },
 
@@ -32,6 +30,7 @@ export default {
           text: 'createdAt',
           value: 'createdAt',
           filterable: true,
+          filterType: 'date',
           align: 'center',
           divider: true,
         },
@@ -46,6 +45,7 @@ export default {
           text: 'shabak',
           value: 'shabak',
           filterable: true,
+          filterType: 'text',
           align: 'center',
           divider: true,
         },

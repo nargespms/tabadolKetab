@@ -6,16 +6,16 @@
       :editable="true"
       :auto-submit="true"
       @change="submitDate"
-      :class="!valid ? 'costum-error pt-2' : ''"
+      :class="valid ? 'costum-error pt-2' : ''"
     >
       <div slot="label">
-        <span v-if="!validate" class="red--text">
+        <span v-if="isRequired" class="red--text">
           *
         </span>
         <v-icon color="primary" size="26" class="mt-3">mdi-calendar</v-icon>
       </div>
     </date-picker>
-    <p v-if="!valid" class="red--text fn13">
+    <p v-if="valid" class="red--text fn13">
       {{ $t('thisFieldIsRequired') }}
     </p>
   </div>
@@ -29,7 +29,7 @@ export default {
     placeHolderText: {
       type: String,
     },
-    validate: {
+    isRequired: {
       type: Boolean,
     },
   },
@@ -45,11 +45,10 @@ export default {
   methods: {
     submitDate() {
       this.$emit('setDate', this.date);
-      this.valid = true;
     },
   },
   watch: {
-    validate(newVal) {
+    isRequired(newVal) {
       this.valid = newVal;
     },
   },
@@ -82,5 +81,12 @@ export default {
 }
 .vpd-icon-btn {
   background-color: transparent !important;
+}
+.form-control {
+  display: block;
+  max-width: 100%;
+}
+.vpd-input-group {
+  display: block;
 }
 </style>

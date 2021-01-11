@@ -1,4 +1,16 @@
 {
+  "role": {
+    "name": "roles",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "fas fa-users-cog",
+    "items": [
+      {
+        "name": "addORedit",
+        "value": false
+      }
+    ]
+  },
   "discount": {
     "name": "discounts",
     "headerColor": "blue darken-2",
@@ -6,7 +18,8 @@
     "icon": "mdi-ticket-percent",
     "items": [
       {
-        "name": "addORdelete"
+        "name": "addORdelete",
+        "value": false
       }
     ]
   },
@@ -17,13 +30,20 @@
     "icon": "fas fa-file-invoice-dollar ",
     "items": [
       {
-        "name": "add"
+        "name": "add",
+        "value": false
       },
       {
-        "name": "delete"
+        "name": "delete",
+        "value": false
       },
       {
-        "name": "previewAll"
+        "name": "previewAll",
+        "value": false
+      },
+      {
+        "name": "preview",
+        "value": false
       }
     ]
   },
@@ -34,7 +54,12 @@
     "icon": "fas fa-ban",
     "items": [
       {
-        "name": "addORdelete"
+        "name": "addORdelete",
+        "value": false
+      },
+      {
+        "name": "delete",
+        "value": false
       }
     ]
   },
@@ -45,10 +70,12 @@
     "icon": "mdi-account-group",
     "items": [
       {
-        "name": "addORedit"
+        "name": "addORedit",
+        "value": false
       },
       {
-        "name": "delete"
+        "name": "delete",
+        "value": false
       }
     ]
   },
@@ -59,10 +86,12 @@
     "icon": "mdi-account-group",
     "items": [
       {
-        "name": "addORedit"
+        "name": "addORedit",
+        "value": false
       },
       {
-        "name": "delete"
+        "name": "delete",
+        "value": false
       }
     ]
   },
@@ -73,10 +102,12 @@
     "icon": "mdi-account-group",
     "items": [
       {
-        "name": "addORedit"
+        "name": "addORedit",
+        "value": false
       },
       {
-        "name": "delete"
+        "name": "delete",
+        "value": false
       }
     ]
   },
@@ -88,10 +119,12 @@
     "icon": "mdi-book-open-variant",
     "items": [
       {
-        "name": "addORedit"
+        "name": "addORedit",
+        "value": false
       },
       {
-        "name": "delete"
+        "name": "delete",
+        "value": false
       }
     ]
   },
@@ -103,7 +136,8 @@
     "icon": "mdi-ticket-account",
     "items": [
       {
-        "name": "addORdelete"
+        "name": "addORedit",
+        "value": false
       }
     ]
   },
@@ -115,7 +149,8 @@
     "icon": "mdi-credit-card-plus",
     "items": [
       {
-        "name": "preview"
+        "name": "preview",
+        "value": false
       }
     ]
   },
@@ -126,7 +161,8 @@
     "icon": "fas fa-object-group",
     "items": [
       {
-        "name": "addORedit"
+        "name": "addORedit",
+        "value": false
       }
     ]
   },
@@ -137,7 +173,8 @@
     "icon": "mdi-ticket-percent",
     "items": [
       {
-        "name": "addORdelete"
+        "name": "addORdelete",
+        "value": false
       }
     ]
   },
@@ -148,7 +185,8 @@
     "icon": " mdi-history",
     "items": [
       {
-        "name": "preview"
+        "name": "preview",
+        "value": false
       }
     ]
   },
@@ -159,7 +197,16 @@
     "icon": "fas fa-tags",
     "items": [
       {
-        "name": "addOReditORdelete"
+        "name": "addORedit",
+        "value": false
+      },
+      {
+        "name": "preview",
+        "value": false
+      },
+      {
+        "name": "delete",
+        "value": false
       }
     ]
   },
@@ -170,10 +217,12 @@
     "icon": "mdi mdi-android-messages",
     "items": [
       {
-        "name": "addORedit"
+        "name": "addORedit",
+        "value": false
       },
       {
-        "name": "delete"
+        "name": "delete",
+        "value": false
       }
     ]
   },
@@ -184,10 +233,12 @@
     "icon": "fas fa-cart-arrow-down",
     "items": [
       {
-        "name": "previewAll"
+        "name": "previewAll",
+        "value": false
       },
       {
-        "name": "postListPreview"
+        "name": "postListPreview",
+        "value": false
       }
     ]
   }

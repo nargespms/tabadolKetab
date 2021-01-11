@@ -24,6 +24,7 @@
       class="elevation-1 text-center ma-4"
       hide-default-header
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
         <v-toolbar color="teal" flat height="48">
@@ -45,23 +46,7 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon
-                v-if="h.sortable"
-                :key="h.index"
-                color="grey"
-                @click="sort"
-              >
-                mdi-menu-down
-              </v-icon>
-              {{ $t(h.text) }}
-              <v-icon
-                v-if="h.filterable"
-                color="grey"
-                size="11"
-                class="pa-2"
-                @click="filter"
-                >fas fa-filter</v-icon
-              >
+              <tableHeaderCell :data="h" @filterCol="filterCol" />
             </th>
           </tr>
         </thead>
@@ -113,12 +98,14 @@
 <script>
 import promptDialog from '../structure/promptDialog.vue';
 import notifMessage from '../structure/notifMessage.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 
 export default {
   name: 'staffTable',
   components: {
     promptDialog,
     notifMessage,
+    tableHeaderCell,
   },
   props: {
     headers: {
@@ -143,6 +130,7 @@ export default {
       enableDelete: false,
       deletingItem: {},
       deleteSuccess: false,
+      filter: {},
     };
   },
   methods: {
@@ -174,8 +162,22 @@ export default {
       console.log('sorted');
     },
     // filter
-    filter() {
-      console.log('filtered');
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+        tableSearch: this.tableSearch,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
     excelFile() {
       // getData as excel file with filtered included

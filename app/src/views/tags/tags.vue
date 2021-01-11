@@ -1,13 +1,7 @@
 <template>
   <div>
-    <addTag @addTag="addTag" />
-    <tagsList
-      :key="listKey"
-      :data="tags"
-      @banTag="banTag"
-      @activeTag="activeTag"
-      @editTag="editTag"
-    />
+    <addTag @reloadList="getData" />
+    <tagsList :key="listKey" @reloadList="getData" :data="data" />
   </div>
 </template>
 
@@ -25,41 +19,18 @@ export default {
     return {
       tags: [],
       listKey: 0,
+      data: [],
     };
   },
   methods: {
-    addTag(value) {
-      // post to server
-      const tag = {
-        title: value,
-        status: 'ACTIVE',
-      };
-      this.tags.push(tag);
+    getData() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/tags/list').then(res => {
+        this.data = res.data.result.docs;
+      });
     },
-    banTag(value) {
-      const tag = {
-        title: value.title,
-        status: 'DEACTIVE',
-      };
-      this.tags.push(tag);
-      this.listKey = +1;
-    },
-    activeTag(value) {
-      const tag = {
-        title: value.title,
-        status: 'ACTIVE',
-      };
-      this.tags.push(tag);
-      this.listKey = +1;
-    },
-    editTag(value) {
-      const tag = {
-        title: value,
-        status: 'ACTIVE',
-      };
-      this.tags.push(tag);
-      this.listKey = +1;
-    },
+  },
+  mounted() {
+    this.getData();
   },
 };
 </script>

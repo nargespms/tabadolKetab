@@ -32,7 +32,13 @@
                   required
                   outlined
                   error-count="2"
-                ></v-text-field>
+                >
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template>
+                </v-text-field>
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field
@@ -42,17 +48,27 @@
                   required
                   outlined
                   error-count="2"
-                ></v-text-field>
+                >
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template>
+                </v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
-                <nationalId @setNationalId="setNationalId" />
+                <nationalId @setNationalId="setNationalId" :isRequire="true" />
               </v-col>
               <v-col cols="12" md="6">
                 <mobilePhone
                   @setMobilePhone="setMobilePhone"
                   :validate="true"
+                  :mode="'edit'"
+                  :editData="this.mode === 'edit' ? publisher.phone : ''"
+                  :isRequired="true"
+                  :phone="false"
                 />
               </v-col>
             </v-row>
@@ -93,7 +109,7 @@
               </v-col>
               <v-col cols="12" md="6">
                 <v-select
-                  v-model="register.roleType"
+                  v-model="role"
                   :items="roleType"
                   :label="$t('roll')"
                   outlined
@@ -162,6 +178,11 @@
                   outlined
                   error-count="2"
                 >
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template>
                   <template v-slot:prepend>
                     <span class="fn-25">
                       🧑‍💻
@@ -177,6 +198,37 @@
                   :label="$t('avatar')"
                 >
                 </v-file-input>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-select
+                  v-model="register.gender"
+                  :items="gender"
+                  :label="$t('gender')"
+                  outlined
+                  clearable
+                  hide-selected
+                  :rules="checkRule"
+                  required
+                >
+                  <template v-slot:item="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template>
+                </v-select>
               </v-col>
             </v-row>
             <passwords v-if="mode !== 'edit'" />
@@ -260,10 +312,12 @@ export default {
         'friendsAndAcquaintances',
         'other',
       ],
-      roleType: ['client', 'admin'],
+      roleType: ['client', 'staff'],
+      role: '',
       register: {},
       captcha: '',
       active: '',
+      gender: ['MALE', 'FEMALE', 'OTHER'],
     };
   },
   methods: {
@@ -275,8 +329,23 @@ export default {
     validate() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-        this.reset();
+        let endpoint = '';
+        if (this.role === 'client') {
+          endpoint = '/v1/api/tabaadol-e-ketaab/client';
+        } else if (this.role === 'staff') {
+          endpoint = '/v1/api/tabaadol-e-ketaab/staff';
+        }
+        this.$axios
+          .post(endpoint, {
+            ...this.register,
+          })
+          .then(res => {
+            console.log(res);
+            if (res.status === 200) {
+              this.saveSuccess = true;
+              this.reset();
+            }
+          });
       } else {
         this.valid = false;
       }
@@ -291,7 +360,7 @@ export default {
       this.register.nationalId = value;
     },
     setMobilePhone(value) {
-      this.register.mobilePhone = value;
+      this.register.mobile = value;
     },
     setPhone(value) {
       this.register.phone = value;

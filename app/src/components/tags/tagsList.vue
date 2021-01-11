@@ -25,7 +25,7 @@
                 :key="item.index"
                 class="d-flex float-right ml-4 mb-4 mt-4"
               >
-                <v-card-title> {{ item.title }}ff </v-card-title>
+                <v-card-title> {{ item.title }} </v-card-title>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-tooltip bottom>
@@ -122,13 +122,19 @@
       />
     </v-dialog>
     <v-dialog v-model="enableEdit" max-width="500px" height="500px">
-      <singlePrompt :data="edittingItem" @setValue="setValue" />
+      <singlePrompt :data="edittingItem" :name="'title'" @setValue="setValue" />
     </v-dialog>
     <notifMessage
       v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
       :type="'success'"
+    />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
     />
   </v-row>
 </template>
@@ -173,6 +179,8 @@ export default {
           color: 'red darken-2',
         },
       ],
+      error: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -184,16 +192,22 @@ export default {
       this.enableDelete = true;
     },
     acceptDelete(value) {
-      console.log(`deleted ${value.name}`);
-      this.closeDelete();
-      this.successNotif = true;
-      // ban this tag delet req to server
-      this.$emit('banTag', value);
-      this.deletingItem = value;
+      this.$axios
+        .put(`/v1/api/tabaadol-e-ketaab/tag/${value.id}`, {
+          title: value.title,
+          active: false,
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.closeDelete();
+            this.successNotif = true;
+            this.$emit('reloadList');
+            this.deletingItem = value;
+          }
+        });
     },
     closeDelete() {
       this.enableDelete = false;
-
       this.deletingItem = {};
     },
 
@@ -208,12 +222,19 @@ export default {
       this.enableRestore = true;
     },
     acceptRetrive(value) {
-      console.log(`retrive ${value.name}`);
-      this.closeRetrive();
-      this.successNotif = true;
-      // active tag req to server
-      this.$emit('activeTag', value);
-      this.deletingItem = value;
+      this.$axios
+        .put(`/v1/api/tabaadol-e-ketaab/tag/${value.id}`, {
+          title: value.title,
+          active: true,
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.closeRetrive();
+            this.successNotif = true;
+            this.$emit('reloadList');
+            this.deletingItem = value;
+          }
+        });
     },
     closeRetrive() {
       this.enableRestore = false;
@@ -221,21 +242,41 @@ export default {
     },
     // edit
     editTag(item) {
-      this.edittingItem = item.title;
+      this.edittingItem = item;
       this.enableEdit = true;
     },
-    setValue(item) {
-      this.$emit('editTag', item);
-      this.enableEdit = false;
-      this.edittingItem = {};
+    setValue(item, id) {
+      console.log(item);
+      this.$axios
+        .put(`/v1/api/tabaadol-e-ketaab/tag/${id}`, {
+          title: item,
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.$emit('reloadList');
+            this.enableEdit = false;
+            this.edittingItem = {};
+          }
+        })
+        .catch(e => {
+          if (e.response.status === 409) {
+            this.enableEdit = false;
+            this.error = true;
+            this.errorMsg = 'repeatedTag';
+            this.edittingItem = {};
+          }
+        });
+    },
+    hideError() {
+      this.error = false;
     },
   },
   computed: {
     activeTags() {
-      return this.data.filter(item => item.status === 'ACTIVE');
+      return this.data.filter(item => item.active === true);
     },
     deactiveTags() {
-      return this.data.filter(item => item.status === 'DEACTIVE');
+      return this.data.filter(item => item.active === false);
     },
   },
 };

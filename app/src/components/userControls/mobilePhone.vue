@@ -4,12 +4,11 @@
       v-model="mobilePhone"
       :label="!phone ? $t('mobilephone') : $t('phone')"
       :rules="
-        validate ? mobilePhoneRules : mobilePhone.length > 0 ? phoneRules : []
+        isRequired ? mobilePhoneRules : mobilePhone.length > 0 ? phoneRules : []
       "
       v-mask="'###########'"
       @update:error="checkTel"
-      debounce="1500"
-      :required="validate"
+      :required="isRequired"
       outlined
       error-count="2"
       ref="phoneInput"
@@ -17,7 +16,7 @@
         !valid && mobilePhone.length > 0 ? `${this.$t('InvalidPhone')}` : ''
       "
     >
-      <template v-if="validate" v-slot:prepend-inner>
+      <template v-if="isRequired" v-slot:prepend-inner>
         <span class="red--text">
           *
         </span>
@@ -36,8 +35,14 @@ export default {
     phone: {
       type: Boolean,
     },
-    validate: {
+    isRequired: {
       type: Boolean,
+    },
+    editData: {
+      type: String,
+    },
+    mode: {
+      type: String,
     },
   },
   data() {
@@ -62,6 +67,16 @@ export default {
         this.$emit('setMobilePhone', this.mobilePhone);
       }
     },
+  },
+  watch: {
+    editData(newVal) {
+      this.mobilePhone = newVal;
+    },
+  },
+  mounted() {
+    if (this.mode === 'edit' && this.editData.length > 0) {
+      this.mobilePhone = this.editData;
+    }
   },
 };
 </script>

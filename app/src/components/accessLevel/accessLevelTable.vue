@@ -10,6 +10,7 @@
       class="elevation-1 text-center ma-4"
       hide-default-header
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
@@ -35,26 +36,14 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon
-                v-if="h.sortable"
-                :key="h.index"
-                color="grey"
-                @click="sort"
-              >
-                mdi-menu-down
-              </v-icon>
-              {{ $t(h.text) }}
-              <v-icon
-                v-if="h.filterable"
-                color="grey"
-                size="11"
-                class="pa-2"
-                @click="filter"
-                >fas fa-filter
-              </v-icon>
+              <tableHeaderCell :data="h" @filterCol="filterCol" />
             </th>
           </tr>
         </thead>
+      </template>
+
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
@@ -87,11 +76,13 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 
 export default {
   name: 'accessLevelTable',
   components: {
     notifMessage,
+    tableHeaderCell,
   },
   props: {
     headers: { type: Array },
@@ -108,6 +99,7 @@ export default {
       successNotif: false,
       // edit
       enableEdit: false,
+      filter: {},
     };
   },
   methods: {
@@ -123,13 +115,22 @@ export default {
       });
     },
 
-    // sort funcs
-    sort() {
-      console.log('sorted');
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
     },
-    // filter
-    filter() {
-      console.log('filtered');
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+        tableSearch: this.tableSearch,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
   },
   watch: {

@@ -1,7 +1,7 @@
 <template>
   <v-row class="justify-center">
     <v-col cols="12" md="8">
-      <v-card class="pa-4">
+      <v-card class="pa-8">
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
             <span>
@@ -75,6 +75,12 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
@@ -90,13 +96,8 @@ export default {
     mode: {
       type: String,
     },
-    title: {
-      type: String,
-      default: '',
-    },
-    active: {
-      type: Boolean,
-      default: true,
+    data: {
+      type: Object,
     },
   },
   data() {
@@ -108,6 +109,8 @@ export default {
         active: false,
       },
       saveSuccess: false,
+      error: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -119,19 +122,28 @@ export default {
 
       if (this.$refs.form.validate()) {
         if (this.mode === 'edit') {
+          console.log(this.author);
           this.$axios
             .put(`/v1/api/tabaadol-e-ketaab/author/${this.author.id}`, {
               ...this.author,
             })
             .then(res => {
               console.log(res.data);
+              if (res.status === 200) {
+                this.$emit('editAuthor');
+              }
             });
-          this.$emit('editAuthor');
         } else {
           this.$axios
             .post('/v1/api/tabaadol-e-ketaab/author', { ...this.author })
             .then(res => {
               console.log(res.data);
+            })
+            .catch(e => {
+              if (e.response.status === 409) {
+                this.error = true;
+                this.errorMsg = 'repeatedAuthor';
+              }
             });
           this.saveSuccess = true;
         }
@@ -148,19 +160,18 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    hideError() {
+      this.error = false;
+    },
   },
   mounted() {
     if (this.mode === 'edit') {
-      this.author.active = this.active;
-      this.author.title = this.title;
+      this.author = this.data;
     }
   },
   watch: {
-    active(newVal) {
-      this.author.active = newVal;
-    },
-    title(newVal) {
-      this.author.title = newVal;
+    data(newVal) {
+      this.author = newVal;
     },
   },
 };

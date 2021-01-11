@@ -28,6 +28,14 @@ $body-font-family: 'aasaam-Noto', sans-serif;
   font-family: $body-font-family;
   background: #fff !important;
 }
+button,
+input,
+optgroup,
+select,
+textarea {
+  font: initial;
+  font-weight: normal;
+}
 .v-application .headline {
   font-family: $body-font-family !important;
   background: #fff !important;

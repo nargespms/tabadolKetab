@@ -14,7 +14,7 @@
           <v-row no-gutters>
             <v-col cols="12" md="2">
               <v-text-field
-                v-model="accessLevel.roleTitle"
+                v-model="accessLevel.title"
                 :rules="requireRule"
                 :label="$t('roleTitle')"
                 required
@@ -32,55 +32,134 @@
           </v-row>
           <v-row>
             <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.user" />
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.user"
+                @setAccess="setAccessUser"
+                :data="this.mode === 'edit' ? this.permission.userData : {}"
+              />
             </v-col>
             <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.forbiddenBook" />
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.forbiddenBook"
+                @setAccess="setAccessForbiddenBook"
+                :data="
+                  this.mode === 'edit' ? this.permission.forbiddenData : {}
+                "
+              />
             </v-col>
             <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.discount" />
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.discount"
+                @setAccess="setAccessDiscount"
+                :data="this.mode === 'edit' ? this.permission.discount : {}"
+              />
             </v-col>
             <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.book" />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.tickets" />
-            </v-col>
-            <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.transactions" />
-            </v-col>
-            <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.category" />
-            </v-col>
-            <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.discountsCategory" />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.logs" />
-            </v-col>
-            <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.tags" />
-            </v-col>
-            <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.messages" />
-            </v-col>
-            <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.ordersList" />
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.book"
+                @setAccess="setAccessBook"
+                :data="this.mode === 'edit' ? this.permission.book : {}"
+              />
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.author" />
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.tickets"
+                @setAccess="setAccessTickets"
+                :data="this.mode === 'edit' ? this.permission.ticket : {}"
+              />
             </v-col>
             <v-col cols="12" lg="3">
-              <moduleAccessConfig :module="modules.publisher" />
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.transactions"
+                @setAccess="setAccessTransactions"
+                :data="this.mode === 'edit' ? this.permission.transaction : {}"
+              />
+            </v-col>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.category"
+                @setAccess="setAccessCategory"
+                :data="this.mode === 'edit' ? this.permission.category : {}"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.logs"
+                @setAccess="setAccesslogs"
+                :data="this.mode === 'edit' ? this.permission.log : {}"
+              />
+            </v-col>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.role"
+                @setAccess="setAccessRole"
+                :data="this.mode === 'edit' ? this.permission.role : {}"
+              />
+            </v-col>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.messages"
+                @setAccess="setAccessmessages"
+                :data="this.mode === 'edit' ? this.permission.messages : {}"
+              />
+            </v-col>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.ordersList"
+                @setAccess="setAccessOrdersList"
+                :data="this.mode === 'edit' ? this.permission.orders : {}"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.author"
+                @setAccess="setAccessAuthor"
+                :data="this.mode === 'edit' ? this.permission.authors : {}"
+              />
+            </v-col>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.publisher"
+                @setAccess="setAccessPublisher"
+                :data="this.mode === 'edit' ? this.permission.publishers : {}"
+              />
             </v-col>
             <v-col cols="12" lg="6">
-              <moduleAccessConfig :module="modules.invoices" />
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.invoices"
+                @setAccess="setAccessInvoices"
+                :data="this.mode === 'edit' ? this.permission.invoices : {}"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" lg="6">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.tags"
+                @setAccess="setAccessTags"
+                :data="this.mode === 'edit' ? this.permission.tagData : {}"
+              />
             </v-col>
           </v-row>
           <div class="justify-center d-flex">
@@ -122,9 +201,18 @@ export default {
     moduleAccessConfig,
     notifMessage,
   },
+  props: {
+    mode: {
+      type: String,
+    },
+    permission: {
+      type: Object,
+    },
+  },
   data() {
     return {
       valid: true,
+      isLoading: true,
       accessLevel: {},
       modules: accessModule,
       saveSuccess: false,
@@ -137,8 +225,31 @@ export default {
     saveAccess() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-        this.reset();
+        if (this.mode !== 'edit') {
+          this.$axios
+            .post('/v1/api/tabaadol-e-ketaab/role', {
+              ...this.accessLevel,
+            })
+            .then(res => {
+              console.log(res);
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+              }
+            });
+        } else if (this.mode === 'edit') {
+          this.$axios
+            .put(`/v1/api/tabaadol-e-ketaab/role/${this.$route.params.role}`, {
+              ...this.accessLevel,
+            })
+            .then(res => {
+              console.log(res);
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+              }
+            });
+        }
       } else {
         this.valid = false;
         this.errorMsg = 'pleaseFillRoleTitle';
@@ -153,6 +264,116 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    setAccessUser(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_user = value.status;
+      } else if (value.itemName === 'delete') {
+        this.accessLevel.d_user = value.status;
+      }
+    },
+    setAccessForbiddenBook(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_forbiddenBook = value.status;
+      } else if (value.itemName === 'delete') {
+        this.accessLevel.d_forbiddenBook = value.status;
+      }
+    },
+    setAccessDiscount(value) {
+      if (value.itemName === 'addORdelete') {
+        this.accessLevel.cd_discount = value.status;
+      }
+    },
+
+    setAccessBook(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_book = value.status;
+      } else if (value.itemName === 'delete') {
+        this.accessLevel.d_book = value.status;
+      }
+    },
+    setAccessTickets(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_ticket = value.status;
+      }
+    },
+    setAccessTransactions(value) {
+      if (value.itemName === 'preview') {
+        this.accessLevel.r_transaction = value.status;
+      }
+    },
+    setAccessCategory(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_category = value.status;
+      }
+    },
+    setAccesslogs(value) {
+      if (value.itemName === 'preview') {
+        this.accessLevel.r_log = value.status;
+      }
+    },
+    setAccessTags(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_tag = value.status;
+      } else if (value.itemName === 'preview') {
+        this.accessLevel.r_tag = value.status;
+      } else if (value.itemName === 'delete') {
+        this.accessLevel.d_tag = value.status;
+      }
+    },
+    setAccessmessages(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_message = value.status;
+      } else if (value.itemName === 'delete') {
+        this.accessLevel.d_message = value.status;
+      }
+    },
+    setAccessOrdersList(value) {
+      if (value.itemName === 'previewAll') {
+        this.accessLevel.r_order = value.status;
+      } else if (value.itemName === 'postListPreview') {
+        this.accessLevel.r_post = value.status;
+      }
+    },
+    setAccessAuthor(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_author = value.status;
+      } else if (value.itemName === 'delete') {
+        this.accessLevel.d_author = value.status;
+      }
+    },
+    setAccessPublisher(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_publisher = value.status;
+      } else if (value.itemName === 'delete') {
+        this.accessLevel.d_publisher = value.status;
+      }
+    },
+    setAccessInvoices(value) {
+      if (value.itemName === 'add') {
+        this.accessLevel.c_invoice = value.status;
+      } else if (value.itemName === 'delete') {
+        this.accessLevel.d_invoice = value.status;
+      } else if (value.itemName === 'previewAll') {
+        this.accessLevel.r_invoices = value.status;
+      } else if (value.itemName === 'preview') {
+        this.accessLevel.r_invoice = value.status;
+      }
+    },
+    setAccessRole(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_role = value.status;
+      }
+    },
+  },
+  watch: {
+    permission(newVal) {
+      this.accessLevel.title = newVal.title;
+    },
+  },
+  mounted() {
+    if (this.mode === 'edit') {
+      this.accessLevel.title = this.permission.title;
+    }
   },
 };
 </script>

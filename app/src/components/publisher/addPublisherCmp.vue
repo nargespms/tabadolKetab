@@ -56,7 +56,9 @@
               ></v-textarea>
               <v-col cols="12" md="6">
                 <mobilePhone
-                  :validate="false"
+                  :mode="'edit'"
+                  :editData="this.mode === 'edit' ? publisher.phone : ''"
+                  :isRequired="false"
                   :phone="true"
                   @setMobilePhone="setPhone"
                 />
@@ -90,6 +92,12 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
@@ -107,13 +115,8 @@ export default {
     mode: {
       type: String,
     },
-    title: {
-      type: String,
-      default: '',
-    },
-    active: {
-      type: Boolean,
-      default: true,
+    data: {
+      type: Object,
     },
   },
   data() {
@@ -125,6 +128,9 @@ export default {
         active: false,
         title: '',
       },
+      // error messages
+      error: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -146,21 +152,32 @@ export default {
               ...this.publisher,
             })
             .then(res => {
-              console.log(res.data);
-            });
-          this.$emit('editPublisher');
+              if (res.status === 200) {
+                this.$emit('editPublisher');
+                this.reset();
+                this.publisher.active = false;
+              }
+            })
+            .catch({});
         } else {
           this.$axios
             .post('/v1/api/tabaadol-e-ketaab/publisher', {
               ...this.publisher,
             })
             .then(res => {
-              console.log(res.data);
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+                this.publisher.active = false;
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 409) {
+                this.error = true;
+                this.errorMsg = 'repeatedPublisher';
+              }
             });
-          this.saveSuccess = true;
         }
-        this.reset();
-        this.publisher.active = false;
       } else {
         this.valid = false;
       }
@@ -172,19 +189,18 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    hideError() {
+      this.error = false;
+    },
   },
   mounted() {
     if (this.mode === 'edit') {
-      this.publisher.active = this.active;
-      this.publisher.title = this.title;
+      this.publisher = this.data;
     }
   },
   watch: {
-    active(newVal) {
-      this.publisher.active = newVal;
-    },
-    title(newVal) {
-      this.publisher.title = newVal;
+    data(newVal) {
+      this.publisher = newVal;
     },
   },
 };

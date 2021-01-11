@@ -40,23 +40,27 @@ export default {
       type: String,
     },
     data: {
+      type: Object,
+    },
+    name: {
       type: String,
     },
   },
   data() {
     return {
-      value: this.data,
+      value: this.data[this.name],
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
     };
   },
   watch: {
     data(newVal) {
-      this.value = newVal;
+      this.value = newVal[this.name];
+      console.log(newVal);
     },
   },
   methods: {
     setValue() {
-      this.$emit('setValue', this.value);
+      this.$emit('setValue', this.value, this.data.id);
     },
   },
 };

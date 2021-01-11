@@ -1,6 +1,7 @@
 import Vue from 'vue';
 // import axios from 'axios';
 import VueI18n from 'vue-i18n';
+import persianDate from 'persian-date';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import { axiosInstance } from './plugins/axios';
@@ -20,6 +21,7 @@ Vue.use({
   // eslint-disable-next-line no-shadow
   install(Vue) {
     Vue.prototype.$axios = axiosInstance;
+    Vue.prototype.$persianDate = persianDate;
   },
 });
 

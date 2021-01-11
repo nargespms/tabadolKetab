@@ -12,6 +12,23 @@
       <v-spacer></v-spacer>
     </v-card-actions>
     <v-form
+      v-if="mode === 'edit'"
+      class="pt-6 d-flex justify-space-around"
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
+      <template v-for="item in data.items">
+        <roleAccessBut
+          :mode="mode"
+          :item="item"
+          :key="item.index"
+          @changeAccess="changeAccess"
+        />
+      </template>
+    </v-form>
+    <v-form
+      v-else
       class="pt-6 d-flex justify-space-around"
       ref="form"
       v-model="valid"
@@ -37,6 +54,12 @@ export default {
     module: {
       type: Object,
     },
+    data: {
+      type: Object,
+    },
+    mode: {
+      type: String,
+    },
   },
   components: {
     roleAccessBut,
@@ -46,6 +69,7 @@ export default {
       valid: true,
       toggle: [],
       state: undefined,
+      editData: this.data,
     };
   },
   methods: {
@@ -58,6 +82,11 @@ export default {
 
       this.$emit('setAccess', accessModule);
       console.log(accessModule);
+    },
+  },
+  watch: {
+    data(newVal) {
+      this.editData = newVal;
     },
   },
 };

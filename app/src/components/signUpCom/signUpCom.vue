@@ -47,7 +47,7 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
-                <nationalId @setNationalId="setNationalId" />
+                <nationalId @setNationalId="setNationalId" :isRequire="true" />
               </v-col>
               <v-col cols="12" md="6">
                 <mobilePhone

@@ -11,7 +11,7 @@
       :autofocus="autofocus"
       error-count="2"
     >
-      <template v-if="isRequired" v-slot:prepend-inner>
+      <template v-if="isRequire" v-slot:prepend-inner>
         <span class="red--text">
           *
         </span>

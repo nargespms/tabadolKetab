@@ -8,7 +8,13 @@
       outlined
       error-count="2"
       :label="$t('email')"
-    ></v-text-field>
+    >
+      <template v-slot:prepend-inner v-if="isRequire">
+        <span class="red--text">
+          *
+        </span>
+      </template>
+    </v-text-field>
   </div>
 </template>
 

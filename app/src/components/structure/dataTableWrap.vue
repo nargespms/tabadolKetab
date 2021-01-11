@@ -1,6 +1,8 @@
 <template>
   <div>
     <staffTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'staffsList'"
       :headers="headers"
       :tableData="tableData"
@@ -66,6 +68,8 @@
       :loading="loading"
     />
     <forbiddenBookTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'forbiddenBook'"
       :headers="headers"
       :tableData="tableData"
@@ -82,6 +86,8 @@
       :loading="loading"
     />
     <authorTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'authors'"
       :headers="headers"
       :tableData="tableData"
@@ -90,6 +96,8 @@
       :loading="loading"
     />
     <publishersTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'publishers'"
       :headers="headers"
       :tableData="tableData"
@@ -106,6 +114,8 @@
       :loading="loading"
     />
     <accessLevelTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'accessLevelList'"
       :headers="headers"
       :tableData="tableData"
@@ -157,54 +167,65 @@ export default {
     module: {
       type: String,
     },
+    endpoint: {
+      type: String,
+    },
   },
   data() {
     return {
-      endpoint: '',
       totalData: 0,
       tableData: [],
       loading: true,
       options: {
         page: 1,
         sortBy: 'time',
+        limit: 10,
       },
     };
   },
   methods: {
-    getUsers() {
-      const { page, itemsPerPage, sortBy } = this.options;
-      console.log(page);
+    getData(props) {
+      const { page, itemsPerPage, sortBy, limit } = props.options;
+      const { filter } = props;
       console.log(itemsPerPage);
       console.log(sortBy);
-      if (
-        this.module === 'bookCats' ||
-        this.module === 'authors' ||
-        this.module === 'publishers'
-      ) {
-        this.endpoint = 'http://jsonplaceholder.typicode.com/todos';
-      } else if (
-        this.module === 'messages' ||
-        this.module === 'tickets' ||
-        this.module === 'discounts'
-      ) {
-        this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
-      } else {
-        this.endpoint = 'http://jsonplaceholder.typicode.com/posts';
-      }
-      this.$axios.get(this.endpoint).then(res => {
-        console.log(res);
-        if (res.status === 200) {
-          this.tableData = res.data;
-          this.totalData = this.tableData.length;
-          this.loading = false;
-          // if (itemsPerPage > 0) {
-          //   this.tableData = this.tableData.slice(
-          //     (page - 1) * itemsPerPage,
-          //     page * itemsPerPage
-          //   );
-          // }
-        }
-      });
+      // if (
+      //   this.module === 'bookCats' ||
+      //   this.module === 'authors' ||
+      //   this.module === 'publishers'
+      // ) {
+      //   this.endpoint = 'http://jsonplaceholder.typicode.com/todos';
+      // } else if (
+      //   this.module === 'messages' ||
+      //   this.module === 'tickets' ||
+      //   this.module === 'discounts'
+      // ) {
+      //   this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
+      // } else {
+      //   this.endpoint = 'http://jsonplaceholder.typicode.com/posts';
+      // }
+      this.$axios
+        .get(this.endpoint, {
+          params: {
+            page,
+            limit,
+            filter,
+          },
+        })
+        .then(res => {
+          console.log(res);
+          if (res.status === 200) {
+            this.tableData = res.data.result.docs;
+            this.totalData = this.tableData.length;
+            this.loading = false;
+            // if (itemsPerPage > 0) {
+            //   this.tableData = this.tableData.slice(
+            //     (page - 1) * itemsPerPage,
+            //     page * itemsPerPage
+            //   );
+            // }
+          }
+        });
     },
   },
   // watch: {
@@ -219,7 +240,7 @@ export default {
   //   },
   // },
   mounted() {
-    this.getUsers();
+    this.getData({ options: this.options });
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <addForbiddenBookCmp />
+  <addForbiddenBookCmp :mode="'add'" />
 </template>
 
 <script>

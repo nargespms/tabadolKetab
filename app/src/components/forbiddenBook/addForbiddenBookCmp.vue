@@ -85,6 +85,12 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
@@ -98,12 +104,23 @@ export default {
     notifMessage,
     authorAutocomplete,
   },
+  props: {
+    mode: {
+      type: String,
+    },
+    editData: {
+      type: Object,
+    },
+  },
   data() {
     return {
       valid: true,
       saveSuccess: false,
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       forbiddenBook: {},
+      // error messages
+      error: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -119,8 +136,47 @@ export default {
       this.$refs.form.validate();
 
       if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-        this.reset();
+        if (this.mode === 'add') {
+          this.$axios
+            .post('/v1/api/tabaadol-e-ketaab/forbidden-book', {
+              ...this.forbiddenBook,
+            })
+            .then(res => {
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+                console.log(res);
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 409) {
+                this.error = true;
+                this.errorMsg = 'repeatedBook';
+              }
+            });
+        } else if (this.mode === 'edit') {
+          this.$axios
+            .put(
+              `/v1/api/tabaadol-e-ketaab/forbidden-book/${this.editData.id}`,
+              {
+                ...this.forbiddenBook,
+              }
+            )
+            .then(res => {
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+                console.log(res);
+                this.$emit('reloadTable');
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 409) {
+                this.error = true;
+                this.errorMsg = 'repeatedBook';
+              }
+            });
+        }
       } else {
         this.valid = false;
       }
@@ -133,6 +189,19 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    hideError() {
+      this.error = false;
+    },
+  },
+  watch: {
+    editData(newVal) {
+      this.forbiddenBook = newVal;
+    },
+  },
+  mounted() {
+    if (this.mode === 'edit') {
+      this.forbiddenBook = this.editData;
+    }
   },
 };
 </script>

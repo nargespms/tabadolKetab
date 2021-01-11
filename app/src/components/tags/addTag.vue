@@ -2,10 +2,10 @@
   <v-row class="justify-center">
     <v-col cols="12" lg="6">
       <v-text-field
+        v-model="tag"
         :label="$t('addTag')"
         outlined
         @keyup.enter="addTag"
-        v-model="tag.title"
         required
         :rules="requireRule"
         ref="tag"
@@ -29,9 +29,15 @@
       </v-text-field>
     </v-col>
     <notifMessage
-      v-if="errorEnable"
-      :msg="errorMsg"
+      v-if="saveSuccess"
+      :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
+      :type="'success'"
+    />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
       :type="'error'"
     />
   </v-row>
@@ -47,25 +53,31 @@ export default {
   },
   data() {
     return {
-      tag: {
-        title: '',
-        deleted: false,
-      },
-      errorEnable: false,
-      errorMsg: '',
+      tag: '',
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
+      saveSuccess: false,
+      error: false,
+      errorMsg: '',
     };
   },
   methods: {
     addTag() {
       if (this.$refs.tag.validate()) {
         this.$axios
-          .post('/v1/api/tabaadol-e-ketaab/tags', { ...this.tag })
+          .post('/v1/api/tabaadol-e-ketaab/tag', { title: this.tag })
           .then(res => {
-            console.log(res);
+            if (res.status === 200) {
+              this.saveSuccess = true;
+              this.$emit('reloadList');
+              this.tag = '';
+            }
+          })
+          .catch(e => {
+            if (e.response.status === 409) {
+              this.error = true;
+              this.errorMsg = 'repeatedTag';
+            }
           });
-        this.$emit('addTag', this.tag);
-        this.tag = '';
       } else {
         this.errorEnable = true;
         this.errorMsg = 'pleaseFillTheInput';
@@ -74,7 +86,10 @@ export default {
     },
     // notif hide
     hideNotif() {
-      this.errorEnable = false;
+      this.saveSuccess = false;
+    },
+    hideError() {
+      this.error = false;
     },
   },
 };

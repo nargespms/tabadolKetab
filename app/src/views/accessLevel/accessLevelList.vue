@@ -1,5 +1,9 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'accessLevelList'" />
+  <dataTableWrap
+    :headers="headers"
+    :module="'accessLevelList'"
+    :endpoint="'/v1/api/tabaadol-e-ketaab/roles/list'"
+  />
 </template>
 
 <script>
@@ -15,9 +19,10 @@ export default {
       headers: [
         {
           text: 'roleTitle',
-          value: 'roleTitle',
+          value: 'title',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
         },
         {
@@ -25,6 +30,7 @@ export default {
           value: 'createdAt',
           align: 'center',
           filterable: true,
+          filterType: 'date',
           divider: true,
         },
         {

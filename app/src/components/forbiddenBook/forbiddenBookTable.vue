@@ -24,6 +24,7 @@
       class="elevation-1 text-center ma-4"
       hide-default-header
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
@@ -49,67 +50,68 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon
-                v-if="h.sortable"
-                :key="h.index"
-                color="grey"
-                @click="sort"
-              >
-                mdi-menu-down
-              </v-icon>
-              {{ $t(h.text) }}
-              <v-icon
-                v-if="h.filterable"
-                color="grey"
-                size="11"
-                class="pa-2"
-                @click="filter"
-                >fas fa-filter
-              </v-icon>
+              <tableHeaderCell :data="h" @filterCol="filterCol" />
             </th>
           </tr>
         </thead>
       </template>
-      <template v-slot:[`item.title`]="{ item }">
-        {{ item.title }}
-      </template>
-      <template v-slot:[`item.operation`]="{ item }">
-        <div class="d-flex">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                medium
-                class="ma-2"
-                v-bind="attrs"
-                @click="preview(item)"
-                v-on="on"
-              >
-                mdi-eye
-              </v-icon>
-            </template>
-            {{ $t('preview') }}
-          </v-tooltip>
 
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                medium
-                class="ma-2"
-                color="grey darken-3"
-                @click="deleteRecord(item)"
-                v-on="on"
-                v-bind="attrs"
-              >
-                mdi-delete
-              </v-icon>
-            </template>
-            {{ $t('delete') }}
-          </v-tooltip>
-        </div>
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+      </template>
+
+      <template v-slot:[`item.active`]="{ item }">
+        <span v-if="item.active">
+          <v-icon color="success" class="pa-2">mdi-account-check </v-icon>
+          {{ $t('active') }}
+        </span>
+        <span v-else>
+          <v-icon color="error" class="pa-2">
+            mdi-account-alert
+          </v-icon>
+          {{ $t('inactive') }}
+        </span>
+      </template>
+
+      <template v-slot:[`item.operation`]="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              v-bind="attrs"
+              @click="editRecord(item)"
+              v-on="on"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+          {{ $t('edit') }}
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              color="grey darken-3"
+              @click="deleteRecord(item)"
+              v-on="on"
+              v-bind="attrs"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          {{ $t('delete') }}
+        </v-tooltip>
       </template>
     </v-data-table>
-    <v-dialog v-model="enablePreview" content-class="sh-0">
-      <showForbiddenBook :item="previewItem" />
+    <v-dialog v-model="enableEdit" content-class="sh-0">
+      <addForbiddenBookCmp
+        :mode="'edit'"
+        :editData="edittingItem"
+        @reloadTable="editSubmit"
+      />
     </v-dialog>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
@@ -127,13 +129,20 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </div>
 </template>
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
 import promptDialog from '../structure/promptDialog.vue';
-import showForbiddenBook from './showForbiddenBook.vue';
+import addForbiddenBookCmp from './addForbiddenBookCmp.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 
 export default {
   name: 'forbiddenBookTable',
@@ -149,7 +158,8 @@ export default {
   components: {
     notifMessage,
     promptDialog,
-    showForbiddenBook,
+    tableHeaderCell,
+    addForbiddenBookCmp,
   },
   data() {
     return {
@@ -159,8 +169,12 @@ export default {
       deletingItem: {},
       successNotif: false,
       // preview
-      enablePreview: false,
-      previewItem: {},
+      enableEdit: false,
+      edittingItem: {},
+      filter: {},
+      // error messages
+      error: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -176,9 +190,21 @@ export default {
     },
     acceptDelete(value) {
       console.log(`deleted ${value.name}`);
-      this.successNotif = true;
-
-      this.closeDelete();
+      this.$axios
+        .delete(`/v1/api/tabaadol-e-ketaab/forbidden-book/${value.id}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.successNotif = true;
+            this.closeDelete();
+          }
+        })
+        .catch(e => {
+          if (e.response.status === 403) {
+            this.error = true;
+            this.errorMsg = 'accessDenied';
+            this.closeDelete();
+          }
+        });
     },
     closeDelete() {
       this.enableDelete = false;
@@ -188,20 +214,42 @@ export default {
       this.successNotif = false;
     },
     // methods for preview
-    preview(item) {
-      this.enablePreview = true;
-      this.previewItem = item;
+    editRecord(item) {
+      this.enableEdit = true;
+      this.edittingItem = item;
     },
     // sort funcs
     sort() {
       console.log('sorted');
     },
+    editSubmit() {
+      this.enableEdit = false;
+      this.edittingItem = {};
+      this.reloadTable();
+    },
     // filter
-    filter() {
-      console.log('filtered');
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+        tableSearch: this.tableSearch,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
     excelFile() {
       // getData as excel file with filtered included
+    },
+    hideError() {
+      this.error = false;
     },
     printData() {
       // go to print page of this table
@@ -217,9 +265,9 @@ export default {
         this.innerOptions = newVal;
       },
     },
-    enablePreview(newVal) {
+    enableEdit(newVal) {
       if (newVal === false) {
-        this.previewItem = {};
+        this.edittingItem = {};
       }
     },
   },

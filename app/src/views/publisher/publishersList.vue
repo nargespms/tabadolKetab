@@ -1,5 +1,9 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'publishers'" />
+  <dataTableWrap
+    :headers="headers"
+    :module="'publishers'"
+    :endpoint="'/v1/api/tabaadol-e-ketaab/publishers/list'"
+  />
 </template>
 
 <script>
@@ -15,9 +19,10 @@ export default {
       headers: [
         {
           text: 'fullName',
-          value: 'fullName',
+          value: 'title',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
         },
         {
@@ -25,6 +30,7 @@ export default {
           value: 'createdAt',
           align: 'center',
           filterable: true,
+          filterType: 'date',
           divider: true,
         },
 
@@ -39,13 +45,15 @@ export default {
           text: 'phone',
           value: 'phone',
           filterable: true,
+          filterType: 'text',
           align: 'center',
           divider: true,
         },
         {
           text: 'status',
-          value: 'status',
+          value: 'active',
           filterable: true,
+          filterType: 'staticDropdown',
           align: 'center',
           divider: true,
         },
