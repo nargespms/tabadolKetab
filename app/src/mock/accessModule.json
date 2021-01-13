@@ -63,8 +63,24 @@
       }
     ]
   },
-  "user": {
-    "name": "users",
+  "staffs": {
+    "name": "staffs",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi-account-group",
+    "items": [
+      {
+        "name": "addORedit",
+        "value": false
+      },
+      {
+        "name": "delete",
+        "value": false
+      }
+    ]
+  },
+  "clients": {
+    "name": "clients",
     "headerColor": "blue darken-2",
     "bgColor": "#0288D1",
     "icon": "mdi-account-group",

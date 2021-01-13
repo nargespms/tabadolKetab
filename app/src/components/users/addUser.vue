@@ -231,7 +231,7 @@
                 </v-select>
               </v-col>
             </v-row>
-            <passwords v-if="mode !== 'edit'" />
+            <passwords v-if="mode !== 'edit'" @setPass="setPass" />
             <v-row>
               <v-col cols="12" md="6">
                 <v-checkbox
@@ -325,6 +325,9 @@ export default {
       this.$router.push({
         name: 'clientsList',
       });
+    },
+    setPass(value) {
+      this.register.password = value;
     },
     validate() {
       this.$refs.form.validate();

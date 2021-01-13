@@ -35,13 +35,6 @@ export default {
           divider: true,
         },
         {
-          text: 'author',
-          value: 'author',
-          filterable: true,
-          align: 'center',
-          divider: true,
-        },
-        {
           text: 'shabak',
           value: 'shabak',
           filterable: true,

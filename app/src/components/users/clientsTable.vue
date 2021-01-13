@@ -49,7 +49,11 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <tableHeaderCell :data="h" @filterCol="filterCol" />
+              <tableHeaderCell
+                :data="h"
+                @filterCol="filterCol"
+                :items="h.text === 'status' ? statusItems : []"
+              />
             </th>
           </tr>
         </thead>
@@ -65,6 +69,30 @@
           </v-avatar>
         </div>
       </template>
+
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+      </template>
+
+      <template v-slot:[`item.mobile`]="{ item }">
+        <span class="numberDir">
+          {{ item.mobile }}
+        </span>
+      </template>
+
+      <template v-slot:[`item.active`]="{ item }">
+        <span v-if="item.active">
+          <v-icon color="success" class="pa-2">mdi-account-check </v-icon>
+          {{ $t('active') }}
+        </span>
+        <span v-else>
+          <v-icon color="error" class="pa-2">
+            mdi-account-alert
+          </v-icon>
+          {{ $t('inactive') }}
+        </span>
+      </template>
+
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon color="grey darken-3" @click="deleteRecord(item)">
           mdi-delete
@@ -122,6 +150,14 @@ export default {
       deletingItem: {},
       deleteSuccess: false,
       filter: {},
+      // fiter
+      statusItems: [
+        { text: 'active', value: true },
+        {
+          text: 'inactive',
+          value: false,
+        },
+      ],
     };
   },
   methods: {

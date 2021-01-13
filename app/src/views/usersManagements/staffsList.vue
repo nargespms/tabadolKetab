@@ -3,7 +3,7 @@
     <dataTableWrap
       :headers="headers"
       :module="'staffsList'"
-      :endpoint="'/v1/api/tabaadol-e-ketaab/Staff/list'"
+      :endpoint="'/v1/api/tabaadol-e-ketaab/staff/list'"
     />
   </div>
 </template>

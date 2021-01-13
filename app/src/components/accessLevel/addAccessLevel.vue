@@ -34,9 +34,17 @@
             <v-col cols="12" lg="3">
               <moduleAccessConfig
                 :mode="mode"
-                :module="modules.user"
-                @setAccess="setAccessUser"
-                :data="this.mode === 'edit' ? this.permission.userData : {}"
+                :module="modules.staffs"
+                @setAccess="setAccessStaffs"
+                :data="this.mode === 'edit' ? this.permission.staffData : {}"
+              />
+            </v-col>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.clients"
+                @setAccess="setAccessClients"
+                :data="this.mode === 'edit' ? this.permission.clientData : {}"
               />
             </v-col>
             <v-col cols="12" lg="3">
@@ -57,14 +65,7 @@
                 :data="this.mode === 'edit' ? this.permission.discount : {}"
               />
             </v-col>
-            <v-col cols="12" lg="3">
-              <moduleAccessConfig
-                :mode="mode"
-                :module="modules.book"
-                @setAccess="setAccessBook"
-                :data="this.mode === 'edit' ? this.permission.book : {}"
-              />
-            </v-col>
+            <v-col cols="12" lg="3"> </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" lg="3">
@@ -89,6 +90,14 @@
                 :module="modules.category"
                 @setAccess="setAccessCategory"
                 :data="this.mode === 'edit' ? this.permission.category : {}"
+              />
+            </v-col>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.book"
+                @setAccess="setAccessBook"
+                :data="this.mode === 'edit' ? this.permission.book : {}"
               />
             </v-col>
           </v-row>
@@ -208,12 +217,18 @@ export default {
     permission: {
       type: Object,
     },
+    editData: {
+      type: Object,
+    },
+    title: {
+      type: String,
+    },
   },
   data() {
     return {
       valid: true,
       isLoading: true,
-      accessLevel: {},
+      accessLevel: this.mode === 'edit' ? this.editData : {},
       modules: accessModule,
       saveSuccess: false,
       errorEnable: false,
@@ -231,7 +246,6 @@ export default {
               ...this.accessLevel,
             })
             .then(res => {
-              console.log(res);
               if (res.status === 200) {
                 this.saveSuccess = true;
                 this.reset();
@@ -243,10 +257,15 @@ export default {
               ...this.accessLevel,
             })
             .then(res => {
-              console.log(res);
               if (res.status === 200) {
                 this.saveSuccess = true;
                 this.reset();
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 409) {
+                this.errorMsg = 'repeatedTitle';
+                this.error = true;
               }
             });
         }
@@ -264,11 +283,18 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
-    setAccessUser(value) {
+    setAccessStaffs(value) {
       if (value.itemName === 'addORedit') {
-        this.accessLevel.cu_user = value.status;
+        this.accessLevel.cu_staff = value.status;
       } else if (value.itemName === 'delete') {
-        this.accessLevel.d_user = value.status;
+        this.accessLevel.d_staff = value.status;
+      }
+    },
+    setAccessClients(value) {
+      if (value.itemName === 'addORedit') {
+        this.accessLevel.cu_client = value.status;
+      } else if (value.itemName === 'delete') {
+        this.accessLevel.d_client = value.status;
       }
     },
     setAccessForbiddenBook(value) {
@@ -366,7 +392,7 @@ export default {
     },
   },
   watch: {
-    permission(newVal) {
+    title(newVal) {
       this.accessLevel.title = newVal.title;
     },
   },

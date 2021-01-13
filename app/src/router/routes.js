@@ -314,7 +314,7 @@ const routes = [
       {
         path: '/accessLevelList/:role',
         name: 'accessLevelPage',
-        component: () => import('../views/accessLevel/accessLevelCreation.vue'),
+        component: () => import('../views/accessLevel/accessLevel.vue'),
       },
       {
         path: '/financialReport',

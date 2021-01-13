@@ -99,10 +99,13 @@ export default {
   userName: 'نام کاربر',
   name: 'نام',
   lastName: 'نام خانوادگی',
+  firstName: 'نام ',
   deleteUser: 'حذف کاربر',
   RUSureUWantToDeletThisUser: 'آیا میخواهید این کاربر را حذف نمایید؟',
   personalInformation: 'مشخصات',
   imageEditing: 'ویرایش تصویر',
+  staffs: 'کارمندان',
+  clients: 'مشتری ها',
   // messages
   summaryText: 'خلاصه پیام',
   sendDate: 'زمان ارسال',
@@ -426,4 +429,5 @@ export default {
   inactive: 'غیرفعال',
   unKnown: 'مشخص نشده ',
   accessDenied: 'متاسفانه شما دسترسی ندارید',
+  repeatedTitle: 'عنوان تکراری است',
 };

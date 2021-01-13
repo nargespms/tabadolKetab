@@ -45,15 +45,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6" class="pa-0 ">
-              <authorAutocomplete
-                :isRequired="false"
-                :placeHolder="'writer'"
-                :height="36"
-                @sendValue="getWriter"
-              />
-            </v-col>
-            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+            <v-col cols="12" md="6" class="pa-0 pr-0">
               <v-text-field
                 v-model="forbiddenBook.shabak"
                 :label="$t('shabak')"
@@ -96,13 +88,11 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import authorAutocomplete from '../author/authorAutocomplete.vue';
 
 export default {
   name: 'addForbiddenBookCmp',
   components: {
     notifMessage,
-    authorAutocomplete,
   },
   props: {
     mode: {

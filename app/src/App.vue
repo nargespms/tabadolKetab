@@ -68,4 +68,8 @@ a {
 .v-tab {
   letter-spacing: inherit;
 }
+.numberDir {
+  direction: ltr;
+  float: left;
+}
 </style>

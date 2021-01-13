@@ -117,19 +117,10 @@ export default {
     sort() {
       console.log('sorted');
     },
-    emitFilter: _.debounce(function(name) {
+    emitFilter: _.debounce(function b(name) {
       console.log(name);
       this.$emit('filterCol', this.filter, name);
     }, 1500),
   },
 };
 </script>
-<style lang="scss">
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-weight: normal;
-}
-</style>

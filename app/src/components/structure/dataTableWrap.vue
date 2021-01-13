@@ -11,6 +11,8 @@
       :loading="loading"
     />
     <clientsTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'clientsList'"
       :headers="headers"
       :tableData="tableData"

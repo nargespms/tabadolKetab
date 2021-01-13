@@ -198,18 +198,6 @@
                   ></v-radio>
                 </v-radio-group></div
             ></v-col>
-            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-              <div class="flex">
-                <span class="fn-25">
-                  🧑‍💻
-                </span>
-                <v-checkbox
-                  v-model="book.weeklyDiscount"
-                  :label="$t('weeklyDiscount')"
-                >
-                </v-checkbox>
-              </div>
-            </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" md="6" class="pa-0 pt-0">
