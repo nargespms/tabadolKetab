@@ -46,7 +46,11 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <tableHeaderCell :data="h" @filterCol="filterCol" />
+              <tableHeaderCell
+                :data="h"
+                @filterCol="filterCol"
+                :items="h.text === 'status' ? statusItems : []"
+              />
             </th>
           </tr>
         </thead>
@@ -63,10 +67,52 @@
         </div>
       </template>
 
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+      </template>
+
+      <template v-slot:[`item.mobile`]="{ item }">
+        <span class="numberDir">
+          {{ item.mobile }}
+        </span>
+      </template>
+
+      <template v-slot:[`item.role`]="{ item }">
+        <router-link
+          :to="`/accessLevelList/${item.role.id}`"
+          class="black--text"
+        >
+          {{ item.role.title }}
+        </router-link>
+      </template>
+
+      <template v-slot:[`item.active`]="{ item }">
+        <span v-if="item.active">
+          <v-icon color="success" class="pa-2">mdi-account-check </v-icon>
+          {{ $t('active') }}
+        </span>
+        <span v-else>
+          <v-icon color="error" class="pa-2">
+            mdi-account-alert
+          </v-icon>
+          {{ $t('inactive') }}
+        </span>
+      </template>
+
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon color="grey darken-3" @click="deleteRecord(item)">
-          mdi-delete
-        </v-icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              color="grey darken-3"
+              @click="deleteRecord(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-account-convert
+            </v-icon>
+          </template>
+          {{ $t('changeStatus') }}
+        </v-tooltip>
       </template>
       <!-- <template v-slot:[`footer`]="{ props }">
         {{ props }}
@@ -79,8 +125,8 @@
     </v-data-table>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
-        :title="'deleteUser'"
-        :message="'RUSureUWantToDeletThisUser'"
+        :title="'changeStatus'"
+        :message="'RUsureUwantChangeStatus'"
         :data="deletingItem"
         @accept="acceptDelete"
         @reject="closeDelete"
@@ -131,6 +177,14 @@ export default {
       deletingItem: {},
       deleteSuccess: false,
       filter: {},
+      // fiter
+      statusItems: [
+        { text: 'active', value: true },
+        {
+          text: 'inactive',
+          value: false,
+        },
+      ],
     };
   },
   methods: {
@@ -145,10 +199,15 @@ export default {
       this.enableDelete = true;
     },
     acceptDelete(value) {
-      console.log(`deleted ${value.name}`);
-      this.deleteSuccess = true;
-
-      this.closeDelete();
+      this.$axios
+        .delete(`/v1/api/tabaadol-e-ketaab/staff/${value.id}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.reloadTable();
+            this.deleteSuccess = true;
+            this.closeDelete();
+          }
+        });
     },
     closeDelete() {
       this.enableDelete = false;

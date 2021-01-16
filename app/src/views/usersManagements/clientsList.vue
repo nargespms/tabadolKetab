@@ -54,14 +54,6 @@ export default {
           divider: true,
         },
         {
-          text: 'landLane',
-          value: 'phone',
-          align: 'left',
-          filterable: true,
-          filterType: 'text',
-          divider: true,
-        },
-        {
           text: 'email',
           value: 'email',
           align: 'left',

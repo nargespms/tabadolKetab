@@ -14,14 +14,6 @@ export default {
     return {
       headers: [
         {
-          text: 'id',
-          value: 'id',
-          align: 'center',
-          filterable: true,
-          divider: true,
-          icon: '👨‍💼',
-        },
-        {
           text: 'title',
           value: 'title',
           align: 'center',
@@ -48,27 +40,13 @@ export default {
           divider: true,
         },
         {
-          text: 'reciever',
-          value: 'reciever',
-          filterable: true,
-          align: 'center',
-          divider: true,
-          icon: '👨‍💼',
-        },
-        {
-          text: 'sender',
-          value: 'sender',
+          text: 'client',
+          value: 'client',
           filterable: true,
           align: 'center',
           divider: true,
         },
-        {
-          text: 'senderNumber',
-          value: 'senderNumber',
-          filterable: false,
-          align: 'center',
-          divider: true,
-        },
+
         {
           text: 'operation',
           value: 'operation',

@@ -196,6 +196,7 @@ export default {
           if (res.status === 200) {
             this.successNotif = true;
             this.closeDelete();
+            this.reloadTable();
           }
         })
         .catch(e => {

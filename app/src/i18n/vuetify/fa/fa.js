@@ -84,7 +84,7 @@ export default {
   avatar: 'تصویر',
   mobilephone: 'موبایل',
   phone: 'تلفن',
-  roll: 'نقش',
+  role: 'نقش',
   client: 'مشتری',
   admin: 'مدیر',
   nationalId: 'کدملی',
@@ -106,6 +106,8 @@ export default {
   imageEditing: 'ویرایش تصویر',
   staffs: 'کارمندان',
   clients: 'مشتری ها',
+  RUsureUwantChangeStatus: 'آیا میخواهید وضعیت کاربر را تغییر دهید؟',
+  createdBy: 'ایجاد شده توسط',
   // messages
   summaryText: 'خلاصه پیام',
   sendDate: 'زمان ارسال',

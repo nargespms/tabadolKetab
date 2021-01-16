@@ -35,8 +35,8 @@ export default {
         },
 
         {
-          text: 'registeredUser',
-          value: 'registeredUser',
+          text: 'createdBy',
+          value: 'createdBy',
           filterable: true,
           align: 'center',
           divider: true,

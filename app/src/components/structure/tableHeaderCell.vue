@@ -99,13 +99,21 @@ export default {
     // convert out put of date picker to gregorian timestamp for server
     persionToGregorian(value) {
       const dateValue = value.split('/').map(i => parseInt(i, 10));
-      return new this.$persianDate(dateValue).toDate().toISOString();
+      return new this.$persianDate(dateValue).toDate().setHours(15, 0);
     },
     setDate(value) {
-      console.log(`date is :${value}`);
-      this.filter[this.data.value] = value;
-      this.filter[this.data.value] = this.persionToGregorian(value);
-      this.emitFilter('createdAt');
+      if (value.length > 0) {
+        console.log(`date is :${value}`);
+        this.filter[this.data.value] = value;
+        this.filter[this.data.value] = new Date(
+          this.persionToGregorian(value)
+        ).toISOString();
+        console.log(this.filter[this.data.value]);
+        this.emitFilter('createdAt');
+      } else {
+        delete this.filter[this.data.value];
+        this.emitFilter(this.data.value);
+      }
     },
     clear(name) {
       this.filter[name] = '';

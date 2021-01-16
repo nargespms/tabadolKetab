@@ -7,6 +7,7 @@
       :auto-submit="true"
       @change="submitDate"
       :class="valid ? 'costum-error pt-2' : ''"
+      :clearable="true"
     >
       <div slot="label">
         <span v-if="isRequired" class="red--text">
@@ -46,10 +47,16 @@ export default {
     submitDate() {
       this.$emit('setDate', this.date);
     },
+    clearDate() {
+      this.date = '';
+    },
   },
   watch: {
     isRequired(newVal) {
       this.valid = newVal;
+    },
+    date(newVal) {
+      this.$emit('setDate', newVal);
     },
   },
 };
@@ -88,5 +95,10 @@ export default {
 }
 .vpd-input-group {
   display: block;
+}
+.vpd-clear-btn {
+  font-size: 18px;
+  margin-top: 10px;
+  margin-left: 4px;
 }
 </style>

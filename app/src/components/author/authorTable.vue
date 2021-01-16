@@ -52,9 +52,20 @@
           </tr>
         </thead>
       </template>
+
+      <template v-slot:[`item.createdBy`]="{ item }">
+        <router-link
+          :to="`/users/profile/${item.createdBy.id}`"
+          class="black--text"
+        >
+          {{ item.createdBy.firstName }} &nbsp; {{ item.createdBy.lastName }}
+        </router-link>
+      </template>
+
       <template v-slot:[`item.createdAt`]="{ item }">
         {{ new Date(item.createdAt).toLocaleDateString('fa') }}
       </template>
+
       <template v-slot:[`item.active`]="{ item }">
         <span v-if="item.active">
           <v-icon color="success" class="pa-2">mdi-account-check </v-icon>
@@ -67,6 +78,7 @@
           {{ $t('inactive') }}
         </span>
       </template>
+
       <template v-slot:[`item.operation`]="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">

@@ -94,15 +94,25 @@
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon color="grey darken-3" @click="deleteRecord(item)">
-          mdi-delete
-        </v-icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              color="grey darken-3"
+              @click="deleteRecord(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-account-convert
+            </v-icon>
+          </template>
+          {{ $t('changeStatus') }}
+        </v-tooltip>
       </template>
     </v-data-table>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
-        :title="'deleteUser'"
-        :message="'RUSureUWantToDeletThisUser'"
+        :title="'changeStatus'"
+        :message="'RUsureUwantChangeStatus'"
         :data="deletingItem"
         @accept="acceptDelete"
         @reject="closeDelete"
@@ -172,10 +182,15 @@ export default {
       this.enableDelete = true;
     },
     acceptDelete(value) {
-      console.log(`deleted ${value.name}`);
-      this.deleteSuccess = true;
-
-      this.closeDelete();
+      this.$axios
+        .delete(`/v1/api/tabaadol-e-ketaab/client/${value.id}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.deleteSuccess = true;
+            this.closeDelete();
+            this.reloadTable();
+          }
+        });
     },
     closeDelete() {
       this.enableDelete = false;
