@@ -153,7 +153,6 @@
                 ref="userAutocomplete"
                 :isRequired="userValidate"
                 :placeHolder="'users'"
-                :hint="`${$t('notSelectedMeanAll')}`"
                 :persistentHint="true"
               />
             </v-col>

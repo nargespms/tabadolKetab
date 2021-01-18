@@ -53,7 +53,7 @@
         </thead>
       </template>
 
-      <template v-slot:[`item.createdBy`]="{ item }">
+      <template v-slot:[`item.createdById`]="{ item }">
         <router-link
           :to="`/users/profile/${item.createdBy.id}`"
           class="black--text"

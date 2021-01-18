@@ -171,7 +171,7 @@ export default {
       // delete
       enableDelete: false,
       deletingItem: {},
-      status: ['USERREGISTER', 'RECIEVED', 'CONFIRMED'],
+      status: ['CLIENTREGISTER', 'RECEIVED', 'CONFIRMED', 'SOLD'],
     };
   },
   methods: {

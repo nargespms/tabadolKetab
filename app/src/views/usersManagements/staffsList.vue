@@ -54,10 +54,10 @@ export default {
         },
         {
           text: 'role',
-          value: 'role',
+          value: 'roleId',
           align: 'center',
           filterable: true,
-          filterType: 'text',
+          filterType: 'roles',
           divider: true,
         },
         {

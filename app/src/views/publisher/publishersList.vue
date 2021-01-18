@@ -36,8 +36,9 @@ export default {
 
         {
           text: 'registeredUser',
-          value: 'registeredUser',
+          value: 'createdById',
           filterable: true,
+          filterType: 'staffUsers',
           align: 'center',
           divider: true,
         },
@@ -53,7 +54,7 @@ export default {
           text: 'status',
           value: 'active',
           filterable: true,
-          filterType: 'staticDropdown',
+          filterType: 'staticDropDown',
           align: 'center',
           divider: true,
         },

@@ -148,7 +148,7 @@
                   🧑‍💻
                 </span>
                 <tagsAutocomplete
-                  :isRequire="true"
+                  :isRequire="false"
                   :placeHolder="'tags'"
                   @sendValue="getTag"
                 />
@@ -347,7 +347,7 @@ export default {
       valid: true,
       saveSuccess: false,
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-      langs: ['fa', 'en'],
+      langs: ['fa', 'en', 'ar'],
       bookStatus: ['status1', 'status2'],
       book: {},
       // bookCategory vlidate

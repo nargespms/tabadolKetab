@@ -209,7 +209,6 @@ export default {
   previewMore: 'مشاهده بیشتر ',
   invalidPhrase: 'عبارت قابل قبول نیست',
   legalCharsAreEngCharNum: 'کارکترهای مجاز حروف انگلیسی و اعدادانگلیسی هستند',
-  notSelectedMeanAll: 'اگر کاربری انتخاب نشود به معنای تمامی کاربران است.',
   enter: 'ورود',
   exit: 'خروج',
   // post
@@ -373,9 +372,9 @@ export default {
   pleaseFillRoleTitle: 'عنوان نقش را وارد نمایید',
   registeration: 'ثبت نام',
   guide: 'راهنما',
-  USERREGISTER: 'ثبت کاربر',
-  CONFIRMED: 'تایید شده و منتشرشده',
-  RECIEVED: 'دریافت شده ',
+  CLIENTREGISTER: 'ثبت کاربر',
+  CONFIRMED: 'تایید شده ',
+  SOLD: 'فروخته شده',
   roles: 'نقش ها',
   // billing
   billing: 'مالی',

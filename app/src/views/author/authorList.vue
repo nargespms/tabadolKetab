@@ -36,8 +36,9 @@ export default {
 
         {
           text: 'createdBy',
-          value: 'createdBy',
+          value: 'createdById',
           filterable: true,
+          filterType: 'staffUsers',
           align: 'center',
           divider: true,
         },

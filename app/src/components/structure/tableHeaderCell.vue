@@ -16,6 +16,7 @@
     </div>
 
     <v-text-field
+      outlined
       v-if="filterEnable && data.filterable && data.filterType === 'text'"
       v-model="filter[data.value]"
       :style="`width:200px`"
@@ -26,7 +27,9 @@
         <v-icon @click="clear(data.value)">mdi-close-circle-outline</v-icon>
       </template>
     </v-text-field>
+
     <v-select
+      outlined
       :style="`width:200px`"
       v-if="
         filterEnable &&
@@ -64,17 +67,31 @@
       @setDate="setDate"
       :isRequired="false"
     />
+    <template v-if="filterEnable && data.filterType === 'staffUsers'">
+      <div class="ma-auto w250">
+        <staffsAutoComplete @setStaff="setStaff" />
+      </div>
+    </template>
+    <template v-if="filterEnable && data.filterType === 'roles'">
+      <div class="ma-auto w250">
+        <rolesAutoComplete @setRole="setRole" />
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
 import _ from 'lodash';
 import datePickerCmp from './datePickerCmp.vue';
+import staffsAutoComplete from './staffsAutoComplete.vue';
+import rolesAutoComplete from './rolesAutocomplete.vue';
 
 export default {
   name: 'tableHeaderCell',
   components: {
     datePickerCmp,
+    staffsAutoComplete,
+    rolesAutoComplete,
   },
   props: {
     data: {
@@ -100,6 +117,25 @@ export default {
     persionToGregorian(value) {
       const dateValue = value.split('/').map(i => parseInt(i, 10));
       return new this.$persianDate(dateValue).toDate().setHours(15, 0);
+    },
+    setStaff(value) {
+      if (value.length > 0) {
+        this.filter[this.data.value] = value;
+        this.emitFilter('createdById');
+      } else {
+        delete this.filter[this.data.value];
+        this.emitFilter(this.data.value);
+      }
+    },
+    setRole(value) {
+      if (value.length > 0) {
+        this.filter[this.data.value] = value;
+        console.log(this.filter[this.data.value]);
+        this.emitFilter('roleId');
+      } else {
+        delete this.filter[this.data.value];
+        this.emitFilter(this.data.value);
+      }
     },
     setDate(value) {
       if (value.length > 0) {
@@ -132,3 +168,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.w250 {
+  width: 250px;
+}
+</style>

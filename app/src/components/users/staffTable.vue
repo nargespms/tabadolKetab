@@ -77,7 +77,7 @@
         </span>
       </template>
 
-      <template v-slot:[`item.role`]="{ item }">
+      <template v-slot:[`item.roleId`]="{ item }">
         <router-link
           :to="`/accessLevelList/${item.role.id}`"
           class="black--text"
