@@ -68,7 +68,7 @@ export default {
       type: Boolean,
     },
     dynamicClass: {
-      type: Boolean,
+      type: String,
     },
     hint: {
       type: String,

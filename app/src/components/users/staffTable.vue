@@ -103,6 +103,20 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
+              class="pl-4"
+              color="grey darken-3"
+              @click="editRecord(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+          {{ $t('edit') }}
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
               color="grey darken-3"
               @click="deleteRecord(item)"
               v-bind="attrs"
@@ -191,6 +205,11 @@ export default {
     addStaff() {
       this.$router.push({
         path: `/users/addUser`,
+      });
+    },
+    editRecord(item) {
+      this.$router.push({
+        path: `/users/profile/${item.id}`,
       });
     },
     // methods for delete notif

@@ -111,7 +111,7 @@
                 <v-select
                   v-model="role"
                   :items="roleType"
-                  :label="$t('roll')"
+                  :label="$t('role')"
                   outlined
                   clearable
                   hide-selected
@@ -134,7 +134,44 @@
                 </v-select>
               </v-col>
             </v-row>
-
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-select
+                  v-model="register.gender"
+                  :items="gender"
+                  :label="$t('gender')"
+                  outlined
+                  clearable
+                  hide-selected
+                  :rules="checkRule"
+                  required
+                >
+                  <template v-slot:item="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template>
+                </v-select>
+              </v-col>
+              <v-col cols="12" md="6">
+                <rolesAutocomplete
+                  @setRole="setRole"
+                  :placeHolder="$t('staffAccess')"
+                  :height="32"
+                  :disable="role === 'client' ? true : false"
+                />
+              </v-col>
+            </v-row>
             <v-row>
               <v-col cols="12" md="6">
                 <v-textarea
@@ -201,38 +238,8 @@
               </v-col>
             </v-row>
 
-            <v-row>
-              <v-col cols="12" md="6">
-                <v-select
-                  v-model="register.gender"
-                  :items="gender"
-                  :label="$t('gender')"
-                  outlined
-                  clearable
-                  hide-selected
-                  :rules="checkRule"
-                  required
-                >
-                  <template v-slot:item="{ item }">
-                    <span>
-                      {{ $t(item) }}
-                    </span>
-                  </template>
-                  <template v-slot:selection="{ item }">
-                    <span>
-                      {{ $t(item) }}
-                    </span>
-                  </template>
-                  <template v-slot:prepend-inner>
-                    <span class="red--text">
-                      *
-                    </span>
-                  </template>
-                </v-select>
-              </v-col>
-            </v-row>
             <passwords v-if="mode !== 'edit'" @setPass="setPass" />
-            <v-row>
+            <v-row v-if="mode === 'edit'">
               <v-col cols="12" md="6">
                 <v-checkbox
                   v-model="register.active"
@@ -279,6 +286,7 @@ import passwords from '../userControls/passwords.vue';
 import mobilePhone from '../userControls/mobilePhone.vue';
 import nationalId from '../userControls/nationalId.vue';
 import email from '../userControls/email.vue';
+import RolesAutocomplete from '../structure/rolesAutocomplete.vue';
 
 export default {
   name: 'addUser',
@@ -293,6 +301,7 @@ export default {
     mobilePhone,
     nationalId,
     email,
+    RolesAutocomplete,
   },
   data() {
     return {
@@ -328,6 +337,9 @@ export default {
     },
     setPass(value) {
       this.register.password = value;
+    },
+    setRole(value) {
+      this.register.roleId = value;
     },
     validate() {
       this.$refs.form.validate();

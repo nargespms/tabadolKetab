@@ -17,6 +17,7 @@
       :dynamicClass="dynamicClass"
       :hint="hint"
       :persistentHint="persistentHint"
+      :disabled="disable"
     >
       <template v-slot:no-data>
         <v-list-item>
@@ -31,9 +32,7 @@
         <v-chip
           v-bind="data.attrs"
           :input-value="data.selected"
-          close
           @click="data.select"
-          @click:close="remove(data.item)"
         >
           {{ data.item.title }}
         </v-chip>
@@ -69,8 +68,11 @@ export default {
     isRequired: {
       type: Boolean,
     },
-    dynamicClass: {
+    disable: {
       type: Boolean,
+    },
+    dynamicClass: {
+      type: String,
     },
     hint: {
       type: String,

@@ -376,6 +376,7 @@ export default {
   CONFIRMED: 'تایید شده ',
   SOLD: 'فروخته شده',
   roles: 'نقش ها',
+  staffAccess: 'دسترسی کارمند',
   // billing
   billing: 'مالی',
   allUsersNumber: 'تعداد تمام کاربران',
