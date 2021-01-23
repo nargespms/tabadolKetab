@@ -8,13 +8,14 @@
       chips
       clearable
       hide-selected
-      item-text="name"
-      item-value="symbol"
+      item-text="title"
+      item-value="id"
       :label="$t('category')"
       outlined
       @change="sendValue"
       :require="isRequire"
       :rules="isRequire ? requireRules : []"
+      :height="height"
     >
       <template v-slot:no-data>
         <v-list-item>
@@ -24,12 +25,11 @@
         </v-list-item>
       </template>
       <template v-slot:selection="{ item }">
-        {{ item.name }}
+        {{ item.title }}
       </template>
       <template v-slot:item="{ item }">
         <v-list-item-content>
-          <v-list-item-title v-text="item.name"></v-list-item-title>
-          <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle>
+          <v-list-item-title v-text="item.title"></v-list-item-title>
         </v-list-item-content>
       </template>
       <template v-if="isRequire" v-slot:prepend-inner>
@@ -65,7 +65,7 @@ export default {
   methods: {
     sendValue() {
       if (this.model && this.model.length > 0) {
-        this.$emit('setBookCat', this.model);
+        this.$emit('sendValue', this.model);
         this.localRequire = true;
       }
     },
@@ -77,18 +77,13 @@ export default {
       if (this.items.length > 0) return;
 
       this.isLoading = true;
-
-      // Lazily load input items
-      fetch('https://api.coingecko.com/api/v3/coins/list')
-        .then(res => res.clone().json())
-        .then(res => {
-          this.items = res;
-        })
-        .catch(err => {
-          console.log(err);
-        })
-        // eslint-disable-next-line no-return-assign
-        .finally(() => (this.isLoading = false));
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/categories').then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.items = res.data.categories;
+          this.isLoading = false;
+        }
+      });
     },
     isRequire(newVal) {
       this.localRequire = newVal;

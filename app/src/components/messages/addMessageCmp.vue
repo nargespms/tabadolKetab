@@ -37,7 +37,7 @@
               <v-radio :label="$t('allClients')" value="clients"></v-radio>
             </v-radio-group>
           </div>
-          <usersAutoComplete
+          <clientsAutoComplete
             ref="userAutocomplete"
             :isRequired="userValidate"
             class="py-6"
@@ -158,14 +158,14 @@
 <script>
 import notifMessage from '../structure/notifMessage.vue';
 import datePickerCmp from '../structure/datePickerCmp.vue';
-import usersAutoComplete from '../structure/usersAutoComplete.vue';
+import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 
 export default {
   name: 'addMessageCmp',
   components: {
     notifMessage,
     datePickerCmp,
-    usersAutoComplete,
+    clientsAutoComplete,
   },
   props: {
     mode: {

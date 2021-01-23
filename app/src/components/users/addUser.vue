@@ -168,7 +168,7 @@
                   @setRole="setRole"
                   :placeHolder="$t('staffAccess')"
                   :height="32"
-                  :disable="role === 'client' ? true : false"
+                  :disable="role === 'client' || role === '' ? true : false"
                 />
               </v-col>
             </v-row>

@@ -34,6 +34,7 @@
       @addNewAddress="addNewAddress"
       @deleteAddress="deleteAddress"
       @hideAddressList="hideAddressList"
+      @setAddress="setAddress"
     />
   </v-card>
 </template>
@@ -73,6 +74,9 @@ export default {
     },
     addNewAddress() {
       this.mode = 'add';
+    },
+    setAddress(value) {
+      this.$emit('setAddress', value);
     },
     saveAddress(value) {
       this.mode = value;

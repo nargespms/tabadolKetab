@@ -6,15 +6,14 @@
       :loading="isLoading"
       :search-input.sync="search"
       chips
-      item-text="name"
-      item-value="symbol"
+      item-text="fullName"
+      item-value="id"
       :label="$t(placeHolder)"
       outlined
       :height="height"
       @change="sendValue"
       :required="isRequired"
       :rules="isRequired ? requireRules : []"
-      multiple
       :dynamicClass="dynamicClass"
       :hint="hint"
       :persistentHint="persistentHint"
@@ -32,17 +31,14 @@
         <v-chip
           v-bind="data.attrs"
           :input-value="data.selected"
-          close
           @click="data.select"
-          @click:close="remove(data.item)"
         >
-          {{ data.item.name }}
+          {{ data.item.fullName }}
         </v-chip>
       </template>
       <template v-slot:item="{ item }">
         <v-list-item-content>
-          <v-list-item-title v-text="item.name"></v-list-item-title>
-          <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle>
+          <v-list-item-title v-text="item.fullName"></v-list-item-title>
         </v-list-item-content>
       </template>
       <template v-if="isRequired" v-slot:prepend-inner>
@@ -56,7 +52,7 @@
 
 <script>
 export default {
-  name: 'authorAutocomplete',
+  name: 'clientsAutocomplete',
   props: {
     placeHolder: {
       type: String,
@@ -97,10 +93,6 @@ export default {
         this.localRequire = true;
       }
     },
-    remove(item) {
-      const index = this.model.indexOf(item.symbol);
-      if (index >= 0) this.model.splice(index, 1);
-    },
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
@@ -109,18 +101,16 @@ export default {
       if (this.items.length > 0) return;
 
       this.isLoading = true;
-
-      // Lazily load input items
-      fetch('https://api.coingecko.com/api/v3/coins/list')
-        .then(res => res.clone().json())
-        .then(res => {
-          this.items = res;
-        })
-        .catch(err => {
-          console.log(err);
-        })
-        // eslint-disable-next-line no-return-assign
-        .finally(() => (this.isLoading = false));
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/clients').then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.items = res.data.clients.map(item => ({
+            id: item.id,
+            fullName: `${item.firstName} ${item.lastName}`,
+          }));
+          this.isLoading = false;
+        }
+      });
     },
     isRequired(newVal) {
       this.localRequire = newVal;

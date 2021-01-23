@@ -7,14 +7,15 @@
       :search-input.sync="search"
       chips
       hide-details
-      item-text="name"
-      item-value="symbol"
+      item-text="title"
+      item-value="id"
       :label="$t(placeHolder)"
       outlined
       @change="sendValue"
       :required="isRequire"
       :rules="isRequire ? requireRules : []"
-      multiple
+      :multiple="isMultiple"
+      :height="height"
     >
       <template v-slot:no-data>
         <v-list-item>
@@ -29,17 +30,16 @@
         <v-chip
           v-bind="data.attrs"
           :input-value="data.selected"
-          close
+          :close="isMultiple"
           @click="data.select"
           @click:close="remove(data.item)"
         >
-          {{ data.item.name }}
+          {{ data.item.title }}
         </v-chip>
       </template>
       <template v-slot:item="{ item }">
         <v-list-item-content>
-          <v-list-item-title v-text="item.name"></v-list-item-title>
-          <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle>
+          <v-list-item-title v-text="item.title"></v-list-item-title>
         </v-list-item-content>
       </template>
     </v-autocomplete>
@@ -58,6 +58,9 @@ export default {
       default: undefined,
     },
     isRequire: {
+      type: Boolean,
+    },
+    isMultiple: {
       type: Boolean,
     },
   },
@@ -79,8 +82,10 @@ export default {
       }
     },
     remove(item) {
-      const index = this.model.indexOf(item.symbol);
-      if (index >= 0) this.model.splice(index, 1);
+      if (this.isMultiple) {
+        const index = this.model.indexOf(item.id);
+        if (index >= 0) this.model.splice(index, 1);
+      }
     },
   },
   watch: {
@@ -90,18 +95,12 @@ export default {
       if (this.items.length > 0) return;
 
       this.isLoading = true;
-
-      // Lazily load input items
-      fetch('https://api.coingecko.com/api/v3/coins/list')
-        .then(res => res.clone().json())
-        .then(res => {
-          this.items = res;
-        })
-        .catch(err => {
-          console.log(err);
-        })
-        // eslint-disable-next-line no-return-assign
-        .finally(() => (this.isLoading = false));
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/publishers').then(res => {
+        if (res.status === 200) {
+          this.items = res.data.publishers;
+          this.isLoading = false;
+        }
+      });
     },
     isRequire(newVal) {
       this.localRequire = newVal;

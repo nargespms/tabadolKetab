@@ -61,6 +61,7 @@
             </template>
           </v-textarea>
           <v-select
+            v-if="this.$store.state.bookShop.userInfo.role === 'CLIENT'"
             :items="departments"
             :label="$t('department')"
             outlined
@@ -88,18 +89,21 @@
               </span>
             </template>
           </v-select>
-          <div class="flex">
+          <div
+            class="flex"
+            v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
+          >
             <span class="fn-25">
               🧑‍💻
             </span>
 
-            <usersAutoComplete
+            <clientsAutoComplete
               ref="userAutocomplete"
               :isRequired="userValidate"
               class="py-6"
               :placeHolder="'users'"
             >
-            </usersAutoComplete>
+            </clientsAutoComplete>
           </div>
 
           <v-file-input
@@ -137,13 +141,13 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import usersAutoComplete from '../structure/usersAutoComplete.vue';
+import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 
 export default {
   name: 'addTicket',
   components: {
     notifMessage,
-    usersAutoComplete,
+    clientsAutoComplete,
   },
   props: {
     mode: {
@@ -188,6 +192,11 @@ export default {
 
       if (this.$refs.form.validate()) {
         if (this.mode === 'addPage') {
+          this.$axios
+            .post('/v1/api/tabaadol-e-ketaab/ticket', { ...this.ticket })
+            .then(res => {
+              console.log(res);
+            });
           this.saveSuccess = true;
           this.reset();
         }

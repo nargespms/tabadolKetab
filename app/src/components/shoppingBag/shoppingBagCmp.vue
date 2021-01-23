@@ -68,12 +68,16 @@
                   <span class="fn13">
                     {{ $t('selectAddress') }}
                   </span>
-                  <span class="fn13 black--text">
-                    (شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷)
+                  <span class="fn13 black--text pr-4">
+                    {{ selectedAddress }}
                   </span>
                 </div>
                 <v-dialog v-model="addressModalEnable" max-width="500px">
-                  <addressCmp @hideAddressList="hideAddressList" state="list" />
+                  <addressCmp
+                    @hideAddressList="hideAddressList"
+                    @setAddress="setAddress"
+                    state="list"
+                  />
                 </v-dialog>
               </v-col>
             </v-row>
@@ -153,11 +157,15 @@ export default {
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       totalPrice: 12000000,
       itemsKey: 0,
+      selectedAddress: '',
     };
   },
   methods: {
     hideAddressList() {
       this.addressModalEnable = false;
+    },
+    setAddress(value) {
+      this.selectedAddress = value.address;
     },
     deleteItem(item) {
       this.$store.commit('bookShop/removeFromBag', item, {

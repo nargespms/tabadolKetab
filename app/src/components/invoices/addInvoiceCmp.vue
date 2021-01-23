@@ -82,7 +82,7 @@
               ></v-textarea>
             </v-col>
             <v-col cols="12" md="6">
-              <usersAutocomplete
+              <clientsAutoComplete
                 ref="userAutocomplete"
                 :isRequired="userValidate"
                 :placeHolder="'users'"
@@ -118,14 +118,14 @@
 </template>
 
 <script>
-import usersAutocomplete from '../structure/usersAutoComplete.vue';
+import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import invoiceItems from './invoiceItems.vue';
 
 export default {
   name: 'addInvoiceCmp',
   components: {
-    usersAutocomplete,
+    clientsAutoComplete,
     notifMessage,
     invoiceItems,
   },

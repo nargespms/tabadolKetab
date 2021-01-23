@@ -21,6 +21,8 @@
       :loading="loading"
     />
     <bookCategoryTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'bookCats'"
       :headers="headers"
       :tableData="tableData"
@@ -29,6 +31,8 @@
       :loading="loading"
     />
     <ticketsTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'tickets'"
       :headers="headers"
       :tableData="tableData"
@@ -37,6 +41,8 @@
       :loading="loading"
     />
     <discountsTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'discounts'"
       :headers="headers"
       :tableData="tableData"
@@ -45,6 +51,8 @@
       :loading="loading"
     />
     <requestedBooksTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'requestedBooks'"
       :headers="headers"
       :tableData="tableData"
@@ -53,6 +61,8 @@
       :loading="loading"
     />
     <booksTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'books'"
       :headers="headers"
       :tableData="tableData"
@@ -62,6 +72,8 @@
     />
 
     <postTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'post'"
       :headers="headers"
       :tableData="tableData"
@@ -80,6 +92,8 @@
       :loading="loading"
     />
     <invoicesTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'invoices'"
       :headers="headers"
       :tableData="tableData"
@@ -108,6 +122,8 @@
       :loading="loading"
     />
     <ordersTable
+      @reloadTable="getData"
+      @getData="getData"
       v-if="this.module === 'orders'"
       :headers="headers"
       :tableData="tableData"

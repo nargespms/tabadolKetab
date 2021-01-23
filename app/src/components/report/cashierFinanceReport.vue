@@ -26,7 +26,7 @@
           </span>
         </v-col>
         <v-col cols="12" md="2">
-          <usersAutoComplete
+          <clientsAutoComplete
             ref="userAutocomplete"
             :isRequired="userValidate"
             :placeHolder="'users'"
@@ -76,14 +76,14 @@
 <script>
 import financeReportTable from './financeReportTable.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
-import usersAutoComplete from '../structure/usersAutoComplete.vue';
+import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 
 export default {
   name: 'cashierFinanceReport',
   components: {
     financeReportTable,
     rangeDatePickerCmp,
-    usersAutoComplete,
+    clientsAutoComplete,
   },
   data() {
     return {

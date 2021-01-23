@@ -42,26 +42,33 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon
-                v-if="h.sortable"
-                :key="h.index"
-                color="grey"
-                @click="sort"
-              >
-                mdi-menu-down
-              </v-icon>
-              {{ $t(h.text) }}
-              <v-icon
-                v-if="h.filterable"
-                color="grey"
-                size="11"
-                class="pa-2"
-                @click="filter"
-                >fas fa-filter
-              </v-icon>
+              <tableHeaderCell
+                :data="h"
+                :items="h.text === 'status' ? statusItems : []"
+                @filterCol="filterCol"
+              />
             </th>
           </tr>
         </thead>
+      </template>
+
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+      </template>
+
+      <template v-slot:[`item.active`]="{ item }">
+        <span v-if="item.active">
+          <v-icon color="success" class="pa-2"
+            >mdi-checkbox-marked-circle-outline
+          </v-icon>
+          {{ $t('active') }}
+        </span>
+        <span v-else>
+          <v-icon color="error" class="pa-2">
+            mdi-minus-circle-outline
+          </v-icon>
+          {{ $t('inactive') }}
+        </span>
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
@@ -85,8 +92,7 @@
     <v-dialog v-model="enableEdit" content-class="sh-0">
       <addBookCategory
         :mode="'edit'"
-        :title="edittingItem.title"
-        :active="edittingItem.completed"
+        :data="edittingItem"
         @savedSuccessfully="editBookSuccess"
       />
     </v-dialog>
@@ -103,6 +109,7 @@
 import promptDialog from '../structure/promptDialog.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import addBookCategory from './addBookCategory.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 
 export default {
   name: 'bookCategoryTable',
@@ -110,6 +117,7 @@ export default {
     promptDialog,
     notifMessage,
     addBookCategory,
+    tableHeaderCell,
   },
   props: {
     headers: {
@@ -138,6 +146,15 @@ export default {
       // edit
       enableEdit: false,
       edittingItem: {},
+      // fiter
+      statusItems: [
+        { text: 'active', value: true },
+        {
+          text: 'inactive',
+          value: false,
+        },
+      ],
+      filter: {},
     };
   },
   methods: {
@@ -147,10 +164,15 @@ export default {
       this.enableDelete = true;
     },
     acceptDelete(value) {
-      console.log(`deleted ${value.name}`);
-      this.successNotif = true;
-
-      this.closeDelete();
+      this.$axios
+        .delete(`/v1/api/tabaadol-e-ketaab/category/${value.id}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.reloadTable();
+            this.successNotif = true;
+            this.closeDelete();
+          }
+        });
     },
     closeDelete() {
       this.enableDelete = false;
@@ -166,6 +188,7 @@ export default {
       this.edittingItem = item;
     },
     editBookSuccess() {
+      this.reloadTable();
       this.enableEdit = false;
       this.successNotif = true;
       this.edittingItem = {};
@@ -176,14 +199,22 @@ export default {
         name: 'addBookCat',
       });
     },
-
-    // sort funcs
-    sort() {
-      console.log('sorted');
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
     },
-    // filter
-    filter() {
-      console.log('filtered');
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+        tableSearch: this.tableSearch,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
   },
   watch: {

@@ -38,7 +38,7 @@
                 <span class="fn-25">
                   🧑‍💻
                 </span>
-                <usersAutoComplete
+                <clientsAutoComplete
                   ref="userAutocomplete"
                   :isRequired="userValidate"
                   :placeHolder="'users'"
@@ -83,13 +83,13 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import usersAutoComplete from '../structure/usersAutoComplete.vue';
+import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 
 export default {
   name: 'addCredit',
   components: {
     notifMessage,
-    usersAutoComplete,
+    clientsAutoComplete,
   },
   data() {
     return {

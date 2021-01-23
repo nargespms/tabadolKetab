@@ -1,24 +1,33 @@
 <template>
-  <v-card class="relative">
+  <v-card class="relative" v-if="!isLoading">
     <v-list two-line class="relative">
-      <v-radio-group :mandatory="true" hide-details>
+      <v-radio-group
+        :mandatory="true"
+        hide-details
+        v-model="selectedAddress"
+        class="px-3 my-0"
+      >
         <template v-for="item in addresses">
-          <v-list-item :key="item.title" class="addressItem">
-            <v-radio @click="itemSelect(item)" :value="item.id"></v-radio>
+          <v-list-item :key="item.title" class="addressItem pa-0">
+            <v-radio @click="itemSelect(item)" :value="item"></v-radio>
 
             <v-list-item-content class="text-right  ">
-              <v-row>
-                <v-col cols="12" lg="10">
+              <v-row class="justify-center clear ">
+                <v-col cols="12" lg="9">
                   <v-list-item-title class="pa-2">
                     <v-icon>mdi-google-maps</v-icon>
                     {{ item.address }}
                   </v-list-item-title>
                   <v-list-item-subtitle class="pa-2">
                     <v-icon>mdi-mailbox</v-icon>
-                    {{ item.postalCode }}
+                    {{ item.zipCode }}
                   </v-list-item-subtitle>
                 </v-col>
-                <v-col cols="12" lg="2" class="d-flex align-self-center">
+                <v-col
+                  cols="12"
+                  lg="2"
+                  class="d-flex justify-center align-self-center"
+                >
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                       <v-icon
@@ -77,7 +86,7 @@
               class="pointer"
               v-bind="attrs"
               v-on="on"
-              @click="confirmPostRequest"
+              @click="confirmAddress"
             >
               <v-icon color="white"> mdi-checkbox-marked-outline</v-icon>
             </v-btn>
@@ -109,40 +118,23 @@ export default {
   data() {
     return {
       selectedAddress: {},
-      addresses: [
-        {
-          id: '1',
-          address: 'شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷',
-          postalCode: '1234567895236',
-        },
-        {
-          id: '2',
-          address: ' فاطمی خیابان زرتشت خیابان آزاددل کامبیز پلاک ۱۴',
-          postalCode: '1234567895236',
-        },
-        {
-          id: '3',
-          address: 'شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷',
-          postalCode: '1234567895236',
-        },
-      ],
+      isLoading: true,
+      addresses: [],
       // delete
       enableDelete: false,
       deletingItem: {},
     };
   },
   methods: {
-    itemSelect(item) {
-      this.selectedAddress = item;
-    },
     editAddress(item) {
       this.$emit('editAddress', item);
     },
     addNewAddress(item) {
       this.$emit('addNewAddress', item);
     },
-    confirmPostRequest() {
+    confirmAddress() {
       this.$emit('hideAddressList');
+      this.$emit('setAddress', this.selectedAddress);
     },
 
     // methods for delete notif
@@ -151,15 +143,32 @@ export default {
       this.enableDelete = true;
     },
     acceptDelete(value) {
-      console.log(`deleted ${value.name}`);
-      this.$emit('deleteAddress', value);
-
-      this.closeDelete();
+      this.$axios
+        .delete(`/v1/api/tabaadol-e-ketaab/address/${value.id}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.$emit('deleteAddress', value);
+            this.closeDelete();
+            this.getAddress();
+          }
+        });
     },
     closeDelete() {
       this.enableDelete = false;
       this.deletingItem = {};
     },
+    getAddress() {
+      this.$axios.get(`/v1/api/tabaadol-e-ketaab/addresses`).then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.addresses = res.data.addresses;
+          this.isLoading = false;
+        }
+      });
+    },
+  },
+  mounted() {
+    this.getAddress();
   },
 };
 </script>

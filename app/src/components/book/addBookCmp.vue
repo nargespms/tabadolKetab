@@ -24,7 +24,7 @@
           <v-row>
             <v-col cols="12" md="6" class="pa-0">
               <v-text-field
-                v-model="book.bookName"
+                v-model="book.name"
                 :rules="requireRule"
                 :label="$t('bookName')"
                 required
@@ -52,26 +52,29 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6" class="pa-0 pb-6">
+            <v-col cols="12" md="6" class="pa-0">
               <bookCatAutocomplete
                 :isRequire="bookCatVallidate"
                 @sendValue="getBookCat"
                 ref="bookCat"
+                :height="32"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
                 :isRequire="false"
                 :placeHolder="'writer'"
                 @sendValue="getWriter"
+                :height="32"
               />
             </v-col>
           </v-row>
-          <v-row class="pb-7">
+          <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
                 :isRequire="false"
                 :placeHolder="'author'"
                 @sendValue="getAuthor"
+                :height="32"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
@@ -79,6 +82,7 @@
                 :isRequire="false"
                 :placeHolder="'translator'"
                 @sendValue="getTranslator"
+                :height="32"
               />
             </v-col>
           </v-row>
@@ -88,9 +92,56 @@
                 :isRequire="false"
                 :placeHolder="'searcher'"
                 @sendValue="getSearcher"
+                :height="32"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+              <publisherAutocomplete
+                :isRequire="false"
+                :placeHolder="'publisher'"
+                @sendValue="getPublisher"
+                :height="32"
+                :isMultiple="false"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6" class="pa-0 ">
+              <v-text-field
+                v-model="book.nationalcode"
+                :label="$t('nationalcode')"
+                outlined
+                v-mask="'###########'"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+              <v-select
+                :items="langs"
+                :label="$t('bookLang')"
+                outlined
+                v-model="book.bookLang"
+                required
+              >
+                <template v-slot:item="{ item }">
+                  <span>
+                    {{ $t(item) }}
+                  </span>
+                </template>
+                <template v-slot:selection="{ item }">
+                  <span>
+                    {{ $t(item) }}
+                  </span>
+                </template>
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+              </v-select>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6" class="pa-0">
               <v-text-field
                 v-model="book.shabak"
                 :label="$t('shabak')"
@@ -105,43 +156,11 @@
                 </template>
               </v-text-field>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="6" class="pa-0 ">
-              <v-text-field
-                v-model="book.nationalcode"
-                :label="$t('nationalcode')"
-                outlined
-                v-mask="'###########'"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-              <v-select :items="langs" :label="$t('bookLang')" outlined>
-                <template v-slot:item="{ item }">
-                  <span>
-                    {{ $t(item) }}
-                  </span>
-                </template>
-                <template v-slot:selection="{ item }">
-                  <span>
-                    {{ $t(item) }}
-                  </span>
-                </template>
-              </v-select>
-            </v-col>
-          </v-row>
-          <v-row class="pb-7">
-            <v-col cols="12" md="6" class="pa-0 ">
-              <publisherAutocomplete
-                :isRequire="false"
-                :placeHolder="'publisher'"
-                @sendValue="getPublisher"
-              />
-            </v-col>
             <v-col
+              v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
               cols="12"
               md="6"
-              class="pa-0 pr-md-4  pr-lg-4 pr-0 pb-6 pb-md-0"
+              class="pa-0 pr-md-4  pr-lg-4 pr-0"
             >
               <div class="flex">
                 <span class="fn-25">
@@ -151,8 +170,20 @@
                   :isRequire="false"
                   :placeHolder="'tags'"
                   @sendValue="getTag"
+                  :height="32"
                 />
               </div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6" class="pa-0">
+              <clientsAutoComplete
+                v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
+                :placeHolder="'clients'"
+                @setUser="setClient"
+                :height="32"
+                :isRequired="true"
+              />
             </v-col>
           </v-row>
           <v-row>
@@ -174,14 +205,14 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6" class="pa-0 pt-0 pb-4">
+            <v-col cols="12" md="6" class="pa-0 pt-0 ">
               <div class="recieveUserWrap d-flex align-center pt-0">
                 <span class="font-weight-black">
                   {{ $t('bookDonation') }} :
                 </span>
 
                 <v-radio-group
-                  v-model="book.bookDonation"
+                  v-model="book.donation"
                   row
                   class="pr-6"
                   :rules="requireRule"
@@ -200,18 +231,23 @@
             ></v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6" class="pa-0 pt-0">
+            <v-col
+              cols="12"
+              md="6"
+              class="pa-0 pt-0"
+              v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
+            >
               <v-text-field
-                v-model="book.UndergraduatePrice"
+                v-model="book.undergraduatePrice"
                 :label="$t('UndergraduatePrice')"
                 outlined
                 required
                 :rules="requireRule"
                 v-mask="'#############'"
                 :hint="
-                  this.book.UndergraduatePrice
+                  this.book.undergraduatePrice
                     ? `${$t('costInToman')}${moneyFormat(
-                        book.UndergraduatePrice
+                        book.undergraduatePrice
                       )}`
                     : ''
                 "
@@ -228,7 +264,12 @@
                 </template>
               </v-text-field>
             </v-col>
-            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+            <v-col
+              cols="12"
+              md="6"
+              class="pa-0 pr-md-4  pr-lg-4 pr-0"
+              v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
+            >
               <v-select
                 :items="bookStatus"
                 :label="$t('status')"
@@ -272,18 +313,18 @@
                   :rules="requireRule"
                 >
                   <v-radio
-                    :label="$t('recieveBook')"
-                    value="recieveBook"
+                    :label="$t('RECEIVEBOOK')"
+                    value="RECEIVEBOOK"
                     class="pr-4"
                   ></v-radio>
                   <v-radio
-                    :label="$t('noProblem')"
-                    value="noProblem"
+                    :label="$t('NOPROBLEM')"
+                    value="NOPROBLEM"
                     class="pr-4"
                   ></v-radio>
                   <v-radio
-                    :label="$t('noProblemWithKnowing')"
-                    value="noProblemWithKnowing"
+                    :label="$t('NOPROBLEMIFASKED')"
+                    value="NOPROBLEMIFASKED"
                     class="pr-4"
                   ></v-radio>
                 </v-radio-group>
@@ -328,6 +369,7 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
+import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
 import tagsAutocomplete from '../tags/tagsAutocomplete.vue';
 import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
@@ -341,6 +383,12 @@ export default {
     tagsAutocomplete,
     publisherAutocomplete,
     authorAutocomplete,
+    clientsAutoComplete,
+  },
+  props: {
+    mode: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -348,7 +396,7 @@ export default {
       saveSuccess: false,
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       langs: ['fa', 'en', 'ar'],
-      bookStatus: ['status1', 'status2'],
+      bookStatus: ['CLIENTREGISTER', 'RECEIVED', 'CONFIRMED', 'SOLD'],
       book: {},
       // bookCategory vlidate
       bookCatVallidate: true,
@@ -360,11 +408,14 @@ export default {
         name: 'bookList',
       });
     },
+    setClient(value) {
+      this.book.sellerId = value;
+    },
     getBookCat(value) {
-      console.log(value);
+      this.book.categoryId = value;
     },
     getPublisher(value) {
-      console.log(value);
+      this.book.publisherId = value;
     },
     getTag(value) {
       console.log(value);
@@ -391,8 +442,19 @@ export default {
         this.bookCatVallidate = false;
       }
       if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-        this.reset();
+        if (this.mode === 'add') {
+          this.$axios
+            .post('/v1/api/tabaadol-e-ketaab/book', {
+              ...this.book,
+            })
+            .then(res => {
+              console.log(res);
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+              }
+            });
+        }
       } else {
         this.valid = false;
       }

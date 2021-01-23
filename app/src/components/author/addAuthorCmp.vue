@@ -47,6 +47,7 @@
                 </template>
               </v-text-field>
               <v-checkbox
+                v-if="this.mode === 'edit'"
                 v-model="author.active"
                 :label="$t('activeinactive')"
               ></v-checkbox>
@@ -106,7 +107,6 @@ export default {
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       author: {
         title: '',
-        active: false,
       },
       saveSuccess: false,
       error: false,
@@ -148,7 +148,6 @@ export default {
           this.saveSuccess = true;
         }
         this.reset();
-        this.author.active = false;
       } else {
         this.valid = false;
       }

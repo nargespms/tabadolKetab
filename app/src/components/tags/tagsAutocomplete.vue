@@ -14,6 +14,7 @@
       :required="isRequire"
       :rules="isRequire ? requireRules : []"
       multiple
+      :height="height"
     >
       <template v-slot:no-data>
         <v-list-item>

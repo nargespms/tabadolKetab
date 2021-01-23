@@ -1,5 +1,9 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'bookCats'" />
+  <dataTableWrap
+    :headers="headers"
+    :module="'bookCats'"
+    :endpoint="'/v1/api/tabaadol-e-ketaab/categories/list'"
+  />
 </template>
 
 <script>
@@ -14,27 +18,27 @@ export default {
     return {
       headers: [
         {
-          text: 'id',
+          text: 'title',
+          value: 'title',
           align: 'center',
-          sortable: false,
-          value: 'id',
-          filterable:true,
+          filterable: true,
+          filterType: 'text',
           divider: true,
         },
-        { text: 'title', value: 'title', align: 'center',filterable:true, divider: true },
         {
           text: 'createdAt',
           value: 'createdAt',
           sortable: false,
-          filterable:true,
+          filterable: true,
+          filterType: 'date',
           align: 'center',
           divider: true,
         },
         {
           text: 'status',
-          value: 'status',
-          sortable: true,
-          filterable:true,
+          value: 'active',
+          filterable: true,
+          filterType: 'staticDropDown',
           align: 'center',
           divider: true,
         },
@@ -42,7 +46,7 @@ export default {
           text: 'operation',
           value: 'operation',
           sortable: false,
-          filterable:false,
+          filterable: false,
           align: 'center',
           divider: true,
         },

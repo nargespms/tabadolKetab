@@ -64,6 +64,7 @@
                 />
               </v-col>
               <v-checkbox
+                v-if="this.mode === 'edit'"
                 v-model="publisher.active"
                 :label="$t('activeinactive')"
               ></v-checkbox>
@@ -125,7 +126,6 @@ export default {
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       saveSuccess: false,
       publisher: {
-        active: false,
         title: '',
       },
       // error messages
@@ -155,7 +155,6 @@ export default {
               if (res.status === 200) {
                 this.$emit('editPublisher');
                 this.reset();
-                this.publisher.active = false;
               }
             })
             .catch({});

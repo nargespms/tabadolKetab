@@ -149,7 +149,7 @@
               <bookCatAutocomplete ref="bookCat" :isRequire="bookCatVallidate"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-0 pr-md-4 pr-lg-4 pb-4">
-              <usersAutoComplete
+              <clientsAutoComplete
                 ref="userAutocomplete"
                 :isRequired="userValidate"
                 :placeHolder="'users'"
@@ -195,7 +195,7 @@
 
 <script>
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
-import usersAutoComplete from '../structure/usersAutoComplete.vue';
+import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
 
@@ -204,7 +204,7 @@ export default {
   components: {
     notifMessage,
     bookCatAutocomplete,
-    usersAutoComplete,
+    clientsAutoComplete,
     rangeDatePickerCmp,
   },
   data() {

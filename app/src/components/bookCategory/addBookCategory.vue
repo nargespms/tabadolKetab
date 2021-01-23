@@ -26,7 +26,12 @@
             </span>
           </v-tooltip>
         </v-card-actions>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+          @keyup.enter="validate"
+        >
           <v-text-field
             v-model="bookCat.title"
             :counter="10"
@@ -35,6 +40,7 @@
             required
             outlined
             class="pt-4"
+            @keyup.enter="validate"
           >
             <template v-slot:prepend-inner>
               <span class="red--text">
@@ -43,6 +49,7 @@
             </template>
           </v-text-field>
           <v-checkbox
+            v-if="mode === 'edit'"
             v-model="bookCat.active"
             :label="$t('activeinactive')"
             required
@@ -71,6 +78,12 @@
       :msg="'operationSuccessfullyOcured'"
       :type="'success'"
     />
+    <notifMessage
+      v-if="errorEnable"
+      :msg="errorMsg"
+      @hideNotif="hideNotif"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
@@ -86,13 +99,8 @@ export default {
     mode: {
       type: String,
     },
-    title: {
-      type: String,
-      default: '',
-    },
-    active: {
-      type: Boolean,
-      default: true,
+    data: {
+      type: Object,
     },
   },
   data() {
@@ -100,7 +108,6 @@ export default {
       valid: true,
       bookCat: {
         title: '',
-        active: true,
       },
 
       titleRules: [
@@ -108,6 +115,9 @@ export default {
         v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
       saveSuccess: false,
+      // error
+      errorEnable: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -115,10 +125,41 @@ export default {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
         if (this.mode === 'addPage') {
-          this.saveSuccess = true;
-          this.reset();
+          this.$axios
+            .post('/v1/api/tabaadol-e-ketaab/category', { ...this.bookCat })
+            .then(res => {
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+                this.$emit('savedSuccessfully');
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 409) {
+                this.errorEnable = true;
+                this.errorMsg = 'repeatedTitle';
+              }
+            });
+        } else if (this.mode === 'edit') {
+          this.$axios
+            .put(`/v1/api/tabaadol-e-ketaab/category/${this.data.id}`, {
+              ...this.bookCat,
+            })
+            .then(res => {
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+                this.$emit('savedSuccessfully');
+              }
+            })
+            .catch(e => {
+              console.log(e);
+              if (e.response.status === 409) {
+                this.errorEnable = true;
+                this.errorMsg = 'repeatedTitle';
+              }
+            });
         }
-        this.$emit('savedSuccessfully');
       } else {
         this.valid = false;
       }
@@ -130,22 +171,21 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    hideError() {
+      this.errorEnable = false;
+    },
     bookCatList() {
       this.$router.push({ path: 'bookCatList' });
     },
   },
   mounted() {
     if (this.mode === 'edit') {
-      this.bookCat.active = this.active;
-      this.bookCat.title = this.title;
+      this.bookCat = this.data;
     }
   },
   watch: {
-    active(newVal) {
-      this.bookCat.active = newVal;
-    },
-    title(newVal) {
-      this.bookCat.title = newVal;
+    data(newVal) {
+      this.bookCat = newVal;
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <addBookCmp />
+    <addBookCmp :mode="'add'" />
   </div>
 </template>
 
