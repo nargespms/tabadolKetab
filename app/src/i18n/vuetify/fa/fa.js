@@ -433,4 +433,5 @@ export default {
   unKnown: 'مشخص نشده ',
   accessDenied: 'متاسفانه شما دسترسی ندارید',
   repeatedTitle: 'عنوان تکراری است',
+  permissionDenied: 'دسترسی وجود ندارد',
 };

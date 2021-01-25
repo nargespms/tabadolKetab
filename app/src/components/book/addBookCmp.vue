@@ -62,6 +62,7 @@
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
                 :isRequire="false"
+                :isMultiple="false"
                 :placeHolder="'writer'"
                 @sendValue="getWriter"
                 :height="32"
@@ -72,6 +73,7 @@
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
                 :isRequire="false"
+                :isMultiple="false"
                 :placeHolder="'author'"
                 @sendValue="getAuthor"
                 :height="32"
@@ -80,6 +82,7 @@
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
                 :isRequire="false"
+                :isMultiple="false"
                 :placeHolder="'translator'"
                 @sendValue="getTranslator"
                 :height="32"
@@ -90,6 +93,7 @@
             <v-col cols="12" md="6" class="pa-0 ">
               <authorAutocomplete
                 :isRequire="false"
+                :isMultiple="false"
                 :placeHolder="'searcher'"
                 @sendValue="getSearcher"
                 :height="32"
@@ -121,6 +125,7 @@
                 outlined
                 v-model="book.bookLang"
                 required
+                :rules="requireRule"
               >
                 <template v-slot:item="{ item }">
                   <span>
@@ -212,10 +217,10 @@
                 </span>
 
                 <v-radio-group
+                  mandatory
                   v-model="book.donation"
                   row
                   class="pr-6"
-                  :rules="requireRule"
                 >
                   <v-radio
                     :label="$t('yes')"
@@ -307,10 +312,10 @@
               <div class="recieveUserWrap d-flex align-center ">
                 <span class="font-weight-black"> {{ $t('recycle') }} : </span>
                 <v-radio-group
+                  mandatory
                   v-model="book.recycle"
                   row
                   class="pr-6"
-                  :rules="requireRule"
                 >
                   <v-radio
                     :label="$t('RECEIVEBOOK')"
@@ -364,6 +369,12 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="errorEnable"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
@@ -400,6 +411,9 @@ export default {
       book: {},
       // bookCategory vlidate
       bookCatVallidate: true,
+      // error
+      errorEnable: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -421,16 +435,16 @@ export default {
       console.log(value);
     },
     getWriter(value) {
-      console.log(value);
+      this.book.writerId = value;
     },
     getSearcher(value) {
-      console.log(value);
+      this.book.searcherId = value;
     },
     getTranslator(value) {
-      console.log(value);
+      this.book.translatorId = value;
     },
     getAuthor(value) {
-      console.log(value);
+      this.book.authorId = value;
     },
     // validate form
     validate() {
@@ -452,6 +466,12 @@ export default {
               if (res.status === 200) {
                 this.saveSuccess = true;
                 this.reset();
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 403) {
+                this.errorEnable = true;
+                this.errorMsg = 'permissionDenied';
               }
             });
         }

@@ -110,6 +110,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$route);
     if (this.$route.name === 'admin-login') {
       this.endpoint = '/v1/api/tabaadol-e-ketaab/staff/sign-in';
     } else {

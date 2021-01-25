@@ -6,9 +6,11 @@ import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import { axiosInstance } from './plugins/axios';
 import './plugins/mask';
-import router from './router/index.js';
+import { Router } from './router/index.js';
 import messages from './i18n/vuetify';
 import store from './store';
+
+// console.log(store);
 
 Vue.use(VueI18n);
 
@@ -30,7 +32,7 @@ Vue.config.productionTip = false;
 new Vue({
   vuetify,
   i18n,
-  router,
+  router: Router,
   store,
   render: h => h(App),
 }).$mount('#app');

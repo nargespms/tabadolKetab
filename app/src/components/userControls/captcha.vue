@@ -56,7 +56,6 @@ export default {
     },
     getCaptcha() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/captcha').then(res => {
-        console.log(res);
         this.capImg = res.data.svg;
         this.captcha.token = res.data.token;
         this.value = res.data.value;

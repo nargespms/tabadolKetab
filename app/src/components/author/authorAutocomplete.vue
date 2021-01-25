@@ -14,7 +14,7 @@
       @change="sendValue"
       :required="isRequire"
       :rules="isRequire ? requireRules : []"
-      multiple
+      :multiple="isMultiple"
     >
       <template v-slot:no-data>
         <v-list-item>
@@ -29,9 +29,8 @@
         <v-chip
           v-bind="data.attrs"
           :input-value="data.selected"
-          close
+          :close="isMultiple"
           @click="data.select"
-          @click:close="remove(data.item)"
         >
           {{ data.item.title }}
         </v-chip>
@@ -59,6 +58,9 @@ export default {
     isRequire: {
       type: Boolean,
     },
+    isMultiple: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -76,10 +78,6 @@ export default {
         this.$emit('sendValue', this.model);
         this.localRequire = true;
       }
-    },
-    remove(item) {
-      const index = this.model.indexOf(item.id);
-      if (index >= 0) this.model.splice(index, 1);
     },
   },
   watch: {

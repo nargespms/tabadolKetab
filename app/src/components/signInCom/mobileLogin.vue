@@ -68,6 +68,9 @@ export default {
               this.$store.commit('bookShop/userEnter', res.data.user, {
                 module: 'bookShop',
               });
+              this.$store.commit('bookShop/loggedIn', true, {
+                module: 'bookShop',
+              });
               this.$router.push({
                 name: 'dashboard',
               });

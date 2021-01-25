@@ -17,9 +17,12 @@
           <v-list-item link to="users/profile/1">
             <v-list-item-content>
               <v-list-item-title class="fn18 pa-4">
-                مدیر تبادل
+                {{ $store.state.bookShop.userInfo.firstName }}
+                {{ $store.state.bookShop.userInfo.lastName }}
               </v-list-item-title>
-              <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
+              <v-list-item-subtitle>{{
+                $store.state.bookShop.userInfo.email
+              }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list-item>
@@ -28,79 +31,84 @@
     <v-divider></v-divider>
 
     <!-- simple  -->
-    <v-list-item
-      v-for="item in simpleItems"
-      :key="item.title"
-      :to="item.link"
-      exact
-      active-class="teal--text text--lighten-2"
-    >
-      <v-list-item-icon>
-        <v-icon>
-          {{ item.action }}
-        </v-icon>
-      </v-list-item-icon>
-
-      <v-list-item-content>
-        <v-list-item-title>
-          {{ $t(item.title) }}
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <!-- multiple  -->
-    <v-list-group
-      v-for="item in groupItems"
-      :key="item.title"
-      v-model="item.active"
-      class="mt-2"
-      no-action
-      color="blue-grey lighten-3"
-      append-icon="fas fa-caret-down"
-    >
-      <template v-slot:prependIcon>
-        <v-badge
-          v-if="item.badge"
-          :content="item.badge"
-          :color="item.badgeColor"
-          overlap
-        >
-          <v-icon class="pl-3">
+    <template v-for="item in simpleItems">
+      <v-list-item
+        v-if="item.condition === true"
+        :key="item.title"
+        :to="item.link"
+        exact
+        active-class="teal--text text--lighten-2"
+      >
+        <v-list-item-icon>
+          <v-icon>
             {{ item.action }}
           </v-icon>
-        </v-badge>
-        <v-icon v-else class="pl-3">
-          {{ item.action }}
-        </v-icon>
-      </template>
-
-      <template v-slot:activator>
-        <v-list-item-content>
-          <v-list-item-title
-            class="font-weight-medium menuTitles fn15"
-            v-text="$t(item.title)"
-          ></v-list-item-title>
-        </v-list-item-content>
-      </template>
-
-      <v-list-item
-        v-for="subItem in item.items"
-        :key="subItem.title"
-        :to="subItem.link"
-        active-class="teal--text text--lighten-2"
-        dark
-      >
-        <v-icon size="14" class="pl-3">
-          {{ subItem.icon }}
-        </v-icon>
+        </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title
-            class="pr3"
-            v-text="$t(subItem.title)"
-          ></v-list-item-title>
+          <v-list-item-title>
+            {{ $t(item.title) }}
+          </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-    </v-list-group>
+    </template>
+    <!-- multiple  -->
+    <template v-for="item in groupItems">
+      <v-list-group
+        v-if="item.condition === true"
+        :key="item.title"
+        v-model="item.active"
+        class="mt-2"
+        no-action
+        color="blue-grey lighten-3"
+        append-icon="fas fa-caret-down"
+      >
+        <template v-slot:prependIcon>
+          <v-badge
+            v-if="item.badge"
+            :content="item.badge"
+            :color="item.badgeColor"
+            overlap
+          >
+            <v-icon class="pl-3">
+              {{ item.action }}
+            </v-icon>
+          </v-badge>
+          <v-icon v-else class="pl-3">
+            {{ item.action }}
+          </v-icon>
+        </template>
+
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title
+              class="font-weight-medium menuTitles fn15"
+              v-text="$t(item.title)"
+            ></v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <template v-for="subItem in item.items">
+          <v-list-item
+            v-if="subItem.condition === true"
+            :key="subItem.title"
+            :to="subItem.link"
+            active-class="teal--text text--lighten-2"
+            dark
+          >
+            <v-icon size="14" class="pl-3">
+              {{ subItem.icon }}
+            </v-icon>
+            <v-list-item-content>
+              <v-list-item-title
+                class="pr3"
+                v-text="$t(subItem.title)"
+              ></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+      </v-list-group>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -116,11 +124,14 @@ export default {
           title: 'Dashboard',
           action: 'mdi-view-dashboard',
           link: '/dashboard',
+          conditions:
+            this.$store.state.bookShop.userInfo.role.r_report === true,
         },
         {
           title: 'bookSearch',
           action: 'mdi-magnify',
           link: '/bookSearch',
+          conditions: true,
         },
       ],
       groupItems: [
@@ -128,27 +139,35 @@ export default {
           action: 'mdi-account',
           title: 'Users',
           active: false,
+          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
           items: [
             { title: 'AddUser', link: '/users/addUser', icon: 'fas fa-plus' },
             {
               title: 'StaffsList',
               link: '/users/staffs',
               icon: 'fa fa-table',
+              condition:
+                this.$store.state.bookShop.userInfo.role.cu_staff === true,
             },
             {
               title: 'ClientsList',
               link: '/users/clients',
               icon: 'fa fa-table',
+              condition: true,
             },
             {
               title: 'roleCreation',
               link: '/accessLevelCreation',
               icon: 'fas fa-user-cog',
+              condition:
+                this.$store.state.bookShop.userInfo.role.cu_role === true,
             },
             {
               title: 'roleList',
               link: '/accessLevelList',
               icon: 'mdi-account-group',
+              condition:
+                this.$store.state.bookShop.userInfo.role.cu_role === true,
             },
           ],
         },
@@ -156,16 +175,19 @@ export default {
           action: 'mdi-book-open-variant',
           title: 'book',
           active: false,
+          condition: true,
           items: [
             {
               title: 'addBook',
               link: '/addBook',
               icon: 'fas fa-plus',
+              condition: true,
             },
             {
               title: 'bookList',
               link: '/bookList',
               icon: 'fa fa-table',
+              condition: true,
             },
           ],
         },
@@ -173,16 +195,20 @@ export default {
           action: 'fas fa-object-group',
           title: 'BookCategory',
           active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role.cu_category === true,
           items: [
             {
               title: 'AddBookCategory',
               link: '/addBookCat',
               icon: 'fas fa-plus',
+              condition: true,
             },
             {
               title: 'BookCategoryList',
               link: '/bookCatList',
               icon: 'fa fa-table',
+              condition: true,
             },
           ],
         },
@@ -190,16 +216,20 @@ export default {
           action: 'mdi-account-group',
           title: 'authors',
           active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role.cu_author === true,
           items: [
             {
               title: 'addAuthor',
               link: '/addAuthor',
               icon: 'mdi-account-edit',
+              condition: true,
             },
             {
               title: 'authorsList',
               link: '/authorsList',
               icon: 'fas fa-table',
+              condition: true,
             },
           ],
         },
@@ -207,16 +237,20 @@ export default {
           action: 'fas fa-building ',
           title: 'publishers',
           active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role.cu_publisher === true,
           items: [
             {
               title: 'addPublisher',
               link: '/addPublisher',
               icon: 'mdi-account-edit',
+              condition: true,
             },
             {
               title: 'publishersList',
               link: '/publishersList',
               icon: 'fas fa-table',
+              condition: true,
             },
           ],
         },
@@ -224,6 +258,7 @@ export default {
           action: 'mdi-android-messages',
           title: 'messages',
           active: false,
+          condition: true,
           badge: '6',
           badgeColor: 'red',
           items: [
@@ -231,11 +266,14 @@ export default {
               title: 'CreateMessage',
               link: '/createNewMsg',
               icon: 'fas fa-plus',
+              condition:
+                this.$store.state.bookShop.userInfo.role.cu_message === true,
             },
             {
               title: 'MessagesList',
               link: '/messagesList',
               icon: 'fa fa-table',
+              condition: true,
             },
           ],
         },
@@ -245,16 +283,19 @@ export default {
           active: false,
           badge: '1',
           badgeColor: 'red',
+          condition: true,
           items: [
             {
               title: 'AddTicket',
               link: '/createNewTicket',
               icon: 'fas fa-plus',
+              condition: true,
             },
             {
               title: 'TicketsList',
               link: '/ticketsList',
               icon: 'fa fa-table',
+              condition: true,
             },
           ],
         },
@@ -262,16 +303,20 @@ export default {
           action: 'mdi-ticket-percent',
           title: 'discounts',
           active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role.cd_discount === true,
           items: [
             {
               title: 'addDiscount',
               link: '/addDiscount',
               icon: 'fas fa-plus',
+              condition: true,
             },
             {
               title: 'discountsList',
               link: '/discountsList',
               icon: 'fa fa-table',
+              condition: true,
             },
           ],
         },
@@ -279,11 +324,15 @@ export default {
           action: 'fas fa-cart-arrow-down',
           title: 'orders',
           active: false,
+          condition: true,
           items: [
             {
               title: 'ordersList',
               link: '/ordersList',
               icon: 'fa fa-table',
+              condition:
+                this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+                this.$store.state.bookShop.userInfo.role.r_order === true,
             },
           ],
         },
@@ -293,16 +342,19 @@ export default {
           active: false,
           badge: 2,
           badgeColor: 'green',
+          condition: true,
           items: [
             {
               title: 'addRequestedBooks',
               link: '/addRequestedBooks',
               icon: 'fas fa-plus',
+              condition: this.$store.state.bookShop.userInfo.role === 'CLIENT',
             },
             {
               title: 'requestedBooksList',
               link: '/requestedBooksList',
               icon: 'fa fa-table',
+              condition: true,
             },
           ],
         },
@@ -310,16 +362,20 @@ export default {
           action: 'fas fa-ban',
           title: 'forbiddenBook',
           active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role.cu_forbiddenBook === true,
           items: [
             {
               title: 'addForbiddenBook',
               link: '/addForbiddenBook',
               icon: 'fas fa-plus',
+              condition: true,
             },
             {
               title: 'forbiddenBookList',
               link: '/forbiddenBookList',
               icon: 'fas fa-table',
+              condition: true,
             },
           ],
         },
@@ -327,16 +383,21 @@ export default {
           action: 'fas fa-motorcycle',
           title: 'post',
           active: false,
+          condition: true,
           items: [
             {
               title: 'postRequest',
               link: '/postRequest',
               icon: 'fas fa-plus',
+              condition: this.$store.state.bookShop.userInfo.role === 'CLIENT',
             },
             {
               title: 'postList',
               link: '/postList',
               icon: 'fas fa-table',
+              condition:
+                this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+                this.$store.state.bookShop.userInfo.role.r_post === true,
             },
           ],
         },
@@ -344,6 +405,7 @@ export default {
           action: 'fas fa-users-cog',
           title: 'accessLevel',
           active: false,
+          condition: this.$store.state.bookShop.userInfo.role.cu_role === true,
           items: [
             {
               title: 'roleCreation',
@@ -362,16 +424,21 @@ export default {
           action: 'mdi-credit-card-plus',
           title: 'credits',
           active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+            this.$store.state.bookShop.userInfo.role.cu_credit === true,
           items: [
             {
               title: 'increaseCredit',
               link: '/increaseCredit',
               icon: 'fas fa-plus',
+              condition: true,
             },
             {
               title: 'transactionsList',
               link: '/creditList',
               icon: 'fas fa-table',
+              condition: true,
             },
           ],
         },
@@ -379,16 +446,22 @@ export default {
           action: 'fas fa-file-invoice-dollar',
           title: 'invoices',
           active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+            this.$store.state.bookShop.userInfo.role.c_invoice === true ||
+            this.$store.state.bookShop.userInfo.role.r_invoice === true,
           items: [
             {
               title: 'addInvoice',
               link: '/addInvoice',
               icon: 'fas fa-plus',
+              condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
             },
             {
               title: 'invoicesList',
               link: '/invoicesList',
               icon: 'fas fa-table',
+              condition: true,
             },
           ],
         },
@@ -396,6 +469,7 @@ export default {
           action: 'mdi-finance',
           title: 'financialReport',
           active: false,
+          condition: this.$store.state.bookShop.userInfo.role.r_report === true,
           items: [
             {
               title: 'financialReport',
@@ -404,11 +478,11 @@ export default {
             },
           ],
         },
-
         {
           action: 'fas fa-tags',
           title: 'tags',
           active: false,
+          condition: this.$store.state.bookShop.userInfo.role.cu_tag === true,
           items: [
             {
               title: 'addANDlistTAGS',
@@ -421,11 +495,13 @@ export default {
           action: 'mdi-history',
           title: 'logs',
           active: false,
+          condition: this.$store.state.bookShop.userInfo.role.r_log === true,
           items: [
             {
               title: 'logsList',
               link: '/logsList',
               icon: 'fas fa-table',
+              condition: true,
             },
           ],
         },
@@ -433,11 +509,14 @@ export default {
           action: 'fas fa-cogs',
           title: 'settings',
           active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role.u_settings === true,
           items: [
             {
               title: 'generalSettings',
               link: '/generalSettings',
               icon: 'fas fa-cog',
+              condition: true,
             },
           ],
         },

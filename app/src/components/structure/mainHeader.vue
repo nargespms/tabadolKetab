@@ -33,7 +33,11 @@
           </span>
         </div>
         <div class="pl-6 enterPannel d-flex" v-else>
-          <div class="pl-3 shoppingBasket" @click="shoppingBag">
+          <div
+            class="pl-3 shoppingBasket"
+            @click="shoppingBag"
+            v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
+          >
             <v-badge
               v-if="bagLength"
               :content="bagLength"
@@ -109,6 +113,9 @@ export default {
     exitPannel() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/log-out');
       this.$store.commit('bookShop/userEnter', null, {
+        module: 'bookShop',
+      });
+      this.$store.commit('bookShop/loggedIn', false, {
         module: 'bookShop',
       });
       this.$router.push({

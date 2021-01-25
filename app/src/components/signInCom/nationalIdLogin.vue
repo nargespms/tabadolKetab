@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     setCaptcha(value) {
-      console.log(value);
       this.captcha = value;
     },
     setNationalId(value) {
@@ -71,6 +70,9 @@ export default {
             console.log(res);
             if (res.status === 200) {
               this.$store.commit('bookShop/userEnter', res.data.user, {
+                module: 'bookShop',
+              });
+              this.$store.commit('bookShop/loggedIn', true, {
                 module: 'bookShop',
               });
               this.$router.push({

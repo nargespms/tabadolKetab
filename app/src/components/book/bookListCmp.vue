@@ -1,5 +1,5 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'books'" />
+  <dataTableWrap :headers="headers" :module="'books'" :endpoint="'book/list'" />
 </template>
 
 <script>

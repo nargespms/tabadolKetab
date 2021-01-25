@@ -2,6 +2,9 @@ export function someMutation(/* state */) {}
 export const userEnter = (state, response) => {
   state.userInfo = response;
 };
+export const loggedIn = (state, response) => {
+  state.loggedIn = response;
+};
 export const addToBag = (state, response) => {
   state.bag.push(response);
 };
