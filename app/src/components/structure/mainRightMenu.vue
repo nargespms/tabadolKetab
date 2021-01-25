@@ -124,14 +124,13 @@ export default {
           title: 'Dashboard',
           action: 'mdi-view-dashboard',
           link: '/dashboard',
-          conditions:
-            this.$store.state.bookShop.userInfo.role.r_report === true,
+          condition: this.$store.state.bookShop.userInfo.role.r_report === true,
         },
         {
           title: 'bookSearch',
           action: 'mdi-magnify',
           link: '/bookSearch',
-          conditions: true,
+          condition: true,
         },
       ],
       groupItems: [
@@ -141,7 +140,14 @@ export default {
           active: false,
           condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
           items: [
-            { title: 'AddUser', link: '/users/addUser', icon: 'fas fa-plus' },
+            {
+              title: 'AddUser',
+              link: '/users/addUser',
+              icon: 'fas fa-plus',
+              condition:
+                this.$store.state.bookShop.userInfo.role.cu_staff === true ||
+                this.$store.state.bookShop.userInfo.role.cu_client === true,
+            },
             {
               title: 'StaffsList',
               link: '/users/staffs',

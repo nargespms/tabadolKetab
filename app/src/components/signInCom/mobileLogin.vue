@@ -50,6 +50,7 @@ export default {
     },
     setMobilePhone(value) {
       this.login.mobile = value;
+      console.log(value);
     },
     setPassword(value) {
       this.login.password = value;
