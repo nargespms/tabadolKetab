@@ -17,6 +17,7 @@
       :dynamicClass="dynamicClass"
       :hint="hint"
       :persistentHint="persistentHint"
+      :multiple="isMultiple"
     >
       <template v-slot:no-data>
         <v-list-item>
@@ -31,6 +32,7 @@
         <v-chip
           v-bind="data.attrs"
           :input-value="data.selected"
+          :close="isMultiple"
           @click="data.select"
         >
           {{ data.item.fullName }}
@@ -75,6 +77,10 @@ export default {
       default: '',
     },
     persistentHint: {
+      type: Boolean,
+      default: false,
+    },
+    isMultiple: {
       type: Boolean,
       default: false,
     },

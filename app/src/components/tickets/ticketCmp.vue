@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters class="justify-center ">
     <v-col cols="12" sm="8" md="8">
-      <v-card>
+      <v-card v-if="!isLoading">
         <v-card-actions class="teal"> </v-card-actions>
         <div class="pa-4 clear">
           <div class="float-right">
@@ -30,11 +30,11 @@
               <v-icon medium color="red darken-2">
                 mdi-account
               </v-icon>
-              <span class="pr-4">
-                {{ ticket.sender.firstName }}
+              <!-- <span class="pr-4">
+                {{ ticket.createdBy.firstName }}
                 &nbsp;
-                {{ ticket.sender.lastName }}
-              </span>
+                {{ ticket.createdBy.lastName }}
+              </span> -->
             </span>
           </div>
         </div>
@@ -69,43 +69,43 @@ export default {
     return {
       componentKey: 0,
       successNotif: false,
+      isLoading: true,
       ticket: {
-        title: 'برای ایجاد فلان کار لطفا بخش فلان را مشاهده فرمایید',
-        sendDate: '2020-10-16T16:45:28.149Z',
-        sender: {
-          firstName: 'علی',
-          lastName: 'تبادلیان',
-          role: 'client',
-          id: '1234',
-        },
-        threads: [
-          {
-            id: '1',
-            description:
-              'برای انجام این کار مجموعه تبادل مستلزم کار فلان زمان است ، متاسفانه امکان انجام آن وجود ندارد',
-            createdAt: '2020-10-16T16:45:28.149Z',
-            createdBy: {
-              id: '1234',
-              firstName: 'علی',
-              lastName: 'تبادلیان',
-              role: 'client',
-              avatar: {},
-            },
-          },
-          {
-            id: '2',
-            description:
-              'برای انجام این کار مجموعه تبادل مستلزم کار فلان زمان است ، متاسفانه امکان انجام آن وجود ندارد',
-            createdAt: '2020-10-16T16:45:28.149Z',
-            createdBy: {
-              id: '1234',
-              firstName: 'علی',
-              lastName: 'تبادلیان',
-              role: 'staff',
-              avatar: {},
-            },
-          },
-        ],
+        // sendDate: '2020-10-16T16:45:28.149Z',
+        // sender: {
+        //   firstName: 'علی',
+        //   lastName: 'تبادلیان',
+        //   role: 'client',
+        //   id: '1234',
+        // },
+        // threads: [
+        //   {
+        //     id: '1',
+        //     description:
+        //       'برای انجام این کار مجموعه تبادل مستلزم کار فلان زمان است ، متاسفانه امکان انجام آن وجود ندارد',
+        //     createdAt: '2020-10-16T16:45:28.149Z',
+        //     createdBy: {
+        //       id: '1234',
+        //       firstName: 'علی',
+        //       lastName: 'تبادلیان',
+        //       role: 'client',
+        //       avatar: {},
+        //     },
+        //   },
+        //   {
+        //     id: '2',
+        //     description:
+        //       'برای انجام این کار مجموعه تبادل مستلزم کار فلان زمان است ، متاسفانه امکان انجام آن وجود ندارد',
+        //     createdAt: '2020-10-16T16:45:28.149Z',
+        //     createdBy: {
+        //       id: '1234',
+        //       firstName: 'علی',
+        //       lastName: 'تبادلیان',
+        //       role: 'staff',
+        //       avatar: {},
+        //     },
+        //   },
+        // ],
       },
     };
   },
@@ -120,6 +120,20 @@ export default {
     hideNotif() {
       this.successNotif = false;
     },
+    getTicketData() {
+      this.$axios
+        .get(`/v1/api/tabaadol-e-ketaab/ticket/${this.$route.params.ticketId}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.ticket = res.data.ticket;
+            console.log(res.data.ticket);
+            this.isLoading = false;
+          }
+        });
+    },
+  },
+  mounted() {
+    this.getTicketData();
   },
 };
 </script>

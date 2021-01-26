@@ -17,6 +17,7 @@
       :dynamicClass="dynamicClass"
       :hint="hint"
       :persistentHint="persistentHint"
+      :multiple="isMultiple"
     >
       <template v-slot:no-data>
         <v-list-item>
@@ -31,6 +32,7 @@
         <v-chip
           v-bind="data.attrs"
           :input-value="data.selected"
+          :close="isMultiple"
           @click="data.select"
         >
           {{ data.item.fullName }}
@@ -45,6 +47,9 @@
         <span class="red--text">
           *
         </span>
+      </template>
+      <template v-slot:append v-if="this.model">
+        <v-icon @click="clear">mdi-close-circle-outline</v-icon>
       </template>
     </v-autocomplete>
   </div>
@@ -75,6 +80,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isMultiple: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -92,6 +101,10 @@ export default {
         this.$emit('setUser', this.model);
         this.localRequire = true;
       }
+    },
+    clear() {
+      this.model = '';
+      this.$emit('setUser', this.model);
     },
   },
   watch: {

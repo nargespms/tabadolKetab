@@ -47,8 +47,8 @@ export default {
   deleteMessage: 'حذف پیام',
   RUSureUWantToDeletThisMessage: 'آیا میخواهید این پیام را حذف کنید؟',
   messageText: 'متن پیام',
-  privateMessage: 'پیام‌های شخصی',
-  publicMessage: 'پیام‌های عمومی',
+  PRIVATE: 'پیام‌های شخصی',
+  PUBLIC: 'پیام‌های عمومی',
   messageType: 'نوع دسته بندی',
   sendSms: 'ارسال پیامک',
   createdAt: 'زمان ایجاد',
@@ -131,6 +131,11 @@ export default {
     'توجه داشته باشید به دلیل ارسال پیامک پیام قابل تغییر و یا حذف نیست.',
   // tickets
   reply: 'پاسخ',
+  ANSWERED_BY_STAFF: 'پاسخ داده توسط کارمند',
+  ANSWERED_BY_CLIENT: 'پاسخ داده توسط مشتری',
+  ONHOLD: 'معلق',
+  OPEN: 'باز',
+  CLOSED: 'بسته',
   // discounts
   discounts: 'تخفیف ها',
   addDiscount: 'ایجاد تخفیف',
@@ -434,4 +439,7 @@ export default {
   accessDenied: 'متاسفانه شما دسترسی ندارید',
   repeatedTitle: 'عنوان تکراری است',
   permissionDenied: 'دسترسی وجود ندارد',
+  receivershouldbespecified: 'گیرنده پیام مشخص نشده است',
+  INFO: 'روابط عمومی',
+  TECH: 'فنی',
 };

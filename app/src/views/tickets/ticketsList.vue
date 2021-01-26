@@ -1,5 +1,9 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'tickets'" />
+  <dataTableWrap
+    :headers="headers"
+    :module="'tickets'"
+    :endpoint="'/v1/api/tabaadol-e-ketaab/tickets/list'"
+  />
 </template>
 
 <script>
@@ -18,14 +22,16 @@ export default {
           value: 'title',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
           icon: '👨‍💼',
         },
 
         {
-          text: 'sendDate',
-          value: 'sendDate',
+          text: 'createdAt',
+          value: 'createdAt',
           filterable: true,
+          filterType: 'date',
           align: 'center',
           body: 100,
           divider: true,
@@ -35,14 +41,16 @@ export default {
           text: 'status',
           value: 'status',
           filterable: true,
+          filterType: 'staticDropDown',
           align: 'center',
           body: 100,
           divider: true,
         },
         {
           text: 'client',
-          value: 'client',
+          value: 'clientId',
           filterable: true,
+          filterType: 'clientUsers',
           align: 'center',
           divider: true,
         },

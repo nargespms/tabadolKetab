@@ -21,6 +21,7 @@
       class="elevation-1 text-center ma-4"
       hide-default-header
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
@@ -42,26 +43,11 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon
-                v-if="h.sortable"
-                :key="h.index"
-                color="grey"
-                @click="sort"
-              >
-                mdi-menu-down
-              </v-icon>
-              {{ $t(h.text) }}
-              <v-icon
-                v-if="h.filterable"
-                color="grey"
-                size="11"
-                class="pa-2"
-                @click="filter"
-                >fas fa-filter
-              </v-icon>
-              <span class="fn-25">
-                {{ h.icon }}
-              </span>
+              <tableHeaderCell
+                :data="h"
+                :items="h.text === 'status' ? statusItems : []"
+                @filterCol="filterCol"
+              />
             </th>
           </tr>
         </thead>
@@ -71,55 +57,49 @@
           {{ item.title }}</router-link
         >
       </template>
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+      </template>
+      <template v-slot:[`item.status`]="{ item }">
+        {{ $t(item.status) }}
+      </template>
+
+      <template v-slot:[`item.clientId`]="{ item }">
+        <router-link
+          :to="`/users/profile/${item.client.id}`"
+          class="black--text"
+        >
+          {{ item.client.firstName }} &nbsp; {{ item.client.lastName }}
+        </router-link>
+      </template>
 
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon medium class="ma-2" @click="preview(item)">
-          mdi-eye
-        </v-icon>
-
-        <v-icon
-          medium
-          class="ma-2"
-          color="grey darken-3"
-          @click="deleteRecord(item)"
-        >
-          mdi-delete
-        </v-icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              @click="preview(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-eye
+            </v-icon>
+          </template>
+          {{ $t('preview') }}
+        </v-tooltip>
       </template>
     </v-data-table>
-    <v-dialog v-model="enablePreview" content-class="sh-0">
-      <showTicket :item="previewItem" />
-    </v-dialog>
-    <v-dialog v-model="enableDelete" max-width="500px">
-      <promptDialog
-        :title="'deleteMessage'"
-        :message="'RUSureUWantToDeletThisMessage'"
-        :data="deletingItem"
-        @accept="acceptDelete"
-        @reject="closeDelete"
-      />
-    </v-dialog>
-
-    <notifMessage
-      v-if="successNotif"
-      :msg="'operationSuccessfullyOcured'"
-      @hideNotif="hideNotif"
-      :type="'success'"
-    />
   </div>
 </template>
 
 <script>
-import notifMessage from '../structure/notifMessage.vue';
-import promptDialog from '../structure/promptDialog.vue';
-import showTicket from './showTicket.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 
 export default {
   name: 'ticketsTable',
   components: {
-    notifMessage,
-    promptDialog,
-    showTicket,
+    tableHeaderCell,
   },
   props: {
     headers: { type: Array },
@@ -133,13 +113,16 @@ export default {
   data() {
     return {
       innerOptions: this.options,
-      // delete
-      enableDelete: false,
-      deletingItem: {},
       successNotif: false,
-      // preview
-      enablePreview: false,
-      previewItem: {},
+      statusItems: [
+        { text: 'CLOSED', value: 'CLOSED' },
+        { text: 'OPEN', value: 'OPEN' },
+        { text: 'ANSWERED_BY_STAFF', value: 'ANSWERED_BY_STAFF' },
+        { text: 'ANSWERED_BY_CLIENT', value: 'ANSWERED_BY_CLIENT' },
+        { text: 'INPROGRESS', value: 'INPROGRESS' },
+        { text: 'ONHOLD', value: 'ONHOLD' },
+      ],
+      filter: {},
     };
   },
   methods: {
@@ -148,36 +131,29 @@ export default {
         name: 'createNewTicket',
       });
     },
-    // methods for delete notif
-    deleteRecord(item) {
-      this.deletingItem = item;
-      this.enableDelete = true;
-    },
-    acceptDelete(value) {
-      console.log(`deleted ${value.name}`);
-      this.successNotif = true;
 
-      this.closeDelete();
-    },
-    closeDelete() {
-      this.enableDelete = false;
-      this.deletingItem = {};
-    },
-    hideNotif() {
-      this.successNotif = false;
-    },
     // methods for preview
     preview(item) {
-      this.enablePreview = true;
-      this.previewItem = item;
+      this.$router.push({
+        path: `/ticketsList/${item.id}`,
+      });
     },
-    // sort funcs
-    sort() {
-      console.log('sorted');
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
     },
-    // filter
-    filter() {
-      console.log('filtered');
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+        tableSearch: this.tableSearch,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
     excelFile() {
       // getData as excel file with filtered included
@@ -195,11 +171,6 @@ export default {
       handler(newVal) {
         this.innerOptions = newVal;
       },
-    },
-    enablePreview(newVal) {
-      if (newVal === false) {
-        this.previewItem = {};
-      }
     },
   },
 };

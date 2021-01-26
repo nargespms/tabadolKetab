@@ -52,7 +52,7 @@
             :rules="requireRule"
             name="input-7-4"
             :label="$t('messageText')"
-            v-model="ticket.text"
+            v-model="ticket.thread.description"
           >
             <template v-slot:prepend-inner>
               <span class="red--text">
@@ -64,6 +64,7 @@
             v-if="this.$store.state.bookShop.userInfo.role === 'CLIENT'"
             :items="departments"
             :label="$t('department')"
+            v-model="ticket.department"
             outlined
             required="true"
             :rules="[v => !!v || `${this.$t('thisFieldIsRequired')}`]"
@@ -98,9 +99,9 @@
             </span>
 
             <clientsAutoComplete
+              @setUser="setClient"
               ref="userAutocomplete"
               :isRequired="userValidate"
-              class="py-6"
               :placeHolder="'users'"
             >
             </clientsAutoComplete>
@@ -162,11 +163,11 @@ export default {
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
-      departments: ['IT', 'BILLING', 'POST'],
+      departments: ['INFO', 'TECH', 'BILLING'],
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       ticket: {
         title: '',
-        text: '',
+        thread: {},
       },
       userValidate: true,
     };
@@ -177,17 +178,22 @@ export default {
         name: 'ticketsList',
       });
     },
+    setClient(value) {
+      this.ticket.clientId = value;
+    },
     // validate form
     validate() {
       this.$refs.form.validate();
       // user validation
-      if (
-        this.$refs.userAutocomplete.model === null ||
-        this.$refs.userAutocomplete.model.length < 1
-      ) {
-        this.userValidate = true;
-      } else {
-        this.userValidate = false;
+      if (this.$store.state.bookShop.userInfo.role !== 'CLIENT') {
+        if (
+          this.$refs.userAutocomplete.model === null ||
+          this.$refs.userAutocomplete.model.length < 1
+        ) {
+          this.userValidate = true;
+        } else {
+          this.userValidate = false;
+        }
       }
 
       if (this.$refs.form.validate()) {
@@ -195,10 +201,11 @@ export default {
           this.$axios
             .post('/v1/api/tabaadol-e-ketaab/ticket', { ...this.ticket })
             .then(res => {
-              console.log(res);
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+              }
             });
-          this.saveSuccess = true;
-          this.reset();
         }
         this.$emit('savedSuccessfully');
       } else {

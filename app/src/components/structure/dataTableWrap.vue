@@ -141,6 +141,12 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <notifMessage
+      v-if="errorEnable"
+      :msg="errorMsg"
+      @hideNotif="hideNotif"
+      :type="'error'"
+    />
   </div>
 </template>
 
@@ -159,6 +165,7 @@ import authorTable from '../author/authorTable.vue';
 import publishersTable from '../publisher/publishersTable.vue';
 import ordersTable from '../orders/ordersTable.vue';
 import accessLevelTable from '../accessLevel/accessLevelTable.vue';
+import notifMessage from './notifMessage.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -177,6 +184,7 @@ export default {
     publishersTable,
     ordersTable,
     accessLevelTable,
+    notifMessage,
   },
   props: {
     headers: {
@@ -199,6 +207,9 @@ export default {
         sortBy: 'time',
         limit: 10,
       },
+      // error
+      errorEnable: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -231,7 +242,6 @@ export default {
           },
         })
         .then(res => {
-          console.log(res);
           if (res.status === 200) {
             this.tableData = res.data.result.docs;
             this.totalData = this.tableData.length;
@@ -242,6 +252,13 @@ export default {
             //     page * itemsPerPage
             //   );
             // }
+          }
+        })
+        .catch(e => {
+          if (e.response.status === 403) {
+            this.errorEnable = true;
+            this.errorMsg = 'permissionDenied';
+            this.loading = false;
           }
         });
     },

@@ -33,16 +33,21 @@
             <span class="font-weight-black"> {{ $t('reciever') }} : </span>
             <v-radio-group v-model="reciever" row>
               <v-radio :label="$t('chooseUserorS')" value="notAll"></v-radio>
-              <v-radio :label="$t('allStaffs')" value="staffs"></v-radio>
-              <v-radio :label="$t('allClients')" value="clients"></v-radio>
+              <v-radio :label="$t('allStaffs')" value="allStaffs"></v-radio>
+              <v-radio :label="$t('allClients')" value="allClients"></v-radio>
             </v-radio-group>
           </div>
           <clientsAutoComplete
-            ref="userAutocomplete"
-            :isRequired="userValidate"
-            class="py-6"
+            @setUser="setClient"
             v-if="reciever === 'notAll'"
-            :placeHolder="'users'"
+            :placeHolder="'clients'"
+            :isMultiple="true"
+          />
+          <staffsAutoComplete
+            v-if="reciever === 'notAll'"
+            @setStaff="setStaff"
+            :placeHolder="'staffs'"
+            :isMultiple="true"
           />
           <v-text-field
             v-model="message.title"
@@ -64,7 +69,7 @@
             :rules="requireRule"
             name="input-7-4"
             :label="$t('messageText')"
-            v-model="message.text"
+            v-model="message.messageText"
           >
             <template v-slot:prepend-inner>
               <span class="red--text">
@@ -76,6 +81,7 @@
             <v-select
               :items="messageType"
               :label="$t('messageType')"
+              v-model="message.type"
               outlined
               required="true"
               :rules="[v => !!v || `${this.$t('thisFieldIsRequired')}`]"
@@ -99,7 +105,7 @@
             <datePickerCmp
               class="d-flex align-self-baseline pr-4 flex-column"
               ref="datePicker"
-              :componenKey="dateKey"
+              :key="dateKey"
               :placeHolderText="'sendDate'"
               :validate="Datevalidate"
               @setDate="setDate"
@@ -152,6 +158,12 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="errorEnable"
+      :msg="errorMsg"
+      @hideNotif="hideNotif"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
@@ -159,6 +171,7 @@
 import notifMessage from '../structure/notifMessage.vue';
 import datePickerCmp from '../structure/datePickerCmp.vue';
 import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
+import staffsAutoComplete from '../structure/staffsAutoComplete.vue';
 
 export default {
   name: 'addMessageCmp',
@@ -166,6 +179,7 @@ export default {
     notifMessage,
     datePickerCmp,
     clientsAutoComplete,
+    staffsAutoComplete,
   },
   props: {
     mode: {
@@ -184,19 +198,20 @@ export default {
         v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-      messageType: ['privateMessage', 'publicMessage'],
+      messageType: ['PRIVATE', 'PUBLIC'],
       users: ['user1', 'user2', 'user3', 'user4'],
       message: {
         title: '',
-        text: '',
-        messageType: null,
+        messageText: '',
+        type: null,
         sms: false,
-        reciever: [],
       },
       reciever: 'notAll',
       Datevalidate: true,
       dateKey: 0,
-      userValidate: true,
+      // error
+      errorEnable: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -205,51 +220,79 @@ export default {
         name: 'messagesList',
       });
     },
+    setStaff(value) {
+      console.log(value);
+      this.message.reciverStaffs = value;
+    },
+    setClient(value) {
+      console.log(value);
+      this.message.reciverClients = value;
+    },
+    // convert out put of date picker to gregorian timestamp for server
+    persionToGregorian(value) {
+      const dateValue = value.split('/').map(i => parseInt(i, 10));
+      return new this.$persianDate(dateValue).toDate().setHours(15, 0);
+    },
+    setDate(value) {
+      console.log(value);
+      this.message.sendDate = new Date(
+        this.persionToGregorian(value)
+      ).toISOString();
+    },
     validate() {
       this.$refs.form.validate();
       console.log(this.$refs.datePicker.date);
-      if (this.reciever === 'notAll') {
-        // user validation
-        if (
-          this.$refs.userAutocomplete.model === null ||
-          this.$refs.userAutocomplete.model.length < 1
-        ) {
-          this.userValidate = true;
-        } else {
-          this.userValidate = false;
-        }
-      }
 
       if (
         this.$refs.datePicker.date.length < 1 ||
         this.$refs.datePicker.date === null
       ) {
         this.Datevalidate = false;
-        this.dateKey = +1;
+        this.dateKey += 1;
       }
       if (this.$refs.form.validate()) {
-        if (this.mode === 'addPage') {
-          this.saveSuccess = true;
-          this.reset();
+        // reciver formatt
+        if (this.reciever === 'allStaffs') {
+          this.message.allStaffs = true;
+        } else if (this.reciever === 'allClients') {
+          this.message.allClients = true;
         }
-        this.$emit('savedSuccessfully');
+
+        if (this.mode === 'addPage') {
+          this.$axios
+            .post('/v1/api/tabaadol-e-ketaab/message', {
+              ...this.message,
+            })
+            .then(res => {
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+                this.$emit('savedSuccessfully');
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 422) {
+                this.errorEnable = true;
+                this.errorMsg = e.response.data.message;
+              }
+            });
+        }
       } else {
         this.valid = false;
       }
     },
     reset() {
       this.$refs.form.reset();
+      delete this.message.reciverClients;
+      delete this.message.reciverStaffs;
+      delete this.message.reciverStaffs;
+      delete this.message.allStaffs;
+      delete this.message.allClients;
+      this.dateKey += 1;
     },
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
-      this.userValidate = true;
-    },
-    // date
-    setDate(value) {
-      // this valu is persian date
-      // it should convert to gregorian
-      console.log(value);
     },
   },
 };

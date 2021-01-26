@@ -91,10 +91,10 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: () => import('../views/dashboard.vue'),
-        meta: {
-          requiresAuth: true,
-          roles: [{ r_report: true }],
-        },
+        // meta: {
+        //   requiresAuth: true,
+        //   roles: [{ r_report: true }],
+        // },
       },
       {
         path: '/signup',
@@ -221,6 +221,8 @@ const routes = [
         meta: {
           requiresAuth: true,
           roles: [{ cu_ticket: true }],
+          access: 'BOTH',
+          cRole: 'CLIENT',
         },
       },
       {
@@ -230,6 +232,8 @@ const routes = [
         meta: {
           requiresAuth: true,
           roles: [{ cu_ticket: true }, { d_ticket: true }],
+          access: 'BOTH',
+          cRole: 'CLIENT',
         },
       },
       {

@@ -67,9 +67,16 @@
       @setDate="setDate"
       :isRequired="false"
     />
+
     <template v-if="filterEnable && data.filterType === 'staffUsers'">
       <div class="ma-auto w250">
         <staffsAutoComplete @setStaff="setStaff" />
+      </div>
+    </template>
+
+    <template v-if="filterEnable && data.filterType === 'clientUsers'">
+      <div class="ma-auto w250">
+        <clientsAutoComplete @setUser="setClient" />
       </div>
     </template>
     <template v-if="filterEnable && data.filterType === 'roles'">
@@ -84,6 +91,7 @@
 import _ from 'lodash';
 import datePickerCmp from './datePickerCmp.vue';
 import staffsAutoComplete from './staffsAutoComplete.vue';
+import clientsAutoComplete from './clientsAutoComplete.vue';
 import rolesAutoComplete from './rolesAutocomplete.vue';
 
 export default {
@@ -91,6 +99,7 @@ export default {
   components: {
     datePickerCmp,
     staffsAutoComplete,
+    clientsAutoComplete,
     rolesAutoComplete,
   },
   props: {
@@ -122,6 +131,15 @@ export default {
       if (value.length > 0) {
         this.filter[this.data.value] = value;
         this.emitFilter('createdById');
+      } else {
+        delete this.filter[this.data.value];
+        this.emitFilter(this.data.value);
+      }
+    },
+    setClient(value) {
+      if (value.length > 0) {
+        this.filter[this.data.value] = value;
+        this.emitFilter('clientId');
       } else {
         delete this.filter[this.data.value];
         this.emitFilter(this.data.value);
