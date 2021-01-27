@@ -115,7 +115,14 @@
 <script>
 export default {
   name: 'mainRightMenu',
-  props: ['state'],
+  props: {
+    state: {
+      type: Boolean,
+    },
+    unreadTickets: {
+      type: String,
+    },
+  },
   data() {
     return {
       localDrawer: this.state,
@@ -287,7 +294,7 @@ export default {
           action: 'mdi-ticket-account',
           title: 'tickets',
           active: false,
-          badge: '1',
+          badge: this.unreadTickets,
           badgeColor: 'red',
           condition: true,
           items: [

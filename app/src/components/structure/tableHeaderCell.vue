@@ -93,6 +93,7 @@ import datePickerCmp from './datePickerCmp.vue';
 import staffsAutoComplete from './staffsAutoComplete.vue';
 import clientsAutoComplete from './clientsAutoComplete.vue';
 import rolesAutoComplete from './rolesAutocomplete.vue';
+import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'tableHeaderCell',
@@ -102,6 +103,7 @@ export default {
     clientsAutoComplete,
     rolesAutoComplete,
   },
+  mixins: [dateTime],
   props: {
     data: {
       type: Object,
@@ -122,11 +124,7 @@ export default {
     filterFunc() {
       this.filterEnable = !this.filterEnable;
     },
-    // convert out put of date picker to gregorian timestamp for server
-    persionToGregorian(value) {
-      const dateValue = value.split('/').map(i => parseInt(i, 10));
-      return new this.$persianDate(dateValue).toDate().setHours(15, 0);
-    },
+
     setStaff(value) {
       if (value.length > 0) {
         this.filter[this.data.value] = value;

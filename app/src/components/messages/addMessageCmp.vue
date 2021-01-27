@@ -1,11 +1,5 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <span class="fn-25">
-      🧑‍💻
-    </span>
-    <span class="fn-25">
-      👨‍🔧
-    </span>
     <v-col cols="12" sm="6" md="8">
       <v-card class="pa-4">
         <v-card-actions class="teal">
@@ -172,6 +166,7 @@ import notifMessage from '../structure/notifMessage.vue';
 import datePickerCmp from '../structure/datePickerCmp.vue';
 import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import staffsAutoComplete from '../structure/staffsAutoComplete.vue';
+import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'addMessageCmp',
@@ -181,6 +176,7 @@ export default {
     clientsAutoComplete,
     staffsAutoComplete,
   },
+  mixins: [dateTime],
   props: {
     mode: {
       type: String,
@@ -228,11 +224,6 @@ export default {
       console.log(value);
       this.message.reciverClients = value;
     },
-    // convert out put of date picker to gregorian timestamp for server
-    persionToGregorian(value) {
-      const dateValue = value.split('/').map(i => parseInt(i, 10));
-      return new this.$persianDate(dateValue).toDate().setHours(15, 0);
-    },
     setDate(value) {
       console.log(value);
       this.message.sendDate = new Date(
@@ -258,7 +249,7 @@ export default {
           this.message.allClients = true;
         }
 
-        if (this.mode === 'addPage') {
+        if (this.mode === 'add') {
           this.$axios
             .post('/v1/api/tabaadol-e-ketaab/message', {
               ...this.message,
@@ -294,6 +285,18 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    getMessage() {
+      this.$axios.get().then(res => {
+        if (res.status === 200) {
+          this.message = res.data.message;
+        }
+      });
+    },
+  },
+  mounted() {
+    if (this.mode === 'edit') {
+      this.getMessage();
+    }
   },
 };
 </script>

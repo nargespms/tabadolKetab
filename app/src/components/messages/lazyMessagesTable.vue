@@ -13,14 +13,14 @@
       <v-btn
         class="ml-4 white--text"
         color="blue lighten-1"
-        @click="changeType('publicMessage')"
-        >{{ $t('publicMessage') }}</v-btn
+        @click="changeType('PUBLIC')"
+        >{{ $t('PUBLIC') }}</v-btn
       >
       <v-btn
         class="ml-4 white--text"
         color="indigo lighten-1"
-        @click="changeType('privateMessage')"
-        >{{ $t('privateMessage') }}</v-btn
+        @click="changeType('PRIVATE')"
+        >{{ $t('PRIVATE') }}</v-btn
       >
     </div>
     <v-toolbar color="teal " flat height="48">
@@ -238,7 +238,7 @@ export default {
       // preview
       enablePreview: false,
       previewItem: {},
-      tableName: 'publicMessage',
+      tableName: 'PUBLIC',
     };
   },
 

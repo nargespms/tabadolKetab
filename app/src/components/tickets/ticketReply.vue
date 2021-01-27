@@ -5,7 +5,7 @@
         outlined
         name="input-7-4"
         :label="$t('messageText')"
-        :v-model="description"
+        v-model="description"
       ></v-textarea>
       <div class="d-flex justify-center">
         <v-btn color="primary " width="200" @click="replyTicket">
@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     replyTicket() {
+      console.log('log');
       this.$emit('replyTicket', this.description);
     },
   },

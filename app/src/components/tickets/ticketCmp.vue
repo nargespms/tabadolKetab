@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters class="justify-center ">
-    <v-col cols="12" sm="8" md="8">
-      <v-card v-if="!isLoading">
+    <v-col cols="12" sm="8" md="8" v-if="!isLoading">
+      <v-card>
         <v-card-actions class="teal"> </v-card-actions>
         <div class="pa-4 clear">
           <div class="float-right">
@@ -9,38 +9,40 @@
               mdi-book-open-page-variant
             </v-icon>
             <span class="pr-4 font-weight-bold"> {{ ticket.title }}</span>
+            <div>
+              <span class="pb-2 pt-4 d-block">
+                <span class="teal--text">{{ $t('status') }} :</span>
+                {{ $t(ticket.status) }}
+              </span>
+              <span class="pb-2 d-block">
+                <span class="teal--text"> {{ $t('department') }} : </span>
+                {{ $t(ticket.department) }}
+              </span>
+            </div>
           </div>
           <div class="float-left">
             <p class="sendDateP">
               {{ $t('sendDate') }}
             </p>
             <span>
-              {{ new Date(ticket.sendDate).toLocaleTimeString('fa') }}
+              {{ new Date(ticket.createdAt).toLocaleTimeString('fa') }}
               <v-icon small color="red">
                 mdi-clock
               </v-icon>
-              {{ new Date(ticket.sendDate).toLocaleDateString('fa') }}
+              {{ new Date(ticket.createdAt).toLocaleDateString('fa') }}
               <v-icon small color="black">
                 mdi-calendar
               </v-icon>
             </span>
           </div>
-          <div class="ticketSender">
-            <span class="red--text text--darken-4">
-              <v-icon medium color="red darken-2">
-                mdi-account
-              </v-icon>
-              <!-- <span class="pr-4">
-                {{ ticket.createdBy.firstName }}
-                &nbsp;
-                {{ ticket.createdBy.lastName }}
-              </span> -->
-            </span>
-          </div>
         </div>
       </v-card>
       <template v-for="item in ticket.threads">
-        <threadEncapsule :key="item.index" :data="item" />
+        <threadEncapsule
+          :key="item.index"
+          :data="item"
+          :userName="item.staff ? 'staff' : item.client ? 'client' : undefined"
+        />
       </template>
       <ticketReply :key="componentKey" @replyTicket="replyTicket" />
     </v-col>
@@ -70,51 +72,24 @@ export default {
       componentKey: 0,
       successNotif: false,
       isLoading: true,
-      ticket: {
-        // sendDate: '2020-10-16T16:45:28.149Z',
-        // sender: {
-        //   firstName: 'علی',
-        //   lastName: 'تبادلیان',
-        //   role: 'client',
-        //   id: '1234',
-        // },
-        // threads: [
-        //   {
-        //     id: '1',
-        //     description:
-        //       'برای انجام این کار مجموعه تبادل مستلزم کار فلان زمان است ، متاسفانه امکان انجام آن وجود ندارد',
-        //     createdAt: '2020-10-16T16:45:28.149Z',
-        //     createdBy: {
-        //       id: '1234',
-        //       firstName: 'علی',
-        //       lastName: 'تبادلیان',
-        //       role: 'client',
-        //       avatar: {},
-        //     },
-        //   },
-        //   {
-        //     id: '2',
-        //     description:
-        //       'برای انجام این کار مجموعه تبادل مستلزم کار فلان زمان است ، متاسفانه امکان انجام آن وجود ندارد',
-        //     createdAt: '2020-10-16T16:45:28.149Z',
-        //     createdBy: {
-        //       id: '1234',
-        //       firstName: 'علی',
-        //       lastName: 'تبادلیان',
-        //       role: 'staff',
-        //       avatar: {},
-        //     },
-        //   },
-        // ],
-      },
+      ticket: {},
     };
   },
   methods: {
     replyTicket(value) {
       console.log(value);
-      console.log('ticket reply sent!');
-      this.componentKey = +1;
-      this.successNotif = true;
+      this.$axios
+        .post('/v1/api/tabaadol-e-ketaab/thread', {
+          ticketId: this.ticket.id,
+          description: value,
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.getTicketData();
+            this.componentKey += 1;
+            this.successNotif = true;
+          }
+        });
     },
     // notif
     hideNotif() {

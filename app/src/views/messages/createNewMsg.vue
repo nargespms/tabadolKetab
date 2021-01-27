@@ -1,6 +1,6 @@
 <template>
   <div>
-    <addMessageCmp :mode="'addPage'" :cardName="'CreateMessage'" />
+    <addMessageCmp :mode="'add'" :cardName="'CreateMessage'" />
   </div>
 </template>
 

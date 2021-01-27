@@ -243,6 +243,8 @@ const routes = [
         meta: {
           requiresAuth: true,
           roles: [{ cu_ticket: true }, { r_ticket: true }],
+          access: 'BOTH',
+          cRole: 'CLIENT',
         },
       },
       // discounts

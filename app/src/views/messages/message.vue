@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <span> messageId: {{ $route.params.messageId }} </span> -->
     <addMessageCmp :mode="'edit'" :cardName="'editMessage'" />
   </div>
 </template>

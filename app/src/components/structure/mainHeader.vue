@@ -74,6 +74,7 @@
       :drawer="drawer"
       :state="drawer"
       @changeState="changeState"
+      :unreadTickets="unreadTickets"
     />
   </div>
 </template>
@@ -89,6 +90,7 @@ export default {
   data() {
     return {
       drawer: true,
+      unreadTickets: '',
     };
   },
   methods: {
@@ -122,6 +124,11 @@ export default {
         name: 'login',
       });
     },
+    getUnreadTickets() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/unreadTickets').then(res => {
+        this.unreadTickets = res.data.toString();
+      });
+    },
   },
   computed: {
     bagLength() {
@@ -130,6 +137,10 @@ export default {
       }
       return false;
     },
+  },
+
+  mounted() {
+    this.getUnreadTickets();
   },
 };
 </script>

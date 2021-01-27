@@ -64,7 +64,10 @@
         {{ $t(item.status) }}
       </template>
 
-      <template v-slot:[`item.clientId`]="{ item }">
+      <template
+        v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
+        v-slot:[`item.clientId`]="{ item }"
+      >
         <router-link
           :to="`/users/profile/${item.client.id}`"
           class="black--text"

@@ -1,15 +1,5 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <span class="fn-25">
-      🧑‍💻
-    </span>
-
-    <span class="fn-25">
-      👨‍💼
-    </span>
-    <span class="fn-25">
-      👨‍🔧
-    </span>
     <v-col cols="12" sm="6" md="8">
       <v-card class="pa-4">
         <v-card-actions class="teal">
@@ -79,11 +69,7 @@
                 {{ $t(item) }}
               </span>
             </template>
-            <template v-slot:prepend>
-              <span class="fn-25">
-                👨‍💼
-              </span>
-            </template>
+
             <template v-slot:prepend-inner>
               <span class="red--text">
                 *
@@ -94,10 +80,6 @@
             class="flex"
             v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
           >
-            <span class="fn-25">
-              🧑‍💻
-            </span>
-
             <clientsAutoComplete
               @setUser="setClient"
               ref="userAutocomplete"
