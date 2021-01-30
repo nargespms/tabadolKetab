@@ -64,6 +64,7 @@
         append-icon="fas fa-caret-down"
       >
         <template v-slot:prependIcon>
+          <!-- {{ unreadBookRequest }} -->
           <v-badge
             v-if="item.badge"
             :content="item.badge"
@@ -120,6 +121,12 @@ export default {
       type: Boolean,
     },
     unreadTickets: {
+      type: String,
+    },
+    unreadBookRequest: {
+      type: String,
+    },
+    unreadMessages: {
       type: String,
     },
   },
@@ -272,7 +279,7 @@ export default {
           title: 'messages',
           active: false,
           condition: true,
-          badge: '6',
+          badge: this.unreadMessages,
           badgeColor: 'red',
           items: [
             {
@@ -353,7 +360,7 @@ export default {
           action: 'mdi-book-open-page-variant',
           title: 'requestedBooks',
           active: false,
-          badge: 2,
+          badge: this.unreadBookRequest,
           badgeColor: 'green',
           condition: true,
           items: [
@@ -542,6 +549,15 @@ export default {
     },
     localDrawer(newVal) {
       this.$emit('changeState', newVal);
+    },
+    unreadTickets(newVal) {
+      this.unreadTickets = newVal;
+    },
+    unreadBookRequest(newVal) {
+      this.unreadBookRequest = newVal;
+    },
+    unreadMessages(newVal) {
+      this.unreadMessages = newVal;
     },
   },
 };

@@ -2,6 +2,15 @@ export function someMutation(/* state */) {}
 export const userEnter = (state, response) => {
   state.userInfo = response;
 };
+export const unreadTicketCal = (state, response) => {
+  state.unreadTickets = response;
+};
+export const unreadBookReqCal = (state, response) => {
+  state.unreadBookReq = response;
+};
+export const unreadMessagesCal = (state, response) => {
+  state.unreadMessages = response;
+};
 export const loggedIn = (state, response) => {
   state.loggedIn = response;
 };

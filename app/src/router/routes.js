@@ -150,6 +150,8 @@ const routes = [
         meta: {
           requiresAuth: true,
           roles: [{ cu_book: true }],
+          access: 'BOTH',
+          cRole: 'CLIENT',
         },
       },
       {
@@ -209,8 +211,6 @@ const routes = [
         meta: {
           requiresAuth: true,
           roles: [{ cu_message: true }, { r_message: true }],
-          access: 'BOTH',
-          cRole: 'CLIENT',
         },
       },
       // tickets

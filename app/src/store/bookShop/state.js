@@ -3,5 +3,8 @@ export default function() {
     bag: [],
     userInfo: {},
     loggedIn: false,
+    unreadTickets: '',
+    unreadBookReq: '',
+    unreadMessages: '',
   };
 }

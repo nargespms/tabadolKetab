@@ -74,7 +74,10 @@
       :drawer="drawer"
       :state="drawer"
       @changeState="changeState"
-      :unreadTickets="unreadTickets"
+      :unreadTickets="this.$store.state.bookShop.unreadTickets"
+      :unreadBookRequest="this.$store.state.bookShop.unreadBookReq"
+      :unreadMessages="this.$store.state.bookShop.unreadMessages"
+      :key="menuKey"
     />
   </div>
 </template>
@@ -90,7 +93,7 @@ export default {
   data() {
     return {
       drawer: true,
-      unreadTickets: '',
+      menuKey: 0,
     };
   },
   methods: {
@@ -117,6 +120,15 @@ export default {
       this.$store.commit('bookShop/userEnter', null, {
         module: 'bookShop',
       });
+      this.$store.commit('bookShop/unreadBookReqCal', '', {
+        module: 'bookShop',
+      });
+      this.$store.commit('bookShop/unreadTicketCal', '', {
+        module: 'bookShop',
+      });
+      this.$store.commit('bookShop/unreadMessagesCal', '', {
+        module: 'bookShop',
+      });
       this.$store.commit('bookShop/loggedIn', false, {
         module: 'bookShop',
       });
@@ -126,8 +138,40 @@ export default {
     },
     getUnreadTickets() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/unreadTickets').then(res => {
-        this.unreadTickets = res.data.toString();
+        this.$store.commit('bookShop/unreadTicketCal', res.data.toString(), {
+          module: 'bookShop',
+        });
+        this.menuKey += 1;
       });
+    },
+    getUnreadMessages() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/unread-messages').then(res => {
+        if (res.status === 200) {
+          this.$store.commit(
+            'bookShop/unreadMessagesCal',
+            res.data.toString(),
+            {
+              module: 'bookShop',
+            }
+          );
+          this.menuKey += 1;
+        } else {
+          this.$store.commit('bookShop/unreadMessagesCal', '', {
+            module: 'bookShop',
+          });
+          this.menuKey += 1;
+        }
+      });
+    },
+    getUnreadBookRequest() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/unread-requested-book')
+        .then(res => {
+          this.$store.commit('bookShop/unreadBookReqCal', res.data.toString(), {
+            module: 'bookShop',
+          });
+          this.menuKey += 1;
+        });
     },
   },
   computed: {
@@ -139,8 +183,15 @@ export default {
     },
   },
 
-  mounted() {
-    this.getUnreadTickets();
+  created() {
+    this.timer2 = setInterval(this.getUnreadBookRequest, 120000);
+    this.timer = setInterval(this.getUnreadTickets, 120000);
+    this.timer3 = setInterval(this.getUnreadMessages, 120000);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+    clearInterval(this.timer2);
+    clearInterval(this.timer3);
   },
 };
 </script>

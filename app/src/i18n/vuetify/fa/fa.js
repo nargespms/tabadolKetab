@@ -129,6 +129,7 @@ export default {
   uploadeMore: 'بارگزاری بیشتر',
   becauseOfSMsMessageDoesntDelete:
     'توجه داشته باشید به دلیل ارسال پیامک پیام قابل تغییر و یا حذف نیست.',
+  canNotBeEditted: 'به علت پیامک شدن پیام قابل ویرایش نیست',
   // tickets
   reply: 'پاسخ',
   ANSWERED_BY_STAFF: 'پاسخ داده توسط کارمند',

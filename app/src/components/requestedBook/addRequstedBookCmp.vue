@@ -181,8 +181,14 @@ export default {
       this.$refs.form.validate();
 
       if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-        this.reset();
+        this.$axios
+          .post('/v1/api/tabaadol-e-ketaab/requested-book', { ...this.reqBook })
+          .then(res => {
+            if (res.status === 200) {
+              this.saveSuccess = true;
+              this.reset();
+            }
+          });
       } else {
         this.valid = false;
       }

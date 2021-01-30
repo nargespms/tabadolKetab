@@ -1,6 +1,14 @@
 <template>
   <v-row no-gutters class="justify-center">
     <v-col cols="12" sm="6" md="8">
+      <v-col cols="12" v-if="message.sms && mode === 'edit'">
+        <div class="alertMessage text-center">
+          <p class="font-weight-black">
+            <v-icon color="red"> fas fa-exclamation-triangle </v-icon>
+            {{ $t('becauseOfSMsMessageDoesntDelete') }}
+          </p>
+        </div>
+      </v-col>
       <v-card class="pa-4">
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
@@ -63,7 +71,7 @@
             :rules="requireRule"
             name="input-7-4"
             :label="$t('messageText')"
-            v-model="message.messageText"
+            v-model="message.text"
           >
             <template v-slot:prepend-inner>
               <span class="red--text">
@@ -198,7 +206,7 @@ export default {
       users: ['user1', 'user2', 'user3', 'user4'],
       message: {
         title: '',
-        messageText: '',
+        text: '',
         type: null,
         sms: false,
       },
@@ -268,6 +276,31 @@ export default {
               }
             });
         }
+        if (this.mode === 'edit') {
+          this.$axios
+            .put(
+              `/v1/api/tabaadol-e-ketaab/message/${this.$route.params.messageId}`,
+              {
+                ...this.message,
+              }
+            )
+            .then(res => {
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.$router.push({
+                  path: '/messagesList',
+                });
+                this.reset();
+                this.$emit('savedSuccessfully');
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 404) {
+                this.errorEnable = true;
+                this.errorMsg = 'canNotBeEditted';
+              }
+            });
+        }
       } else {
         this.valid = false;
       }
@@ -286,11 +319,15 @@ export default {
       this.saveSuccess = false;
     },
     getMessage() {
-      this.$axios.get().then(res => {
-        if (res.status === 200) {
-          this.message = res.data.message;
-        }
-      });
+      this.$axios
+        .get(
+          `/v1/api/tabaadol-e-ketaab/message/${this.$route.params.messageId}`
+        )
+        .then(res => {
+          if (res.status === 200) {
+            this.message = res.data;
+          }
+        });
     },
   },
   mounted() {

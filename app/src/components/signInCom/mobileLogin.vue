@@ -55,6 +55,42 @@ export default {
     setPassword(value) {
       this.login.password = value;
     },
+    getUnreadTickets() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/unreadTickets').then(res => {
+        this.$store.commit('bookShop/unreadTicketCal', res.data.toString(), {
+          module: 'bookShop',
+        });
+      });
+    },
+    getUnreadBookRequest() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/unread-requested-book')
+        .then(res => {
+          this.unreadBookRequest = res.data.toString();
+          this.$store.commit('bookShop/unreadBookReqCal', res.data.toString(), {
+            module: 'bookShop',
+          });
+        });
+    },
+    getUnreadMessages() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/unread-messages').then(res => {
+        if (res.status === 200) {
+          this.$store.commit(
+            'bookShop/unreadMessagesCal',
+            res.data.toString(),
+            {
+              module: 'bookShop',
+            }
+          );
+          this.menuKey += 1;
+        } else {
+          this.$store.commit('bookShop/unreadMessagesCal', '', {
+            module: 'bookShop',
+          });
+          this.menuKey += 1;
+        }
+      });
+    },
     validate() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
@@ -66,6 +102,9 @@ export default {
           .then(res => {
             console.log(res);
             if (res.status === 200) {
+              this.getUnreadTickets();
+              this.getUnreadBookRequest();
+              this.getUnreadMessages();
               this.$store.commit('bookShop/userEnter', res.data.user, {
                 module: 'bookShop',
               });
