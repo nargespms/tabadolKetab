@@ -1,5 +1,9 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'books'" :endpoint="'book/list'" />
+  <dataTableWrap
+    :headers="headers"
+    :module="'books'"
+    :endpoint="'/v1/api/tabaadol-e-ketaab/books/list'"
+  />
 </template>
 
 <script>

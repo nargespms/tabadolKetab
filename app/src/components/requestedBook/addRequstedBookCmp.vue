@@ -45,13 +45,17 @@
           </v-row>
           <v-row>
             <v-col cols="12" md="6" class="pa-0">
-              <bookCatAutocomplete :isRequire="false" @sendValue="getBookCat"
+              <bookCatAutocomplete
+                :isRequire="false"
+                @sendValue="getBookCat"
+                :height="32"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
                 :isRequire="false"
                 :placeHolder="'writer'"
                 @sendValue="getWriter"
+                :height="32"
               />
             </v-col>
           </v-row>
@@ -61,6 +65,7 @@
                 :isRequire="false"
                 :placeHolder="'author'"
                 @sendValue="getAuthor"
+                :height="32"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
@@ -68,6 +73,7 @@
                 :isRequire="false"
                 :placeHolder="'translator'"
                 @sendValue="getTranslator"
+                :height="32"
               />
             </v-col>
           </v-row>
@@ -77,6 +83,7 @@
                 :isRequire="false"
                 :placeHolder="'searcher'"
                 @sendValue="getSearcher"
+                :height="32"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
@@ -165,16 +172,16 @@ export default {
       this.reqBook.bookCats = value;
     },
     getWriter(value) {
-      console.log(value);
+      this.reqBook.writerId = value;
     },
     getSearcher(value) {
-      console.log(value);
+      this.reqBook.searcherId = value;
     },
     getTranslator(value) {
-      console.log(value);
+      this.reqBook.translatorId = value;
     },
     getAuthor(value) {
-      console.log(value);
+      this.reqBook.authorId = value;
     },
     // validate form
     validate() {

@@ -184,9 +184,9 @@ export default {
   },
 
   created() {
-    this.timer2 = setInterval(this.getUnreadBookRequest, 120000);
-    this.timer = setInterval(this.getUnreadTickets, 120000);
-    this.timer3 = setInterval(this.getUnreadMessages, 120000);
+    this.timer2 = setInterval(this.getUnreadBookRequest, 300000);
+    this.timer = setInterval(this.getUnreadTickets, 300000);
+    this.timer3 = setInterval(this.getUnreadMessages, 300000);
   },
   beforeDestroy() {
     clearInterval(this.timer);

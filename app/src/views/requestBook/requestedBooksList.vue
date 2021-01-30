@@ -1,5 +1,9 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'requestedBooks'" />
+  <dataTableWrap
+    :headers="headers"
+    :module="'requestedBooks'"
+    :endpoint="'/v1/api/tabaadol-e-ketaab/requested-books/list'"
+  />
 </template>
 
 <script>
