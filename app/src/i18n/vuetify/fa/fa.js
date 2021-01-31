@@ -137,6 +137,7 @@ export default {
   ONHOLD: 'معلق',
   OPEN: 'باز',
   CLOSED: 'بسته',
+  endOfList: 'انتهای لیست',
   // discounts
   discounts: 'تخفیف ها',
   addDiscount: 'ایجاد تخفیف',

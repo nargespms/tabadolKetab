@@ -1,9 +1,11 @@
 <template>
-  <dataTableWrap
-    :headers="headers"
-    :module="'books'"
-    :endpoint="'/v1/api/tabaadol-e-ketaab/books/list'"
-  />
+  <div>
+    <dataTableWrap
+      :headers="headers"
+      :module="'books'"
+      :endpoint="'/v1/api/tabaadol-e-ketaab/books/list'"
+    />
+  </div>
 </template>
 
 <script>
@@ -19,17 +21,19 @@ export default {
       headers: [
         {
           text: 'title',
-          value: 'title',
+          value: 'name',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
           icon: '👨‍💼',
         },
         {
           text: 'registerDate',
-          value: 'registerDate',
+          value: 'createdAt',
           align: 'center',
           filterable: true,
+          filterType: 'date',
           divider: true,
           icon: '👨‍💼',
         },
@@ -88,13 +92,7 @@ export default {
           filterable: true,
           divider: true,
         },
-        {
-          text: 'confirmerUser',
-          value: 'confirmerUser',
-          align: 'center',
-          filterable: true,
-          divider: true,
-        },
+
         {
           text: 'barcode',
           value: 'barcode',

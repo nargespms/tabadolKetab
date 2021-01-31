@@ -204,17 +204,7 @@ export default {
     hideNotif() {
       this.successNotif = false;
     },
-    // sort funcs
-    sort() {
-      console.log('sorted');
-    },
-    // filter
-    filter() {
-      console.log('filtered');
-    },
-    excelFile() {
-      // getData as excel file with filtered included
-    },
+
     printData() {
       // go to print page of this table
       const routeData = this.$router.resolve({

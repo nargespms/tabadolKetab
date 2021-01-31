@@ -60,7 +60,8 @@
       :totalData="totalData"
       :loading="loading"
     />
-    <booksTable
+
+    <lazyBookTable
       @reloadTable="getData"
       @getData="getData"
       v-if="this.module === 'books'"
@@ -157,7 +158,7 @@ import bookCategoryTable from '../bookCategory/bookCategoryTable.vue';
 import ticketsTable from '../tickets/ticketsTable.vue';
 import discountsTable from '../discount/discountsTable.vue';
 import requestedBooksTable from '../requestedBook/requestedBooksTable.vue';
-import booksTable from '../book/booksTable.vue';
+import lazyBookTable from '../book/lazyBookTable.vue';
 import postTable from '../post/postTable.vue';
 import forbiddenBookTable from '../forbiddenBook/forbiddenBookTable.vue';
 import invoicesTable from '../invoices/invoicesTable.vue';
@@ -176,7 +177,7 @@ export default {
     ticketsTable,
     discountsTable,
     requestedBooksTable,
-    booksTable,
+    lazyBookTable,
     postTable,
     forbiddenBookTable,
     invoicesTable,
@@ -218,21 +219,7 @@ export default {
       const { filter } = props;
       console.log(itemsPerPage);
       console.log(sortBy);
-      // if (
-      //   this.module === 'bookCats' ||
-      //   this.module === 'authors' ||
-      //   this.module === 'publishers'
-      // ) {
-      //   this.endpoint = 'http://jsonplaceholder.typicode.com/todos';
-      // } else if (
-      //   this.module === 'messages' ||
-      //   this.module === 'tickets' ||
-      //   this.module === 'discounts'
-      // ) {
-      //   this.endpoint = 'https://jsonplaceholder.typicode.com/posts';
-      // } else {
-      //   this.endpoint = 'http://jsonplaceholder.typicode.com/posts';
-      // }
+
       this.$axios
         .get(this.endpoint, {
           params: {
