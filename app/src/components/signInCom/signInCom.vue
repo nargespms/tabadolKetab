@@ -120,7 +120,8 @@ export default {
 };
 </script>
 <style lang="scss">
-.registerLink {
+.registerLink,
+.forgotPassword {
   cursor: pointer;
   text-align: center;
   padding: 8px;

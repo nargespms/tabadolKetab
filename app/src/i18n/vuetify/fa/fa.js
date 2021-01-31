@@ -39,7 +39,7 @@ export default {
   save: 'ذخیره',
   title: 'عنوان',
   captcha: 'کد امنیتی',
-  InvalidPhone: 'شماره تلفن وارد شده مامعتبر می باشد',
+  InvalidPhone: 'شماره تلفن وارد شده نامعتبر می باشد',
   InvalidEmail: 'ایمیل نامعتبر می باشد',
   InvalidNationalCode: 'کد ملی وارد شده نامعتبر می باشد',
   deleteBookCategory: 'حذف دسته بندی کتاب',
@@ -62,6 +62,7 @@ export default {
   user: 'کاربر',
   profile: 'پروفایل',
   id: 'شناسه',
+  forgotPassword: 'فراموشی رمزعبور',
   // signup
   signUp: 'ثبت نام',
   website: 'وب سایت',

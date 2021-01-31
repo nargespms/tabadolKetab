@@ -8,7 +8,7 @@
       "
       v-mask="'###########'"
       @update:error="checkTel"
-      :required="isRequired"
+      :required="isRequired ? true : false"
       outlined
       error-count="2"
       ref="phoneInput"
