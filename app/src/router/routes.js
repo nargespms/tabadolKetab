@@ -400,7 +400,7 @@ const routes = [
         component: () => import('../views/general/settings.vue'),
         meta: {
           requiresAuth: true,
-          roles: [{ u_settings: true }],
+          roles: [{ ur_setting: true }],
         },
       },
       {
