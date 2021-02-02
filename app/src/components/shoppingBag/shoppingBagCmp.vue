@@ -81,53 +81,14 @@
                 </v-dialog>
               </v-col>
             </v-row>
-            <v-divider></v-divider>
-            <v-row class="justify-center">
-              <v-col cols="12" lg="10">
-                <div class="pa-3 grey lighten-2 br-rd-3 text-center">
-                  <span class="font-weight-medium">
-                    {{ $t('totalPrice') }} :
-                    {{ moneyFormat(totalPrice) }}
-                    {{ $t('rial') }}
-                  </span>
-                </div>
-                <div class="pa-3 d-flex align-center ">
-                  <span class="font-weight-black">
-                    {{ $t('payMethod') }} :
-                  </span>
-                  <v-radio-group
-                    v-model="bag.payMethod"
-                    row
-                    class="pr-6"
-                    :rules="requireRule"
-                  >
-                    <v-radio
-                      :label="$t('creditPay')"
-                      value="creditPay"
-                      class="pr-6"
-                    ></v-radio>
-                    <v-radio
-                      :label="$t('onlinePay')"
-                      value="onlinePay"
-                      class="pr-6"
-                    ></v-radio>
-                    <v-radio
-                      :label="$t('presentPay')"
-                      value="presentPay"
-                      class="pr-6"
-                    ></v-radio>
-                  </v-radio-group>
-                </div>
-              </v-col>
-            </v-row>
-            <div class="justify-center d-flex">
+            <div class="justify-center d-flex mt-4">
               <v-btn
                 :disabled="!valid"
                 color="success"
                 class="px-16 py-5"
                 @click="pay"
               >
-                {{ $t('pay') }}
+                {{ $t('saveOrder') }}
               </v-btn>
             </div>
           </v-form>
@@ -182,6 +143,8 @@ export default {
     },
     getItems() {
       this.items = [...this.$store.state.bookShop.bag];
+      this.bag.booksId = this.$store.state.bookShop.bag.map(item => item.id);
+      console.log(this.$store.state.bookShop.bag.map(item => item.id));
       this.isLoading = false;
     },
   },

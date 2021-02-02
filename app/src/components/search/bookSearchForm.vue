@@ -88,25 +88,6 @@
                   @sendValue="getBookCat"
                 />
               </v-col>
-              <v-col cols="12" md="6">
-                <div class="recieveUserWrap d-flex align-center pt-0">
-                  <span class="font-weight-black">
-                    {{ $t('bookDonation') }} :
-                  </span>
-                  <v-radio-group v-model="search.bookDonation" row class="pr-6">
-                    <v-radio
-                      :label="$t('yes')"
-                      :value="true"
-                      color="green"
-                    ></v-radio>
-                    <v-radio
-                      :label="$t('no')"
-                      :value="false"
-                      color="red"
-                    ></v-radio>
-                  </v-radio-group>
-                </div>
-              </v-col>
             </v-row>
             <div class="justify-center d-flex">
               <v-btn

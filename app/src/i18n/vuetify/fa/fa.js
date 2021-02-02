@@ -188,6 +188,7 @@ export default {
   bookList: 'لیست کتاب‌ها',
   registerDate: 'تاریخ ثبت ',
   confirmRegisterDate: 'تاریخ تایید ثبت',
+  confirmDate: 'تاریخ تایید ثبت',
   tags: 'برچسب‌ها',
   mainPrice: 'قیمت اصلی',
   soldPrice: 'قیمت فروخته شده',
@@ -212,6 +213,7 @@ export default {
   NOPROBLEMIFASKED: 'با هماهنگی ،مانعی ندارد.',
   recycle: 'بازیافت',
   UndergraduatePrice: 'قیمت کارشناسی',
+  undergraduatePrice: 'قیمت کارشناسی',
   weeklyDiscount: 'تخفیف هفتگی',
   previewMore: 'مشاهده بیشتر ',
   invalidPhrase: 'عبارت قابل قبول نیست',
@@ -444,4 +446,6 @@ export default {
   receivershouldbespecified: 'گیرنده پیام مشخص نشده است',
   INFO: 'روابط عمومی',
   TECH: 'فنی',
+  nextLevel: 'مرحله بعدی',
+  saveOrder: 'ثبت سفارش',
 };

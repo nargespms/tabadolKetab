@@ -6,7 +6,6 @@
       :loading="isLoading"
       :search-input.sync="search"
       chips
-      clearable
       hide-selected
       item-text="title"
       item-value="id"
@@ -36,6 +35,9 @@
         <span class="red--text">
           *
         </span>
+      </template>
+      <template v-slot:append v-if="this.model">
+        <v-icon @click="clear">mdi-close-circle-outline</v-icon>
       </template>
     </v-autocomplete>
   </div>
@@ -68,6 +70,10 @@ export default {
         this.$emit('sendValue', this.model);
         this.localRequire = true;
       }
+    },
+    clear() {
+      this.model = '';
+      this.$emit('sendValue', this.model);
     },
   },
   watch: {

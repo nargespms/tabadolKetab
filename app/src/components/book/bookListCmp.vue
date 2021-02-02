@@ -1,7 +1,11 @@
 <template>
   <div>
     <dataTableWrap
-      :headers="headers"
+      :headers="
+        this.$store.state.bookShop.userInfo.role !== 'CLIENT'
+          ? headers
+          : clientHeaders
+      "
       :module="'books'"
       :endpoint="'/v1/api/tabaadol-e-ketaab/books/list'"
     />
@@ -26,7 +30,6 @@ export default {
           filterable: true,
           filterType: 'text',
           divider: true,
-          icon: '👨‍💼',
         },
         {
           text: 'registerDate',
@@ -35,23 +38,22 @@ export default {
           filterable: true,
           filterType: 'date',
           divider: true,
-          icon: '👨‍💼',
         },
         {
           text: 'category',
-          value: 'category',
+          value: 'categoryId',
           align: 'center',
           filterable: true,
+          filterType: 'bookCategory',
           divider: true,
-          icon: '👨‍💼',
         },
         {
           text: 'status',
           value: 'status',
           align: 'center',
           filterable: true,
+          filterType: 'staticDropDown',
           divider: true,
-          icon: '👨‍💼',
         },
         {
           text: 'tags',
@@ -59,40 +61,122 @@ export default {
           align: 'center',
           filterable: true,
           divider: true,
-          icon: '👨‍💼',
         },
         {
-          text: 'mainPrice',
-          value: 'mainPrice',
+          text: 'undergraduatePrice',
+          value: 'undergraduatePrice',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
-          icon: '👨‍💼',
         },
         {
           text: 'soldPrice',
           value: 'soldPrice',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
-          icon: '👨‍💼',
         },
         {
-          text: 'confirmRegisterDate',
-          value: 'confirmRegisterDate',
+          text: 'confirmDate',
+          value: 'confirmDate',
           align: 'center',
           filterable: true,
+          filterType: 'date',
+          filterName: 'confirmDate',
           divider: true,
-          icon: '👨‍💼',
         },
         {
           text: 'user',
-          value: 'user',
+          value: 'sellerId',
+          align: 'center',
+          filterable: true,
+          filterType: 'clientUsers',
+          filterName: 'sellerId',
+          divider: true,
+        },
+
+        {
+          text: 'barcode',
+          value: 'barcode',
+          align: 'center',
+          filterable: false,
+          divider: true,
+        },
+        {
+          text: 'operation',
+          value: 'operation',
+          align: 'center',
+          filterable: false,
+          divider: true,
+        },
+      ],
+      clientHeaders: [
+        {
+          text: 'title',
+          value: 'name',
+          align: 'center',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
+        {
+          text: 'registerDate',
+          value: 'createdAt',
+          align: 'center',
+          filterable: true,
+          filterType: 'date',
+          divider: true,
+        },
+        {
+          text: 'category',
+          value: 'categoryId',
+          align: 'center',
+          filterable: true,
+          filterType: 'bookCategory',
+          divider: true,
+        },
+        {
+          text: 'status',
+          value: 'status',
+          align: 'center',
+          filterable: true,
+          filterType: 'staticDropDown',
+          divider: true,
+        },
+        {
+          text: 'tags',
+          value: 'tags',
           align: 'center',
           filterable: true,
           divider: true,
         },
-
+        {
+          text: 'undergraduatePrice',
+          value: 'undergraduatePrice',
+          align: 'center',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
+        {
+          text: 'soldPrice',
+          value: 'soldPrice',
+          align: 'center',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
+        {
+          text: 'confirmDate',
+          value: 'confirmDate',
+          align: 'center',
+          filterable: true,
+          filterType: 'date',
+          filterName: 'confirmDate',
+          divider: true,
+        },
         {
           text: 'barcode',
           value: 'barcode',

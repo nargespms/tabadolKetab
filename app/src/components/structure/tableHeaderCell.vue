@@ -84,6 +84,15 @@
         <rolesAutoComplete @setRole="setRole" />
       </div>
     </template>
+    <template v-if="filterEnable && data.filterType === 'bookCategory'">
+      <div class="ma-auto w250">
+        <bookCatAutocomplete
+          :isRequire="false"
+          @sendValue="getBookCat"
+          :height="32"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -92,8 +101,9 @@ import _ from 'lodash';
 import datePickerCmp from './datePickerCmp.vue';
 import staffsAutoComplete from './staffsAutoComplete.vue';
 import clientsAutoComplete from './clientsAutoComplete.vue';
-import rolesAutoComplete from './rolesAutocomplete.vue';
 import dateTime from '../../mixins/dateTime.js';
+import rolesAutoComplete from './rolesAutocomplete.vue';
+import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
 
 export default {
   name: 'tableHeaderCell',
@@ -102,6 +112,7 @@ export default {
     staffsAutoComplete,
     clientsAutoComplete,
     rolesAutoComplete,
+    bookCatAutocomplete,
   },
   mixins: [dateTime],
   props: {
@@ -137,7 +148,11 @@ export default {
     setClient(value) {
       if (value.length > 0) {
         this.filter[this.data.value] = value;
-        this.emitFilter('clientId');
+        if (this.data.filterName) {
+          this.emitFilter(this.data.filterName);
+        } else {
+          this.emitFilter('clientId');
+        }
       } else {
         delete this.filter[this.data.value];
         this.emitFilter(this.data.value);
@@ -155,13 +170,27 @@ export default {
     },
     setDate(value) {
       if (value.length > 0) {
-        console.log(`date is :${value}`);
         this.filter[this.data.value] = value;
         this.filter[this.data.value] = new Date(
           this.persionToGregorian(value)
         ).toISOString();
+
+        if (this.data.filterName) {
+          this.emitFilter(this.data.filterName);
+        } else {
+          this.emitFilter('createdAt');
+        }
+      } else {
+        delete this.filter[this.data.value];
+        this.emitFilter(this.data.value);
+      }
+    },
+    getBookCat(value) {
+      console.log(value);
+      if (value.length > 0) {
+        this.filter[this.data.value] = value;
         console.log(this.filter[this.data.value]);
-        this.emitFilter('createdAt');
+        this.emitFilter('categoryId');
       } else {
         delete this.filter[this.data.value];
         this.emitFilter(this.data.value);

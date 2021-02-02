@@ -31,7 +31,13 @@
 
     <table
       class="generalTable "
-      :class="$vuetify.breakpoint.lg ? '' : 'tableMobileScroll'"
+      :class="
+        $vuetify.breakpoint.xl
+          ? ''
+          : $vuetify.breakpoint.lg
+          ? ''
+          : 'tableMobileScroll'
+      "
     >
       <thead class="grey lighten-2">
         <th class="text-center" v-for="h in headers" :key="h.index">
@@ -42,7 +48,7 @@
           />
         </th>
       </thead>
-      <tbody>
+      <tbody v-if="tableData.length > 0">
         <tr
           v-for="item in tableData"
           :key="item.index"
@@ -55,29 +61,35 @@
             {{ new Date(item.createdAt).toLocaleDateString('fa') }}
           </td>
           <td>
-            {{}}
+            {{ item.category.title }}
           </td>
           <td>
             {{ $t(item.status) }}
           </td>
-          <td>
-            {{}}
-          </td>
+          <td></td>
           <td>
             {{ item.undergraduatePrice }}
           </td>
-          <td>
-            {{}}
-          </td>
+          <td></td>
 
           <td>
-            {{ new Date(item.confirmDate).toLocaleDateString('fa') }}
+            <span v-if="item.confirmDate.length > 0">
+              {{ new Date(item.confirmDate).toLocaleDateString('fa') }}
+            </span>
+          </td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
+            {{ item.seller.firstName }}
+            {{ item.seller.lastName }}
           </td>
           <td>
-            {{}}
-          </td>
-          <td>
-            {{}}
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon @click="printBarCode(item)" v-bind="attrs" v-on="on"
+                  >mdi-barcode-scan</v-icon
+                >
+              </template>
+              {{ $t('barcodePrint') }}
+            </v-tooltip>
           </td>
           <td>
             <div class="d-flex">
@@ -128,6 +140,13 @@
           </td>
         </tr>
       </tbody>
+      <tbody v-if="tableData.length === 0">
+        <div class=" pa-4 ma-auto ">
+          <span class="text-center">
+            {{ $t('noResultsText') }}
+          </span>
+        </div>
+      </tbody>
     </table>
     <div class="d-flex justify-center">
       <v-btn
@@ -143,8 +162,8 @@
 
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
-        :title="'deleteMessage'"
-        :message="'RUSureUWantToDeletThisMessage'"
+        :title="'deleteBook'"
+        :message="'RUSureUWantToDeletThisBook'"
         :data="deletingItem"
         @accept="acceptDelete"
         @reject="closeDelete"
@@ -195,7 +214,12 @@ export default {
       // delete
       enableDelete: false,
       deletingItem: {},
-      status: ['CLIENTREGISTER', 'RECEIVED', 'CONFIRMED', 'SOLD'],
+      status: [
+        { text: 'CLIENTREGISTER', value: 'CLIENTREGISTER' },
+        { text: 'RECEIVED', value: 'RECEIVED' },
+        { text: 'CONFIRMED', value: 'CONFIRMED' },
+        { text: 'SOLD', value: 'SOLD' },
+      ],
       filter: {},
       uploadMoreBut: 'uploadeMore',
     };
@@ -206,6 +230,7 @@ export default {
         name: 'addBook',
       });
     },
+
     excelFile() {
       console.log('excel');
       // getData as excel file with filtered included
