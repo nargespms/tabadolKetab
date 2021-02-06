@@ -112,7 +112,7 @@
           <v-row>
             <v-col cols="12" md="6" class="pa-0 ">
               <v-text-field
-                v-model="book.nationalcode"
+                v-model="book.nationalCode"
                 :label="$t('nationalcode')"
                 outlined
                 v-mask="'###########'"
@@ -168,9 +168,6 @@
               class="pa-0 pr-md-4  pr-lg-4 pr-0"
             >
               <div class="flex">
-                <span class="fn-25">
-                  🧑‍💻
-                </span>
                 <tagsAutocomplete
                   :isRequire="false"
                   :placeHolder="'tags'"
@@ -192,9 +189,71 @@
             </v-col>
           </v-row>
           <v-row>
+            <v-col
+              cols="12"
+              md="6"
+              class="pa-0 pt-0"
+              v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
+            >
+              <v-text-field
+                v-model="book.undergraduatePrice"
+                :label="$t('UndergraduatePrice')"
+                outlined
+                required
+                :rules="requireRule"
+                v-mask="'#############'"
+                :hint="
+                  this.book.undergraduatePrice
+                    ? `${$t('costInToman')}${moneyFormat(
+                        book.undergraduatePrice
+                      )}`
+                    : ''
+                "
+              >
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+              </v-text-field>
+            </v-col>
+            <v-col
+              cols="12"
+              md="6"
+              class="pa-0 pr-md-4  pr-lg-4 pr-0"
+              v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
+            >
+              <v-select
+                v-if="mode === 'edit'"
+                :items="bookStatus"
+                :label="$t('status')"
+                outlined
+                required
+                :rules="requireRule"
+                v-model="book.status"
+              >
+                <template v-slot:item="{ item }">
+                  <span>
+                    {{ $t(item) }}
+                  </span>
+                </template>
+                <template v-slot:selection="{ item }">
+                  <span>
+                    {{ $t(item) }}
+                  </span>
+                </template>
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+              </v-select>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col cols="12" md="6" class="pa-0 pt-0">
               <v-textarea
-                v-model="book.desc"
+                v-model="book.description"
                 :label="$t('description')"
                 name="input-7-4"
                 outlined
@@ -202,7 +261,7 @@
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <v-textarea
-                v-model="book.bookSummary"
+                v-model="book.summary"
                 :label="$t('bookSummary')"
                 name="input-7-4"
                 outlined
@@ -234,77 +293,6 @@
                   ></v-radio>
                 </v-radio-group></div
             ></v-col>
-          </v-row>
-          <v-row>
-            <v-col
-              cols="12"
-              md="6"
-              class="pa-0 pt-0"
-              v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
-            >
-              <v-text-field
-                v-model="book.undergraduatePrice"
-                :label="$t('UndergraduatePrice')"
-                outlined
-                required
-                :rules="requireRule"
-                v-mask="'#############'"
-                :hint="
-                  this.book.undergraduatePrice
-                    ? `${$t('costInToman')}${moneyFormat(
-                        book.undergraduatePrice
-                      )}`
-                    : ''
-                "
-              >
-                <template v-slot:prepend>
-                  <span class="fn-25">
-                    🧑‍💻
-                  </span>
-                </template>
-                <template v-slot:prepend-inner>
-                  <span class="red--text">
-                    *
-                  </span>
-                </template>
-              </v-text-field>
-            </v-col>
-            <v-col
-              cols="12"
-              md="6"
-              class="pa-0 pr-md-4  pr-lg-4 pr-0"
-              v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
-            >
-              <v-select
-                :items="bookStatus"
-                :label="$t('status')"
-                outlined
-                required
-                :rules="requireRule"
-                v-model="book.status"
-              >
-                <template v-slot:item="{ item }">
-                  <span>
-                    {{ $t(item) }}
-                  </span>
-                </template>
-                <template v-slot:selection="{ item }">
-                  <span>
-                    {{ $t(item) }}
-                  </span>
-                </template>
-                <template v-slot:prepend-inner>
-                  <span class="red--text">
-                    *
-                  </span>
-                </template>
-                <template v-slot:prepend>
-                  <span class="fn-25">
-                    🧑‍💻
-                  </span>
-                </template>
-              </v-select>
-            </v-col>
           </v-row>
 
           <v-row>
@@ -432,7 +420,7 @@ export default {
       this.book.publisherId = value;
     },
     getTag(value) {
-      console.log(value);
+      this.book.tags = value;
     },
     getWriter(value) {
       this.book.writerId = value;
@@ -474,6 +462,26 @@ export default {
                 this.errorMsg = 'permissionDenied';
               }
             });
+        } else if (this.mode === 'edit') {
+          this.$axios
+            .put(
+              `/v1/api/tabaadol-e-ketaab/book/${this.$route.params.bookId}`,
+              {
+                ...this.book,
+              }
+            )
+            .then(res => {
+              console.log(res);
+              if (res.status === 200) {
+                this.saveSuccess = true;
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 403) {
+                this.errorEnable = true;
+                this.errorMsg = 'permissionDenied';
+              }
+            });
         }
       } else {
         this.valid = false;
@@ -491,6 +499,18 @@ export default {
     moneyFormat(value) {
       return new Intl.NumberFormat('es-ES').format(value);
     },
+    getBookData() {
+      this.$axios
+        .get(`/v1/api/tabaadol-e-ketaab/book/${this.$route.params.bookId}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.book = res.data;
+          }
+        });
+    },
+  },
+  mounted() {
+    this.getBookData();
   },
 };
 </script>

@@ -166,6 +166,17 @@ const routes = [
         },
       },
       {
+        path: '/bookList/:bookId',
+        name: 'bookPage',
+        component: () => import('../views/book/book.vue'),
+        meta: {
+          requiresAuth: true,
+          roles: [{ r_book: true }],
+          access: 'BOTH',
+          cRole: 'CLIENT',
+        },
+      },
+      {
         path: '/addBookCat',
         name: 'addBookCat',
         component: () => import('../views/bookCategory/addBookCat.vue'),

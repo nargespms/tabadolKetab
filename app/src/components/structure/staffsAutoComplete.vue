@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  name: 'authorAutocomplete',
+  name: 'staffsAutocomplete',
   props: {
     placeHolder: {
       type: String,

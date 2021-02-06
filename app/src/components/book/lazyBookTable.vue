@@ -230,6 +230,11 @@ export default {
         name: 'addBook',
       });
     },
+    editRecord(item) {
+      this.$router.push({
+        path: `/bookList/${item.id}`,
+      });
+    },
 
     excelFile() {
       console.log('excel');
@@ -294,12 +299,14 @@ export default {
         .get('/v1/api/tabaadol-e-ketaab/books/list', {
           params: {
             offset: this.tableData.length,
+            limit: this.innerOptions.limit,
           },
         })
         .then(res => {
           if (res.status === 200) {
             if (res.data.result.docs.length > 0) {
-              this.tableData.push(...res.data);
+              this.tableData.push(...res.data.result.docs);
+              this.enableLoadingMore = false;
             } else {
               this.uploadMoreBut = 'endOfList';
               this.enableLoadingMore = true;

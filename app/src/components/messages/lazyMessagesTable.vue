@@ -44,95 +44,63 @@
     <table
       v-if="!isLoading"
       class="generalTable "
-      :class="$vuetify.breakpoint.lg ? '' : 'tableMobileScroll'"
+      :class="
+        $vuetify.breakpoint.xl
+          ? ''
+          : $vuetify.breakpoint.lg
+          ? ''
+          : 'tableMobileScroll'
+      "
     >
       <thead class="grey lighten-2">
-        <th>
-          <span class="fn-25">
-            👨‍💼
-          </span>
-          {{ $t('title') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
+        <th class="text-center" v-for="h in headers" :key="h.index">
+          <tableHeaderCell
+            :data="h"
+            :items="h.text === 'type' ? status : h.text === 'sms' ? smsOpt : []"
+            @filterCol="filterCol"
+          />
         </th>
-        <th>
-          <span class="fn-25">
-            👨‍💼
-          </span>
-          {{ $t('sendDate') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('reciever') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('recieverNumber') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>{{ $t('attachments') }}</th>
-        <th>
-          <span class="fn-25">
-            👨‍💼
-          </span>
-          {{ $t('sender') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('messageType') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('sendSms') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th><span class="fn-25"> 👨‍💼 </span>{{ $t('operation') }}</th>
       </thead>
-      <tbody>
-        <tr
-          v-for="item in tableData"
-          :key="item.index"
-          :class="item.name === 'Ervin Howell' ? 'grey lighten-2' : ''"
-        >
+      <tbody v-if="tableData.length > 0">
+        <tr v-for="item in tableData" :key="item.index">
           <td>
-            {{ item.name }}
+            {{ item.title }}
           </td>
           <td>
-            {{ item.name }}
+            {{ new Date(item.sendDate).toLocaleDateString('fa') }}
           </td>
           <td>
-            {{ item.name }}
+            {{ item.receiver.firstName }}
+            {{ item.receiver.lastName }}
           </td>
           <td>
-            {{ item.name }}
+            <span class="numberDir">
+              {{ item.receiver.mobile }}
+            </span>
           </td>
           <td>
-            {{ item.name }}
+            {{ item.attachments }}
           </td>
           <td>
-            {{ item.name }}
+            {{ item.createdBy.firstName }}
+            {{ item.createdBy.lastName }}
           </td>
           <td>
-            {{ item.name }}
+            {{ $t(item.type) }}
           </td>
           <td>
-            {{ item.name }}
+            <span v-if="item.sms">
+              {{ $t('smsDone') }}
+              <v-icon color="success">mdi-check</v-icon>
+            </span>
+            <span v-else>
+              {{ $t('smsUnDone') }}
+              <v-icon color="error">mdi-close</v-icon>
+            </span>
           </td>
+
           <td>
-            <div class="d-flex">
+            <div class="d-flex justify-center">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
@@ -161,48 +129,35 @@
                 </template>
                 {{ $t('edit') }}
               </v-tooltip>
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    medium
-                    class="ma-2"
-                    color="grey darken-3"
-                    @click="deleteRecord(item)"
-                    v-on="on"
-                    v-bind="attrs"
-                  >
-                    mdi-delete
-                  </v-icon>
-                </template>
-                {{ $t('delete') }}
-              </v-tooltip>
             </div>
           </td>
         </tr>
+      </tbody>
+      <tbody v-if="tableData.length === 0">
+        <div class=" pa-4 ma-auto ">
+          <span class="text-center">
+            {{ $t('noResultsText') }}
+          </span>
+        </div>
       </tbody>
     </table>
     <div class="d-flex justify-center">
       <v-btn
         class="ma-2 d-flex"
         :loading="loadingMore"
-        :disabled="loadingMore"
+        :disabled="enableLoadingMore"
         color="teal white--text"
         @click="getMoreData"
       >
-        {{ $t('uploadeMore') }}
+        {{ $t(uploadMoreBut) }}
       </v-btn>
     </div>
-    <v-dialog v-model="enablePreview" content-class="sh-0">
-      <messageShow :item="previewItem" />
-    </v-dialog>
-    <v-dialog v-model="enableDelete" max-width="500px">
-      <promptDialog
-        :title="'deleteMessage'"
-        :message="'RUSureUWantToDeletThisMessage'"
-        :data="deletingItem"
-        @accept="acceptDelete"
-        @reject="closeDelete"
-      />
+    <v-dialog
+      v-model="enablePreview"
+      content-class="sh-0"
+      @click:outside="closeDialog"
+    >
+      <messageShow :id="previewItem.id" />
     </v-dialog>
 
     <notifMessage
@@ -216,29 +171,53 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import promptDialog from '../structure/promptDialog.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 import messageShow from './messageShow.vue';
 
 export default {
   name: 'lazyMessagesTable',
   components: {
     notifMessage,
-    promptDialog,
     messageShow,
+    tableHeaderCell,
+  },
+  props: {
+    headers: { type: Array },
+    tableData: { type: Array },
+    totalData: { type: Number },
+    loading: { type: Boolean },
+    options: {
+      type: Object,
+      default: () => ({
+        descending: false,
+        page: 1,
+        limit: 10,
+      }),
+    },
   },
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       loadingMore: false,
-      tableData: [],
-      // delete
-      enableDelete: false,
-      deletingItem: {},
+      enableLoadingMore: false,
+      // tableData: [],
+      innerOptions: this.options,
+
       successNotif: false,
       // preview
       enablePreview: false,
       previewItem: {},
       tableName: 'PUBLIC',
+      filter: {},
+      uploadMoreBut: 'uploadeMore',
+      status: [
+        { text: 'PRIVATE', value: 'PRIVATE' },
+        { text: 'PUBLIC', value: 'PUBLIC' },
+      ],
+      smsOpt: [
+        { text: 'smsTrue', value: 'true' },
+        { text: 'smsFalse', value: 'false' },
+      ],
     };
   },
 
@@ -248,21 +227,7 @@ export default {
         name: 'createNewMsg',
       });
     },
-    // methods for delete notif
-    deleteRecord(item) {
-      this.deletingItem = item;
-      this.enableDelete = true;
-    },
-    acceptDelete(value) {
-      console.log(`deleted ${value.name}`);
-      this.successNotif = true;
 
-      this.closeDelete();
-    },
-    closeDelete() {
-      this.enableDelete = false;
-      this.deletingItem = {};
-    },
     hideNotif() {
       this.successNotif = false;
     },
@@ -278,16 +243,24 @@ export default {
         path: `/messagesList/${item.id}`,
       });
     },
-    // sort funcs
-    sort() {
-      console.log('sorted');
-    },
-    // filter
-    filter() {
-      console.log('filtered');
-    },
     excelFile() {
       // getData as excel file with filtered included
+    },
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
     printData() {
       // go to print page of this table
@@ -296,27 +269,37 @@ export default {
       });
       window.open(routeData.href, '_blank');
     },
-    getData() {
-      this.$axios
-        .get('https://jsonplaceholder.typicode.com/users')
-        .then(res => {
-          console.log();
-          this.tableData = res.data;
-          this.isLoading = false;
-        });
-    },
+
     getMoreData() {
       this.loadingMore = true;
+      this.enableLoadingMore = true;
       this.$axios
-        .get('https://jsonplaceholder.typicode.com/users')
+        .get('/v1/api/tabaadol-e-ketaab/messages/list', {
+          params: {
+            offset: this.tableData.length,
+            limit: this.innerOptions.limit,
+          },
+        })
         .then(res => {
-          console.log();
-          this.tableData.push(...res.data);
+          if (res.data.result.docs.length > 0) {
+            this.tableData.push(...res.data.result.docs);
+            this.enableLoadingMore = false;
+          } else {
+            this.uploadMoreBut = 'endOfList';
+            this.enableLoadingMore = true;
+          }
           this.loadingMore = false;
         });
     },
     changeType(name) {
       this.tableName = name;
+      this.filter.type = name;
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    closeDialog() {
+      this.previewItem = {};
     },
   },
   watch: {
@@ -325,9 +308,6 @@ export default {
         this.previewItem = {};
       }
     },
-  },
-  mounted() {
-    this.getData();
   },
 };
 </script>

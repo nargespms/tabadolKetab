@@ -81,8 +81,12 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog v-model="enablePreview" content-class="sh-0">
-      <showRequestedBook :item="previewItem" />
+    <v-dialog
+      v-model="enablePreview"
+      content-class="sh-0"
+      @click:outside="closeDialog"
+    >
+      <showRequestedBook :id="previewItem.id" />
     </v-dialog>
     <v-dialog v-model="enableStatusChange" max-width="500px">
       <multipleChoiseDialog
@@ -195,6 +199,9 @@ export default {
         name: 'printRequestedBooks',
       });
       window.open(routeData.href, '_blank');
+    },
+    closeDialog() {
+      this.previewItem = {};
     },
   },
   watch: {
