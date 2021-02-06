@@ -15,24 +15,15 @@
             </v-icon>
           </span>
         </v-card-title>
-        <v-card-subtitle>
-          <span v-if="book.shabak">
-            {{ $t('shabak') }} : {{ book.shabak }}
-          </span>
-          <span v-if="book.publisher">
+        <v-card-subtitle class="pt-3">
+          <p v-if="book.shabak">{{ $t('shabak') }} : {{ book.shabak }}</p>
+          <p v-if="book.publisher">
             {{ $t('publisher') }} : {{ book.publisher }}
-          </span>
-          <span v-if="book.searcher">
-            {{ $t('searcher') }} : {{ book.searcher }}
-          </span>
-          <span v-if="book.author">
-            {{ $t('author') }} : {{ book.author }}
-          </span>
-          <span v-if="book.author">
-            {{ $t('author') }} : {{ book.author }}
-          </span>
+          </p>
+          <p v-if="book.searcher">{{ $t('searcher') }} : {{ book.searcher }}</p>
+          <p v-if="book.author">{{ $t('author') }} : {{ book.author }}</p>
+          <p v-if="book.author">{{ $t('author') }} : {{ book.author }}</p>
         </v-card-subtitle>
-        {{ book }}
       </v-card>
     </v-col>
   </v-row>
