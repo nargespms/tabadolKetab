@@ -141,11 +141,11 @@
         </tr>
       </tbody>
       <tbody v-if="tableData.length === 0">
-        <div class=" pa-4 ma-auto ">
+        <td colspan="11" class=" pa-4 ma-auto ">
           <span class="text-center">
             {{ $t('noResultsText') }}
           </span>
-        </div>
+        </td>
       </tbody>
     </table>
     <div class="d-flex justify-center">
@@ -316,11 +316,7 @@ export default {
         });
     },
   },
-  computed: {
-    lastId() {
-      return this.tableData[this.tableData.length - 1].id;
-    },
-  },
+
   watch: {
     options: {
       handler(newVal) {

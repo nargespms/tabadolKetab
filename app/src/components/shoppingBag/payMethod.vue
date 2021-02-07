@@ -5,25 +5,15 @@
         <span class="font-weight-black"> {{ $t('payMethod') }} : </span>
         <v-radio-group
           v-model="payMethod"
+          @change="setMethod"
           row
           class="pr-6"
           :rules="requireRule"
         >
-          <v-radio
-            :label="$t('creditPay')"
-            value="creditPay"
-            class="pr-6"
-          ></v-radio>
-          <v-radio
-            :label="$t('onlinePay')"
-            value="onlinePay"
-            class="pr-6"
-          ></v-radio>
-          <v-radio
-            :label="$t('presentPay')"
-            value="presentPay"
-            class="pr-6"
-          ></v-radio>
+          <v-radio :label="$t('CASH')" value="CASH" class="pr-6"></v-radio>
+          <v-radio :label="$t('CARD')" value="CARD" class="pr-6"></v-radio>
+          <v-radio :label="$t('POZ')" value="POZ" class="pr-6"></v-radio>
+          <v-radio :label="$t('GIFT')" value="GIFT" class="pr-6"></v-radio>
         </v-radio-group>
       </div>
     </v-col>
@@ -35,8 +25,14 @@ export default {
   name: 'payMethod',
   data() {
     return {
-      payMethod:'',,
+      payMethod: '',
+      requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
     };
+  },
+  methods: {
+    setMethod() {
+      this.$emit('setMethod', this.payMethod);
+    },
   },
 };
 </script>

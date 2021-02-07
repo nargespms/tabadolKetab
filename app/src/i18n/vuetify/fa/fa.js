@@ -174,7 +174,7 @@ export default {
   // credits
   credits: 'اعتبارات',
   increaseCredit: 'افزایش اعتبار',
-  costInToman: 'مبلغ به تومان : ',
+  decreaseCredit: 'کاهش اعتبار',
   toman: 'تومان',
   rial: 'ریال',
   creditList: 'لیست اعتبارات',
@@ -248,6 +248,8 @@ export default {
   deleteAddress: 'حذف  آدرس',
   RUSureUWantToDeletThisAddress: 'آیا میخواهید این  آدرس را حذف نمایید؟',
   price: 'مبلغ',
+  paidWay: 'نوع پرداخت',
+  expireDate: 'تاریخ انقضا',
   userPhoneNumber: 'تلفن همراه کاربر',
   userLandLane: 'تلفن ثابت کاربر',
   receivesend: 'دریافت / ارسال',
@@ -295,6 +297,10 @@ export default {
   issueDate: 'تاریخ صدور',
   deleteInvoice: 'حذف فاکتور',
   RUSureUWantToDeletThisInvoice: 'آیا میخواهید این فاکتور را حذف نمایید؟',
+  CASH: 'نقدی',
+  CARD: 'کارت به کارت',
+  POZ: 'دستگاه کارت خوان',
+  GIFT: 'هدیه',
   // settings
   settings: 'تنظیمات',
   generalSettings: 'تنظیمات عمومی',
@@ -455,4 +461,5 @@ export default {
   TECH: 'فنی',
   nextLevel: 'مرحله بعدی',
   saveOrder: 'ثبت سفارش',
+  costInRial: 'مبلغ به ریال',
 };

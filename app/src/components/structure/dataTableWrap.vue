@@ -81,6 +81,16 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <lazycreditTable
+      @reloadTable="getData"
+      @getData="getData"
+      v-if="this.module === 'tranactions'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
 
     <postTable
       @reloadTable="getData"
@@ -178,6 +188,7 @@ import ordersTable from '../orders/ordersTable.vue';
 import accessLevelTable from '../accessLevel/accessLevelTable.vue';
 import notifMessage from './notifMessage.vue';
 import lazyMessagesTable from '../messages/lazyMessagesTable.vue';
+import lazycreditTable from '../credit/lazycreditTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -198,6 +209,7 @@ export default {
     accessLevelTable,
     notifMessage,
     lazyMessagesTable,
+    lazycreditTable,
   },
   props: {
     headers: {

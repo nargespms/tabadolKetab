@@ -1,11 +1,5 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <span class="fn-25">
-      🧑‍💻
-    </span>
-    <span class="fn-25">
-      👨‍🔧
-    </span>
     <v-col cols="12" sm="6" md="8">
       <v-card class="pa-4">
         <v-card-actions class="teal">
