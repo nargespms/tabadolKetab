@@ -71,7 +71,7 @@
           <td>
             {{ item.description }}
           </td>
-          <td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
             <span v-if="item.client">
               {{ item.client.firstName }}
               {{ item.client.lastName }}

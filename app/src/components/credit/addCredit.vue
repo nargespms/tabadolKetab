@@ -59,7 +59,10 @@
                   dynamicClass="pb-7"
                 />
               </div>
-              <payMethod @setMethod="setMethod" />
+              <payMethod
+                v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
+                @setMethod="setMethod"
+              />
               <v-textarea
                 outlined
                 name="input-7-4"
