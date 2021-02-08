@@ -23,6 +23,14 @@ export default {
     return {
       headers: [
         {
+          text: 'transactionNumber',
+          value: 'number',
+          align: 'center',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
+        {
           text: 'transactionDate',
           value: 'createdAt',
           align: 'center',
@@ -70,6 +78,14 @@ export default {
         },
       ],
       clientHeaders: [
+        {
+          text: 'transactionNumber',
+          value: 'number',
+          align: 'center',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
         {
           text: 'transactionDate',
           value: 'createdAt',

@@ -1,6 +1,6 @@
 export default {
   Login: 'ورود',
-  changing: ' مرکز تبادل',
+  changing: 'مرکز تبادل کتاب',
   book: ' کتاب ',
   Dashboard: 'پنل مدیریت',
   edit: 'ویرایش',
@@ -301,6 +301,7 @@ export default {
   CARD: 'کارت به کارت',
   POZ: 'دستگاه کارت خوان',
   GIFT: 'هدیه',
+  transactionNumber: 'شماره تراکنش',
   // settings
   settings: 'تنظیمات',
   generalSettings: 'تنظیمات عمومی',

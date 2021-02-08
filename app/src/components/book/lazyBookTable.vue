@@ -264,6 +264,7 @@ export default {
       window.open(routeData.href, '_blank');
     },
     printBarCode(value) {
+      console.log('inja');
       const routeData = this.$router.resolve({
         path: `/print/barcode/${value.id}`,
       });

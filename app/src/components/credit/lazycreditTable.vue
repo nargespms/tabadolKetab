@@ -47,6 +47,9 @@
       <tbody v-if="tableData.length > 0">
         <tr v-for="item in tableData" :key="item.index">
           <td>
+            {{ item.number }}
+          </td>
+          <td>
             {{ new Date(item.createdAt).toLocaleDateString('fa') }}
           </td>
           <td>
@@ -63,7 +66,9 @@
             </span>
           </td>
           <td>
-            {{ item.paymentId }}
+            <span v-if="item.paymentId">
+              {{ item.paymentId }}
+            </span>
           </td>
           <td>
             {{ $t(item.paidWay) }}
