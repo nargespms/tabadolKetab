@@ -14,6 +14,9 @@ export const unreadMessagesCal = (state, response) => {
 export const loggedIn = (state, response) => {
   state.loggedIn = response;
 };
+export const clearBag = state => {
+  state.bag = [];
+};
 export const addToBag = (state, response) => {
   state.bag.push(response);
 };

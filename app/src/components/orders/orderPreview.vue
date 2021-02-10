@@ -11,6 +11,39 @@
           <v-spacer></v-spacer>
         </v-card-actions>
         <v-row>
+          <v-col cols="12" class="px-5 py-3">
+            <div class="d-flex justify-space-between flex-wrap">
+              <p>
+                <span class="font-weight-black"> {{ $t('fullname') }} : </span>
+                <span>
+                  {{ order.client.firstName }}
+                  {{ order.client.lastName }}
+                </span>
+              </p>
+              <p>
+                <span class="font-weight-black"> {{ $t('address') }} : </span>
+                <span>
+                  {{ order.address.address }}
+                </span>
+              </p>
+              <p>
+                <span class="font-weight-black">
+                  {{ $t('postalCode') }} :
+                </span>
+                <span>
+                  {{ order.address.zipCode }}
+                </span>
+              </p>
+              <p>
+                <span class="font-weight-black"> {{ $t('mobile') }} : </span>
+                <span class="numberDir">
+                  {{ order.client.mobile }}
+                </span>
+              </p>
+            </div>
+          </v-col>
+        </v-row>
+        <v-row>
           <v-col>
             <table
               class="generalTable"
@@ -26,28 +59,16 @@
                 <th>
                   {{ $t('createdAt') }}
                 </th>
-                <th>
-                  {{ $t('user') }}
-                </th>
-                <th>
-                  {{ $t('phone') }}
-                </th>
               </thead>
               <tbody>
                 <td>
                   {{ $t(order.type) }}
                 </td>
                 <td>
-                  {{ order.orderNumber }}
+                  {{ order.number }}
                 </td>
                 <td>
                   {{ new Date(order.createdAt).toLocaleDateString('fa') }}
-                </td>
-                <td>
-                  {{ order.user }}
-                </td>
-                <td>
-                  {{ order.phone }}
                 </td>
               </tbody>
             </table>
@@ -60,8 +81,19 @@
             :deletable="false"
           />
         </v-row>
-
-        <v-form v-model="valid" lazy-validation>
+        <payMethod
+          v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
+          :data="staffData"
+        />
+        <payMethod
+          v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
+          :data="clientData"
+        />
+        <v-form
+          v-model="valid"
+          lazy-validation
+          v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
+        >
           <v-row no-gutters>
             <v-col cols="12" md="4">
               <v-select
@@ -81,11 +113,6 @@
                     {{ $t(item) }}
                   </span>
                 </template>
-                <template v-slot:prepend>
-                  <span class="fn-25">
-                    🧑‍💻
-                  </span>
-                </template>
               </v-select>
             </v-col>
             <v-col cols="12" md="4">
@@ -95,13 +122,6 @@
                 :validate="true"
                 @setDate="setDate"
               />
-            </v-col>
-            <v-col cols="12" md="4" class="text-left">
-              <span class=" primary--text">
-                <span class="fn-25">
-                  🧑‍💻
-                </span>
-              </span>
             </v-col>
           </v-row>
           <div class="justify-center d-flex mt-4">
@@ -123,6 +143,13 @@
             </v-btn>
           </div>
         </v-form>
+        <v-form v-if="this.$store.state.bookShop.userInfo.role === 'CLIENT'">
+          <div class="justify-center d-flex mt-4">
+            <v-btn color="success" class="px-16 py-5" @click="pay">
+              {{ $t('payment') }}
+            </v-btn>
+          </div>
+        </v-form>
       </v-card>
     </v-col>
   </v-row>
@@ -130,6 +157,7 @@
 
 <script>
 import invoiceItems from '../invoices/invoiceItems.vue';
+import payMethod from '../shoppingBag/payMethod.vue';
 import datePickerCmp from '../structure/datePickerCmp.vue';
 
 export default {
@@ -137,6 +165,12 @@ export default {
   components: {
     invoiceItems,
     datePickerCmp,
+    payMethod,
+  },
+  props: {
+    id: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -151,13 +185,9 @@ export default {
         'RECEIVED',
         'TAKEN',
       ],
-      order: {
-        type: 'buy',
-        orderNumber: '223355',
-        user: 'علی تبادلیان',
-        phone: '02144556699 ',
-        createdAt: '2020-11-14T07:57:56.171Z',
-      },
+      order: {},
+      staffData: ['CASH', 'CARD', 'POZ', 'GIFT'],
+      clientData: ['CREDIT', 'ONLINE'],
     };
   },
   methods: {
@@ -172,29 +202,36 @@ export default {
     cancel() {
       console.log('updated');
     },
+    pay() {
+      this.$axios
+        .patch(
+          `/v1/api/tabaadol-e-ketaab/payment/invoice/${this.order.invoice.id}`
+        )
+        .then(res => {
+          console.log(res);
+          if (res.status === 200) {
+            this.$store.commit('bookShop/clearBag', {
+              module: 'bookShop',
+            });
+          }
+        })
+        .catch(e => {
+          if (e.response.status === 406) {
+            // the credit is in response message
+          }
+        });
+    },
   },
   mounted() {
-    this.orderItems = [
-      {
-        name: 'ملت عشق',
-        barcode: '121314156',
-        mainPrice: '22000000',
-        priceWithDiscount: '1100000',
-      },
-      {
-        name: ' جین ایر',
-        barcode: '45678900',
-        mainPrice: '7900000',
-        priceWithDiscount: '560000',
-      },
-      {
-        name: ' دیوانه ای بالای بام ',
-        barcode: '678900342',
-        mainPrice: '20000',
-        priceWithDiscount: '15000',
-      },
-    ];
-    this.isLoading = false;
+    this.$axios
+      .get(`/v1/api/tabaadol-e-ketaab/order/${this.$route.params.orderId}`)
+      .then(res => {
+        if (res.status === 200) {
+          this.order = res.data;
+          this.orderItems = res.data.invoice.books;
+          this.isLoading = false;
+        }
+      });
   },
 };
 </script>

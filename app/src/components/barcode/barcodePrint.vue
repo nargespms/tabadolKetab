@@ -1,14 +1,14 @@
 <template>
   <div class="d-flex flex-row-reverse mxW100">
-    <div class="d-flex flex-column dashBorder px-2">
-      <span class="text-center font-weight-medium">
+    <div class="d-flex flex-column dashBorder px-3">
+      <span class="text-center font-weight-medium fn14">
         {{ $t('changing') }}
       </span>
-      <svg id="barcode"></svg>
-      <span class="text-center" v-if="!isLoading">
+      <svg id="barcode" class="ma-auto"></svg>
+      <span class="text-center fn14" v-if="!isLoading">
         {{ $t('rial') }}{{ book.undergraduatePrice }} | {{ book.number }}</span
       >
-      <span class="text-center font-weight-bold fn12" v-if="!isLoading">
+      <span class="text-center font-weight-bold fn12 pb-1" v-if="!isLoading">
         {{ book.category.title }} |
         {{ new Date().toLocaleDateString('fa') }}</span
       >
@@ -27,9 +27,13 @@ export default {
   },
   methods: {
     getBarcode(data) {
+      console.log(data);
       this.$jsbarcode('#barcode', data.number, {
-        displayValue: false,
         height: 40,
+        margin: 0,
+        displayValue: false,
+        width: 0.9,
+        format: 'code39',
       });
       this.isLoading = false;
     },

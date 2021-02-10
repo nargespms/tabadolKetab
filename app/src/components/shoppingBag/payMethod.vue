@@ -10,10 +10,14 @@
           class="pr-6"
           :rules="requireRule"
         >
-          <v-radio :label="$t('CASH')" value="CASH" class="pr-6"></v-radio>
-          <v-radio :label="$t('CARD')" value="CARD" class="pr-6"></v-radio>
-          <v-radio :label="$t('POZ')" value="POZ" class="pr-6"></v-radio>
-          <v-radio :label="$t('GIFT')" value="GIFT" class="pr-6"></v-radio>
+          <template v-for="item in data">
+            <v-radio
+              :key="item.index"
+              :label="$t(item)"
+              :value="item"
+              class="pr-6"
+            ></v-radio>
+          </template>
         </v-radio-group>
       </div>
     </v-col>
@@ -23,6 +27,11 @@
 <script>
 export default {
   name: 'payMethod',
+  props: {
+    data: {
+      type: Array,
+    },
+  },
   data() {
     return {
       payMethod: '',

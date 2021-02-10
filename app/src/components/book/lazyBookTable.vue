@@ -99,6 +99,20 @@
                     medium
                     class="ma-2"
                     v-bind="attrs"
+                    @click="addToBag(item)"
+                    v-on="on"
+                  >
+                    fas fa-shopping-cart
+                  </v-icon>
+                </template>
+                {{ $t('buy') }}
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    medium
+                    class="ma-2"
+                    v-bind="attrs"
                     @click="preview(item)"
                     v-on="on"
                   >
@@ -225,6 +239,11 @@ export default {
     };
   },
   methods: {
+    addToBag(book) {
+      this.$store.commit('bookShop/addToBag', book, {
+        module: 'bookShop',
+      });
+    },
     addRequestedBook() {
       this.$router.push({
         name: 'addBook',

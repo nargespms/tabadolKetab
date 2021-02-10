@@ -8,7 +8,11 @@
       >
         <div>
           <v-app-bar-nav-icon
-            v-if="$route.name !== 'login' && $route.name !== 'signup'"
+            v-if="
+              $route.name !== 'login' &&
+                $route.name !== 'signup' &&
+                $route.name !== 'admin-login'
+            "
             class="white--text "
             @click="changeDrawer"
           ></v-app-bar-nav-icon>
@@ -16,8 +20,6 @@
           <span class="red--text text--darken-4"
             >{{ $t('changing') }} &nbsp;
           </span>
-
-          <span class="white--text">{{ $t('book') }} &nbsp; </span>
         </div>
         <!-- <div v-if="$route.name !== 'login' || $route.name !== 'signup'">
 
@@ -25,7 +27,11 @@
         <div
           class=" pl-6 enterPannel"
           @click="enterPannel"
-          v-if="$route.name === 'login' || $route.name === 'signup'"
+          v-if="
+            $route.name === 'login' ||
+              $route.name === 'signup' ||
+              $route.name === 'admin-login'
+          "
         >
           <v-icon color="white">mdi-account-key</v-icon>
           <span class="white--text">
@@ -95,6 +101,7 @@ export default {
     return {
       drawer: true,
       menuKey: 0,
+      emptyArray: [],
     };
   },
   methods: {
@@ -148,6 +155,9 @@ export default {
       this.$store.commit('bookShop/loggedIn', false, {
         module: 'bookShop',
       });
+      this.$store.commit('bookShop/clearBag', {
+        module: 'bookShop',
+      });
     }, 2000),
     getUnreadTickets() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/unreadTickets').then(res => {
@@ -189,7 +199,7 @@ export default {
   },
   computed: {
     bagLength() {
-      if (this.$store.state.bookShop.bag.length) {
+      if (this.$store.state.bookShop.bag) {
         return this.$store.state.bookShop.bag.length;
       }
       return false;

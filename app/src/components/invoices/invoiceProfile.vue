@@ -131,20 +131,25 @@ export default {
   components: {
     invoiceItems,
   },
+  props: {
+    id: {
+      type: String,
+    },
+  },
   data() {
     return {
       isLoading: true,
       invoiceItems: [],
       invoice: {
-        issueDate: '2020-11-24T20:30:00.000Z',
-        clientName: 'علی مشتری',
-        cashier: 'علی تبادلیان',
-        phone: '۰۹۱۲۶۷۸۹۳۴۵',
-        postalCode: '۱۴۷۵۲۳۶۸۶۳۴',
-        booksPriceWithoutDiscount: '125000 ریال',
-        remainedCredit: '20000 ریال',
-        booksPrice: '20000 ریال',
-        address: 'شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷',
+        // issueDate: '2020-11-24T20:30:00.000Z',
+        // clientName: 'علی مشتری',
+        // cashier: 'علی تبادلیان',
+        // phone: '۰۹۱۲۶۷۸۹۳۴۵',
+        // postalCode: '۱۴۷۵۲۳۶۸۶۳۴',
+        // booksPriceWithoutDiscount: '125000 ریال',
+        // remainedCredit: '20000 ریال',
+        // booksPrice: '20000 ریال',
+        // address: 'شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷',
       },
     };
   },
@@ -163,27 +168,15 @@ export default {
     },
   },
   mounted() {
-    this.invoiceItems = [
-      {
-        name: 'ملت عشق',
-        barcode: '121314156',
-        mainPrice: '22000000',
-        priceWithDiscount: '1100000',
-      },
-      {
-        name: ' جین ایر',
-        barcode: '45678900',
-        mainPrice: '7900000',
-        priceWithDiscount: '560000',
-      },
-      {
-        name: ' دیوانه ای بالای بام ',
-        barcode: '678900342',
-        mainPrice: '20000',
-        priceWithDiscount: '15000',
-      },
-    ];
-    this.isLoading = false;
+    this.$axios
+      .get(`/v1/api/tabaadol-e-ketaab/invoice/${this.id}`)
+      .then(res => {
+        if (res.status === 200) {
+          this.invoice = res.data;
+          this.invoiceItems = res.data.books;
+          this.isLoading = false;
+        }
+      });
   },
 };
 </script>

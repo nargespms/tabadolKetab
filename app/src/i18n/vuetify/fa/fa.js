@@ -284,6 +284,7 @@ export default {
   someThingWentWrong: 'متاسفانه مشکلی پیش آمده',
   // invoice
   radif: 'ردیف',
+  discount: 'تخفیف',
   bookPrice: 'قیمت کتاب',
   priceWithDiscount: 'قیمت با تخفیف',
   invoiceItems: 'آیتم های فاکتور',
@@ -301,6 +302,8 @@ export default {
   CARD: 'کارت به کارت',
   POZ: 'دستگاه کارت خوان',
   GIFT: 'هدیه',
+  CREDIT: 'اعتباری',
+  ONLINE: 'آنلاین',
   transactionNumber: 'شماره تراکنش',
   // settings
   settings: 'تنظیمات',
@@ -327,6 +330,7 @@ export default {
   priceRange: 'بازه قیمت ',
   searchResult: 'نتایج جستجو',
   buy: 'خرید',
+  BUY: 'خرید',
   // shpping basket
   shoppingBasket: 'سبد خرید',
   sendWay: 'نحوه ارسال',
@@ -338,6 +342,7 @@ export default {
   onlinePay: 'پرداخت آنلاین',
   presentPay: 'پرداخت در محل ',
   pay: 'پرداخت',
+  payment: 'پرداخت',
   // tags
   addANDlistTAGS: 'ایجاد و لیست برچسب ها',
   addTag: 'افزودن تگ',
@@ -463,4 +468,8 @@ export default {
   nextLevel: 'مرحله بعدی',
   saveOrder: 'ثبت سفارش',
   costInRial: 'مبلغ به ریال',
+  PRESENCE: 'حضوری',
+  TABADOL: 'تبادل',
+  TIPAX: 'تیپاکس',
+  selectYourAddress: 'آدرس مورد نظر را انتخاب نمایید',
 };

@@ -27,6 +27,9 @@
           {{ $t('mainPrice') }}
         </th>
         <th>
+          {{ $t('discount') }}
+        </th>
+        <th>
           {{ $t('priceWithDiscount') }}
         </th>
 
@@ -45,22 +48,26 @@
             {{ index + 1 }}
           </td>
           <td>
-            {{ item.barcode }}
+            {{ item.number }}
           </td>
           <td>
             {{ item.name }}
           </td>
           <td>
-            {{ item.mainPrice }}
+            {{ item.undergraduatePrice }}
           </td>
+
           <td>
-            <span v-if="item.priceWithDiscount">
-              {{ item.priceWithDiscount }}
+            <span v-if="item.discount > 0">
+              {{ item.discount }}
             </span>
             <span v-else>
               <v-icon color="red">mdi-close-circle-outline</v-icon>
               {{ $t('noDiscount') }}
             </span>
+          </td>
+          <td>
+            {{ item.soldPrice }}
           </td>
 
           <td v-if="deletable">

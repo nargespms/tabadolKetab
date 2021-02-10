@@ -1,6 +1,9 @@
 <template>
   <v-row no-gutters class="justify-center">
     <v-col cols="12" sm="6" md="8">
+      <v-overlay :value="isLoading">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
       <v-card>
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
@@ -122,6 +125,7 @@ export default {
       endpoint: '',
       method: '',
       clientId: '',
+      isLoading: false,
     };
   },
   methods: {
@@ -156,9 +160,14 @@ export default {
       }
 
       if (this.$refs.form.validate() && this.clientValidate) {
+        this.isLoading = true;
         this.$axios[this.method](this.endpoint, { ...this.credit }).then(
           res => {
             if (res.status === 200) {
+              if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
+                window.open(res.data.link, '_blank');
+                this.isLoading = false;
+              }
               this.saveSuccess = true;
               this.reset();
             }
