@@ -29,6 +29,7 @@
           <v-row>
             <v-col>
               <v-text-field
+                v-if="queryGet"
                 v-model="credit.credit"
                 :rules="requireRule"
                 :label="$t('cost')"
@@ -126,6 +127,7 @@ export default {
       method: '',
       clientId: '',
       isLoading: false,
+      queryGet: false,
     };
   },
   methods: {
@@ -189,6 +191,20 @@ export default {
     moneyFormat(value) {
       return new Intl.NumberFormat('es-ES').format(value);
     },
+  },
+  watch: {
+    credit(newVal) {
+      this.credit = newVal;
+    },
+  },
+  mounted() {
+    console.log(this.$route.query.credit);
+    if (this.$route.query.credit) {
+      this.credit.credit = this.$route.query.credit;
+      this.queryGet = true;
+    } else {
+      this.queryGet = true;
+    }
   },
 };
 </script>

@@ -180,7 +180,6 @@ export default {
               this.orderLoading = false;
               this.errorEnable = true;
               this.errorMsg = 'selectYourAddress';
-              console.log('sdd');
             }
           });
       } else {

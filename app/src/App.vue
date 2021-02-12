@@ -72,4 +72,8 @@ a {
   direction: ltr;
   float: left;
 }
+.v-snack__wrapper {
+  position: fixed !important;
+  left: 0 !important;
+}
 </style>

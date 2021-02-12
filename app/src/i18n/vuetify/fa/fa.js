@@ -305,6 +305,7 @@ export default {
   CREDIT: 'اعتباری',
   ONLINE: 'آنلاین',
   transactionNumber: 'شماره تراکنش',
+  notEnoughCredit: 'اعتبار حساب شما کافی نیست',
   // settings
   settings: 'تنظیمات',
   generalSettings: 'تنظیمات عمومی',

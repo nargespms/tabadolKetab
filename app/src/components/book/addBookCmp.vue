@@ -45,7 +45,7 @@
                 v-mask="'#############'"
                 :hint="
                   this.book.coverPrice
-                    ? `${$t('costInToman')}${moneyFormat(book.coverPrice)}`
+                    ? `${$t('costInRial')}${moneyFormat(book.coverPrice)}`
                     : ''
                 "
               ></v-text-field>
@@ -204,7 +204,7 @@
                 v-mask="'#############'"
                 :hint="
                   this.book.undergraduatePrice
-                    ? `${$t('costInToman')}${moneyFormat(
+                    ? `${$t('costInRial')}${moneyFormat(
                         book.undergraduatePrice
                       )}`
                     : ''
@@ -354,8 +354,8 @@
     <notifMessage
       v-if="saveSuccess"
       :msg="'operationSuccessfullyOcured'"
-      @hideNotif="hideNotif"
       :type="'success'"
+      @hideNotif="hideNotif"
     />
     <notifMessage
       v-if="errorEnable"

@@ -46,7 +46,7 @@
                 v-mask="'######'"
                 :hint="
                   this.settings.PostPrice
-                    ? `${$t('costInToman')}${moneyFormat(settings.PostPrice)}`
+                    ? `${$t('costInRial')}${moneyFormat(settings.PostPrice)}`
                     : ''
                 "
                 :persistentHint="settings.PostPrice"

@@ -24,7 +24,7 @@
         <v-form class="pt-6" ref="form" v-model="valid" lazy-validation>
           <v-container>
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0">
                 <v-text-field
                   v-model="register.firstName"
                   :rules="nameRules"
@@ -40,7 +40,7 @@
                   </template>
                 </v-text-field>
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <v-text-field
                   v-model="register.lastName"
                   :rules="nameRules"
@@ -58,10 +58,10 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0">
                 <nationalId @setNationalId="setNationalId" :isRequire="true" />
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <mobilePhone
                   @setMobilePhone="setMobilePhone"
                   :validate="true"
@@ -73,14 +73,14 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0">
                 <mobilePhone
                   :phone="true"
                   @setMobilePhone="setPhone"
                   :validate="true"
                 />
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <v-select
                   v-model="register.introductionType"
                   :items="introductionType"
@@ -104,11 +104,12 @@
             </v-row>
 
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0">
                 <email :isRequire="true" @setEmail="setEmail" />
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <v-select
+                  v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
                   v-model="role"
                   :items="roleType"
                   :label="$t('role')"
@@ -126,16 +127,11 @@
                       {{ $t(item) }}
                     </span>
                   </template>
-                  <template v-slot:prepend>
-                    <span class="fn-25">
-                      🧑‍💻
-                    </span>
-                  </template>
                 </v-select>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0">
                 <v-select
                   v-model="register.gender"
                   :items="gender"
@@ -163,7 +159,7 @@
                   </template>
                 </v-select>
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <rolesAutocomplete
                   @setRole="setRole"
                   :placeHolder="$t('staffAccess')"
@@ -173,41 +169,34 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0">
                 <v-textarea
                   outlined
                   required
                   name="input-7-4"
                   :label="$t('address')"
                   v-model="register.address"
+                  v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
                 >
-                  <template v-slot:prepend>
-                    <span class="fn-25">
-                      🧑‍💻
-                    </span>
-                  </template>
                 </v-textarea>
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <v-textarea
                   outlined
                   required
                   name="input-7-4"
                   :label="$t('description')"
                   v-model="register.description"
+                  v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
                 >
-                  <template v-slot:prepend>
-                    <span class="fn-25">
-                      🧑‍💻
-                    </span>
-                  </template></v-textarea
-                >
+                </v-textarea>
               </v-col>
             </v-row>
 
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0">
                 <v-text-field
+                  v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
                   v-model="register.postalCode"
                   :label="$t('postalCode')"
                   v-mask="'###########'"
@@ -220,14 +209,9 @@
                       *
                     </span>
                   </template>
-                  <template v-slot:prepend>
-                    <span class="fn-25">
-                      🧑‍💻
-                    </span>
-                  </template>
                 </v-text-field>
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <v-file-input
                   outlined
                   show-size

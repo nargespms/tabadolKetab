@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters class="justify-center">
     <v-col cols="12" sm="6" md="8">
-      <v-card class="pa-4">
+      <v-card class="pa-4" v-if="!isLoading">
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
             <span>
@@ -81,14 +81,20 @@
             :deletable="false"
           />
         </v-row>
-        <payMethod
-          v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
-          :data="staffData"
-        />
-        <payMethod
-          v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
-          :data="clientData"
-        />
+        <v-row>
+          <v-col cols="12" md="7">
+            <payMethod
+              v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
+              :data="staffData"/>
+            <payMethod
+              v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
+              :data="clientData"
+          /></v-col>
+          <v-col cols="12" md="5">
+            <discountCode @changeOrderTotal="changeOrderTotal" />
+          </v-col>
+        </v-row>
+
         <v-form
           v-model="valid"
           lazy-validation
@@ -152,6 +158,14 @@
         </v-form>
       </v-card>
     </v-col>
+    <v-dialog v-model="enableCreditWarn" max-width="500px">
+      <creditWarning
+        :title="'notEnoughCredit'"
+        :amount="creditAmount"
+        @accept="acceptIncrease"
+        @reject="closeWarn"
+      />
+    </v-dialog>
   </v-row>
 </template>
 
@@ -159,6 +173,8 @@
 import invoiceItems from '../invoices/invoiceItems.vue';
 import payMethod from '../shoppingBag/payMethod.vue';
 import datePickerCmp from '../structure/datePickerCmp.vue';
+import discountCode from '../discount/discountCode.vue';
+import creditWarning from '../credit/creditWarning.vue';
 
 export default {
   name: 'orderPreview',
@@ -166,6 +182,8 @@ export default {
     invoiceItems,
     datePickerCmp,
     payMethod,
+    discountCode,
+    creditWarning,
   },
   props: {
     id: {
@@ -188,9 +206,15 @@ export default {
       order: {},
       staffData: ['CASH', 'CARD', 'POZ', 'GIFT'],
       clientData: ['CREDIT', 'ONLINE'],
+      // credit warn
+      enableCreditWarn: false,
+      creditAmount: '',
     };
   },
   methods: {
+    changeOrderTotal(value) {
+      console.log(`Totla after copon ${value}`);
+    },
     setDate(value) {
       // this valu is persian date
       // it should convert to gregorian
@@ -217,9 +241,22 @@ export default {
         })
         .catch(e => {
           if (e.response.status === 406) {
+            this.enableCreditWarn = true;
+            console.log(e.response);
             // the credit is in response message
+            this.creditAmount = e.response.data.message;
+          } else if (e.response.status === 404) {
+            // should warn no book found
           }
         });
+    },
+    acceptIncrease() {
+      this.$router.push({
+        path: `/increaseCredit/?credit=${this.creditAmount}`,
+      });
+    },
+    closeWarn() {
+      this.enableCreditWarn = false;
     },
   },
   mounted() {

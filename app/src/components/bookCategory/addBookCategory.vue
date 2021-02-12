@@ -20,12 +20,7 @@
             </span>
           </v-tooltip>
         </v-card-actions>
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
-          @keyup.enter="validate"
-        >
+        <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
             v-model="bookCat.title"
             :counter="10"
@@ -34,7 +29,6 @@
             required
             outlined
             class="pt-4"
-            @keyup.enter="validate"
           >
             <template v-slot:prepend-inner>
               <span class="red--text">

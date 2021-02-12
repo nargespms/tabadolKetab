@@ -49,11 +49,7 @@
         </th>
       </thead>
       <tbody v-if="tableData.length > 0">
-        <tr
-          v-for="item in tableData"
-          :key="item.index"
-          :class="item.name === 'Ervin Howell' ? 'grey lighten-2' : ''"
-        >
+        <tr v-for="item in tableData" :key="item.index">
           <td>
             {{ item.name }}
           </td>
@@ -93,7 +89,10 @@
           </td>
           <td>
             <div class="d-flex">
-              <v-tooltip bottom>
+              <v-tooltip
+                bottom
+                v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
+              >
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
                     medium
@@ -190,6 +189,12 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </div>
 </template>
 
@@ -236,6 +241,9 @@ export default {
       ],
       filter: {},
       uploadMoreBut: 'uploadeMore',
+      // error
+      error: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -303,6 +311,13 @@ export default {
             this.successNotif = true;
             this.closeDelete();
           }
+        })
+        .catch(e => {
+          if (e.response.status === 403) {
+            this.error = true;
+            this.errorMsg = 'permissionDenied';
+            this.closeDelete();
+          }
         });
     },
     closeDelete() {
@@ -311,6 +326,9 @@ export default {
     },
     hideNotif() {
       this.successNotif = false;
+    },
+    hideError() {
+      this.error = false;
     },
     getMoreData() {
       this.loadingMore = true;
