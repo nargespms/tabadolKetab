@@ -4,42 +4,40 @@
       <span class="text-center"> {{ $t(title) }} &nbsp; </span>
     </v-card-title>
     <v-card-text class="text-center">
-      {{ $t(message) }}
+      <span>
+        مقدار اعتبار مورد نیاز برای تکمیل خرید :
+      </span>
+      {{ this.moneyFormat(amount) }} {{ $t('rial') }}
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="green darken-1" outlined @click="accepted">
-        {{ $t('accept') }}
+        {{ $t('increaseCredit') }}
       </v-btn>
-      <v-btn v-if="cancelBut" color="red darken-3" outlined @click="rejected"
-        >{{ $t('reject') }}
+      <v-btn color="red darken-3" outlined @click="rejected"
+        >{{ $t('onlinePay') }}
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import moneyFormat from '../../mixins/moneyFormat.js';
+
 export default {
-  name: 'promptDialog',
+  name: 'creditWarning',
   props: {
     title: {
       type: String,
     },
-    message: {
+    amount: {
       type: String,
     },
-    data: {
-      type: Object,
-    },
-    cancelBut: {
-      type: Boolean,
-      default: true,
-    },
   },
+  mixins: [moneyFormat],
   data() {
     return {
       dialog: true,
-      item: this.data,
     };
   },
   methods: {
@@ -48,11 +46,6 @@ export default {
     },
     rejected() {
       this.$emit('reject', this.item);
-    },
-  },
-  watch: {
-    data(newVal) {
-      this.item = newVal;
     },
   },
 };

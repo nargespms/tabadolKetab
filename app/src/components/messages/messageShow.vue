@@ -61,31 +61,36 @@
 export default {
   name: 'messageShow',
   props: {
-    item: {
-      type: Object,
+    id: {
+      type: String,
     },
   },
   data() {
     return {
       show: false,
-      message: {
-        reciever: {
-          firstname: 'علی',
-          lastname: 'علیان',
-          mobilePhone: '09121234567',
-        },
-        sender: {
-          firstname: 'مسئول کتاب',
-          lastname: 'امیری',
-        },
-        title: 'کتاب های تخفیف خورده را از دست ندهید',
-        text:
-          'این ماه کتاب های تخفیف خورده زیادی در دسته بندی های متفاوتی تخفیف خورده حتما از تخفیف ها استفاده کن و سرانه مطالعه را افزایش بده!',
-        type: 'publicMessage',
-        attachments: true,
-        sendDate: '2020-11-14T07:57:56.171Z',
-      },
+      message: {},
     };
+  },
+  watch: {
+    id(newVal) {
+      if (newVal) {
+        this.getMessageData();
+      }
+    },
+  },
+  methods: {
+    getMessageData() {
+      this.$axios
+        .get(`/v1/api/tabaadol-e-ketaab/message/${this.id}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.message = res.data;
+          }
+        });
+    },
+  },
+  mounted() {
+    this.getMessageData();
   },
 };
 </script>

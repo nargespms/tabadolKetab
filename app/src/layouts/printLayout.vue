@@ -31,6 +31,9 @@ a {
 .fn13 {
   font-size: 13px;
 }
+.fn14 {
+  font-size: 14px;
+}
 .fn12 {
   font-size: 12px;
 }

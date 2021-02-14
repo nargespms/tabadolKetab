@@ -279,7 +279,7 @@ export default {
           title: 'messages',
           active: false,
           condition: true,
-          badge: this.unreadMessages,
+          badge: this.unreadMessages !== '0' ? this.unreadMessages : '',
           badgeColor: 'red',
           items: [
             {
@@ -301,7 +301,7 @@ export default {
           action: 'mdi-ticket-account',
           title: 'tickets',
           active: false,
-          badge: this.unreadTickets,
+          badge: this.unreadTickets !== '0' ? this.unreadTickets : '',
           badgeColor: 'red',
           condition: true,
           items: [
@@ -360,7 +360,7 @@ export default {
           action: 'mdi-book-open-page-variant',
           title: 'requestedBooks',
           active: false,
-          badge: this.unreadBookRequest,
+          badge: this.unreadBookRequest !== '0' ? this.unreadBookRequest : '',
           badgeColor: 'green',
           condition: true,
           items: [
@@ -508,6 +508,7 @@ export default {
               title: 'addANDlistTAGS',
               link: '/tags',
               icon: 'fas fa-tag',
+              condition: true,
             },
           ],
         },

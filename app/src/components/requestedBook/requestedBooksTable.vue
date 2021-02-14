@@ -28,6 +28,7 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-icon
+                v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
                 color="white"
                 @click="addRequestedBook"
                 v-bind="attrs"
@@ -47,29 +48,37 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon
-                v-if="h.sortable"
-                :key="h.index"
-                color="grey"
-                @click="sort"
-              >
-                mdi-menu-down
-              </v-icon>
-              {{ $t(h.text) }}
-              <v-icon
-                v-if="h.filterable"
-                color="grey"
-                size="11"
-                class="pa-2"
-                @click="filter"
-                >fas fa-filter
-              </v-icon>
-              <span class="fn-25">
-                {{ h.icon }}
-              </span>
+              <tableHeaderCell
+                :data="h"
+                :items="h.text === 'status' ? statusItems : []"
+                @filterCol="filterCol"
+              />
             </th>
           </tr>
         </thead>
+      </template>
+
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+      </template>
+
+      <template v-slot:[`item.categoryId`]="{ item }">
+        <span v-if="item.category">
+          {{ item.category.title }}
+        </span>
+      </template>
+
+      <template v-slot:[`item.clientId`]="{ item }">
+        <span>
+          {{ item.client.firstName }}
+          {{ item.client.lastName }}
+        </span>
+      </template>
+
+      <template v-slot:[`item.mobile`]="{ item }">
+        <span class="numberDir">
+          {{ item.client.mobile }}
+        </span>
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
@@ -81,8 +90,12 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog v-model="enablePreview" content-class="sh-0">
-      <showRequestedBook :item="previewItem" />
+    <v-dialog
+      v-model="enablePreview"
+      content-class="sh-0"
+      @click:outside="closeDialog"
+    >
+      <showRequestedBook :id="previewItem.id" />
     </v-dialog>
     <v-dialog v-model="enableStatusChange" max-width="500px">
       <multipleChoiseDialog
@@ -110,6 +123,7 @@
 import showRequestedBook from './showRequestedBook.vue';
 import multipleChoiseDialog from '../structure/multipleChoiseDialog.vue';
 import notifMessage from '../structure/notifMessage.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 
 export default {
   name: 'requestedBooksTable',
@@ -117,6 +131,7 @@ export default {
     showRequestedBook,
     multipleChoiseDialog,
     notifMessage,
+    tableHeaderCell,
   },
   props: {
     headers: { type: Array },
@@ -151,6 +166,12 @@ export default {
           color: 'red',
         },
       ],
+      filter: {},
+      statusItems: [
+        { text: 'inprogress', value: 'inprogress' },
+        { text: 'available', value: 'available' },
+        { text: 'unavailable', value: 'unavailable' },
+      ],
     };
   },
   methods: {
@@ -178,14 +199,7 @@ export default {
     hideNotif() {
       this.successNotif = false;
     },
-    // sort funcs
-    sort() {
-      console.log('sorted');
-    },
-    // filter
-    filter() {
-      console.log('filtered');
-    },
+
     excelFile() {
       // getData as excel file with filtered included
     },
@@ -195,6 +209,26 @@ export default {
         name: 'printRequestedBooks',
       });
       window.open(routeData.href, '_blank');
+    },
+    closeDialog() {
+      this.previewItem = {};
+    },
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+        tableSearch: this.tableSearch,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
   },
   watch: {

@@ -1,8 +1,5 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <span class="fn-25">
-      👨‍💼
-    </span>
     <v-col cols="12" sm="6" md="8">
       <v-card class="pa-4">
         <v-card-actions class="teal">
@@ -98,7 +95,7 @@
           <v-row>
             <v-col class="pa-0 pt-0">
               <v-textarea
-                v-model="reqBook.desc"
+                v-model="reqBook.description"
                 :label="$t('description')"
                 name="input-7-4"
                 outlined
@@ -169,19 +166,19 @@ export default {
       });
     },
     getBookCat(value) {
-      this.reqBook.bookCats = value;
+      this.reqBook.categoryId = value;
     },
     getWriter(value) {
-      this.reqBook.writerId = value;
+      this.reqBook.writer = value;
     },
     getSearcher(value) {
-      this.reqBook.searcherId = value;
+      this.reqBook.searcher = value;
     },
     getTranslator(value) {
-      this.reqBook.translatorId = value;
+      this.reqBook.translator = value;
     },
     getAuthor(value) {
-      this.reqBook.authorId = value;
+      this.reqBook.author = value;
     },
     // validate form
     validate() {

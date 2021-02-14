@@ -49,11 +49,7 @@
         </th>
       </thead>
       <tbody v-if="tableData.length > 0">
-        <tr
-          v-for="item in tableData"
-          :key="item.index"
-          :class="item.name === 'Ervin Howell' ? 'grey lighten-2' : ''"
-        >
+        <tr v-for="item in tableData" :key="item.index">
           <td>
             {{ item.name }}
           </td>
@@ -70,7 +66,9 @@
           <td>
             {{ item.undergraduatePrice }}
           </td>
-          <td></td>
+          <td>
+            {{ item.afterDiscount }}
+          </td>
 
           <td>
             <span v-if="item.confirmDate.length > 0">
@@ -93,6 +91,23 @@
           </td>
           <td>
             <div class="d-flex">
+              <v-tooltip
+                bottom
+                v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    medium
+                    class="ma-2"
+                    v-bind="attrs"
+                    @click="addToBag(item)"
+                    v-on="on"
+                  >
+                    fas fa-shopping-cart
+                  </v-icon>
+                </template>
+                {{ $t('buy') }}
+              </v-tooltip>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
@@ -141,11 +156,11 @@
         </tr>
       </tbody>
       <tbody v-if="tableData.length === 0">
-        <div class=" pa-4 ma-auto ">
+        <td colspan="11" class=" pa-4 ma-auto ">
           <span class="text-center">
             {{ $t('noResultsText') }}
           </span>
-        </div>
+        </td>
       </tbody>
     </table>
     <div class="d-flex justify-center">
@@ -175,6 +190,12 @@
       :msg="'operationSuccessfullyOcured'"
       @hideNotif="hideNotif"
       :type="'success'"
+    />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
     />
   </div>
 </template>
@@ -222,12 +243,25 @@ export default {
       ],
       filter: {},
       uploadMoreBut: 'uploadeMore',
+      // error
+      error: false,
+      errorMsg: '',
     };
   },
   methods: {
+    addToBag(book) {
+      this.$store.commit('bookShop/addToBag', book, {
+        module: 'bookShop',
+      });
+    },
     addRequestedBook() {
       this.$router.push({
         name: 'addBook',
+      });
+    },
+    editRecord(item) {
+      this.$router.push({
+        path: `/bookList/${item.id}`,
       });
     },
 
@@ -259,6 +293,7 @@ export default {
       window.open(routeData.href, '_blank');
     },
     printBarCode(value) {
+      console.log('inja');
       const routeData = this.$router.resolve({
         path: `/print/barcode/${value.id}`,
       });
@@ -278,6 +313,13 @@ export default {
             this.successNotif = true;
             this.closeDelete();
           }
+        })
+        .catch(e => {
+          if (e.response.status === 403) {
+            this.error = true;
+            this.errorMsg = 'permissionDenied';
+            this.closeDelete();
+          }
         });
     },
     closeDelete() {
@@ -287,6 +329,9 @@ export default {
     hideNotif() {
       this.successNotif = false;
     },
+    hideError() {
+      this.error = false;
+    },
     getMoreData() {
       this.loadingMore = true;
       this.enableLoadingMore = true;
@@ -294,12 +339,14 @@ export default {
         .get('/v1/api/tabaadol-e-ketaab/books/list', {
           params: {
             offset: this.tableData.length,
+            limit: this.innerOptions.limit,
           },
         })
         .then(res => {
           if (res.status === 200) {
             if (res.data.result.docs.length > 0) {
-              this.tableData.push(...res.data);
+              this.tableData.push(...res.data.result.docs);
+              this.enableLoadingMore = false;
             } else {
               this.uploadMoreBut = 'endOfList';
               this.enableLoadingMore = true;
@@ -309,11 +356,7 @@ export default {
         });
     },
   },
-  computed: {
-    lastId() {
-      return this.tableData[this.tableData.length - 1].id;
-    },
-  },
+
   watch: {
     options: {
       handler(newVal) {

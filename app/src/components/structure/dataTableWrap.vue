@@ -71,6 +71,26 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <lazyMessagesTable
+      @reloadTable="getData"
+      @getData="getData"
+      v-if="this.module === 'messages'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
+    <lazycreditTable
+      @reloadTable="getData"
+      @getData="getData"
+      v-if="this.module === 'tranactions'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
 
     <postTable
       @reloadTable="getData"
@@ -167,6 +187,8 @@ import publishersTable from '../publisher/publishersTable.vue';
 import ordersTable from '../orders/ordersTable.vue';
 import accessLevelTable from '../accessLevel/accessLevelTable.vue';
 import notifMessage from './notifMessage.vue';
+import lazyMessagesTable from '../messages/lazyMessagesTable.vue';
+import lazycreditTable from '../credit/lazycreditTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -186,6 +208,8 @@ export default {
     ordersTable,
     accessLevelTable,
     notifMessage,
+    lazyMessagesTable,
+    lazycreditTable,
   },
   props: {
     headers: {
@@ -242,6 +266,7 @@ export default {
           }
         })
         .catch(e => {
+          console.log(e);
           if (e.response.status === 403) {
             this.errorEnable = true;
             this.errorMsg = 'permissionDenied';

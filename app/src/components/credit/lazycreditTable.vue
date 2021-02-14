@@ -24,163 +24,85 @@
         {{ $t('transactionsList') }}
       </span>
     </v-toolbar>
-    <v-progress-linear
-      v-if="isLoading"
-      color="primary"
-      indeterminate
-    ></v-progress-linear>
+
     <table
-      v-if="!isLoading"
       class="generalTable "
-      :class="$vuetify.breakpoint.lg ? '' : 'tableMobileScroll'"
+      :class="
+        $vuetify.breakpoint.xl
+          ? ''
+          : $vuetify.breakpoint.lg
+          ? ''
+          : 'tableMobileScroll'
+      "
     >
       <thead class="grey lighten-2">
-        <th>
-          {{ $t('id') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-          <span class="fn-25">
-            👨‍💼
-          </span>
+        <th class="text-center" v-for="h in headers" :key="h.index">
+          <tableHeaderCell
+            :data="h"
+            @filterCol="filterCol"
+            :items="h.text === 'paidWay' ? paidMethod : []"
+          />
         </th>
-        <th>
-          {{ $t('transactionDate') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-          <span class="fn-25">
-            👨‍💼
-          </span>
-        </th>
-        <th>
-          {{ $t('amount') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-          <span class="fn-25">
-            👨‍💼
-          </span>
-        </th>
-        <th>
-          {{ $t('trackingCode') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-          <span class="fn-25">
-            👨‍💼
-          </span>
-        </th>
-        <th>
-          {{ $t('payType') }}
-          <span class="fn-25">
-            👨‍💼
-          </span>
-        </th>
-        <th>
-          {{ $t('sender') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-          <span class="fn-25">
-            👨‍💼
-          </span>
-        </th>
-        <th>
-          {{ $t('description') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-          <span class="fn-25">
-            👨‍💼
-          </span>
-        </th>
-        <th>
-          {{ $t('user') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('expDateCredit') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-          <span class="fn-25">
-            👨‍💼
-          </span>
-        </th>
-        <th>{{ $t('operation') }}</th>
       </thead>
-      <tbody>
-        <tr
-          v-for="item in tableData"
-          :key="item.index"
-          :class="item.name === 'Ervin Howell' ? 'grey lighten-2' : ''"
-        >
+      <tbody v-if="tableData.length > 0">
+        <tr v-for="item in tableData" :key="item.index">
           <td>
-            {{ item.name }}
+            {{ item.number }}
           </td>
           <td>
-            {{ item.name }}
+            {{ new Date(item.createdAt).toLocaleDateString('fa') }}
           </td>
           <td>
-            {{ item.name }}
+            <span
+              :class="item.total > 0 ? 'success--text' : 'error--text'"
+              class="numberDir"
+            >
+              <span>
+                {{ item.total }}
+                <span class="float-left pr-2">
+                  {{ $t('rial') }}
+                </span>
+              </span>
+            </span>
           </td>
           <td>
-            {{ item.name }}
+            <span v-if="item.paymentId">
+              {{ item.paymentId }}
+            </span>
           </td>
           <td>
-            {{ item.name }}
+            {{ $t(item.paidWay) }}
           </td>
           <td>
-            {{ item.name }}
+            {{ item.description }}
           </td>
-          <td>
-            {{ item.name }}
-          </td>
-          <td>
-            {{ item.name }}
-          </td>
-          <td>
-            {{ item.name }}
-          </td>
-          <td>
-            <div class="d-flex">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    medium
-                    class="ma-2"
-                    v-bind="attrs"
-                    @click="preview(item)"
-                    v-on="on"
-                  >
-                    mdi-eye
-                  </v-icon>
-                </template>
-                {{ $t('preview') }}
-              </v-tooltip>
-            </div>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
+            <span v-if="item.client">
+              {{ item.client.firstName }}
+              {{ item.client.lastName }}
+            </span>
           </td>
         </tr>
+      </tbody>
+      <tbody v-if="tableData.length === 0">
+        <td colspan="6" class=" pa-4 ma-auto ">
+          <span class="text-center">
+            {{ $t('noResultsText') }}
+          </span>
+        </td>
       </tbody>
     </table>
     <div class="d-flex justify-center">
       <v-btn
         class="ma-2 d-flex"
         :loading="loadingMore"
-        :disabled="loadingMore"
+        :disabled="enableLoadingMore"
         color="teal white--text"
         @click="getMoreData"
       >
-        {{ $t('uploadeMore') }}
+        {{ $t(uploadMoreBut) }}
       </v-btn>
     </div>
-
-    <v-dialog v-model="enablePreview" content-class="sh-0">
-      <showCredit :item="previewItem" />
-    </v-dialog>
 
     <notifMessage
       v-if="successNotif"
@@ -193,24 +115,43 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import showCredit from './showCredit.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 
 export default {
   name: 'lazycreditTable',
   components: {
     notifMessage,
-    showCredit,
+    tableHeaderCell,
   },
-
+  props: {
+    headers: { type: Array },
+    tableData: { type: Array },
+    totalData: { type: Number },
+    loading: { type: Boolean },
+    options: {
+      type: Object,
+      default: () => ({
+        descending: false,
+        page: 1,
+        limit: 10,
+      }),
+    },
+  },
   data() {
     return {
+      innerOptions: this.options,
       isLoading: true,
       loadingMore: false,
-      tableData: [],
+      enableLoadingMore: false,
       successNotif: false,
-      // preview
-      enablePreview: false,
-      previewItem: {},
+      filter: {},
+      uploadMoreBut: 'uploadeMore',
+      paidMethod: [
+        { text: 'CASH', value: 'CASH' },
+        { text: 'CARD', value: 'CARD' },
+        { text: 'POZ', value: 'POZ' },
+        { text: 'GIFT', value: 'GIFT' },
+      ],
     };
   },
   methods: {
@@ -219,22 +160,24 @@ export default {
         name: 'increaseCredit',
       });
     },
-
     hideNotif() {
       this.successNotif = false;
     },
-    // methods for preview
-    preview(item) {
-      this.enablePreview = true;
-      this.previewItem = item;
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
     },
-    // sort funcs
-    sort() {
-      console.log('sorted');
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+      });
     },
-    // filter
-    filter() {
-      console.log('filtered');
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
     excelFile() {
       // getData as excel file with filtered included
@@ -246,34 +189,29 @@ export default {
       });
       window.open(routeData.href, '_blank');
     },
-    getData() {
-      this.$axios
-        .get('https://jsonplaceholder.typicode.com/users')
-        .then(res => {
-          console.log();
-          this.tableData = res.data;
-          this.isLoading = false;
-        });
-    },
+
     getMoreData() {
       this.loadingMore = true;
+      this.enableLoadingMore = true;
       this.$axios
-        .get('https://jsonplaceholder.typicode.com/users')
+        .get('/v1/api/tabaadol-e-ketaab/transactions/list', {
+          params: {
+            offset: this.tableData.length,
+            limit: this.innerOptions.limit,
+          },
+        })
         .then(res => {
-          console.log();
-          this.tableData.push(...res.data);
-          this.loadingMore = false;
+          if (res.status === 200) {
+            if (res.data.result.docs.length > 0) {
+              this.tableData.push(...res.data.result.docs);
+              this.enableLoadingMore = false;
+            } else {
+              this.uploadMoreBut = 'endOfList';
+              this.enableLoadingMore = true;
+            }
+            this.loadingMore = false;
+          }
         });
-    },
-  },
-  mounted() {
-    this.getData();
-  },
-  watch: {
-    enablePreview(newVal) {
-      if (newVal === false) {
-        this.previewItem = {};
-      }
     },
   },
 };
