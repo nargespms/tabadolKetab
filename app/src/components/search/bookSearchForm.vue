@@ -21,41 +21,48 @@
             <v-row>
               <v-col cols="12" md="3" class="pa-0">
                 <v-text-field
-                  v-model="search.bookName"
+                  v-model="search.name"
                   :label="$t('bookName')"
                   outlined
-                  error-count="1"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
-                <v-text-field
-                  v-model="search.writer"
-                  :label="$t('writer')"
-                  outlined
-                ></v-text-field>
+                <authorAutocomplete
+                  :isRequire="false"
+                  :isMultiple="false"
+                  :placeHolder="'writer'"
+                  @sendValue="getWriter"
+                  :height="32"
+                />
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
-                <v-text-field
-                  v-model="search.author"
-                  :label="$t('author')"
-                  outlined
-                ></v-text-field>
+                <authorAutocomplete
+                  :isRequire="false"
+                  :isMultiple="false"
+                  :placeHolder="'author'"
+                  @sendValue="getAuthor"
+                  :height="32"
+                />
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
-                <v-text-field
-                  v-model="search.translator"
-                  :label="$t('translator')"
-                  outlined
-                ></v-text-field>
+                <authorAutocomplete
+                  :isRequire="false"
+                  :isMultiple="false"
+                  :placeHolder="'translator'"
+                  @sendValue="getTranslator"
+                  :height="32"
+                />
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="3" class="pa-0">
-                <v-text-field
-                  v-model="search.searcher"
-                  :label="$t('searcher')"
-                  outlined
-                ></v-text-field>
+                <authorAutocomplete
+                  :isRequire="false"
+                  :isMultiple="false"
+                  :placeHolder="'searcher'"
+                  @sendValue="getSearcher"
+                  :height="32"
+                />
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
                 <v-text-field
@@ -73,19 +80,21 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
-                <v-text-field
-                  v-model="search.publisher"
-                  :label="$t('publisher')"
-                  outlined
-                ></v-text-field>
+                <publisherAutocomplete
+                  :isRequire="false"
+                  :placeHolder="'publisher'"
+                  @sendValue="getPublisher"
+                  :height="32"
+                  :isMultiple="false"
+                />
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="3" class="pa-0">
                 <bookCatAutocomplete
-                  :validate="true"
-                  :height="36"
+                  :isRequire="false"
                   @sendValue="getBookCat"
+                  :height="32"
                 />
               </v-col>
             </v-row>
@@ -108,11 +117,15 @@
 
 <script>
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
+import authorAutocomplete from '../author/authorAutocomplete.vue';
+import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
 
 export default {
   name: 'bookSearchForm',
   components: {
     bookCatAutocomplete,
+    authorAutocomplete,
+    publisherAutocomplete,
   },
   data() {
     return {
@@ -123,14 +136,14 @@ export default {
   },
   methods: {
     getBookCat(value) {
-      console.log(value);
+      this.search.categoryId = value;
     },
     searchBook() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        this.reset();
         this.show = false;
-        this.$emit('searchBook');
+        console.log(this.search);
+        this.$emit('searchBook', this.search);
       } else {
         this.valid = false;
       }
@@ -138,6 +151,21 @@ export default {
     // reset form
     reset() {
       this.$refs.form.reset();
+    },
+    getWriter(value) {
+      this.search.writerId = value;
+    },
+    getAuthor(value) {
+      this.search.authorId = value;
+    },
+    getTranslator(value) {
+      this.search.translatorId = value;
+    },
+    getSearcher(value) {
+      this.search.searcherId = value;
+    },
+    getPublisher(value) {
+      this.search.publisherId = value;
     },
   },
 };

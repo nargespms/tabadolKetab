@@ -67,7 +67,7 @@
             </span>
           </td>
           <td>
-            {{ item.soldPrice }}
+            {{ item.afterDiscount }}
           </td>
 
           <td v-if="deletable">

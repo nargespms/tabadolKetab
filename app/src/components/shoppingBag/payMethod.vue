@@ -1,6 +1,6 @@
 <template>
   <v-row class="justify-center">
-    <v-col cols="12" lg="10">
+    <v-col cols="12">
       <div class="pa-3 d-flex align-center ">
         <span class="font-weight-black"> {{ $t('payMethod') }} : </span>
         <v-radio-group
@@ -31,6 +31,9 @@ export default {
     data: {
       type: Array,
     },
+    initValue: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -42,6 +45,11 @@ export default {
     setMethod() {
       this.$emit('setMethod', this.payMethod);
     },
+  },
+  mounted() {
+    if (this.initValue) {
+      this.payMethod = this.initValue;
+    }
   },
 };
 </script>

@@ -4,9 +4,14 @@
     <bookFilterSearch @filterSearch="filterSearch" class="mt-6" />
     <booksSearchResults
       v-if="searchResult.length > 0"
-      :data="searchResult"
       class="mt-6"
+      :data="searchResult"
+      :enableLoadingMore="enableLoadingMore"
+      :loadingMore="loadingMore"
+      :uploadMoreBut="uploadMoreBut"
+      @getMoreData="getMoreData"
     />
+
     <v-row no-gutters class="justify-center mt-6">
       <v-col cols="12" md="11">
         <v-card v-if="searchResult.length === 0">
@@ -42,6 +47,10 @@ export default {
   data() {
     return {
       searchResult: [],
+      uploadMoreBut: 'uploadeMore',
+      loadingMore: false,
+      enableLoadingMore: false,
+      filter: {},
     };
   },
   methods: {
@@ -50,107 +59,54 @@ export default {
         name: 'addRequestedBooks',
       });
     },
-    searchBook() {
-      this.searchResult = [
-        {
-          id: 1,
-          name: 'راز داوینچی',
-          mainPrice: '۶۵۰۰۰',
-          priceWithDiscount: '۶۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=19',
-          barcode: '45678900',
-        },
-        {
-          id: 2,
-          name: ' جین ایر',
-          mainPrice: '۴۰۰۰۰',
-          priceWithDiscount: '۳۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=20',
-          barcode: '45678900',
-        },
-        {
-          id: 3,
-          name: 'زنان کوچک ',
-          mainPrice: '۵۰۰۰۰',
-          priceWithDiscount: '۴۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=21',
-          barcode: '45678900',
-        },
-        {
-          id: 4,
-          name: 'ملت عشق ',
-          mainPrice: '۶۵۰۰۰',
-          priceWithDiscount: '۶۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=22',
-        },
-        {
-          id: 5,
-          name: 'کیمیاگر ',
-          mainPrice: '۶۵۰۰۰',
-          priceWithDiscount: '۶۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=15',
-          barcode: '45678900',
-        },
-        {
-          id: 6,
-          name: 'عقل و احساس',
-          mainPrice: '۴۰۰۰۰',
-          priceWithDiscount: '۳۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=16',
-          barcode: '45678900',
-        },
-      ];
+    searchBook(value) {
+      this.filter = value;
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/books', {
+          params: { ...value },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.searchResult = res.data.result.docs;
+          }
+        });
     },
-    filterSearch() {
-      this.searchResult = [
-        {
-          id: 5,
-          name: 'کیمیاگر ',
-          mainPrice: '۶۵۰۰۰',
-          priceWithDiscount: '۶۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=15',
-          barcode: '45678900',
-        },
-        {
-          id: 6,
-          name: 'عقل و احساس',
-          mainPrice: '۴۰۰۰۰',
-          priceWithDiscount: '۳۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=16',
-          barcode: '45678900',
-        },
-        {
-          id: 7,
-          name: '۱۹۸۴',
-          mainPrice: '۵۰۰۰۰',
-          priceWithDiscount: '۴۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=17',
-          barcode: '45678900',
-        },
-        {
-          id: 8,
-          name: 'مردی به نام اوه  ',
-          mainPrice: '۶۵۰۰۰',
-          image: 'https://picsum.photos/500/300?image=18',
-          barcode: '45678900',
-        },
-        {
-          id: 3,
-          name: 'زنان کوچک ',
-          mainPrice: '۵۰۰۰۰',
-          priceWithDiscount: '۴۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=21',
-          barcode: '45678900',
-        },
-        {
-          id: 4,
-          name: 'ملت عشق ',
-          mainPrice: '۶۵۰۰۰',
-          priceWithDiscount: '۶۰۰۰۰',
-          image: 'https://picsum.photos/500/300?image=22',
-          barcode: '45678900',
-        },
-      ];
+    filterSearch(value) {
+      this.filter = value;
+
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/books', {
+          params: { ...value },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.searchResult = res.data.result.docs;
+          }
+        });
+    },
+    getMoreData() {
+      this.loadingMore = true;
+      this.enableLoadingMore = true;
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/books', {
+          params: {
+            ...this.filter,
+            offset: this.searchResult.length,
+            limit: 9,
+          },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            if (res.data.result.docs > 0) {
+              this.searchResult.push(res.data.result.docs);
+              this.enableLoadingMore = false;
+            } else {
+              this.uploadMoreBut = 'endOfList';
+              this.enableLoadingMore = true;
+            }
+            this.loadingMore = false;
+          }
+        });
     },
   },
 };

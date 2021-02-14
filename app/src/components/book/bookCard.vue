@@ -31,16 +31,15 @@
     <div class="d-flex flex-column align-center">
       <p class="py-2 font-weight-medium">{{ book.name }}</p>
       <p
+        v-if="book.discount > 0"
         :class="
-          book.priceWithDiscount
-            ? 'text-decoration-line-through  grey--text'
-            : ''
+          book.afterDiscount ? 'text-decoration-line-through  grey--text' : ''
         "
       >
-        {{ book.mainPrice }} {{ $t('rial') }}
+        {{ book.afterDiscount }} {{ $t('rial') }}
       </p>
-      <p v-if="book.priceWithDiscount" class=" primary--text">
-        {{ book.priceWithDiscount }} {{ $t('rial') }}
+      <p v-if="book.undergraduatePrice" class=" primary--text">
+        {{ book.undergraduatePrice }} {{ $t('rial') }}
       </p>
       <v-btn
         color="blue lighten-1"
@@ -68,11 +67,19 @@ export default {
       type: Object,
     },
   },
+
   methods: {
     addToBag(book) {
-      this.$store.commit('bookShop/addToBag', book, {
-        module: 'bookShop',
-      });
+      if (this.$store.state.bookShop.userInfo === null) {
+        console.log('inji');
+        this.$emit('loginProblem');
+      } else if (this.$store.state.bookShop.userInfo.role !== 'CLIENT') {
+        this.$emit('staffBuy');
+      } else if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
+        this.$store.commit('bookShop/addToBag', book, {
+          module: 'bookShop',
+        });
+      }
     },
   },
 };

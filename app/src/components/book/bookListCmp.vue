@@ -71,8 +71,8 @@ export default {
           divider: true,
         },
         {
-          text: 'soldPrice',
-          value: 'soldPrice',
+          text: 'afterDiscount',
+          value: 'afterDiscount',
           align: 'center',
           filterable: true,
           filterType: 'text',
@@ -161,8 +161,8 @@ export default {
           divider: true,
         },
         {
-          text: 'soldPrice',
-          value: 'soldPrice',
+          text: 'afterDiscount',
+          value: 'afterDiscount',
           align: 'center',
           filterable: true,
           filterType: 'text',

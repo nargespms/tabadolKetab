@@ -332,6 +332,9 @@ export default {
   searchResult: 'نتایج جستجو',
   buy: 'خرید',
   BUY: 'خرید',
+  staffCantBuyBooks: 'کارمندان امکان خرید کتاب را ندارند',
+  youShouldregisterOrloginFirst: 'برای خرید لازم است وارد حساب کاربری خود شوید',
+  registerOrLogin: 'عضویت / ورود',
   // shpping basket
   shoppingBasket: 'سبد خرید',
   sendWay: 'نحوه ارسال',
@@ -473,4 +476,9 @@ export default {
   TABADOL: 'تبادل',
   TIPAX: 'تیپاکس',
   selectYourAddress: 'آدرس مورد نظر را انتخاب نمایید',
+  afterDiscount: 'قیمت بعد از تخفیف',
+  RESERVED: 'رزرو شده',
+  PRESENSE: 'حضوری',
+  orderSubmit: 'تاییدیه سفارش',
+  orderHasBeenSubmitted: 'سفارش مورد نظر با موفقیت ثبت شد',
 };

@@ -85,10 +85,14 @@
           <v-col cols="12" md="7">
             <payMethod
               v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
-              :data="staffData"/>
+              :data="staffData"
+              @setMethod="setMethod"/>
+
             <payMethod
               v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
               :data="clientData"
+              @setMethod="setMethod"
+              :initValue="paidWay"
           /></v-col>
           <v-col cols="12" md="5">
             <discountCode @changeOrderTotal="changeOrderTotal" />
@@ -166,6 +170,14 @@
         @reject="closeWarn"
       />
     </v-dialog>
+    <v-dialog v-model="submitPay" max-width="500px" persistent>
+      <promptDialog
+        :title="'orderSubmit'"
+        :message="'orderHasBeenSubmitted'"
+        @accept="accept"
+        :cancelBut="false"
+      />
+    </v-dialog>
   </v-row>
 </template>
 
@@ -173,6 +185,7 @@
 import invoiceItems from '../invoices/invoiceItems.vue';
 import payMethod from '../shoppingBag/payMethod.vue';
 import datePickerCmp from '../structure/datePickerCmp.vue';
+import promptDialog from '../structure/promptDialog.vue';
 import discountCode from '../discount/discountCode.vue';
 import creditWarning from '../credit/creditWarning.vue';
 
@@ -184,6 +197,7 @@ export default {
     payMethod,
     discountCode,
     creditWarning,
+    promptDialog,
   },
   props: {
     id: {
@@ -204,11 +218,13 @@ export default {
         'TAKEN',
       ],
       order: {},
-      staffData: ['CASH', 'CARD', 'POZ', 'GIFT'],
-      clientData: ['CREDIT', 'ONLINE'],
+      staffData: ['CREDIT'],
+      clientData: ['CREDIT', 'ONLINE', 'PRESENSE'],
       // credit warn
       enableCreditWarn: false,
       creditAmount: '',
+      paidWay: 'CREDIT',
+      submitPay: false,
     };
   },
   methods: {
@@ -226,29 +242,59 @@ export default {
     cancel() {
       console.log('updated');
     },
+    setMethod(value) {
+      this.paidWay = value;
+    },
     pay() {
-      this.$axios
-        .patch(
-          `/v1/api/tabaadol-e-ketaab/payment/invoice/${this.order.invoice.id}`
-        )
-        .then(res => {
-          console.log(res);
-          if (res.status === 200) {
-            this.$store.commit('bookShop/clearBag', {
-              module: 'bookShop',
-            });
-          }
-        })
-        .catch(e => {
-          if (e.response.status === 406) {
-            this.enableCreditWarn = true;
-            console.log(e.response);
-            // the credit is in response message
-            this.creditAmount = e.response.data.message;
-          } else if (e.response.status === 404) {
-            // should warn no book found
-          }
-        });
+      if (this.paidWay === 'ONLINE') {
+        this.$axios
+          .post('/v1/api/tabaadol-e-ketaab/credit', {
+            orderId: this.order.id,
+            paidWay: this.paidWay,
+          })
+          .then(res => {
+            if (res.status === 200) {
+              console.log(res);
+              window.open(res.data.link, '_blank');
+              this.$store.commit('bookShop/clearBag', {
+                module: 'bookShop',
+              });
+            }
+          });
+      } else if (this.paidWay === 'CREDIT') {
+        this.$axios
+          .patch(
+            `/v1/api/tabaadol-e-ketaab/payment/invoice/${this.order.invoice.id}`
+          )
+          .then(res => {
+            console.log(res);
+            if (res.status === 200) {
+              this.$store.commit('bookShop/clearBag', {
+                module: 'bookShop',
+              });
+            }
+          })
+          .catch(e => {
+            if (e.response.status === 406) {
+              this.enableCreditWarn = true;
+              console.log(e.response);
+              // the credit is in response message
+              this.creditAmount = e.response.data.message;
+            } else if (e.response.status === 404) {
+              // should warn no book found
+            }
+          });
+      } else if (this.paidWay === 'PRESENSE') {
+        this.$axios
+          .patch(`/v1/api/tabaadol-e-ketaab/order/${this.order.id}`, {
+            status: 'SUBMITTED',
+          })
+          .then(res => {
+            if (res.status === 200) {
+              this.submitPay = true;
+            }
+          });
+      }
     },
     acceptIncrease() {
       this.$router.push({
@@ -257,6 +303,17 @@ export default {
     },
     closeWarn() {
       this.enableCreditWarn = false;
+    },
+    accept() {
+      this.$router.push({
+        name: 'ordersList',
+      });
+      this.$store.commit('bookShop/clearBag', {
+        module: 'bookShop',
+      });
+    },
+    close() {
+      this.submitPay = false;
     },
   },
   mounted() {

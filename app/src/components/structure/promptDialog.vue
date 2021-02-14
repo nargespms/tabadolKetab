@@ -11,7 +11,7 @@
       <v-btn color="green darken-1" outlined @click="accepted">
         {{ $t('accept') }}
       </v-btn>
-      <v-btn color="red darken-3" outlined @click="rejected"
+      <v-btn v-if="cancelBut" color="red darken-3" outlined @click="rejected"
         >{{ $t('reject') }}
       </v-btn>
     </v-card-actions>
@@ -30,6 +30,10 @@ export default {
     },
     data: {
       type: Object,
+    },
+    cancelBut: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {

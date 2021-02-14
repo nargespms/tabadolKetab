@@ -66,7 +66,9 @@
           <td>
             {{ item.undergraduatePrice }}
           </td>
-          <td></td>
+          <td>
+            {{ item.afterDiscount }}
+          </td>
 
           <td>
             <span v-if="item.confirmDate.length > 0">

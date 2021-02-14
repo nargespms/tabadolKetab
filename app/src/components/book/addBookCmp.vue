@@ -181,7 +181,7 @@
             <v-col cols="12" md="6" class="pa-0">
               <clientsAutoComplete
                 v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
-                :placeHolder="'clients'"
+                :placeHolder="'client'"
                 @setUser="setClient"
                 :height="32"
                 :isRequired="true"

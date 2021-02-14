@@ -19,7 +19,7 @@
             lazy-validation
           >
             <v-row class="mt-6">
-              <v-col cols="12" md="4" class="pa-0 d-flex">
+              <v-col cols="12" md="4" class="pa-0 d-flex align-self-end">
                 <span class="pl-6">
                   {{ $t('priceRange') }}
                 </span>
@@ -27,23 +27,18 @@
                   max="100"
                   min="5"
                   v-model="range"
+                  @change="priceRange"
                   thumb-label="always"
                   persistent-hint
                   :hint="$t('numberAreInToman')"
                 ></v-range-slider>
               </v-col>
 
-              <v-col cols="12" md="4" class="pa-0 pr-md-4 pr-0">
-                <bookCatAutocomplete
-                  :validate="true"
-                  :height="36"
-                  @sendValue="getBookCat"
-                />
-              </v-col>
               <v-col cols="12" md="4" class="pa-0 pr-md-2 pr-0 d-flex">
                 <v-checkbox
                   class="pr-4"
-                  v-model="filter.existed"
+                  v-model="filter.status"
+                  @change="bookStatus"
                   :label="$t('existedBooks')"
                 ></v-checkbox
                 ><v-checkbox
@@ -72,13 +67,8 @@
 </template>
 
 <script>
-import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
-
 export default {
   name: 'bookFilterSearch',
-  components: {
-    bookCatAutocomplete,
-  },
   data() {
     return {
       valid: true,
@@ -94,7 +84,7 @@ export default {
     filterBook() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        this.$emit('filterSearch');
+        this.$emit('filterSearch', this.filter);
         this.show = false;
       } else {
         this.valid = false;
@@ -103,6 +93,17 @@ export default {
     // reset form
     reset() {
       this.$refs.form.reset();
+    },
+    bookStatus() {
+      if (this.filter.status) {
+        this.filter.status = 'CONFIRMED';
+      } else {
+        delete this.filter.status;
+      }
+      console.log(this.filter.status);
+    },
+    priceRange() {
+      this.filter.range = this.range;
     },
   },
 };
