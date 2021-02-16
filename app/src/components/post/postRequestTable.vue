@@ -1,9 +1,6 @@
 <template>
   <div>
     <v-row class="px-2 justify-end">
-      <span class="fn-25">
-        👨‍💼
-      </span>
       <v-col cols="12" md="4" align="center" class="pa-0">
         <div class="d-flex flex-row-reverse  pa-2">
           <v-btn
@@ -26,40 +23,23 @@
         {{ $t('bookSendReq') }}
       </span>
     </v-toolbar>
-    <v-progress-linear
-      v-if="isLoading"
-      color="primary"
-      indeterminate
-    ></v-progress-linear>
+
     <table
-      v-if="!isLoading"
       class="generalTable "
-      :class="$vuetify.breakpoint.xs ? 'tableMobileScroll' : ''"
+      :class="
+        $vuetify.breakpoint.xl
+          ? ''
+          : $vuetify.breakpoint.lg
+          ? ''
+          : 'tableMobileScroll'
+      "
     >
       <thead class="grey lighten-2">
-        <th>
-          {{ $t('select') }}
-        </th>
-        <th>
-          {{ $t('title') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('reqisterDate') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('category') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
+        <th class="text-center" v-for="h in headers" :key="h.index">
+          <tableHeaderCell :data="h" @filterCol="filterCol" />
         </th>
       </thead>
-      <tbody>
+      <tbody v-if="tableData.length > 0">
         <tr v-for="item in tableData" :key="item.index">
           <td class="d-flex justify-center">
             <v-checkbox :value="item" v-model="request"></v-checkbox>
@@ -68,23 +48,30 @@
             {{ item.name }}
           </td>
           <td>
-            {{ item.name }}
+            {{ new Date(item.createdAt).toLocaleDateString('fa') }}
           </td>
           <td>
-            {{ item.name }}
+            {{ item.category.title }}
           </td>
         </tr>
+      </tbody>
+      <tbody v-if="tableData.length === 0">
+        <td colspan="11" class=" pa-4 ma-auto ">
+          <span class="text-center">
+            {{ $t('noResultsText') }}
+          </span>
+        </td>
       </tbody>
     </table>
     <div class="d-flex justify-center">
       <v-btn
         class="ma-2 d-flex"
         :loading="loadingMore"
-        :disabled="loadingMore"
+        :disabled="enableLoadingMore"
         color="teal white--text"
         @click="getMoreData"
       >
-        {{ $t('uploadeMore') }}
+        {{ $t(uploadMoreBut) }}
       </v-btn>
       <v-btn
         color="green"
@@ -95,7 +82,11 @@
       >
     </div>
     <v-dialog v-model="addressModalEnable" max-width="500px">
-      <addressCmp @hideAddressList="hideAddressList" state="list" />
+      <addressCmp
+        @hideAddressList="hideAddressList"
+        @setAddress="setAddress"
+        state="list"
+      />
     </v-dialog>
     <notifMessage
       v-if="successNotif"
@@ -108,6 +99,7 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 import addressCmp from '../userControls/addressCmp.vue';
 
 export default {
@@ -115,49 +107,92 @@ export default {
   components: {
     addressCmp,
     notifMessage,
+    tableHeaderCell,
+  },
+  props: {
+    headers: { type: Array },
+    tableData: { type: Array },
+    totalData: { type: Number },
+    loading: { type: Boolean },
+    options: {
+      type: Object,
+      default: () => ({
+        descending: false,
+        page: 1,
+        limit: 10,
+      }),
+    },
   },
   data() {
     return {
+      innerOptions: this.options,
+      loadingMore: false,
+      enableLoadingMore: false,
       request: [],
       successNotif: false,
-      isLoading: true,
-      loadingMore: false,
-      tableData: [],
       addressModalEnable: false,
+      filter: {},
+      uploadMoreBut: 'uploadeMore',
+      // error
+      error: false,
+      errorMsg: '',
+      booksId: [],
+      order: {},
     };
   },
   methods: {
+    setAddress(value) {
+      this.order.addressId = value.id;
+      this.order.booksId = this.request.map(book => {
+        return book.id;
+      });
+      this.$axios
+        .post('/v1/api/tabaadol-e-ketaab/order', {
+          ...this.order,
+          type: 'SELL',
+          delivery: 'TABADOL',
+        })
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res);
+            this.successNotif = true;
+            this.request = [];
+            this.$router.push({
+              name: 'ordersList',
+            });
+          }
+        });
+    },
     postRequest(item) {
-      this.request.push(item);
+      this.booksId.push(item.id);
     },
     hideNotif() {
       this.successNotif = false;
     },
-    // sort funcs
-    sort() {
-      console.log('sorted');
-    },
-    // filter
-    filter() {
-      console.log('filtered');
-    },
-    getData() {
-      this.$axios
-        .get('https://jsonplaceholder.typicode.com/users')
-        .then(res => {
-          console.log();
-          this.tableData = res.data;
-          this.isLoading = false;
-        });
-    },
     getMoreData() {
       this.loadingMore = true;
+      this.enableLoadingMore = true;
       this.$axios
-        .get('https://jsonplaceholder.typicode.com/users')
+        .get(
+          '/v1/api/tabaadol-e-ketaab/books/list?filter[status]=CLIENTREGISTER',
+          {
+            params: {
+              offset: this.tableData.length,
+              limit: this.innerOptions.limit,
+            },
+          }
+        )
         .then(res => {
-          console.log();
-          this.tableData.push(...res.data);
-          this.loadingMore = false;
+          if (res.status === 200) {
+            if (res.data.result.docs.length > 0) {
+              this.tableData.push(...res.data.result.docs);
+              this.enableLoadingMore = false;
+            } else {
+              this.uploadMoreBut = 'endOfList';
+              this.enableLoadingMore = true;
+            }
+            this.loadingMore = false;
+          }
         });
     },
     addressModal() {
@@ -165,13 +200,31 @@ export default {
     },
     hideAddressList() {
       this.addressModalEnable = false;
-      this.successNotif = true;
-      this.request = [];
+      this.postRequest();
+    },
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
   },
-
-  mounted() {
-    this.getData();
+  watch: {
+    options: {
+      handler(newVal) {
+        this.innerOptions = newVal;
+      },
+    },
   },
 };
 </script>

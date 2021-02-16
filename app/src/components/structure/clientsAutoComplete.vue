@@ -84,6 +84,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    editDataId: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -106,6 +109,30 @@ export default {
       this.model = '';
       this.$emit('setUser', this.model);
     },
+    getClient() {
+      const edittingClient = this.items.find(item => {
+        return item.id === this.editDataId;
+      });
+      console.log(edittingClient);
+      console.log('3');
+      this.model = edittingClient;
+    },
+    getData() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/clients').then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.items = res.data.clients.map(item => ({
+            id: item.id,
+            fullName: `${item.firstName} ${item.lastName}`,
+          }));
+          this.isLoading = false;
+          if (this.editDataId.length > 0) {
+            console.log('2');
+            this.getClient();
+          }
+        }
+      });
+    },
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
@@ -122,11 +149,18 @@ export default {
             fullName: `${item.firstName} ${item.lastName}`,
           }));
           this.isLoading = false;
+          if (this.editDataId.length > 0) {
+            this.getClient();
+          }
         }
       });
     },
+
     isRequired(newVal) {
       this.localRequire = newVal;
+    },
+    editDataId() {
+      this.getData();
     },
   },
 };

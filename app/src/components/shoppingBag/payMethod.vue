@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      payMethod: '',
+      payMethod: 'POZ',
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
     };
   },

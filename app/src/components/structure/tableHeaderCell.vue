@@ -139,7 +139,11 @@ export default {
     setStaff(value) {
       if (value.length > 0) {
         this.filter[this.data.value] = value;
-        this.emitFilter('createdById');
+        if (this.data.filterName) {
+          this.emitFilter(this.data.filterName);
+        } else {
+          this.emitFilter('createdById');
+        }
       } else {
         delete this.filter[this.data.value];
         this.emitFilter(this.data.value);

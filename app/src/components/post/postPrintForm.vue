@@ -80,18 +80,18 @@
             <div class=" d-flex align-center ">
               <span class="font-weight-black"> {{ $t('recycle') }} : </span>
               <v-radio
-                :label="$t('recieveBook')"
-                value="recieveBook"
+                :label="$t('RECEIVEBOOK')"
+                value="RECEIVEBOOK"
                 class="pr-12"
               ></v-radio>
               <v-radio
-                :label="$t('noProblem')"
-                value="noProblem"
+                :label="$t('NOPROBLEM')"
+                value="NOPROBLEM"
                 class="pr-12"
               ></v-radio>
               <v-radio
-                :label="$t('noProblemWithKnowing')"
-                value="noProblemWithKnowing"
+                :label="$t('NOPROBLEMIFASKED')"
+                value="NOPROBLEMIFASKED"
                 class="pr-12"
               ></v-radio>
             </div>

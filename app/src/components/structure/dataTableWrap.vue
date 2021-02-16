@@ -162,6 +162,17 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <postRequestTable
+      @reloadTable="getData"
+      @getData="getData"
+      v-if="this.module === 'postBooks'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
+
     <notifMessage
       v-if="errorEnable"
       :msg="errorMsg"
@@ -172,6 +183,7 @@
 </template>
 
 <script>
+import postRequestTable from '../post/postRequestTable.vue';
 import staffTable from '../users/staffTable.vue';
 import clientsTable from '../users/clientsTable.vue';
 import bookCategoryTable from '../bookCategory/bookCategoryTable.vue';
@@ -210,6 +222,7 @@ export default {
     notifMessage,
     lazyMessagesTable,
     lazycreditTable,
+    postRequestTable,
   },
   props: {
     headers: {

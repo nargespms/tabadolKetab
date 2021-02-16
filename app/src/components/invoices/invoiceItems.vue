@@ -67,7 +67,12 @@
             </span>
           </td>
           <td>
-            {{ item.afterDiscount }}
+            <span v-if="item.afterDiscount">
+              {{ item.afterDiscount }}
+            </span>
+            <span v-else>
+              {{ item.finalTotal }}
+            </span>
           </td>
 
           <td v-if="deletable">

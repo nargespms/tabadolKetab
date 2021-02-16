@@ -240,10 +240,6 @@ export default {
       this.enableEdit = false;
       this.reloadTable();
     },
-    // sort funcs
-    sort() {
-      console.log('sorted');
-    },
 
     excelFile() {
       // getData as excel file with filtered included

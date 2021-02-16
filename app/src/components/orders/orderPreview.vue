@@ -22,7 +22,7 @@
               </p>
               <p>
                 <span class="font-weight-black"> {{ $t('address') }} : </span>
-                <span>
+                <span v-if="order.address">
                   {{ order.address.address }}
                 </span>
               </p>
@@ -30,7 +30,7 @@
                 <span class="font-weight-black">
                   {{ $t('postalCode') }} :
                 </span>
-                <span>
+                <span v-if="order.address">
                   {{ order.address.zipCode }}
                 </span>
               </p>
@@ -84,11 +84,6 @@
         <v-row>
           <v-col cols="12" md="7">
             <payMethod
-              v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
-              :data="staffData"
-              @setMethod="setMethod"/>
-
-            <payMethod
               v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
               :data="clientData"
               @setMethod="setMethod"
@@ -99,61 +94,7 @@
           </v-col>
         </v-row>
 
-        <v-form
-          v-model="valid"
-          lazy-validation
-          v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
-        >
-          <v-row no-gutters>
-            <v-col cols="12" md="4">
-              <v-select
-                :items="status"
-                :label="$t('status')"
-                outlined
-                required
-                v-model="order.status"
-              >
-                <template v-slot:item="{ item }">
-                  <span>
-                    {{ $t(item) }}
-                  </span>
-                </template>
-                <template v-slot:selection="{ item }">
-                  <span>
-                    {{ $t(item) }}
-                  </span>
-                </template>
-              </v-select>
-            </v-col>
-            <v-col cols="12" md="4">
-              <datePickerCmp
-                class="d-flex align-self-baseline pr-4 flex-column"
-                :placeHolderText="'sendorRecieveDate'"
-                :validate="true"
-                @setDate="setDate"
-              />
-            </v-col>
-          </v-row>
-          <div class="justify-center d-flex mt-4">
-            <v-btn
-              :disabled="!valid"
-              color="success"
-              class="mr-4"
-              @click="update"
-            >
-              {{ $t('update') }}
-            </v-btn>
-            <v-btn
-              :disabled="!valid"
-              color="error"
-              class="mr-4"
-              @click="cancel"
-            >
-              {{ $t('cancelOrder') }}
-            </v-btn>
-          </div>
-        </v-form>
-        <v-form v-if="this.$store.state.bookShop.userInfo.role === 'CLIENT'">
+        <v-form>
           <div class="justify-center d-flex mt-4">
             <v-btn color="success" class="px-16 py-5" @click="pay">
               {{ $t('payment') }}
@@ -178,26 +119,33 @@
         :cancelBut="false"
       />
     </v-dialog>
+    <v-dialog v-model="addCreditModal" max-width="1000px">
+      <addCredit
+        :data="clientCredit"
+        :mode="'modal'"
+        @closeModal="closeAddCredit"
+      />
+    </v-dialog>
   </v-row>
 </template>
 
 <script>
 import invoiceItems from '../invoices/invoiceItems.vue';
 import payMethod from '../shoppingBag/payMethod.vue';
-import datePickerCmp from '../structure/datePickerCmp.vue';
 import promptDialog from '../structure/promptDialog.vue';
 import discountCode from '../discount/discountCode.vue';
 import creditWarning from '../credit/creditWarning.vue';
+import addCredit from '../credit/addCredit.vue';
 
 export default {
   name: 'orderPreview',
   components: {
     invoiceItems,
-    datePickerCmp,
     payMethod,
     discountCode,
     creditWarning,
     promptDialog,
+    addCredit,
   },
   props: {
     id: {
@@ -219,15 +167,21 @@ export default {
       ],
       order: {},
       staffData: ['CREDIT'],
-      clientData: ['CREDIT', 'ONLINE', 'PRESENSE'],
+      clientData: ['CREDIT', 'ONLINE', 'PRESENCE'],
       // credit warn
       enableCreditWarn: false,
       creditAmount: '',
       paidWay: 'CREDIT',
       submitPay: false,
+      addCreditModal: false,
+      clientCredit: {},
     };
   },
   methods: {
+    closeAddCredit() {
+      this.addCreditModal = false;
+      this.enableCreditWarn = false;
+    },
     changeOrderTotal(value) {
       console.log(`Totla after copon ${value}`);
     },
@@ -272,6 +226,9 @@ export default {
               this.$store.commit('bookShop/clearBag', {
                 module: 'bookShop',
               });
+              this.$router.push({
+                name: 'ordersList',
+              });
             }
           })
           .catch(e => {
@@ -284,7 +241,7 @@ export default {
               // should warn no book found
             }
           });
-      } else if (this.paidWay === 'PRESENSE') {
+      } else if (this.paidWay === 'PRESENCE') {
         this.$axios
           .patch(`/v1/api/tabaadol-e-ketaab/order/${this.order.id}`, {
             status: 'SUBMITTED',
@@ -297,9 +254,15 @@ export default {
       }
     },
     acceptIncrease() {
-      this.$router.push({
-        path: `/increaseCredit/?credit=${this.creditAmount}`,
-      });
+      if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
+        this.$router.push({
+          path: `/increaseCredit/?credit=${this.creditAmount}`,
+        });
+      } else {
+        this.addCreditModal = true;
+        this.clientCredit.credit = this.creditAmount;
+        this.clientCredit.clientId = this.order.client.id;
+      }
     },
     closeWarn() {
       this.enableCreditWarn = false;

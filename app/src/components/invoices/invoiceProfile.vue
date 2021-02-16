@@ -26,30 +26,22 @@
               <p>
                 <span class="font-weight-black"> {{ $t('fullname') }} : </span>
                 <span>
-                  {{ invoice.clientName }}
+                  {{ invoice.client.firstName }}
+                  {{ invoice.client.lastName }}
                 </span>
               </p>
               <p>
-                <span class="font-weight-black"> {{ $t('address') }} : </span>
-                <span>
-                  {{ invoice.address }}
+                <span class="font-weight-black"> {{ $t('status') }} : </span>
+                <span v-if="invoice.paid">
+                  {{ $t('paid') }}
+                  <v-icon color="success">mdi-check</v-icon>
+                </span>
+                <span v-if="!invoice.paid">
+                  {{ $t('unpaid') }}
+                  <v-icon color="error">mdi-close</v-icon>
                 </span>
               </p>
             </div>
-          </v-col>
-          <v-col cols="12" md="4">
-            <p>
-              <span class="font-weight-black"> {{ $t('phone') }} : </span>
-              <span>
-                {{ invoice.phone }}
-              </span>
-            </p>
-            <p>
-              <span class="font-weight-black"> {{ $t('postalCode') }} : </span>
-              <span>
-                {{ invoice.postalCode }}
-              </span>
-            </p>
           </v-col>
         </v-row>
         <v-row class="pa-2">
@@ -64,15 +56,19 @@
             <table class="generalTable ">
               <tr>
                 <th class="text-right">{{ $t('booksPrice') }}</th>
-                <td>{{ invoice.booksPrice }}</td>
+                <td>{{ invoice.finalTotal }}</td>
               </tr>
               <tr>
                 <th class="text-right">{{ $t('cashier') }}</th>
-                <td>{{ invoice.cashier }}</td>
+                <td>
+                  <span v-if="invoice.staff">
+                    {{ invoice.staff.firstName }} {{ invoice.staff.lastName }}
+                  </span>
+                </td>
               </tr>
               <tr>
                 <th class="text-right">{{ $t('remainedCredit') }}</th>
-                <td>{{ invoice.remainedCredit }}</td>
+                <td>{{ invoice.client.credit }}</td>
               </tr>
             </table>
           </v-col>
@@ -84,17 +80,21 @@
                   {{ $t('booksPriceWithoutDiscount') }}
                 </th>
                 <td>
-                  {{ invoice.booksPriceWithoutDiscount }}
+                  {{ invoice.total }}
                 </td>
               </tr>
               <tr>
                 <th class="text-right">{{ $t('clientName') }}</th>
-                <td>{{ invoice.clientName }}</td>
+                <td>
+                  {{ invoice.client.firstName }} {{ invoice.client.lastName }}
+                </td>
               </tr>
               <tr>
                 <th class="text-right">{{ $t('issueDate') }}</th>
                 <td>
-                  {{ new Date(invoice.issueDate).toLocaleDateString('fa') }}
+                  <span v-if="invoice.paidDate">
+                    {{ new Date(invoice.paidDate).toLocaleDateString('fa') }}
+                  </span>
                 </td>
               </tr>
             </table>
@@ -169,7 +169,7 @@ export default {
   },
   mounted() {
     this.$axios
-      .get(`/v1/api/tabaadol-e-ketaab/invoice/${this.id}`)
+      .get(`/v1/api/tabaadol-e-ketaab/invoice/${this.$route.params.invoiceId}`)
       .then(res => {
         if (res.status === 200) {
           this.invoice = res.data;
