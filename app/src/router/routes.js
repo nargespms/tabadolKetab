@@ -107,6 +107,11 @@ const routes = [
         component: () => import('../views/login/signIn.vue'),
       },
       {
+        path: '/forgot',
+        name: 'forgot',
+        component: () => import('../views/forgotPassword.vue'),
+      },
+      {
         path: '/admin-login',
         name: 'admin-login',
         component: () => import('../views/login/admin-login.vue'),
@@ -406,7 +411,7 @@ const routes = [
         component: () => import('../views/general/settings.vue'),
         meta: {
           requiresAuth: true,
-          roles: [{ u_settings: true }],
+          roles: [{ ur_setting: true }],
         },
       },
       {

@@ -531,7 +531,7 @@ export default {
           title: 'settings',
           active: false,
           condition:
-            this.$store.state.bookShop.userInfo.role.u_settings === true,
+            this.$store.state.bookShop.userInfo.role.ur_setting === true,
           items: [
             {
               title: 'generalSettings',
