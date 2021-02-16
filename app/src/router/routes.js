@@ -338,7 +338,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           roles: [{ r_post: true }],
-          access: 'CLIENT',
+          access: 'BOTH',
           cRole: 'CLIENT',
         },
       },

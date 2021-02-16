@@ -168,7 +168,7 @@ export default {
         { text: 'IN_PROGRESS', value: 'IN_PROGRESS' },
         { text: 'ON_WAY', value: 'ON_WAY' },
         { text: 'RECEIVED', value: 'RECEIVED' },
-        { text: 'FINISHED', value: 'FINISHED' },
+        { text: 'CLOSED', value: 'CLOSED' },
       ],
       filter: {},
     };

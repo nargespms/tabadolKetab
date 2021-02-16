@@ -88,13 +88,7 @@
               ></v-textarea>
             </v-col>
             <v-col cols="12" md="6">
-              <clientsAutoComplete
-                ref="userAutocomplete"
-                :isRequired="userValidate"
-                :placeHolder="'client'"
-                @setUser="setUser"
-                :key="usersKey"
-              />
+              <getClientByMobile @setUser="setUser" />
             </v-col>
           </v-row>
           <div
@@ -124,18 +118,18 @@
 </template>
 
 <script>
-import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import invoiceItems from './invoiceItems.vue';
 import deliveryMethod from '../shoppingBag/deliveryMethod.vue';
+import getClientByMobile from '../users/getClientByMobile.vue';
 
 export default {
   name: 'addInvoiceCmp',
   components: {
-    clientsAutoComplete,
     notifMessage,
     invoiceItems,
     deliveryMethod,
+    getClientByMobile,
   },
   data() {
     return {
@@ -174,7 +168,7 @@ export default {
       this.$refs.form.validate();
 
       // it should add item to invoice item
-      // if (this.$refs.form.validate() && this.barcode.length === 9) {
+      // if (this.$refs.form.validate() && this.barcode.length === 9 && this.clientId.length>0) {
       this.$axios
         .get(`/v1/api/tabaadol-e-ketaab/book-number/${this.barcode}`)
         .then(res => {
@@ -220,14 +214,7 @@ export default {
     addInvoice() {
       this.$refs.form2.validate();
       // user validation
-      if (
-        this.$refs.userAutocomplete.model === null ||
-        this.$refs.userAutocomplete.model.length < 1
-      ) {
-        this.userValidate = true;
-      } else {
-        this.userValidate = false;
-      }
+
       if (this.$refs.form2.validate()) {
         this.$axios
           .post('/v1/api/tabaadol-e-ketaab/order', {

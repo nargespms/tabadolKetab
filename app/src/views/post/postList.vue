@@ -1,5 +1,13 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'post'" />
+  <dataTableWrap
+    :headers="
+      this.$store.state.bookShop.userInfo.role !== 'CLIENT'
+        ? headers
+        : clientHeaders
+    "
+    :module="'post'"
+    :endpoint="'/v1/api/tabaadol-e-ketaab/order/list?filter[delivery]=TABADOL'"
+  />
 </template>
 
 <script>
@@ -14,94 +22,78 @@ export default {
     return {
       headers: [
         {
-          text: 'id',
-          value: 'id',
+          text: 'type',
+          value: 'type',
           align: 'center',
           filterable: true,
+          filterType: 'staticDropDown',
           divider: true,
         },
         {
-          text: 'receivesend',
-          value: 'receivesend',
+          text: 'orderNumber',
+          value: 'number',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
         },
 
         {
-          text: 'registerDate',
-          value: 'registerDate',
+          text: 'client',
+          value: 'clientId',
           filterable: true,
+          filterType: 'clientUsers',
+          align: 'center',
+          divider: true,
+          icon: '🧑‍💻',
+        },
+        {
+          text: 'createdAt',
+          value: 'createdAt',
+          filterable: true,
+          filterType: 'date',
           align: 'center',
           divider: true,
         },
         {
-          text: 'sendDate',
-          value: 'sendDate',
-          filterable: true,
-          align: 'center',
-          divider: true,
-        },
-        {
-          text: 'price',
-          value: 'price',
-          filterable: true,
-          align: 'center',
-          divider: true,
-        },
-        {
-          text: 'number',
-          value: 'number',
+          text: 'booksCount',
+          value: 'booksCount',
           filterable: false,
+          filterType: 'text',
           align: 'center',
           divider: true,
         },
         {
-          text: 'address',
-          value: 'address',
-          filterable: false,
+          text: 'mobile',
+          value: 'mobile',
+          filterable: true,
+          filterType: 'text',
           align: 'center',
-          body: 100,
+          divider: true,
+          icon: '🧑‍💻',
+        },
+        {
+          text: 'finalTotal',
+          value: 'finalTotal',
+          filterable: true,
+          filterType: 'text',
+          align: 'center',
           divider: true,
         },
+
+        // {
+        //   text: 'sendorRecieveDate',
+        //   value: 'sendorRecieveDate',
+        //   filterable: true,
+        //   align: 'center',
+        //   divider: true,
+        // },
         {
           text: 'status',
           value: 'status',
           filterable: true,
+          filterType: 'staticDropDown',
           align: 'center',
-          divider: true,
-        },
-        {
-          text: 'userPhoneNumber',
-          value: 'userPhoneNumber',
-          filterable: true,
-          align: 'center',
-          divider: true,
-          icon: ' 🧑‍💻',
-        },
-        {
-          text: 'userLandLane',
-          value: 'userLandLane',
-          filterable: true,
-          align: 'center',
-          divider: true,
-          icon: ' 🧑‍💻',
-        },
-        {
-          text: 'description',
-          value: 'description',
-          filterable: false,
-          align: 'center',
-          body: 100,
-          divider: true,
-          icon: ' 🧑‍💻',
-        },
-        {
-          text: 'user',
-          value: 'user',
-          filterable: true,
-          align: 'center',
-          body: 100,
           divider: true,
         },
         {
@@ -111,7 +103,64 @@ export default {
           width: 250,
           class: 'operationClass',
           divider: true,
-          icon: ' 🧑‍💻',
+        },
+      ],
+      clientHeaders: [
+        {
+          text: 'type',
+          value: 'type',
+          align: 'center',
+          filterable: true,
+          filterType: 'staticDropDown',
+          divider: true,
+        },
+        {
+          text: 'orderNumber',
+          value: 'number',
+          align: 'center',
+          filterable: true,
+          filterType: 'text',
+          divider: true,
+        },
+        {
+          text: 'createdAt',
+          value: 'createdAt',
+          filterable: true,
+          filterType: 'date',
+          align: 'center',
+          divider: true,
+        },
+        {
+          text: 'booksCount',
+          value: 'booksCount',
+          filterable: false,
+          filterType: 'text',
+          align: 'center',
+          divider: true,
+        },
+        {
+          text: 'finalTotal',
+          value: 'finalTotal',
+          filterable: true,
+          filterType: 'text',
+          align: 'center',
+          divider: true,
+        },
+        {
+          text: 'status',
+          value: 'status',
+          filterable: true,
+          filterType: 'staticDropDown',
+          align: 'center',
+          divider: true,
+        },
+        {
+          text: 'operation',
+          value: 'operation',
+          align: 'center',
+          width: 250,
+          class: 'operationClass',
+          divider: true,
         },
       ],
     };
