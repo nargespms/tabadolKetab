@@ -88,7 +88,10 @@
               ></v-textarea>
             </v-col>
             <v-col cols="12" md="6">
-              <getClientByMobile @setUser="setUser" />
+              <getClientByMobile
+                @setUser="setUser"
+                @clientError="clientError"
+              />
             </v-col>
           </v-row>
           <div
@@ -156,6 +159,10 @@ export default {
     };
   },
   methods: {
+    clientError() {
+      this.errorEnable = true;
+      this.errorMsg = 'clientNotFound';
+    },
     setUser(value) {
       this.clientId = value;
     },

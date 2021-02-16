@@ -498,4 +498,8 @@ export default {
   ON_WAY: 'در حال ارسال',
   // CLOSED: 'بسته شده',
   getClient: 'دریافت کاربر',
+  chooseOrderStatus: 'وضعیت مورد نظر برای سفارش را انتخاب نمایید',
+  clientNotFound: 'کاربر مورد نظر پیدا نشد',
+  startDateShouldStartFromTommorow: 'تاریخ شروع باید از یک روزآینده شروع شود.',
+  invalidDateRange: 'بازه زمانی نادرست است',
 };

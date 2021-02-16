@@ -82,11 +82,8 @@
       </template>
 
       <template v-slot:[`item.delivery`]="{ item }">
-        <span v-if="item.delivery === 'PRESENCE'">
-          <v-icon>mdi-check</v-icon>
-        </span>
-        <span v-else>
-          <v-icon>mdi-close</v-icon>
+        <span>
+          {{ $t(item.delivery) }}
         </span>
       </template>
 
@@ -108,6 +105,20 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
+              medium
+              class="ma-2"
+              @click="changeStatusOrder(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-table-edit
+            </v-icon>
+          </template>
+          {{ $t('changeStatus') }}
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
               v-bind="attrs"
               v-on="on"
               medium
@@ -122,16 +133,26 @@
         </v-tooltip>
       </template>
     </v-data-table>
+    <v-dialog v-model="enableStatusChange" max-width="500px">
+      <multipleChoiseDialog
+        :title="'changeStatus'"
+        :message="`${$t('chooseOrderStatus')}`"
+        :buttons="changeStatusButs"
+        @changeStatus="changeStatus"
+      />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
+import multipleChoiseDialog from '../structure/multipleChoiseDialog.vue';
 
 export default {
   name: 'ordersTable',
   components: {
     tableHeaderCell,
+    multipleChoiseDialog,
   },
   props: {
     headers: { type: Array },
@@ -171,6 +192,34 @@ export default {
         { text: 'CLOSED', value: 'CLOSED' },
       ],
       filter: {},
+      changeStatusButs: [
+        {
+          name: 'ACCEPTED',
+          color: 'green darken-1',
+        },
+        {
+          name: 'RECEIVED',
+          color: 'blue-grey lighten-1',
+        },
+        {
+          name: 'IN_PROGRESS',
+          color: 'purple lighten-3',
+        },
+        {
+          name: 'ON_WAY',
+          color: 'grey darken-1',
+        },
+        {
+          name: 'CANCELED',
+          color: 'red',
+        },
+        {
+          name: 'CLOSED',
+          color: 'red',
+        },
+      ],
+      enableStatusChange: false,
+      edittingItem: {},
     };
   },
   methods: {
@@ -186,7 +235,23 @@ export default {
         path: `/ordersList/${item.id}`,
       });
     },
-
+    changeStatusOrder(item) {
+      this.enableStatusChange = true;
+      this.edittingItem = item;
+    },
+    changeStatus(value) {
+      this.$axios
+        .patch(`/v1/api/tabaadol-e-ketaab/order/${this.edittingItem.id}`, {
+          status: value,
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.reloadTable();
+            this.edittingItem = {};
+            this.enableStatusChange = false;
+          }
+        });
+    },
     excelFile() {
       // getData as excel file with filtered included
     },

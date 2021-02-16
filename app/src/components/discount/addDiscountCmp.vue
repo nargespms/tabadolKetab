@@ -1,8 +1,5 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <span class="fn-25">
-      🧑‍💻
-    </span>
     <v-col cols="12" sm="6" md="9">
       <v-card class="pa-4">
         <v-card-actions class="teal">
@@ -51,6 +48,7 @@
                 :toValidate="toDateValidation"
                 :key="dateKey"
                 @setDate="setDate"
+                :hint="'startDateShouldStartFromTommorow'"
               />
             </v-col>
           </v-row>
@@ -83,9 +81,9 @@
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-0 pr-md-4 pr-lg-4">
               <v-text-field
-                v-model.number="discount.amount"
+                v-model.number="discount.percent"
                 :rules="requireRule"
-                :label="$t('amount')"
+                :label="$t('percent')"
                 required
                 outlined
                 error-count="1"
@@ -99,9 +97,28 @@
             </v-col>
           </v-row>
           <v-row>
+            <v-col cols="12" md="6" class="pa-0 pb-6 pa-md-0 pa-lg-0">
+              <bookCatAutocomplete
+                :isRequire="bookCatVallidate"
+                @sendValue="getBookCat"
+                :height="32"
+                ref="bookCat"
+              />
+            </v-col>
+            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+              <v-text-field
+                v-model.number="discount.max"
+                :label="$t('discountMaxAmount')"
+                outlined
+                v-mask="'##########'"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col
+              v-if="discount.type === 'discountCode'"
               cols="12"
-              :md="discount.type === 'percent' ? '4' : '6'"
+              :md="discount.type === 'category' ? '4' : '6'"
               class="pa-0"
             >
               <v-text-field
@@ -112,8 +129,9 @@
               ></v-text-field>
             </v-col>
             <v-col
+              v-if="discount.type === 'discountCode'"
               cols="12"
-              :md="discount.type === 'percent' ? '4' : '6'"
+              :md="discount.type === 'category' ? '4' : '6'"
               class="pa-0 pr-md-4  pr-lg-4 pr-0"
             >
               <v-text-field
@@ -129,38 +147,12 @@
                 persistent-hint
               ></v-text-field>
             </v-col>
+          </v-row>
 
-            <v-col
-              v-if="discount.type === 'percent'"
-              cols="12"
-              :md="discount.type === 'percent' ? '4' : '6'"
-              class="pa-0 pr-md-4  pr-lg-4 pr-0"
-            >
-              <v-text-field
-                v-model.number="discount.maxAmount"
-                :label="$t('discountMaxAmount')"
-                outlined
-                v-mask="'##########'"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="6" class="pa-0 pb-6 pa-md-0 pa-lg-0">
-              <bookCatAutocomplete ref="bookCat" :isRequire="bookCatVallidate"
-            /></v-col>
-            <v-col cols="12" md="6" class="pa-0 pr-0 pr-md-4 pr-lg-4 pb-4">
-              <clientsAutoComplete
-                ref="userAutocomplete"
-                :isRequired="userValidate"
-                :placeHolder="'users'"
-                :persistentHint="true"
-              />
-            </v-col>
-          </v-row>
           <v-row>
             <v-col class="pa-0 pt-4">
               <v-textarea
-                v-model="discount.desc"
+                v-model="discount.description"
                 :label="$t('description')"
                 name="input-7-4"
                 outlined
@@ -189,24 +181,30 @@
         @hideNotif="hideNotif"
         :type="'success'"
       />
+      <notifMessage
+        v-if="error"
+        :msg="errorMsg"
+        @hideNotif="hideError"
+        :type="'error'"
+      />
     </v-col>
   </v-row>
 </template>
 
 <script>
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
-import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
+import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'addDiscountCmp',
   components: {
     notifMessage,
     bookCatAutocomplete,
-    clientsAutoComplete,
     rangeDatePickerCmp,
   },
+  mixins: [dateTime],
   data() {
     return {
       valid: true,
@@ -225,11 +223,14 @@ export default {
       dateKey: 0,
       fromDateValidation: true,
       toDateValidation: true,
-      discountType: ['percent', 'cost'],
+      discountType: ['category', 'discountCode'],
       // bookCategory vlidate
       bookCatVallidate: true,
       // user validation
       userValidate: false,
+      endpoint: '',
+      error: false,
+      errorMsg: '',
     };
   },
 
@@ -239,7 +240,16 @@ export default {
         name: 'discountsList',
       });
     },
+    getBookCat(value) {
+      this.discount.categoryId = value;
+    },
     setDate(value) {
+      this.discount.validFrom = new Date(
+        this.persionToGregorian(value.fromDate)
+      ).toISOString();
+      this.discount.expireDate = new Date(
+        this.persionToGregorian(value.toDate)
+      ).toISOString();
       console.log(`date is :${value.fromDate}`);
       console.log(`date is :${value.toDate}`);
     },
@@ -269,12 +279,30 @@ export default {
       } else {
         this.bookCatVallidate = false;
       }
-
+      if (this.discount.type === 'category') {
+        this.endpoint = '/v1/api/tabaadol-e-ketaab/category-discount';
+      } else {
+        this.endpoint = '/v1/api/tabaadol-e-ketaab/coupon';
+      }
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation
         if (this.$refs.form.validate()) {
-          this.saveSuccess = true;
-          this.reset();
+          this.$axios
+            .post(this.endpoint, {
+              ...this.discount,
+            })
+            .then(res => {
+              if (res.status === 200) {
+                this.saveSuccess = true;
+                this.reset();
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 406) {
+                this.error = true;
+                this.errorMsg = 'invalidDateRange';
+              }
+            });
         } else {
           this.valid = false;
         }
@@ -291,6 +319,9 @@ export default {
     // notification hide
     hideNotif() {
       this.saveSuccess = false;
+    },
+    hideError() {
+      this.error = false;
     },
   },
 };

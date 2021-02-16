@@ -6,10 +6,11 @@
     <v-card-text class="text-center">
       {{ $t(message) }}
     </v-card-text>
-    <v-card-actions class="d-flex justify-center">
+    <v-card-actions class="d-flex justify-center flex-wrap">
       <template v-for="but in buttons">
         <v-btn
           :color="but.color"
+          class="mb-3"
           :key="but.name"
           outlined
           @click="changeStatus(but.name)"
