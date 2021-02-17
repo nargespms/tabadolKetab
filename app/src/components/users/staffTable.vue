@@ -1,8 +1,5 @@
 <template>
   <div>
-    <span class="fn-25">
-      🧑‍💻
-    </span>
     <div class="d-flex flex-row-reverse ma-4">
       <v-btn
         color="light-blue darken-2"

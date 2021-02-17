@@ -320,6 +320,11 @@ export default {
             this.errorMsg = 'permissionDenied';
             this.closeDelete();
           }
+          if (e.response.status === 412) {
+            this.error = true;
+            this.errorMsg = 'thisBookCanNotBeDeleted';
+            this.closeDelete();
+          }
         });
     },
     closeDelete() {

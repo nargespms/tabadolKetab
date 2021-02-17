@@ -503,4 +503,5 @@ export default {
   clientNotFound: 'کاربر مورد نظر پیدا نشد',
   startDateShouldStartFromTommorow: 'تاریخ شروع باید از یک روزآینده شروع شود.',
   invalidDateRange: 'بازه زمانی نادرست است',
+  thisBookCanNotBeDeleted: 'این کتاب قابل حذف شدن نیست',
 };

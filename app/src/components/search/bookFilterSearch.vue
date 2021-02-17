@@ -19,29 +19,27 @@
             lazy-validation
           >
             <v-row class="mt-6">
-              <v-col cols="12" md="4" class="pa-0 d-flex align-self-end">
+              <v-col cols="12" md="6" class="pa-0 d-flex align-self-end">
                 <span class="pl-6">
                   {{ $t('priceRange') }}
                 </span>
+
                 <v-range-slider
-                  max="100"
-                  min="5"
+                  :max="max"
+                  :min="min"
                   v-model="range"
                   @change="priceRange"
-                  thumb-label="always"
                   persistent-hint
-                  :hint="$t('numberAreInToman')"
+                  :hint="
+                    `${filter.minPrice}${this.$t('rial')}-${
+                      filter.maxPrice
+                    }${this.$t('rial')}`
+                  "
                 ></v-range-slider>
               </v-col>
 
               <v-col cols="12" md="4" class="pa-0 pr-md-2 pr-0 d-flex">
                 <v-checkbox
-                  class="pr-4"
-                  v-model="filter.status"
-                  @change="bookStatus"
-                  :label="$t('existedBooks')"
-                ></v-checkbox
-                ><v-checkbox
                   class="pr-8"
                   v-model="filter.withDiscount"
                   :label="$t('discountedBooks')"
@@ -73,8 +71,13 @@ export default {
     return {
       valid: true,
       show: true,
-      range: [5, 200],
-      filter: {},
+      min: 10000,
+      max: 4000000,
+      range: [10000, 4000000],
+      filter: {
+        minPrice: 10000,
+        maxPrice: 4000000,
+      },
     };
   },
   methods: {
@@ -103,7 +106,7 @@ export default {
       console.log(this.filter.status);
     },
     priceRange() {
-      this.filter.range = this.range;
+      this.filter = { minPrice: this.range[0], maxPrice: this.range[1] };
     },
   },
 };

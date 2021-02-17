@@ -74,8 +74,8 @@ export default {
           text: 'afterDiscount',
           value: 'afterDiscount',
           align: 'center',
-          filterable: true,
-          filterType: 'text',
+          // filterable: true,
+          // filterType: 'text',
           divider: true,
         },
         {

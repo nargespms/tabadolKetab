@@ -1,11 +1,5 @@
 <template>
   <div>
-    <span class="fn-25">
-      🧑‍💻
-    </span>
-    <span class="fn-25">
-      👨‍🔧
-    </span>
     <v-data-table
       :headers="headers"
       :items="tableData"
@@ -16,6 +10,7 @@
       class="elevation-1 text-center ma-4"
       hide-default-header
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
