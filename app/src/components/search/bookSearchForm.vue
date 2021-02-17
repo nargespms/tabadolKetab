@@ -21,10 +21,16 @@
             <v-row>
               <v-col cols="12" md="3" class="pa-0">
                 <v-text-field
-                  v-model="search.name"
+                  v-model="filter.name"
                   :label="$t('bookName')"
                   outlined
-                ></v-text-field>
+                >
+                  <template v-slot:append v-if="filter.name">
+                    <v-icon @click="clear('name')"
+                      >mdi-close-circle-outline</v-icon
+                    >
+                  </template>
+                </v-text-field>
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
                 <authorAutocomplete
@@ -33,6 +39,7 @@
                   :placeHolder="'writer'"
                   @sendValue="getWriter"
                   :height="32"
+                  :clearable="true"
                 />
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
@@ -42,6 +49,7 @@
                   :placeHolder="'author'"
                   @sendValue="getAuthor"
                   :height="32"
+                  :clearable="true"
                 />
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
@@ -51,6 +59,7 @@
                   :placeHolder="'translator'"
                   @sendValue="getTranslator"
                   :height="32"
+                  :clearable="true"
                 />
               </v-col>
             </v-row>
@@ -62,22 +71,35 @@
                   :placeHolder="'searcher'"
                   @sendValue="getSearcher"
                   :height="32"
+                  :clearable="true"
                 />
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
                 <v-text-field
-                  v-model="search.shabak"
+                  v-model="filter.shabak"
                   :label="$t('shabak')"
                   outlined
-                ></v-text-field>
+                >
+                  <template v-slot:append v-if="filter.shabak">
+                    <v-icon @click="clear('shabak')"
+                      >mdi-close-circle-outline</v-icon
+                    >
+                  </template>
+                </v-text-field>
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
                 <v-text-field
-                  v-model="search.nationalcode"
+                  v-model="filter.nationalCode"
                   :label="$t('nationalcode')"
                   outlined
                   v-mask="'###########'"
-                ></v-text-field>
+                >
+                  <template v-slot:append v-if="filter.nationalcode">
+                    <v-icon @click="clear('nationalcode')"
+                      >mdi-close-circle-outline</v-icon
+                    >
+                  </template>
+                </v-text-field>
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
                 <publisherAutocomplete
@@ -86,6 +108,7 @@
                   @sendValue="getPublisher"
                   :height="32"
                   :isMultiple="false"
+                  :clearable="true"
                 />
               </v-col>
             </v-row>
@@ -131,19 +154,19 @@ export default {
     return {
       valid: true,
       show: true,
-      search: {},
+      filter: {},
     };
   },
   methods: {
     getBookCat(value) {
-      this.search.categoryId = value;
+      this.filter.categoryId = value;
     },
     searchBook() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
         this.show = false;
-        console.log(this.search);
-        this.$emit('searchBook', this.search);
+        console.log(this.filter);
+        this.$emit('searchBook', this.filter);
       } else {
         this.valid = false;
       }
@@ -153,19 +176,44 @@ export default {
       this.$refs.form.reset();
     },
     getWriter(value) {
-      this.search.writerId = value;
+      if (value.length > 0) {
+        this.filter.writerId = value;
+      } else {
+        delete this.filter.writerId;
+      }
     },
     getAuthor(value) {
-      this.search.authorId = value;
+      if (value.length > 0) {
+        this.filter.authorId = value;
+      } else {
+        delete this.filter.authorId;
+      }
     },
     getTranslator(value) {
-      this.search.translatorId = value;
+      if (value.length > 0) {
+        this.filter.translatorId = value;
+      } else {
+        delete this.filter.translatorId;
+      }
     },
     getSearcher(value) {
-      this.search.searcherId = value;
+      if (value.length > 0) {
+        this.filter.searcherId = value;
+      } else {
+        delete this.filter.searcherId;
+      }
     },
     getPublisher(value) {
-      this.search.publisherId = value;
+      if (value.length > 0) {
+        this.filter.publisherId = value;
+      } else {
+        delete this.filter.publisherId;
+      }
+    },
+    clear(name) {
+      console.log(name);
+      this.filter[name] = '';
+      delete this.filter.name;
     },
   },
 };

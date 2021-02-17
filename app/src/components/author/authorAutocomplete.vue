@@ -35,10 +35,15 @@
           {{ data.item.title }}
         </v-chip>
       </template>
+
       <template v-slot:item="{ item }">
         <v-list-item-content>
           <v-list-item-title v-text="item.title"></v-list-item-title>
         </v-list-item-content>
+      </template>
+
+      <template v-if="clearable && this.model" v-slot:append>
+        <v-icon @click="clear">mdi-close-circle-outline</v-icon>
       </template>
     </v-autocomplete>
   </div>
@@ -61,6 +66,9 @@ export default {
     isMultiple: {
       type: Boolean,
     },
+    clearable: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -79,7 +87,12 @@ export default {
         this.localRequire = true;
       }
     },
+    clear() {
+      this.model = '';
+      this.$emit('sendValue', this.model);
+    },
   },
+
   watch: {
     // eslint-disable-next-line no-unused-vars
     search(val) {

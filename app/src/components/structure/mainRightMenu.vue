@@ -421,24 +421,24 @@ export default {
             },
           ],
         },
-        {
-          action: 'fas fa-users-cog',
-          title: 'accessLevel',
-          active: false,
-          condition: this.$store.state.bookShop.userInfo.role.cu_role === true,
-          items: [
-            {
-              title: 'roleCreation',
-              link: '/accessLevelCreation',
-              icon: 'fas fa-user-cog',
-            },
-            {
-              title: 'roleList',
-              link: '/accessLevelList',
-              icon: 'fas fa-table',
-            },
-          ],
-        },
+        // {
+        //   action: 'fas fa-users-cog',
+        //   title: 'accessLevel',
+        //   active: false,
+        //   condition: this.$store.state.bookShop.userInfo.role.cu_role === true,
+        //   items: [
+        //     {
+        //       title: 'roleCreation',
+        //       link: '/accessLevelCreation',
+        //       icon: 'fas fa-user-cog',
+        //     },
+        //     {
+        //       title: 'roleList',
+        //       link: '/accessLevelList',
+        //       icon: 'fas fa-table',
+        //     },
+        //   ],
+        // },
 
         {
           action: 'mdi-credit-card-plus',
@@ -485,19 +485,19 @@ export default {
             },
           ],
         },
-        {
-          action: 'mdi-finance',
-          title: 'financialReport',
-          active: false,
-          condition: this.$store.state.bookShop.userInfo.role.r_report === true,
-          items: [
-            {
-              title: 'financialReport',
-              link: '/financialReport',
-              icon: 'fas fa-table',
-            },
-          ],
-        },
+        // {
+        //   action: 'mdi-finance',
+        //   title: 'financialReport',
+        //   active: false,
+        //   condition: this.$store.state.bookShop.userInfo.role.r_report === true,
+        //   items: [
+        //     {
+        //       title: 'financialReport',
+        //       link: '/financialReport',
+        //       icon: 'fas fa-table',
+        //     },
+        //   ],
+        // },
         {
           action: 'fas fa-tags',
           title: 'tags',
