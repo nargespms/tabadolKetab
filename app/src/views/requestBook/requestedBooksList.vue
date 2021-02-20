@@ -64,11 +64,11 @@ export default {
         },
         {
           text: 'client',
-          value: 'clientId',
+          value: 'createdById',
           align: 'center',
           filterable: true,
           filterType: 'clientUsers',
-          filterName: 'clientId',
+          filterName: 'createdById',
           divider: true,
         },
         {

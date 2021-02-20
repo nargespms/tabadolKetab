@@ -165,7 +165,9 @@ export default {
   requestDate: 'زمان درخواست',
   chooseRequestedBookStatus: 'وضعیت کتاب درخواستی را انتخاب نمایید.',
   available: 'موجود',
+  AVAILABLE: 'موجود',
   unavailable: 'ناموجود',
+  UNAVAILABLE: 'ناموجود',
   inprogress: 'در حال بررسی',
   bookNumber: 'شماره کتاب',
   writer: 'نویسنده',
@@ -186,7 +188,7 @@ export default {
   payType: 'نوع پرداخت',
   // book
   addBook: 'افزودن کتاب',
-  bookList: 'لیست کتاب‌ها',
+  booksList: 'لیست کتاب‌ها',
   registerDate: 'تاریخ ثبت ',
   confirmRegisterDate: 'تاریخ تایید ثبت',
   confirmDate: 'تاریخ تایید ثبت',

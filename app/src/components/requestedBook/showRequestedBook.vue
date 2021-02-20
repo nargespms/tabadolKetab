@@ -48,7 +48,7 @@ export default {
         .get(`/v1/api/tabaadol-e-ketaab/requested-book/${this.id}`)
         .then(res => {
           if (res.status === 200) {
-            this.book = res.data;
+            this.book = res.data.requestedBook;
           }
         });
     },

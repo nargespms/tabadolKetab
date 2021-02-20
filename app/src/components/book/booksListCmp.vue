@@ -16,7 +16,7 @@
 import dataTableWrap from '../structure/dataTableWrap.vue';
 
 export default {
-  name: 'bookListCmp',
+  name: 'booksListCmp',
   components: {
     dataTableWrap,
   },

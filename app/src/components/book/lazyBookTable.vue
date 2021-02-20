@@ -25,7 +25,7 @@
         <span>{{ $t('addBook') }}</span>
       </v-tooltip>
       <span class="pr-4 font-weight-medium white--text">
-        {{ $t('bookList') }}
+        {{ $t('booksList') }}
       </span>
     </v-toolbar>
 
@@ -261,7 +261,7 @@ export default {
     },
     editRecord(item) {
       this.$router.push({
-        path: `/bookList/${item.id}`,
+        path: `/booksList/${item.id}`,
       });
     },
 
@@ -291,6 +291,11 @@ export default {
         name: 'printBooks',
       });
       window.open(routeData.href, '_blank');
+    },
+    preview(item) {
+      this.$router.push({
+        path: `/books/${item.id}`,
+      });
     },
     printBarCode(value) {
       console.log('inja');

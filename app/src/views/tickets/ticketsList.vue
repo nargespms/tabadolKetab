@@ -52,6 +52,17 @@ export default {
           condition: true,
         },
         {
+          text: 'department',
+          value: 'department',
+          filterable: true,
+          filterType: 'staticDropDown',
+          filterName: 'department',
+          align: 'center',
+          body: 100,
+          divider: true,
+          condition: true,
+        },
+        {
           text: 'client',
           value: 'clientId',
           filterable: true,
@@ -99,7 +110,17 @@ export default {
           body: 100,
           divider: true,
         },
-
+        {
+          text: 'department',
+          value: 'department',
+          filterable: true,
+          filterType: 'staticDropDown',
+          filterName: 'department',
+          align: 'center',
+          body: 100,
+          divider: true,
+          condition: true,
+        },
         {
           text: 'operation',
           value: 'operation',

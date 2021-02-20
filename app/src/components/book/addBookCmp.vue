@@ -12,11 +12,11 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon color="white" @click="bookList"> fa fa-table</v-icon>
+                <v-icon color="white" @click="booksList"> fa fa-table</v-icon>
               </v-btn>
             </template>
             <span>
-              {{ $t('bookList') }}
+              {{ $t('booksList') }}
             </span>
           </v-tooltip>
         </v-card-actions>
@@ -405,9 +405,9 @@ export default {
     };
   },
   methods: {
-    bookList() {
+    booksList() {
       this.$router.push({
-        name: 'bookList',
+        name: 'booksList',
       });
     },
     setClient(value) {

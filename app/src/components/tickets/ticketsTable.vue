@@ -45,7 +45,13 @@
             <th class="text-center" v-for="h in headers" :key="h.index">
               <tableHeaderCell
                 :data="h"
-                :items="h.text === 'status' ? statusItems : []"
+                :items="
+                  h.text === 'status'
+                    ? statusItems
+                    : h.text === 'department'
+                    ? departmentItems
+                    : []
+                "
                 @filterCol="filterCol"
               />
             </th>
@@ -62,6 +68,10 @@
       </template>
       <template v-slot:[`item.status`]="{ item }">
         {{ $t(item.status) }}
+      </template>
+
+      <template v-slot:[`item.department`]="{ item }">
+        {{ $t(item.department) }}
       </template>
 
       <template
@@ -124,6 +134,11 @@ export default {
         { text: 'ANSWERED_BY_CLIENT', value: 'ANSWERED_BY_CLIENT' },
         { text: 'INPROGRESS', value: 'INPROGRESS' },
         { text: 'ONHOLD', value: 'ONHOLD' },
+      ],
+      departmentItems: [
+        { text: 'INFO', value: 'INFO' },
+        { text: 'TECH', value: 'TECH' },
+        { text: 'BILLING', value: 'BILLING' },
       ],
       filter: {},
     };

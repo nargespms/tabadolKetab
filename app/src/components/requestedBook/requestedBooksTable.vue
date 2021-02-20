@@ -68,7 +68,7 @@
         </span>
       </template>
 
-      <template v-slot:[`item.clientId`]="{ item }">
+      <template v-slot:[`item.createdById`]="{ item }">
         <span>
           {{ item.client.firstName }}
           {{ item.client.lastName }}
@@ -106,11 +106,7 @@
     <v-dialog v-model="enableStatusChange" max-width="500px">
       <multipleChoiseDialog
         :title="'changeStatus'"
-        :message="
-          `${$t('chooseRequestedBookStatus')}\n${$t('bookNumber')}:${
-            changingStatusItem.id
-          }`
-        "
+        :message="`${$t('chooseRequestedBookStatus')}\n`"
         :data="changingStatusItem"
         :buttons="changeStatusButs"
         @changeStatus="changeStatus"
@@ -160,23 +156,23 @@ export default {
       changingStatusItem: {},
       changeStatusButs: [
         {
-          name: 'inprogress',
+          name: 'AVAILABLE',
           color: 'purple',
         },
         {
-          name: 'available',
+          name: 'UNAVAILABLE',
           color: 'green',
         },
         {
-          name: 'unavailable',
+          name: 'PENDING',
           color: 'red',
         },
       ],
       filter: {},
       statusItems: [
-        { text: 'inprogress', value: 'inprogress' },
-        { text: 'available', value: 'available' },
-        { text: 'unavailable', value: 'unavailable' },
+        { text: 'AVAILABLE', value: 'AVAILABLE' },
+        { text: 'UNAVAILABLE', value: 'UNAVAILABLE' },
+        { text: 'PENDING', value: 'PENDING' },
       ],
     };
   },
@@ -198,9 +194,18 @@ export default {
     },
     changeStatus(value) {
       console.log(value);
-      this.enableStatusChange = false;
-      this.changingStatusItem = {};
-      this.successNotif = true;
+      this.$axios
+        .patch(
+          `/v1/api/tabaadol-e-ketaab/requested-book/${this.changingStatusItem.id}`,
+          { status: value }
+        )
+        .then(res => {
+          if (res.status === 200) {
+            this.enableStatusChange = false;
+            this.changingStatusItem = {};
+            this.successNotif = true;
+          }
+        });
     },
     hideNotif() {
       this.successNotif = false;

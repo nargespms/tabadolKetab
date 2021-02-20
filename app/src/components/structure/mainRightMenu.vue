@@ -204,8 +204,8 @@ export default {
               condition: true,
             },
             {
-              title: 'bookList',
-              link: '/bookList',
+              title: 'booksList',
+              link: '/booksList',
               icon: 'fa fa-table',
               condition: true,
             },

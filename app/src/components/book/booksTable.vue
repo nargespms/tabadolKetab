@@ -42,7 +42,7 @@
             <span>{{ $t('addBook') }}</span>
           </v-tooltip>
           <span class="pr-4 font-weight-medium white--text">
-            {{ $t('bookList') }}
+            {{ $t('booksList') }}
           </span>
         </v-toolbar>
       </template>

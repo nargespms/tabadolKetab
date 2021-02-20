@@ -160,9 +160,9 @@ const routes = [
         },
       },
       {
-        path: '/bookList',
-        name: 'bookList',
-        component: () => import('../views/book/bookList.vue'),
+        path: '/booksList',
+        name: 'booksList',
+        component: () => import('../views/book/booksList.vue'),
         meta: {
           requiresAuth: true,
           roles: [{ r_book: true }],
@@ -171,15 +171,18 @@ const routes = [
         },
       },
       {
-        path: '/bookList/:bookId',
+        path: '/booksList/:bookId',
         name: 'bookPage',
         component: () => import('../views/book/book.vue'),
         meta: {
           requiresAuth: true,
           roles: [{ r_book: true }],
-          access: 'BOTH',
-          cRole: 'CLIENT',
         },
+      },
+      {
+        path: '/books/:bookId',
+        name: 'bookPreviewPage',
+        component: () => import('../views/book/bookPreview.vue'),
       },
       {
         path: '/addBookCat',
