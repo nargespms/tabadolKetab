@@ -81,6 +81,12 @@
         </span>
       </template>
 
+      <template v-slot:[`item.status`]="{ item }">
+        <span>
+          {{ $t(item.status) }}
+        </span>
+      </template>
+
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon medium class="ma-2" @click="preview(item)">
           mdi-eye
