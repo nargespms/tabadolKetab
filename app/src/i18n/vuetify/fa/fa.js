@@ -157,6 +157,10 @@ export default {
   noBooksSelected: '  کتابی انتخاب نشده است ',
   loadingText: 'در حال گرفتن اطلاعات ...',
   noDiscount: 'تخفیف ندارد',
+  discountAmount: 'مقدار تخفیف',
+  finalTotalBuy: 'قیمت نهایی خرید شما ',
+  addToBag: 'افزودن به سبد خرید',
+  bookDetailsInfo: 'اطلاعات تکمیلی کتاب',
   // requested Books
   requestedBooks: 'کتاب‌های درخواستی',
   addRequestedBooks: 'ایجاد درخواست کتاب',
