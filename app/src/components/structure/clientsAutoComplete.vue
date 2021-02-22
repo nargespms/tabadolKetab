@@ -115,7 +115,8 @@ export default {
       });
       console.log(edittingClient);
       console.log('3');
-      this.model = edittingClient;
+      this.model = edittingClient.id;
+      this.$emit('sendValue', this.model);
     },
     getData() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/clients').then(res => {
@@ -162,6 +163,11 @@ export default {
     editDataId() {
       this.getData();
     },
+  },
+  mounted() {
+    if (this.editDataId) {
+      this.getData();
+    }
   },
 };
 </script>

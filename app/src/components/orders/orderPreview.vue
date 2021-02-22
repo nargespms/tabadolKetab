@@ -1,6 +1,9 @@
 <template>
   <v-row no-gutters class="justify-center">
     <v-col cols="12" sm="6" md="8">
+      <v-overlay :value="isLoading">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
       <v-card class="pa-4" v-if="!isLoading">
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
@@ -44,37 +47,6 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col>
-            <table
-              class="generalTable"
-              :class="$vuetify.breakpoint.lg ? '' : 'tableMobileScroll'"
-            >
-              <thead class=" grey lighten-2">
-                <th>
-                  {{ $t('orderType') }}
-                </th>
-                <th>
-                  {{ $t('orderNumber') }}
-                </th>
-                <th>
-                  {{ $t('createdAt') }}
-                </th>
-              </thead>
-              <tbody>
-                <td>
-                  {{ $t(order.type) }}
-                </td>
-                <td>
-                  {{ order.number }}
-                </td>
-                <td>
-                  {{ new Date(order.createdAt).toLocaleDateString('fa') }}
-                </td>
-              </tbody>
-            </table>
-          </v-col>
-        </v-row>
-        <v-row>
           <invoiceItems
             v-if="!isLoading"
             :data="orderItems"
@@ -82,6 +54,48 @@
           />
         </v-row>
         <v-row>
+          <v-col>
+            <table
+              class="generalTable"
+              :class="$vuetify.breakpoint.lg ? '' : 'tableMobileScroll'"
+            >
+              <thead class=" grey lighten-2">
+                <th>
+                  {{ $t('createdAt') }}
+                </th>
+                <th>
+                  {{ $t('orderType') }}
+                </th>
+                <th>
+                  {{ $t('orderNumber') }}
+                </th>
+                <th>
+                  {{ $t('finalTotal') }}
+                </th>
+              </thead>
+              <tbody>
+                <td>
+                  {{ new Date(order.createdAt).toLocaleDateString('fa') }}
+                </td>
+                <td>
+                  {{ $t(order.type) }}
+                </td>
+                <td>
+                  {{ order.number }}
+                </td>
+                <td
+                  :key="amountKey"
+                  :class="changeAmount"
+                  transition="scale-transition"
+                >
+                  {{ total }}{{ $t('rial') }}
+                </td>
+              </tbody>
+            </table>
+          </v-col>
+        </v-row>
+
+        <v-row v-if="order.type !== 'SELL'">
           <v-col cols="12" md="7">
             <payMethod
               v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
@@ -90,13 +104,22 @@
               :initValue="paidWay"
           /></v-col>
           <v-col cols="12" md="5">
-            <discountCode @changeOrderTotal="changeOrderTotal" />
+            <discountCode
+              @changeOrderTotal="changeOrderTotal"
+              @errorCoupon="errorCoupon"
+              :invoiceId="order.type !== 'SELL' ? order.invoice.id : ''"
+            />
           </v-col>
         </v-row>
 
         <v-form>
           <div class="justify-center d-flex mt-4">
-            <v-btn color="success" class="px-16 py-5" @click="pay">
+            <v-btn
+              color="success"
+              class="px-16 py-5"
+              @click="pay"
+              :disabled="order.type !== 'SELL' ? order.invoice.paid : true"
+            >
               {{ $t('payment') }}
             </v-btn>
           </div>
@@ -126,6 +149,18 @@
         @closeModal="closeAddCredit"
       />
     </v-dialog>
+    <notifMessage
+      v-if="saveSuccess"
+      :msg="'operationSuccessfullyOcured'"
+      @hideNotif="hideNotif"
+      :type="'success'"
+    />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
@@ -133,6 +168,7 @@
 import invoiceItems from '../invoices/invoiceItems.vue';
 import payMethod from '../shoppingBag/payMethod.vue';
 import promptDialog from '../structure/promptDialog.vue';
+import notifMessage from '../structure/notifMessage.vue';
 import discountCode from '../discount/discountCode.vue';
 import creditWarning from '../credit/creditWarning.vue';
 import addCredit from '../credit/addCredit.vue';
@@ -146,6 +182,7 @@ export default {
     creditWarning,
     promptDialog,
     addCredit,
+    notifMessage,
   },
   props: {
     id: {
@@ -175,6 +212,12 @@ export default {
       submitPay: false,
       addCreditModal: false,
       clientCredit: {},
+      // notif
+      error: false,
+      errorMsg: '',
+      saveSuccess: false,
+      changeAmount: '',
+      amountKey: 0,
     };
   },
   methods: {
@@ -183,7 +226,30 @@ export default {
       this.enableCreditWarn = false;
     },
     changeOrderTotal(value) {
-      console.log(`Totla after copon ${value}`);
+      if (this.order.type !== 'SELL') {
+        this.order.invoice.finalTotal = value;
+      }
+      this.saveSuccess = true;
+
+      this.changeAmount = 'green lighten-1';
+      this.amountKey += 1;
+
+      setTimeout(
+        function dynamicClass() {
+          this.changeAmount = '';
+        }.bind(this),
+        2000
+      );
+    },
+    errorCoupon() {
+      this.error = true;
+      this.errorMsg = 'invalidCoupon';
+    },
+    hideNotif() {
+      this.saveSuccess = false;
+    },
+    hideError() {
+      this.error = false;
     },
     setDate(value) {
       // this valu is persian date
@@ -254,15 +320,12 @@ export default {
       }
     },
     acceptIncrease() {
-      if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
-        this.$router.push({
-          path: `/increaseCredit/?credit=${this.creditAmount}`,
-        });
-      } else {
-        this.addCreditModal = true;
-        this.clientCredit.credit = this.creditAmount;
-        this.clientCredit.clientId = this.order.client.id;
-      }
+      this.addCreditModal = true;
+      this.clientCredit.credit = this.creditAmount;
+      this.clientCredit.clientId = this.order.client.id;
+      this.$store.commit('bookShop/clearBag', {
+        module: 'bookShop',
+      });
     },
     closeWarn() {
       this.enableCreditWarn = false;
@@ -279,13 +342,38 @@ export default {
       this.submitPay = false;
     },
   },
+  watch: {
+    order(newVal) {
+      if (this.order.type !== 'SELL') {
+        this.finalTotal = newVal.invoice.finalTotal;
+      } else {
+        this.finalTotal = '';
+      }
+    },
+  },
+  computed: {
+    total() {
+      if (this.order.type !== 'SELL') {
+        return this.order.invoice.finalTotal;
+      }
+      return 0;
+    },
+  },
+
   mounted() {
     this.$axios
       .get(`/v1/api/tabaadol-e-ketaab/order/${this.$route.params.orderId}`)
       .then(res => {
         if (res.status === 200) {
           this.order = res.data;
-          this.orderItems = res.data.invoice.books;
+          if (res.data.type !== 'SELL') {
+            console.log('ss');
+            this.finalTotal = res.data.invoice.finalTotal;
+            this.orderItems = res.data.invoice.books;
+          } else {
+            this.orderItems = res.data.books;
+          }
+
           this.isLoading = false;
         }
       });

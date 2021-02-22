@@ -69,6 +69,9 @@
           {{ $t(item.client.lastName) }}
         </span>
       </template>
+      <template v-slot:[`item.finalTotal`]="{ item }">
+        <span> {{ item.finalTotal }} {{ $t('rial') }} </span>
+      </template>
 
       <template v-slot:[`item.mobile`]="{ item }">
         <span class="numberDir">

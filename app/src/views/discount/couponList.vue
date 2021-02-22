@@ -2,8 +2,8 @@
   <div>
     <dataTableWrap
       :headers="headers"
-      :module="'discounts'"
-      :endpoint="'/v1/api/tabaadol-e-ketaab/category-discount/list'"
+      :module="'coupon'"
+      :endpoint="'/v1/api/tabaadol-e-ketaab/coupon/list'"
     />
   </div>
 </template>
@@ -12,7 +12,7 @@
 import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
-  name: 'discountsList',
+  name: 'couponList',
   components: {
     dataTableWrap,
   },
@@ -36,15 +36,6 @@ export default {
           align: 'center',
           divider: true,
         },
-        {
-          text: 'category',
-          value: 'categoryId',
-          filterable: true,
-          filterType: 'bookCategory',
-          align: 'center',
-          divider: true,
-        },
-
         {
           text: 'percent',
           value: 'percent',

@@ -285,6 +285,15 @@ const routes = [
           roles: [{ cd_discount: true }, { r_discount: true }],
         },
       },
+      {
+        path: '/couponList',
+        name: 'couponList',
+        component: () => import('../views/discount/couponList.vue'),
+        meta: {
+          requiresAuth: true,
+          roles: [{ cd_discount: true }, { r_discount: true }],
+        },
+      },
       // requested books
       {
         path: '/addRequestedBooks',

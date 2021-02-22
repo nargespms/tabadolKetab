@@ -63,7 +63,6 @@
       :style="`width:200px`"
       v-if="filterEnable && data.filterable && data.filterType === 'date'"
       class="pr-4 ma-auto mb-3"
-      :placeHolderText="'sendDate'"
       @setDate="setDate"
       :isRequired="false"
     />

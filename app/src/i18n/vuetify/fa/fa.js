@@ -161,6 +161,16 @@ export default {
   finalTotalBuy: 'قیمت نهایی خرید شما ',
   addToBag: 'افزودن به سبد خرید',
   bookDetailsInfo: 'اطلاعات تکمیلی کتاب',
+  categoryDiscountsList: ' تخفیفات دسته بندی',
+  couponDiscountsList: 'لیست بن های تخفیفات  ',
+  couponList: 'لیست بن های تخفیف',
+  deleteCoupon: 'حذف بن تخفیف',
+  RUSureUWantToDeletThisCoupon: 'آیا میخواهید این بن تخفیف را حذف نمایید؟',
+  discountPreview: 'مشاهده تخفیف',
+  couponDiscount: 'بن تخفیف',
+  Thisbookissoldorreservedorregisteredbyclient:
+    'کتاب مورد نظر رزرو شده است و یا به فروش رسیده است !',
+  invalidCoupon: 'بن تخفیف مورد نظر نامعتبر میباشد',
   // requested Books
   requestedBooks: 'کتاب‌های درخواستی',
   addRequestedBooks: 'ایجاد درخواست کتاب',

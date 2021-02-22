@@ -82,8 +82,8 @@
             <v-col cols="12" md="6" class="pa-0 pr-0 pr-md-4 pr-lg-4">
               <v-text-field
                 v-model.number="discount.percent"
-                :rules="requireRule"
                 :label="$t('percent')"
+                :rules="requireRule"
                 required
                 outlined
                 error-count="1"
@@ -97,7 +97,12 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6" class="pa-0 pb-6 pa-md-0 pa-lg-0">
+            <v-col
+              v-if="discount.type === 'category'"
+              cols="12"
+              md="6"
+              class="pa-0 pb-6 pa-md-0 pa-lg-0"
+            >
               <bookCatAutocomplete
                 :isRequire="bookCatVallidate"
                 @sendValue="getBookCat"
@@ -105,7 +110,15 @@
                 ref="bookCat"
               />
             </v-col>
-            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+            <v-col
+              cols="12"
+              md="6"
+              :class="
+                discount.type === 'category'
+                  ? 'pa-0 pr-md-4  pr-lg-4 pr-0'
+                  : 'pa-0'
+              "
+            >
               <v-text-field
                 v-model.number="discount.max"
                 :label="$t('discountMaxAmount')"
@@ -122,11 +135,19 @@
               class="pa-0"
             >
               <v-text-field
-                v-model.number="discount.number"
+                v-model.number="discount.count"
                 :label="$t('number')"
                 outlined
+                :rules="requireRule"
+                required
                 v-mask="'##########'"
-              ></v-text-field>
+              >
+                <template v-slot:prepend-inner>
+                  <span class="red--text">
+                    *
+                  </span>
+                </template>
+              </v-text-field>
             </v-col>
             <v-col
               v-if="discount.type === 'discountCode'"
@@ -135,14 +156,12 @@
               class="pa-0 pr-md-4  pr-lg-4 pr-0"
             >
               <v-text-field
-                v-model="discount.preCode"
+                v-model="discount.prefix"
                 :label="$t('discountCode')"
                 :rules="prefix"
                 outlined
                 :hint="
-                  this.discount.preCode
-                    ? `${$t('legalCharsAreEngCharNum')}`
-                    : ''
+                  this.discount.prefix ? `${$t('legalCharsAreEngCharNum')}` : ''
                 "
                 persistent-hint
               ></v-text-field>
@@ -236,9 +255,15 @@ export default {
 
   methods: {
     discountsList() {
-      this.$router.push({
-        name: 'discountsList',
-      });
+      if (this.discount.type === 'category') {
+        this.$router.push({
+          name: 'discountsList',
+        });
+      } else {
+        this.$router.push({
+          name: 'couponList',
+        });
+      }
     },
     getBookCat(value) {
       this.discount.categoryId = value;
@@ -273,11 +298,13 @@ export default {
       } else {
         this.toDateValidation = true;
       }
-      // book category validation
-      if (this.$refs.bookCat.model === null) {
-        this.bookCatVallidate = true;
-      } else {
-        this.bookCatVallidate = false;
+      if (this.discount.type === 'category') {
+        // book category validation
+        if (this.$refs.bookCat.model === null) {
+          this.bookCatVallidate = true;
+        } else {
+          this.bookCatVallidate = false;
+        }
       }
       if (this.discount.type === 'category') {
         this.endpoint = '/v1/api/tabaadol-e-ketaab/category-discount';

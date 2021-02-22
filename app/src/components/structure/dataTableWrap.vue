@@ -50,6 +50,16 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <lazyCouponTable
+      @reloadTable="getData"
+      @getData="getData"
+      v-if="this.module === 'coupon'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
     <requestedBooksTable
       @reloadTable="getData"
       @getData="getData"
@@ -189,6 +199,7 @@ import clientsTable from '../users/clientsTable.vue';
 import bookCategoryTable from '../bookCategory/bookCategoryTable.vue';
 import ticketsTable from '../tickets/ticketsTable.vue';
 import discountsTable from '../discount/discountsTable.vue';
+import lazyCouponTable from '../discount/lazyCouponTable.vue';
 import requestedBooksTable from '../requestedBook/requestedBooksTable.vue';
 import lazyBookTable from '../book/lazyBookTable.vue';
 import postTable from '../post/postTable.vue';
@@ -210,6 +221,7 @@ export default {
     bookCategoryTable,
     ticketsTable,
     discountsTable,
+    lazyCouponTable,
     requestedBooksTable,
     lazyBookTable,
     postTable,

@@ -71,6 +71,9 @@ export default {
     clearable: {
       type: Boolean,
     },
+    editDataId: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -99,6 +102,24 @@ export default {
       this.model = '';
       this.$emit('sendValue', this.model);
     },
+    getPublisher() {
+      const edittingPublisher = this.items.find(item => {
+        return item.id === this.editDataId;
+      });
+      this.model = edittingPublisher.id;
+      this.$emit('sendValue', this.model);
+    },
+    getData() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/publishers').then(res => {
+        if (res.status === 200) {
+          this.items = res.data.publishers;
+          this.isLoading = false;
+          if (this.editDataId.length > 0) {
+            this.getPublisher();
+          }
+        }
+      });
+    },
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
@@ -117,6 +138,14 @@ export default {
     isRequire(newVal) {
       this.localRequire = newVal;
     },
+    editDataId() {
+      this.getData();
+    },
+  },
+  mounted() {
+    if (this.editDataId) {
+      this.getData();
+    }
   },
 };
 </script>

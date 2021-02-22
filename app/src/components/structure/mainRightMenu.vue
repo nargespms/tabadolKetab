@@ -333,8 +333,14 @@ export default {
               condition: true,
             },
             {
-              title: 'discountsList',
+              title: 'categoryDiscountsList',
               link: '/discountsList',
+              icon: 'fa fa-table',
+              condition: true,
+            },
+            {
+              title: 'couponDiscountsList',
+              link: '/couponList',
               icon: 'fa fa-table',
               condition: true,
             },

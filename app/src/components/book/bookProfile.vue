@@ -21,7 +21,7 @@
             {{ book.name }}
           </span>
         </p>
-        <p>
+        <p v-if="book.publisher || book.writer">
           <span v-if="book.publisher" class="primary--text">
             {{ book.publisher.title }}
           </span>
@@ -39,8 +39,12 @@
                 : ''
             "
           >
-            <span> {{ $t('mainPrice') }} : </span>
-            <span> {{ book.undergraduatePrice }} {{ $t('rial') }} </span>
+            <span v-if="book.undergraduatePrice">
+              {{ $t('mainPrice') }} :
+            </span>
+            <span v-if="book.undergraduatePrice">
+              {{ book.undergraduatePrice }} {{ $t('rial') }}
+            </span>
           </p>
           <p v-if="book.discount > 0" class="bookDiscount">
             {{ $t('discountAmount') }}: {{ book.discount }}
@@ -66,7 +70,7 @@
           </span>
           <p>{{ book.summary }}</p>
         </div>
-        <div class="detailsBook">
+        <div class="detailsBook mt-4">
           <bookDetails :data="book" />
         </div>
       </v-col>

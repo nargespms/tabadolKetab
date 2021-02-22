@@ -157,15 +157,15 @@ export default {
       changeStatusButs: [
         {
           name: 'AVAILABLE',
-          color: 'purple',
-        },
-        {
-          name: 'UNAVAILABLE',
           color: 'green',
         },
         {
-          name: 'PENDING',
+          name: 'UNAVAILABLE',
           color: 'red',
+        },
+        {
+          name: 'PENDING',
+          color: 'purple',
         },
       ],
       filter: {},
@@ -204,6 +204,7 @@ export default {
             this.enableStatusChange = false;
             this.changingStatusItem = {};
             this.successNotif = true;
+            this.reloadTable();
           }
         });
     },

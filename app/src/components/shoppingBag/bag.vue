@@ -157,6 +157,11 @@ export default {
               this.errorEnable = true;
               this.errorMsg = 'selectYourAddress';
             }
+            if (e.response.status === 404) {
+              this.orderLoading = false;
+              this.errorEnable = true;
+              this.errorMsg = 'Thisbookissoldorreservedorregisteredbyclient';
+            }
           });
       } else {
         this.orderLoading = false;
