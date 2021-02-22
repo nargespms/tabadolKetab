@@ -18,11 +18,16 @@
         <v-card-subtitle class="pt-3">
           <p v-if="book.shabak">{{ $t('shabak') }} : {{ book.shabak }}</p>
           <p v-if="book.publisher">
-            {{ $t('publisher') }} : {{ book.publisher }}
+            {{ $t('publisher') }} : {{ book.publisher.title }}
           </p>
-          <p v-if="book.searcher">{{ $t('searcher') }} : {{ book.searcher }}</p>
-          <p v-if="book.author">{{ $t('author') }} : {{ book.author }}</p>
-          <p v-if="book.author">{{ $t('author') }} : {{ book.author }}</p>
+          <p v-if="book.searcher">
+            {{ $t('searcher') }} : {{ book.searcher.title }}
+          </p>
+          <p v-if="book.author">{{ $t('author') }} : {{ book.author.title }}</p>
+          <p v-if="book.translator">
+            {{ $t('translator') }} : {{ book.translator.title }}
+          </p>
+          <p v-if="book.writer">{{ $t('writer') }} : {{ book.writer.title }}</p>
         </v-card-subtitle>
       </v-card>
     </v-col>

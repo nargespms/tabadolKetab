@@ -21,10 +21,18 @@
               {{ $t(item.text) }}
             </span>
           </v-col>
-          <v-col cols="12" lg="6">
-            <span v-if="item.value">
+          <v-col cols="12" lg="6" v-if="item.text !== 'tags'">
+            <span v-if="item.value.length > 0">
               {{ item.value }}
             </span>
+          </v-col>
+
+          <v-col cols="12" lg="6" v-if="item.text === 'tags'">
+            <template v-for="tag in item.value">
+              <span v-if="item.value.length > 0" :key="tag.id">
+                {{ tag.title }} -
+              </span>
+            </template>
           </v-col>
         </v-row>
       </template>
@@ -43,32 +51,33 @@ export default {
   data() {
     return {
       items: [
-        { text: 'shabak', value: this.data.shabak ? this.data.shabak : null },
+        { text: 'shabak', value: this.data.shabak ? this.data.shabak : '' },
         {
           text: 'author',
-          value: this.data.author.title ? this.data.author.title : null,
+          value: this.data.author ? this.data.author.title : '',
         },
         {
           text: 'writer',
-          value: this.data.writer.title ? this.data.writer.title : null,
+          value: this.data.writer ? this.data.writer.title : '',
         },
         {
           text: 'publisher',
-          value: this.data.publisher.title ? this.data.publisher.title : null,
+          value: this.data.publisher ? this.data.publisher.title : '',
         },
         {
           text: 'searcher',
-          value: this.data.searcher.title ? this.data.searcher.title : null,
+          value: this.data.searcher ? this.data.searcher.title : '',
         },
         {
           text: 'translator',
-          value: this.data.translator.title ? this.data.translator.title : null,
+          value: this.data.translator ? this.data.translator.title : '',
         },
         {
           text: 'category',
-          value: this.data.category.title ? this.data.category.title : null,
+          value: this.data.category ? this.data.category.title : '',
         },
         { text: 'bookLang', value: this.$t(this.data.bookLang) },
+        { text: 'tags', value: this.data.tags },
       ],
     };
   },

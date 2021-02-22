@@ -62,7 +62,11 @@
           <td>
             {{ $t(item.status) }}
           </td>
-          <td></td>
+          <td>
+            <template v-for="tag in item.tags">
+              <span :key="tag.id"> {{ tag.title }}- </span>
+            </template>
+          </td>
           <td>
             {{ item.undergraduatePrice }}
           </td>

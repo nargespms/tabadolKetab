@@ -170,6 +170,7 @@ export default {
   couponDiscount: 'بن تخفیف',
   Thisbookissoldorreservedorregisteredbyclient:
     'کتاب مورد نظر رزرو شده است و یا به فروش رسیده است !',
+  youcannoteditthisbook: 'کتاب مورد نظر قابل ویرایش نمیباشد',
   invalidCoupon: 'بن تخفیف مورد نظر نامعتبر میباشد',
   // requested Books
   requestedBooks: 'کتاب‌های درخواستی',

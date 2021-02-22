@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  name: 'authorAutocomplete',
+  name: 'tagsAutocomplete',
   props: {
     placeHolder: {
       type: String,
@@ -63,6 +63,9 @@ export default {
     },
     isRequire: {
       type: Boolean,
+    },
+    editDataId: {
+      type: Array,
     },
   },
   data() {
@@ -86,6 +89,15 @@ export default {
       const index = this.model.indexOf(item.id);
       if (index >= 0) this.model.splice(index, 1);
     },
+    getData() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/tags').then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.items = res.data.tags;
+          this.isLoading = false;
+        }
+      });
+    },
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
@@ -105,6 +117,19 @@ export default {
     isRequire(newVal) {
       this.localRequire = newVal;
     },
+    editDataId(newVal) {
+      this.model = newVal;
+    },
+  },
+  mounted() {
+    if (this.editDataId.length > 0) {
+      this.getData();
+      this.model = [];
+      this.editDataId.forEach(tag => {
+        this.model.push(tag.id);
+      });
+      this.$emit('sendValue', this.model);
+    }
   },
 };
 </script>

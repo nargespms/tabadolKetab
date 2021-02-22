@@ -59,7 +59,7 @@ export default {
           text: 'tags',
           value: 'tags',
           align: 'center',
-          filterable: true,
+          filterable: false,
           divider: true,
         },
         {
@@ -149,7 +149,7 @@ export default {
           text: 'tags',
           value: 'tags',
           align: 'center',
-          filterable: true,
+          filterable: false,
           divider: true,
         },
         {

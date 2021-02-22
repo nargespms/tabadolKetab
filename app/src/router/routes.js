@@ -177,6 +177,8 @@ const routes = [
         meta: {
           requiresAuth: true,
           roles: [{ r_book: true }],
+          access: 'BOTH',
+          cRole: 'CLIENT',
         },
       },
       {

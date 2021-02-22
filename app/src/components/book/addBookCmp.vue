@@ -192,6 +192,7 @@
                   :placeHolder="'tags'"
                   @sendValue="getTag"
                   :height="32"
+                  :editDataId="mode === 'edit' && book.tags ? book.tags : []"
                 />
               </div>
             </v-col>

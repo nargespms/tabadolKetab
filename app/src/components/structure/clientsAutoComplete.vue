@@ -113,8 +113,6 @@ export default {
       const edittingClient = this.items.find(item => {
         return item.id === this.editDataId;
       });
-      console.log(edittingClient);
-      console.log('3');
       this.model = edittingClient.id;
       this.$emit('sendValue', this.model);
     },
@@ -128,7 +126,6 @@ export default {
           }));
           this.isLoading = false;
           if (this.editDataId.length > 0) {
-            console.log('2');
             this.getClient();
           }
         }
