@@ -6,6 +6,7 @@
           :lable="'ticketsNumber'"
           :number="tickets.total"
           :color="color"
+          :link="'ticketsList'"
         />
       </v-col>
       <v-col cols="12" lg="3">
@@ -13,6 +14,7 @@
           :lable="'todayTicketsNumber'"
           :number="tickets.todayNumber"
           :color="color"
+          :link="`/ticketsList?filter[createdAt]=${this.today}`"
         />
       </v-col>
     </v-row>
@@ -35,6 +37,41 @@ export default {
         todayNumber: 10,
       },
     };
+  },
+  computed: {
+    today() {
+      return new Date().toISOString();
+    },
+  },
+  methods: {
+    getTotalTickets() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/report/tickets').then(res => {
+        if (res.status === 200) {
+          console.log(res.data);
+          this.tickets.total = res.data.count;
+        }
+      });
+    },
+    getTodayTickets() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/report/tickets', {
+          params: {
+            filter: {
+              createdAt: new Date(),
+            },
+          },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res.data);
+            this.tickets.todayNumber = res.data.count;
+          }
+        });
+    },
+  },
+  mounted() {
+    this.getTotalTickets();
+    this.getTodayTickets();
   },
 };
 </script>

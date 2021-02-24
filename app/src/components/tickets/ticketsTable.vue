@@ -53,6 +53,7 @@
                     : []
                 "
                 @filterCol="filterCol"
+                :editData="options.filter ? options.filter : {}"
               />
             </th>
           </tr>
