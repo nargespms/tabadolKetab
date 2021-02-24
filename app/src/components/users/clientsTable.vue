@@ -47,6 +47,7 @@
                 :data="h"
                 @filterCol="filterCol"
                 :items="h.text === 'status' ? statusItems : []"
+                :editData="options.filter ? options.filter : {}"
               />
             </th>
           </tr>

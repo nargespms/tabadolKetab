@@ -1,134 +1,173 @@
 <template>
   <div>
-    <span class="fn-25">
-      🧑‍💻
-    </span>
     <v-toolbar color="teal " flat height="48">
       <span class="pr-4 font-weight-medium white--text">
         {{ $t('logsList') }}
       </span>
     </v-toolbar>
-    <v-progress-linear
-      v-if="isLoading"
-      color="primary"
-      indeterminate
-    ></v-progress-linear>
+
     <table
-      v-if="!isLoading"
       class="generalTable "
-      :class="$vuetify.breakpoint.lg ? '' : 'tableMobileScroll'"
+      :class="
+        $vuetify.breakpoint.xl
+          ? ''
+          : $vuetify.breakpoint.lg
+          ? ''
+          : 'tableMobileScroll'
+      "
     >
       <thead class="grey lighten-2">
-        <th>
-          {{ $t('title') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('module') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('date') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>
-          {{ $t('user') }}
-          <v-icon color="grey" size="11" class="pa-2" @click="filter"
-            >fas fa-filter
-          </v-icon>
-        </th>
-        <th>{{ $t('userInfo') }}</th>
-        <th>
-          {{ $t('ip') }}
+        <th v-for="h in headers" :key="h.index">
+          <tableHeaderCell :data="h" @filterCol="filterCol" />
         </th>
       </thead>
-      <tbody>
+      <tbody v-if="tableData.length > 0">
         <tr v-for="item in tableData" :key="item.index">
           <td>
-            {{ item.name }}
+            {{ $t(item.action) }}
           </td>
           <td>
-            {{ item.name }}
+            {{ $t(item.appModule) }}
           </td>
           <td>
-            {{ item.name }}
+            <span
+              v-if="item.code === '200' || item.code === '204'"
+              class="http200"
+            >
+              {{ item.code }}
+            </span>
+            <span
+              v-if="
+                item.code === '400' ||
+                  item.code === '404' ||
+                  item.code === '406' ||
+                  item.code === '412' ||
+                  item.code === '403' ||
+                  item.code === '422' ||
+                  item.code === '409'
+              "
+              class="http400"
+            >
+              {{ item.code }}
+            </span>
           </td>
           <td>
-            {{ item.name }}
+            {{ new Date(item.createdAt).toLocaleDateString('fa') }}
           </td>
           <td>
-            {{ item.name }}
+            {{ item.user.firstName }}
+            {{ item.user.lastName }}
           </td>
           <td>
-            {{ item.name }}
+            {{ item.ip }}
+          </td>
+          <td>
+            {{ item.ua }}
           </td>
         </tr>
+      </tbody>
+      <tbody v-if="tableData.length === 0">
+        <td colspan="11" class=" pa-4 ma-auto ">
+          <span class="text-center">
+            {{ $t('noResultsText') }}
+          </span>
+        </td>
       </tbody>
     </table>
     <div class="d-flex justify-center">
       <v-btn
         class="ma-2 d-flex"
         :loading="loadingMore"
-        :disabled="loadingMore"
+        :disabled="enableLoadingMore"
         color="teal white--text"
         @click="getMoreData"
       >
-        {{ $t('uploadeMore') }}
+        {{ $t(uploadMoreBut) }}
       </v-btn>
     </div>
   </div>
 </template>
 
 <script>
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
+
 export default {
   name: 'lazyLogTable',
+  components: {
+    tableHeaderCell,
+  },
+  props: {
+    headers: { type: Array },
+    tableData: { type: Array },
+    totalData: { type: Number },
+    loading: { type: Boolean },
+    options: {
+      type: Object,
+      default: () => ({
+        descending: false,
+        page: 1,
+        limit: 10,
+      }),
+    },
+  },
   data() {
     return {
-      isLoading: true,
+      innerOptions: this.options,
       loadingMore: false,
-      tableData: [],
+      enableLoadingMore: false,
+      filter: {},
+      uploadMoreBut: 'uploadeMore',
+      isLoading: true,
     };
   },
   methods: {
-    // filter
-    filter() {
-      console.log('filtered');
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
     },
-    getData() {
-      this.$axios
-        .get('https://jsonplaceholder.typicode.com/users')
-        .then(res => {
-          console.log();
-          this.tableData = res.data;
-          this.isLoading = false;
-        });
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+      });
     },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
+    },
+
     getMoreData() {
       this.loadingMore = true;
+      this.enableLoadingMore = true;
       this.$axios
-        .get('https://jsonplaceholder.typicode.com/users')
+        .get('/v1/api/tabaadol-e-ketaab/log/list', {
+          params: {
+            offset: this.tableData.length,
+            limit: this.innerOptions.limit,
+          },
+        })
         .then(res => {
-          console.log();
-          this.tableData.push(...res.data);
-          this.loadingMore = false;
+          if (res.status === 200) {
+            if (res.data.result.docs.length > 0) {
+              this.tableData.push(...res.data.result.docs);
+              this.enableLoadingMore = false;
+            } else {
+              this.uploadMoreBut = 'endOfList';
+              this.enableLoadingMore = true;
+            }
+            this.loadingMore = false;
+          }
         });
     },
   },
   watch: {
-    enablePreview(newVal) {
-      if (newVal === false) {
-        this.previewItem = {};
-      }
+    options: {
+      handler(newVal) {
+        this.innerOptions = newVal;
+      },
     },
-  },
-  mounted() {
-    this.getData();
   },
 };
 </script>
@@ -150,5 +189,20 @@ export default {
   display: block;
   overflow-x: auto;
   white-space: nowrap;
+}
+.http200 {
+  background-color: #43a047;
+  border-radius: 2px;
+  padding: 0px 8px;
+}
+.http400 {
+  background-color: #d50000;
+  border-radius: 2px;
+  padding: 0px 8px;
+}
+.http300 {
+  background-color: #f57c00;
+  border-radius: 2px;
+  padding: 0px 8px;
 }
 </style>

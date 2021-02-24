@@ -182,6 +182,16 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <lazyLogTable
+      @reloadTable="getData"
+      @getData="getData"
+      v-if="this.module === 'logs'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
 
     <notifMessage
       v-if="errorEnable"
@@ -212,6 +222,7 @@ import accessLevelTable from '../accessLevel/accessLevelTable.vue';
 import notifMessage from './notifMessage.vue';
 import lazyMessagesTable from '../messages/lazyMessagesTable.vue';
 import lazycreditTable from '../credit/lazycreditTable.vue';
+import lazyLogTable from '../logs/lazyLogTable.vue';
 
 export default {
   name: 'dataTableWrap',
@@ -235,6 +246,7 @@ export default {
     lazyMessagesTable,
     lazycreditTable,
     postRequestTable,
+    lazyLogTable,
   },
   props: {
     headers: {
@@ -260,14 +272,15 @@ export default {
       // error
       errorEnable: false,
       errorMsg: '',
+      urlFilter: {},
     };
   },
   methods: {
     getData(props) {
       const { page, itemsPerPage, sortBy, limit } = props.options;
       const { filter } = props;
-      console.log(itemsPerPage);
-      console.log(sortBy);
+      console.log(`itemsPerPage${itemsPerPage}`);
+      console.log(`sortBy${sortBy}`);
 
       this.$axios
         .get(this.endpoint, {
@@ -312,7 +325,19 @@ export default {
   //   },
   // },
   mounted() {
-    this.getData({ options: this.options });
+    if (this.$route.query) {
+      Object.keys(this.$route.query)
+        .filter(f => f.match(/^filter\[[a-z0-9]+\]/i))
+        .forEach(f => {
+          const v = this.$route.query[f].trim();
+          const [, field] = f.match(/^filter\[([^\]]+)]$/);
+          this.urlFilter[field] = v;
+        });
+      this.options.filter = this.urlFilter;
+      this.getData({ options: this.options, filter: this.urlFilter });
+    } else {
+      this.getData({ options: this.options });
+    }
   },
 };
 </script>

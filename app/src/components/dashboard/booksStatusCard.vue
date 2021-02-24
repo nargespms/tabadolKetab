@@ -102,7 +102,10 @@ export default {
         mostSoldCat: 'مذهبی',
         todayMostSoldCat: 'اجتماعی',
       },
+      isLoading: true,
     };
   },
+  methods: {},
+  mounted() {},
 };
 </script>

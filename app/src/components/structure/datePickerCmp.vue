@@ -1,5 +1,8 @@
 <template>
   <div>
+    <span v-if="editData">
+      {{ dateComming }}
+    </span>
     <date-picker
       v-model="date"
       :placeholder="$t(placeHolderText)"
@@ -33,10 +36,15 @@ export default {
     isRequired: {
       type: Boolean,
     },
+    editData: {
+      type: String,
+    },
   },
+
   data() {
     return {
       date: '',
+      dateComming: '',
       valid: this.validate,
     };
   },
@@ -57,7 +65,18 @@ export default {
     },
     date(newVal) {
       this.$emit('setDate', newVal);
+      this.dateComming = '';
     },
+    editData(newVal) {
+      this.dateComming = new this.$persianDate(new Date(newVal)).format('L');
+    },
+  },
+  mounted() {
+    if (this.editData) {
+      this.dateComming = new this.$persianDate(new Date(this.editData)).format(
+        'L'
+      );
+    }
   },
 };
 </script>

@@ -17,7 +17,12 @@
             <v-tab-item>
               <v-card flat>
                 <v-card-text>
-                  <v-form class="pt-6" ref="form" v-model="validMobile" lazy-validation>
+                  <v-form
+                    class="pt-6"
+                    ref="form"
+                    v-model="validMobile"
+                    lazy-validation
+                  >
                     <mobilePhone :isRequired="true" />
                     <div class="justify-center d-flex">
                       <v-btn
@@ -67,8 +72,15 @@ export default {
     validateMobile() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-        this.validMobile = true;
+        this.$axios
+          .post('/v1/api/tabaadol-e-ketaab/staff/verify-mobile')
+          .then(res => {
+            console.log(res);
+            if (res.status === 200) {
+              this.saveSuccess = true;
+              this.validMobile = true;
+            }
+          });
       } else {
         this.validMobile = false;
       }

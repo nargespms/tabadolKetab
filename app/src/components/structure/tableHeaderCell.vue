@@ -65,6 +65,7 @@
       class="pr-4 ma-auto mb-3"
       @setDate="setDate"
       :isRequired="false"
+      :editData="editData ? editData[data.value] : ''"
     />
 
     <template v-if="filterEnable && data.filterType === 'staffUsers'">
@@ -120,6 +121,9 @@ export default {
     },
     items: {
       type: Array,
+    },
+    editData: {
+      type: Object,
     },
   },
   data() {
@@ -213,6 +217,22 @@ export default {
       console.log(name);
       this.$emit('filterCol', this.filter, name);
     }, 1500),
+  },
+  watch: {
+    editData(newVal) {
+      if (this.editData && Object.keys(this.editData)[0] === this.data.value) {
+        this.filter = newVal;
+      }
+    },
+  },
+  mounted() {
+    if (this.editData && Object.keys(this.editData)[0] === this.data.value) {
+      // console.log(this.editData);
+      // console.log(Object.keys(this.editData)[0]);
+      // console.log(this.data.value);
+      this.filter = this.editData;
+      console.log('ss');
+    }
   },
 };
 </script>

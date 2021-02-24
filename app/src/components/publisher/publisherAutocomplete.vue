@@ -99,7 +99,7 @@ export default {
       }
     },
     clear() {
-      this.model = '';
+      this.model = null;
       this.$emit('sendValue', this.model);
     },
     getPublisher() {

@@ -28,39 +28,39 @@ Router.beforeEach((to, from, next) => {
 
       if (to.meta.access === 'BOTH') {
         if (to.meta.cRole === userRole) {
-          console.log('Both & client HAPPY');
+          // console.log('Both & client HAPPY');
           next();
         } else if (to.meta.cRole !== userRole) {
           if (
             routeRules.some(role => userRole[Object.keys(role)[0]] === true)
           ) {
-            console.log('Both & staff HAPPY');
+            // console.log('Both & staff HAPPY');
 
             next();
           } else {
-            console.log('Both & staff UNHAPPY');
+            // console.log('Both & staff UNHAPPY');
 
             next({ name: '404' });
           }
         } else {
-          console.log('Both & client UNHAPPY');
+          // console.log('Both & client UNHAPPY');
 
           next({ name: '404' });
         }
       } else if (to.meta.access === 'CLIENT') {
         if (to.meta.cRole === userRole) {
-          console.log('ONLY client & happy');
+          // console.log('ONLY client & happy');
           next();
         } else {
-          console.log('ONLY client & unhappy');
+          // console.log('ONLY client & unhappy');
           next({ name: '404' });
         }
       } else if (to.meta.access !== 'CLIENT' && to.meta.access !== 'BOTH') {
         if (routeRules.some(role => userRole[Object.keys(role)[0]] === true)) {
-          console.log('ONLY staff & happy');
+          // console.log('ONLY staff & happy');
           next();
         } else {
-          console.log('ONLY staff & unhappy');
+          // console.log('ONLY staff & unhappy');
 
           next({ name: '404' });
         }

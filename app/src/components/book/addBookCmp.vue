@@ -73,6 +73,7 @@
                 :editDataId="
                   mode === 'edit' && book.writer ? book.writer.id : ''
                 "
+                :clearable="true"
               />
             </v-col>
           </v-row>
@@ -87,6 +88,7 @@
                 :editDataId="
                   mode === 'edit' && book.author ? book.author.id : ''
                 "
+                :clearable="true"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
@@ -99,6 +101,7 @@
                 :editDataId="
                   mode === 'edit' && book.translator ? book.translator.id : ''
                 "
+                :clearable="true"
               />
             </v-col>
           </v-row>
@@ -113,6 +116,7 @@
                 :editDataId="
                   mode === 'edit' && book.searcher ? book.searcher.id : ''
                 "
+                :clearable="true"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
@@ -125,6 +129,7 @@
                 :editDataId="
                   mode === 'edit' && book.publisher ? book.publisher.id : ''
                 "
+                :clearable="true"
               />
             </v-col>
           </v-row>

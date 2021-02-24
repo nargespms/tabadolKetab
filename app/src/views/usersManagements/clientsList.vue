@@ -82,7 +82,7 @@ export default {
           value: 'createdAt',
           align: 'center',
           filterable: true,
-          filtertype: 'date',
+          filterType: 'date',
           divider: true,
         },
         {
