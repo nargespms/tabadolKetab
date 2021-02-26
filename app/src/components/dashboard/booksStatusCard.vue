@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" lg="3">
         <statusCard
-          :lable="'totalRegisteredBookNumber'"
+          :lable="'totalBookNumber'"
           :number="books.totalRegistered"
           :color="color"
         />
@@ -60,22 +60,6 @@
         />
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12" lg="3">
-        <statusCard
-          :lable="'mostSoldCategory'"
-          :item="books.mostSoldCat"
-          :color="color"
-        />
-      </v-col>
-      <v-col cols="12" lg="3">
-        <statusCard
-          :lable="'todayMostSoldCategory'"
-          :item="books.todayMostSoldCat"
-          :color="color"
-        />
-      </v-col>
-    </v-row>
   </div>
 </template>
 
@@ -99,8 +83,6 @@ export default {
         soldBooks: 130,
         todaysoldBooks: 30,
         reqbooks: 3,
-        mostSoldCat: 'مذهبی',
-        todayMostSoldCat: 'اجتماعی',
       },
       isLoading: true,
     };

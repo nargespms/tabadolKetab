@@ -549,4 +549,6 @@ export default {
   startDateShouldStartFromTommorow: 'تاریخ شروع باید از یک روزآینده شروع شود.',
   invalidDateRange: 'بازه زمانی نادرست است',
   thisBookCanNotBeDeleted: 'این کتاب قابل حذف شدن نیست',
+  receiveDate: 'تاریخ دریافت',
+  totalBookNumber: 'تعداد کل کتاب ها',
 };
