@@ -1,8 +1,5 @@
 <template>
   <div>
-    <span class="fn-25">
-      🧑‍💻
-    </span>
     <div class="d-flex flex-row-reverse ma-4">
       <v-btn
         color="light-blue darken-2"
@@ -261,10 +258,13 @@ export default {
     },
   },
   watch: {
-    options: {
+    innerOptions: {
       handler(newVal) {
-        this.innerOptions = newVal;
+        this.onRequest({
+          options: newVal,
+        });
       },
+      deep: true,
     },
     enableEdit(newVal) {
       if (newVal === false) {

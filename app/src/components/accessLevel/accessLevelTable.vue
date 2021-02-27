@@ -6,9 +6,9 @@
       :options.sync="innerOptions"
       update:options
       :server-items-length="totalData"
+      hide-default-header
       :loading="loading"
       class="elevation-1 text-center ma-4"
-      hide-default-header
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
     >
@@ -134,10 +134,13 @@ export default {
     },
   },
   watch: {
-    options: {
+    innerOptions: {
       handler(newVal) {
-        this.innerOptions = newVal;
+        this.onRequest({
+          options: newVal,
+        });
       },
+      deep: true,
     },
   },
 };

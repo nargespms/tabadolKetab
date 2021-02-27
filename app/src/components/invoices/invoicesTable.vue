@@ -197,10 +197,13 @@ export default {
     },
   },
   watch: {
-    options: {
+    innerOptions: {
       handler(newVal) {
-        this.innerOptions = newVal;
+        this.onRequest({
+          options: newVal,
+        });
       },
+      deep: true,
     },
     enablePreview(newVal) {
       if (newVal === false) {

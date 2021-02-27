@@ -20,6 +20,7 @@
       :totalData="totalData"
       :loading="loading"
     />
+
     <bookCategoryTable
       @reloadTable="getData"
       @getData="getData"
@@ -278,7 +279,7 @@ export default {
       loading: true,
       options: {
         page: 1,
-        sortBy: 'time',
+        // sortBy: 'time',
         limit: 10,
       },
       // error
@@ -305,14 +306,10 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.tableData = res.data.result.docs;
-            this.totalData = this.tableData.length;
+            this.totalData = res.data.result.totalDocs;
+            // console.log(this.tableData);
+            // console.log(this.totalData);
             this.loading = false;
-            if (itemsPerPage > 0) {
-              this.tableData = this.tableData.slice(
-                (page - 1) * itemsPerPage,
-                page * itemsPerPage
-              );
-            }
           }
         })
         .catch(e => {
@@ -325,17 +322,14 @@ export default {
         });
     },
   },
-  // watch: {
-  //   options: {
-  //     handler() {
-  //       this.getUsers().then(res => {
-  //         this.tableData = res.items;
-  //         this.totalData = res.total;
-  //       });
-  //     },
-  //     deep: true,
-  //   },
-  // },
+  watch: {
+    options: {
+      handler() {
+        this.getData({ options: this.options });
+      },
+      deep: true,
+    },
+  },
   mounted() {
     if (this.$route.query) {
       Object.keys(this.$route.query)

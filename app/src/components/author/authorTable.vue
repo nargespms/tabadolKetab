@@ -17,9 +17,9 @@
       :options.sync="innerOptions"
       update:options
       :server-items-length="totalData"
+      hide-default-header
       :loading="loading"
       class="elevation-1 text-center ma-4"
-      hide-default-header
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
     >
@@ -166,7 +166,6 @@ export default {
       type: Object,
       default: () => ({
         descending: false,
-        page: 1,
         limit: 10,
       }),
     },
@@ -264,16 +263,29 @@ export default {
       });
     },
     onRequest(props) {
+      console.log('miay?');
       props.filter = this.filter;
       this.innerOptions = props.options;
       this.$emit('getData', props);
     },
   },
   watch: {
-    options: {
+    // options: {
+    //   handler(newVal) {
+    //     this.innerOptions = newVal;
+    //     this.onRequest({
+    //       options: this.innerOptions,
+    //     });
+    //   },
+    //   deep: true,
+    // },
+    innerOptions: {
       handler(newVal) {
-        this.innerOptions = newVal;
+        this.onRequest({
+          options: newVal,
+        });
       },
+      deep: true,
     },
     enablePreview(newVal) {
       if (newVal === false) {

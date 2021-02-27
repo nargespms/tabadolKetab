@@ -3,14 +3,14 @@
     <v-data-table
       :headers="headers"
       :items="tableData"
-      :options.sync="innerOptions"
-      update:page
-      :server-items-length="totalData"
       :loading="loading"
       class="elevation-1 text-center ma-4"
-      hide-default-header
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
+      :options.sync="innerOptions"
+      update:options
+      :server-items-length="totalData"
+      hide-default-header
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
@@ -74,6 +74,10 @@
           mdi-delete
         </v-icon>
       </template>
+      <!-- <template v-slot:[`footer`]="{ props }">
+        {{ props }}
+        <v-pagination v-model="page" :length="pageCount"></v-pagination>
+      </template> -->
     </v-data-table>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
@@ -213,10 +217,13 @@ export default {
     },
   },
   watch: {
-    options: {
+    innerOptions: {
       handler(newVal) {
-        this.innerOptions = newVal;
+        this.onRequest({
+          options: newVal,
+        });
       },
+      deep: true,
     },
   },
 };

@@ -127,6 +127,7 @@ export default {
       saveSuccess: false,
       publisher: {
         title: '',
+        active: true,
       },
       // error messages
       error: false,
@@ -167,7 +168,7 @@ export default {
               if (res.status === 200) {
                 this.saveSuccess = true;
                 this.reset();
-                this.publisher.active = false;
+                this.publisher.active = true;
               }
             })
             .catch(e => {
