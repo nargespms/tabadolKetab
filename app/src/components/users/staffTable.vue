@@ -15,13 +15,14 @@
       :headers="headers"
       :items="tableData"
       :loading="loading"
-      class="elevation-1 text-center ma-4"
+      class="elevation-1 text-center ma-4 clear"
       hide-default-header
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
       :options.sync="innerOptions"
       update:options
       :server-items-length="totalData"
+      hide-default-footer
     >
       <template v-slot:top>
         <v-toolbar color="teal" flat height="48">
@@ -125,14 +126,15 @@
           {{ $t('changeStatus') }}
         </v-tooltip>
       </template>
-      <!-- <template v-slot:[`footer`]="{ props }">
-        {{ props }}
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
         <v-pagination
-          :v-model="props.options.page"
+          class="pa-3 float-left"
+          v-model="innerOptions.page"
           :length="props.pagination.pageCount"
-          :total-visible="7"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
         ></v-pagination>
-      </template> -->
+      </template>
     </v-data-table>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog

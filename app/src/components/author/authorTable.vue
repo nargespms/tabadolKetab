@@ -19,9 +19,10 @@
       :server-items-length="totalData"
       hide-default-header
       :loading="loading"
-      class="elevation-1 text-center ma-4"
+      class="elevation-1 text-center ma-4 clear"
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
+      hide-default-footer
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
@@ -111,6 +112,15 @@
           </template>
           {{ $t('delete') }}
         </v-tooltip>
+      </template>
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
+        <v-pagination
+          class="pa-3 float-left"
+          v-model="innerOptions.page"
+          :length="props.pagination.pageCount"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+        ></v-pagination>
       </template>
     </v-data-table>
     <v-dialog
@@ -263,22 +273,12 @@ export default {
       });
     },
     onRequest(props) {
-      console.log('miay?');
       props.filter = this.filter;
       this.innerOptions = props.options;
       this.$emit('getData', props);
     },
   },
   watch: {
-    // options: {
-    //   handler(newVal) {
-    //     this.innerOptions = newVal;
-    //     this.onRequest({
-    //       options: this.innerOptions,
-    //     });
-    //   },
-    //   deep: true,
-    // },
     innerOptions: {
       handler(newVal) {
         this.onRequest({

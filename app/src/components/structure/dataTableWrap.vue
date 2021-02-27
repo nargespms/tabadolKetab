@@ -290,10 +290,8 @@ export default {
   },
   methods: {
     getData(props) {
-      const { page, itemsPerPage, sortBy, limit } = props.options;
+      const { page, limit } = props.options;
       const { filter } = props;
-      console.log(`itemsPerPage${itemsPerPage}`);
-      console.log(`sortBy${sortBy}`);
 
       this.$axios
         .get(this.endpoint, {

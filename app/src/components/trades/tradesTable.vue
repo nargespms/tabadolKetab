@@ -1,12 +1,6 @@
 <template>
   <div>
     <div class="d-flex flex-row-reverse ma-4">
-      <v-btn
-        color="light-blue darken-2"
-        class="white--text"
-        @click="printData"
-        >{{ $t('print') }}</v-btn
-      >
       <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
       }}</v-btn>
@@ -18,8 +12,9 @@
       update:options
       :server-items-length="totalData"
       :loading="loading"
-      class="elevation-1 text-center ma-4"
+      class="elevation-1 text-center ma-4 clear"
       hide-default-header
+      hide-default-footer
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
     >
@@ -56,6 +51,15 @@
           {{ item.staff.firstName }} &nbsp;
           {{ item.staff.lastName }}
         </span>
+      </template>
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
+        <v-pagination
+          class="pa-3 float-left"
+          v-model="innerOptions.page"
+          :length="props.pagination.pageCount"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+        ></v-pagination>
       </template>
     </v-data-table>
   </div>

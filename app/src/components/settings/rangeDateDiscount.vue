@@ -84,7 +84,6 @@ export default {
   },
   methods: {
     sendValue() {
-      console.log('chandbar inja miay?');
       this.$emit('setDateRange', this.rangeDate);
     },
     reset() {
