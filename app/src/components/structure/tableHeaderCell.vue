@@ -207,7 +207,7 @@ export default {
       this.filter[name] = '';
       delete this.filter[name];
       console.log(this.filter);
-      this.emitFilter(name);
+      // this.emitFilter(name);
     },
     // sort funcs
     sort() {
@@ -224,6 +224,9 @@ export default {
         this.filter = newVal;
       }
     },
+    filterEnable(newVal) {
+      this.filterEnable = newVal;
+    },
   },
   mounted() {
     if (this.editData && Object.keys(this.editData)[0] === this.data.value) {
@@ -231,6 +234,7 @@ export default {
       // console.log(Object.keys(this.editData)[0]);
       // console.log(this.data.value);
       this.filter = this.editData;
+      this.filterEnable = true;
       console.log('ss');
     }
   },

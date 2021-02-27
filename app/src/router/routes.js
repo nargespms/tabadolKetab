@@ -420,6 +420,15 @@ const routes = [
         },
       },
       {
+        path: '/tradesList',
+        name: 'tradesList',
+        component: () => import('../views/billing/tradesList.vue'),
+        meta: {
+          requiresAuth: true,
+          roles: [{ c_invoice: true }, { r_invoice: true }],
+        },
+      },
+      {
         path: '/generalSettings',
         name: 'generalSettings',
         component: () => import('../views/general/settings.vue'),
@@ -550,6 +559,12 @@ const routes = [
           roles: [{ r_report: true }],
         },
       },
+      {
+        name: 'accessDenied',
+        path: '403',
+        component: () => import('../views/errors/E403.vue'),
+      },
+      { path: '*', component: () => import('../views/errors/E404.vue') },
     ],
   },
 ];

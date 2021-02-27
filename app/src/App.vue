@@ -15,6 +15,50 @@
 <script>
 export default {
   name: 'App',
+  methods: {
+    // refresh token
+    refreshToken() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/refresh-token').catch(e => {
+        if (e.response.status === 403) {
+          console.log(this.$route);
+          if (
+            this.$route.name !== 'bookPreviewPage' ||
+            this.$route.name !== 'bookSearch'
+          ) {
+            if (
+              this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+              this.$store.state.bookShop.userInfo === null
+            ) {
+              this.$router.push({
+                name: 'login',
+              });
+            } else {
+              this.$router.push({
+                name: 'admin-login',
+              });
+            }
+          }
+          this.$store.commit('bookShop/loggedIn', false, {
+            module: 'bookShop',
+          });
+          this.$store.commit('bookShop/userEnter', null, {
+            module: 'bookShop',
+          });
+        }
+      });
+    },
+    cancelAutoUpdate() {
+      clearInterval(this.timer);
+    },
+  },
+  //  refresh token
+  created() {
+    this.refreshToken();
+    this.timer = setInterval(this.refreshToken, 3600000);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  },
 };
 </script>
 

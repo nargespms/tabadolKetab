@@ -4,7 +4,7 @@
       :headers="headers"
       :items="tableData"
       :options.sync="innerOptions"
-      update:options
+      update:page
       :server-items-length="totalData"
       :loading="loading"
       class="elevation-1 text-center ma-4"

@@ -132,6 +132,16 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <tradesTable
+      @reloadTable="getData"
+      @getData="getData"
+      v-if="this.module === 'trades'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
     <authorTable
       @reloadTable="getData"
       @getData="getData"
@@ -215,6 +225,7 @@ import lazyBookTable from '../book/lazyBookTable.vue';
 import postTable from '../post/postTable.vue';
 import forbiddenBookTable from '../forbiddenBook/forbiddenBookTable.vue';
 import invoicesTable from '../invoices/invoicesTable.vue';
+import tradesTable from '../trades/tradesTable.vue';
 import authorTable from '../author/authorTable.vue';
 import publishersTable from '../publisher/publishersTable.vue';
 import ordersTable from '../orders/ordersTable.vue';
@@ -238,6 +249,7 @@ export default {
     postTable,
     forbiddenBookTable,
     invoicesTable,
+    tradesTable,
     authorTable,
     publishersTable,
     ordersTable,
@@ -295,12 +307,12 @@ export default {
             this.tableData = res.data.result.docs;
             this.totalData = this.tableData.length;
             this.loading = false;
-            // if (itemsPerPage > 0) {
-            //   this.tableData = this.tableData.slice(
-            //     (page - 1) * itemsPerPage,
-            //     page * itemsPerPage
-            //   );
-            // }
+            if (itemsPerPage > 0) {
+              this.tableData = this.tableData.slice(
+                (page - 1) * itemsPerPage,
+                page * itemsPerPage
+              );
+            }
           }
         })
         .catch(e => {

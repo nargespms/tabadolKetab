@@ -491,19 +491,24 @@ export default {
             },
           ],
         },
-        // {
-        //   action: 'mdi-finance',
-        //   title: 'financialReport',
-        //   active: false,
-        //   condition: this.$store.state.bookShop.userInfo.role.r_report === true,
-        //   items: [
-        //     {
-        //       title: 'financialReport',
-        //       link: '/financialReport',
-        //       icon: 'fas fa-table',
-        //     },
-        //   ],
-        // },
+        {
+          action: 'mdi-cash-multiple',
+          title: 'trades',
+          active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role !== 'CLIENT' ||
+            this.$store.state.bookShop.userInfo.role.c_invoice === true ||
+            this.$store.state.bookShop.userInfo.role.r_invoice === true,
+          items: [
+            {
+              title: 'tradesList',
+              link: '/tradesList',
+              icon: 'fas fa-table',
+              condition: true,
+            },
+          ],
+        },
+
         {
           action: 'fas fa-tags',
           title: 'tags',

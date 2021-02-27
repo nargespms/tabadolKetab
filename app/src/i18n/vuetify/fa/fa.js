@@ -551,4 +551,10 @@ export default {
   thisBookCanNotBeDeleted: 'این کتاب قابل حذف شدن نیست',
   receiveDate: 'تاریخ دریافت',
   totalBookNumber: 'تعداد کل کتاب ها',
+  // trades
+  trades: 'معاملات',
+  tradesList: 'لیست معاملات',
+  tradesNumber: 'شماره معامله',
+  ErrorMessage404: 'متاسفانه صفحه مورد نظر پیدا نشد !',
+  ErrorMessage403: 'متاسفانه شما دسترسی این بخش را ندارید !',
 };

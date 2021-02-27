@@ -40,12 +40,12 @@ Router.beforeEach((to, from, next) => {
           } else {
             // console.log('Both & staff UNHAPPY');
 
-            next({ name: '404' });
+            next({ name: 'accessDenied' });
           }
         } else {
           // console.log('Both & client UNHAPPY');
 
-          next({ name: '404' });
+          next({ name: 'accessDenied' });
         }
       } else if (to.meta.access === 'CLIENT') {
         if (to.meta.cRole === userRole) {
@@ -53,7 +53,7 @@ Router.beforeEach((to, from, next) => {
           next();
         } else {
           // console.log('ONLY client & unhappy');
-          next({ name: '404' });
+          next({ name: 'accessDenied' });
         }
       } else if (to.meta.access !== 'CLIENT' && to.meta.access !== 'BOTH') {
         if (routeRules.some(role => userRole[Object.keys(role)[0]] === true)) {
@@ -62,7 +62,7 @@ Router.beforeEach((to, from, next) => {
         } else {
           // console.log('ONLY staff & unhappy');
 
-          next({ name: '404' });
+          next({ name: 'accessDenied' });
         }
       }
     }
