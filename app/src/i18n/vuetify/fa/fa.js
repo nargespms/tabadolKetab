@@ -494,6 +494,7 @@ export default {
   financialReport: 'گزارش مالی',
   totalBuy: 'جمع خرید',
   show: 'نمایش',
+  invoiceCount: 'تعدادفاکتور',
   transactionType: 'نوع تراکنش',
   categoryName: 'نام دسته بندی',
   cash: 'نقدی',

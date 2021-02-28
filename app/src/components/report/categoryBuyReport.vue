@@ -50,6 +50,7 @@
 <script>
 import financeReportTable from './financeReportTable.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
+import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'categoryBuyReport',
@@ -75,41 +76,30 @@ export default {
         {
           text: 'categoryName',
         },
-        {
-          text: 'number',
-        },
+
         {
           text: 'totalBuy',
         },
       ],
-      data: [
-        {
-          category: {
-            name: 'مذهبی ',
-          },
-          number: 5,
-          totalBuy: 120000,
-        },
-        {
-          category: {
-            name: 'اجتماعی ',
-          },
-          number: 10,
-          totalBuy: 120000,
-        },
-        {
-          category: {
-            name: 'سیاسی ',
-          },
-          number: 9,
-          totalBuy: 120000,
-        },
-      ],
+      data: [],
+      startDate: '',
+      endDate: '',
     };
   },
+  mixins: [dateTime],
+
   methods: {
     setDate(value) {
-      console.log(value);
+      if (value.fromDate.length > 0) {
+        this.startDate = new Date(
+          this.persionToGregorian(value.fromDate)
+        ).toISOString();
+      }
+      if (value.toDate.length > 0) {
+        this.endDate = new Date(
+          this.persionToGregorian(value.toDate)
+        ).toISOString();
+      }
     },
 
     showResult() {
@@ -135,8 +125,22 @@ export default {
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation
         if (this.$refs.form.validate()) {
-          this.reset();
-          this.isLoading = false;
+          this.$axios
+            .get('/v1/api/tabaadol-e-ketaab/report/categories', {
+              params: {
+                filter: {
+                  startDate: this.startDate,
+                  endDate: this.endDate,
+                },
+              },
+            })
+            .then(res => {
+              if (res.status === 200) {
+                this.data = res.data;
+                this.reset();
+                this.isLoading = false;
+              }
+            });
         } else {
           this.valid = false;
         }

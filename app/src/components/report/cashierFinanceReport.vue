@@ -32,26 +32,6 @@
             :placeHolder="'users'"
           />
         </v-col>
-        <v-col cols="12" md="2">
-          <v-select
-            v-model="type"
-            :items="transactionType"
-            :label="$t('transactionType')"
-            outlined
-          >
-            <template v-slot:item="{ item }">
-              <span>
-                {{ $t(item) }}
-              </span>
-            </template>
-            <template v-slot:selection="{ item }">
-              <span>
-                {{ $t(item) }}
-              </span>
-            </template>
-          </v-select>
-        </v-col>
-
         <v-col cols="12" md="1">
           <v-btn
             :disabled="!valid"
@@ -105,30 +85,24 @@ export default {
           text: 'radif',
         },
         {
-          text: 'transactionType',
+          text: 'finalTotal',
         },
         {
-          text: 'date',
-        },
-        {
-          text: 'cost',
+          text: 'invoiceCount',
         },
       ],
       data: [
         {
-          transactionType: 'cash',
-          date: '2020-12-08T20:30:00.000Z',
-          cost: 120000,
+          invoiceCount: '1',
+          finalTotal: 120000,
         },
         {
-          transactionType: 'credit',
-          date: '2020-12-08T20:30:00.000Z',
-          cost: 58000,
+          invoiceCount: '1',
+          finalTotal: 58000,
         },
         {
-          transactionType: 'cash',
-          date: '2020-12-08T20:30:00.000Z',
-          cost: 365000,
+          invoiceCount: '1',
+          finalTotal: 365000,
         },
       ],
     };

@@ -50,6 +50,7 @@
 <script>
 import financeReportTable from './financeReportTable.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
+import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'userBuyReport',
@@ -67,7 +68,8 @@ export default {
       toDateValidation: true,
 
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-
+      startDate: '',
+      endDate: '',
       type: '',
       columns: [
         {
@@ -80,31 +82,22 @@ export default {
           text: 'totalBuy',
         },
       ],
-      data: [
-        {
-          user: {
-            fullName: 'علی تبادلیان',
-          },
-          totalBuy: 120000,
-        },
-        {
-          user: {
-            fullName: 'علی تبادلیان',
-          },
-          totalBuy: 6523000,
-        },
-        {
-          user: {
-            fullName: 'علی تبادلیان',
-          },
-          totalBuy: 520000,
-        },
-      ],
+      data: [],
     };
   },
+  mixins: [dateTime],
   methods: {
     setDate(value) {
-      console.log(value);
+      if (value.fromDate.length > 0) {
+        this.startDate = new Date(
+          this.persionToGregorian(value.fromDate)
+        ).toISOString();
+      }
+      if (value.toDate.length > 0) {
+        this.endDate = new Date(
+          this.persionToGregorian(value.toDate)
+        ).toISOString();
+      }
     },
     showResult() {
       this.$refs.form.validate();
@@ -129,8 +122,22 @@ export default {
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation
         if (this.$refs.form.validate()) {
-          this.reset();
-          this.isLoading = false;
+          this.$axios
+            .get('/v1/api/tabaadol-e-ketaab/report/best-buyers', {
+              params: {
+                filter: {
+                  startDate: this.startDate,
+                  endDate: this.endDate,
+                },
+              },
+            })
+            .then(res => {
+              if (res.status === 200) {
+                this.data = res.data;
+                this.reset();
+                this.isLoading = false;
+              }
+            });
         } else {
           this.valid = false;
         }

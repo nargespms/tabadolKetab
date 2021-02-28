@@ -45,15 +45,13 @@
           <td>
             {{ index + 1 }}
           </td>
+
           <td>
-            {{ item.transactionType }}
-          </td>
-          <td>
-            {{ new Date(item.date).toLocaleDateString('fa') }}
-          </td>
-          <td>
-            {{ moneyFormat(item.cost) }}
+            {{ moneyFormat(item.finalTotal) }}
             {{ $t('rial') }}
+          </td>
+          <td>
+            {{ item.invoiceCount }}
           </td>
         </tr>
       </tbody>
