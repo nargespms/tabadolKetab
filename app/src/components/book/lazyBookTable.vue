@@ -69,10 +69,10 @@
             </template>
           </td>
           <td>
-            {{ item.undergraduatePrice }}
+            {{ moneyFormat(item.undergraduatePrice) }}
           </td>
           <td>
-            {{ item.afterDiscount }}
+            {{ moneyFormat(item.afterDiscount) }}
           </td>
 
           <td>
@@ -209,6 +209,7 @@
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import promptDialog from '../structure/promptDialog.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'lazyBookTable',
@@ -231,6 +232,8 @@ export default {
       }),
     },
   },
+  mixins: [moneyFormat],
+
   data() {
     return {
       innerOptions: this.options,

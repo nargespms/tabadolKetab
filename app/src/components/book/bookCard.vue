@@ -40,10 +40,10 @@
           book.afterDiscount ? 'text-decoration-line-through  grey--text' : ''
         "
       >
-        {{ book.afterDiscount }} {{ $t('rial') }}
+        {{ this.moneyFormat(book.afterDiscount) }} {{ $t('rial') }}
       </p>
       <p v-if="book.undergraduatePrice" class=" primary--text">
-        {{ book.undergraduatePrice }} {{ $t('rial') }}
+        {{ this.moneyFormat(book.undergraduatePrice) }} {{ $t('rial') }}
       </p>
       <v-btn
         color="blue lighten-1"
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import moneyFormat from '../../mixins/moneyFormat.js';
+
 export default {
   name: 'bookCard',
   props: {
@@ -71,7 +73,7 @@ export default {
       type: Object,
     },
   },
-
+  mixins: [moneyFormat],
   methods: {
     addToBag(book) {
       if (this.$store.state.bookShop.userInfo === null) {

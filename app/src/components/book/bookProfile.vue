@@ -43,16 +43,16 @@
               {{ $t('mainPrice') }} :
             </span>
             <span v-if="book.undergraduatePrice">
-              {{ book.undergraduatePrice }} {{ $t('rial') }}
+              {{ this.moneyFormat(book.undergraduatePrice) }} {{ $t('rial') }}
             </span>
           </p>
           <p v-if="book.discount > 0" class="bookDiscount">
-            {{ $t('discountAmount') }}: {{ book.discount }}
+            {{ $t('discountAmount') }}: {{ this.moneyFormat(book.discount) }}
           </p>
           <p v-if="book.afterDiscount">
             <span> {{ $t('finalTotalBuy') }}: </span>
             <span class="success--text">
-              {{ book.afterDiscount }} {{ $t('rial') }}
+              {{ this.moneyFormat(book.afterDiscount) }} {{ $t('rial') }}
             </span>
           </p>
         </div>
@@ -80,12 +80,15 @@
 
 <script>
 import bookDetails from './bookDetails.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'bookProfile',
   components: {
     bookDetails,
   },
+  mixins: [moneyFormat],
+
   data() {
     return {
       book: {},
