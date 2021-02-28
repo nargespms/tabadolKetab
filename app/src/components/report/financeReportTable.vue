@@ -41,17 +41,15 @@
         </tr>
       </tbody>
       <tbody v-if="this.module === 'cashierReport'">
-        <tr v-for="(item, index) in data" :key="item.index">
+        <tr>
           <td>
-            {{ index + 1 }}
-          </td>
-
-          <td>
-            {{ moneyFormat(item.finalTotal) }}
-            {{ $t('rial') }}
+            <span v-if="singleItem.sum">
+              {{ moneyFormat(singleItem.sum) }}
+              {{ $t('rial') }}
+            </span>
           </td>
           <td>
-            {{ item.invoiceCount }}
+            {{ singleItem.count }}
           </td>
         </tr>
       </tbody>
@@ -60,8 +58,11 @@
 </template>
 
 <script>
+import moneyFormat from '../../mixins/moneyFormat.js';
+
 export default {
   name: 'financeReportTable',
+  mixins: [moneyFormat],
   props: {
     columns: {
       type: Array,
@@ -72,10 +73,8 @@ export default {
     data: {
       type: Array,
     },
-  },
-  methods: {
-    moneyFormat(value) {
-      return new Intl.NumberFormat('es-ES').format(value);
+    singleItem: {
+      type: Object,
     },
   },
 };

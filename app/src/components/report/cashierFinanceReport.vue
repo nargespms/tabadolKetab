@@ -30,6 +30,7 @@
             @setStaff="setStaff"
             :placeHolder="'staffs'"
             :isMultiple="false"
+            :height="32"
           />
         </v-col>
         <v-col cols="12" md="1">
@@ -44,10 +45,14 @@
         </v-col>
       </v-row>
     </v-form>
+    <v-overlay :value="isLoading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+
     <financeReportTable
-      v-if="!isLoading"
+      v-if="data.hasOwnProperty('count')"
       :columns="columns"
-      :data="data"
+      :singleItem="data"
       :module="'cashierReport'"
     />
   </v-card>
@@ -69,7 +74,7 @@ export default {
   data() {
     return {
       valid: true,
-      isLoading: true,
+      isLoading: '',
       // rangepcker data
       dateKey: 0,
       fromDateValidation: true,
@@ -83,16 +88,13 @@ export default {
       userValidate: true,
       columns: [
         {
-          text: 'radif',
-        },
-        {
           text: 'finalTotal',
         },
         {
           text: 'invoiceCount',
         },
       ],
-      data: [],
+      data: {},
       staffId: '',
       startDate: '',
       endDate: '',
@@ -118,6 +120,7 @@ export default {
       console.log(value);
     },
     showResult() {
+      this.isLoading = true;
       this.$refs.form.validate();
       // date picker validation
       if (
@@ -141,7 +144,7 @@ export default {
         // formvalidation
         if (this.$refs.form.validate()) {
           this.$axios
-            .get('/v1/api/tabaadol-e-ketaab/report/best-buyers', {
+            .get('/v1/api/tabaadol-e-ketaab/report/cashier', {
               params: {
                 filter: {
                   startDate: this.startDate,
@@ -152,7 +155,10 @@ export default {
             })
             .then(res => {
               this.data = res.data;
-              this.reset();
+              this.isLoading = false;
+            })
+            .catch(e => {
+              console.log(e);
               this.isLoading = false;
             });
         } else {
