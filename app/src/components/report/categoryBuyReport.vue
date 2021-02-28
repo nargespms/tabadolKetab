@@ -25,13 +25,7 @@
             </span>
           </span>
         </v-col>
-        <v-col cols="12" md="3">
-          <bookCatAutocomplete
-            :isRequire="bookCatVallidate"
-            @sendValue="getBookCat"
-            ref="bookCat"
-          />
-        </v-col>
+
         <v-col cols="12" md="1">
           <v-btn
             :disabled="!valid"
@@ -56,14 +50,12 @@
 <script>
 import financeReportTable from './financeReportTable.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
-import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete';
 
 export default {
   name: 'categoryBuyReport',
   components: {
     financeReportTable,
     rangeDatePickerCmp,
-    bookCatAutocomplete,
   },
   data() {
     return {
@@ -73,9 +65,6 @@ export default {
       dateKey: 0,
       fromDateValidation: true,
       toDateValidation: true,
-
-      // bookCategory vlidate
-      bookCatVallidate: true,
 
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
 
@@ -122,9 +111,7 @@ export default {
     setDate(value) {
       console.log(value);
     },
-    getBookCat(value) {
-      console.log(value);
-    },
+
     showResult() {
       this.$refs.form.validate();
       // date picker validation
@@ -144,12 +131,6 @@ export default {
       } else {
         this.toDateValidation = true;
       }
-      // book category validation
-      if (this.$refs.bookCat.model.length < 1) {
-        this.bookCatVallidate = false;
-      } else {
-        this.bookCatVallidate = true;
-      }
 
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation
@@ -167,7 +148,6 @@ export default {
       this.dateKey = +1;
       this.toDateValidation = true;
       this.fromDateValidation = true;
-      this.bookCatVallidate = true;
     },
   },
 };

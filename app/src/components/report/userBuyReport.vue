@@ -25,27 +25,7 @@
             </span>
           </span>
         </v-col>
-        <v-col cols="12" md="3">
-          <v-select
-            v-model="type"
-            :items="transactionType"
-            :label="$t('transactionType')"
-            outlined
-            required="true"
-            :rules="requireRule"
-          >
-            <template v-slot:item="{ item }">
-              <span>
-                {{ $t(item) }}
-              </span>
-            </template>
-            <template v-slot:selection="{ item }">
-              <span>
-                {{ $t(item) }}
-              </span>
-            </template>
-          </v-select>
-        </v-col>
+
         <v-col cols="12" md="1">
           <v-btn
             :disabled="!valid"
@@ -89,7 +69,6 @@ export default {
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
 
       type: '',
-      transactionType: ['cash', 'credit'],
       columns: [
         {
           text: 'radif',

@@ -4,21 +4,21 @@
       <v-col cols="12" lg="4">
         <creditStatusCard
           :lable="'existedBooksCredit'"
-          :number="billing.existedBooksCredit"
+          :number="billing.booksValue"
           :color="color"
         />
       </v-col>
       <v-col cols="12" lg="4">
         <creditStatusCard
-          :lable="'usersCreditSumFromboooksTrade'"
-          :number="billing.usersCreditSumFromboooksTrade"
+          :lable="'usersCreditSum'"
+          :number="billing.usersCredit"
           :color="color"
         />
       </v-col>
       <v-col cols="12" lg="4">
         <creditStatusCard
-          :lable="'usersCreditSumCache'"
-          :number="billing.usersCreditSumCache"
+          :lable="'sumOfWage'"
+          :number="billing.sumOfWage"
           :color="color"
         />
       </v-col>
@@ -33,15 +33,15 @@
       </v-col>
       <v-col cols="12" lg="4">
         <creditStatusCard
-          :lable="'todayExpiredSum'"
-          :number="billing.todayExpiredSum"
+          :lable="'usersCreditSumFromboooksTrade'"
+          :number="billing.usersCreditSumFromboooksTrade"
           :color="color"
         />
       </v-col>
       <v-col cols="12" lg="4">
         <creditStatusCard
           :lable="'usersCreditSumCache'"
-          :number="billing.totalExpireSum"
+          :number="billing.totalDeposit"
           :color="color"
         />
       </v-col>
@@ -61,14 +61,82 @@ export default {
     return {
       color: '',
       billing: {
-        existedBooksCredit: 1200000,
-        usersCreditSumFromboooksTrade: 2500000,
-        usersCreditSumCache: 52680000,
-        todayOnlineShop: 80000,
-        todayExpiredSum: 56000,
-        totalExpireSum: 1205000,
+        booksValue: 0,
+        usersCreditSumFromboooksTrade: 0,
+        sumOfWage: 0,
+        todayOnlineShop: 0,
+
+        totalDeposit: 0,
       },
     };
+  },
+  methods: {
+    getBooksValue() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/report/books-value')
+        .then(res => {
+          if (res.status === 200) {
+            this.billing.booksValue = res.data.sum;
+          }
+        });
+    },
+    usersCredit() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/report/clients-credit')
+        .then(res => {
+          if (res.status === 200) {
+            this.billing.usersCredit = res.data.sum;
+          }
+        });
+    },
+    todayOnline() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/report/online-buy', {
+          params: {
+            filter: {
+              createdAt: new Date(),
+            },
+          },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.billing.todayOnlineShop = res.data.sum;
+          }
+        });
+    },
+    sumOfWage() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/report/wage').then(res => {
+        if (res.status === 200) {
+          this.billing.sumOfWage = res.data.sum;
+        }
+      });
+    },
+    usersCreditSumFromboooksTrade() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/report/sell-credit')
+        .then(res => {
+          if (res.status === 200) {
+            this.billing.usersCreditSumFromboooksTrade = res.data.sum;
+          }
+        });
+    },
+    totalDeposit() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/report/total-deposit')
+        .then(res => {
+          if (res.status === 200) {
+            this.billing.totalDeposit = res.data.sum;
+          }
+        });
+    },
+  },
+  mounted() {
+    this.getBooksValue();
+    this.usersCredit();
+    this.todayOnline();
+    this.sumOfWage();
+    this.usersCreditSumFromboooksTrade();
+    this.totalDeposit();
   },
 };
 </script>

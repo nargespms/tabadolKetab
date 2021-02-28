@@ -290,8 +290,12 @@ export default {
   },
   methods: {
     getData(props) {
-      const { page, limit } = props.options;
-      const { filter } = props;
+      // const { page, limit } = props.options;
+      // const { filter } = props;
+      const {
+        filter,
+        options: { page, limit },
+      } = props;
 
       this.$axios
         .get(this.endpoint, {
@@ -305,6 +309,7 @@ export default {
           if (res.status === 200) {
             this.tableData = res.data.result.docs;
             this.totalData = res.data.result.totalDocs;
+            this.options = { ...this.options, page, limit };
             // console.log(this.tableData);
             // console.log(this.totalData);
             this.loading = false;
@@ -320,14 +325,7 @@ export default {
         });
     },
   },
-  watch: {
-    options: {
-      handler() {
-        this.getData({ options: this.options });
-      },
-      deep: true,
-    },
-  },
+
   mounted() {
     if (this.$route.query) {
       Object.keys(this.$route.query)

@@ -485,6 +485,8 @@ export default {
   todayRecievedPostsNumber: 'تعداد تحویل پست امروز',
   existedBooksCredit: 'ارزش کتاب های موجود',
   usersCreditSumFromboooksTrade: 'مجموع اعتبار کاربران از فروش کتاب',
+  usersCreditSum: 'مجموع اعتبار کاربران   ',
+  sumOfWage: 'مجموع کارمزد دریافتی',
   usersCreditSumCache: 'مجموع اعتبار کاربران  به صورت واریز نقدی',
   todayExpiredSum: 'مجموع اعتبار منقضی امروز',
   totalExpireSum: 'مجموع اعتبار منقضی کل',

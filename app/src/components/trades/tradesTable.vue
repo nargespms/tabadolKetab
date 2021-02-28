@@ -55,7 +55,8 @@
       <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
         <v-pagination
           class="pa-3 float-left"
-          v-model="innerOptions.page"
+          @input="changePage"
+          :value="options.page"
           :length="props.pagination.pageCount"
           prev-icon="mdi-menu-left"
           next-icon="mdi-menu-right"
@@ -90,8 +91,7 @@ export default {
   },
   data() {
     return {
-      innerOptions: this.options,
-
+      innerOptions: { ...this.options },
       filter: {},
     };
   },
@@ -117,15 +117,11 @@ export default {
       this.innerOptions = props.options;
       this.$emit('getData', props);
     },
-  },
-  watch: {
-    innerOptions: {
-      handler(newVal) {
-        this.onRequest({
-          options: newVal,
-        });
-      },
-      deep: true,
+    changePage(page) {
+      this.$emit('getData', {
+        filter: this.filter,
+        options: { ...this.options, page },
+      });
     },
   },
 };

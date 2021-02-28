@@ -11,23 +11,22 @@
     <div class="pa-6">
       <template v-for="(item, index) in items">
         <v-row
-          v-if="item.value.length > 0"
           :key="item.text"
           :class="index % 2 === 0 ? 'grey lighten-3' : 'white'"
         >
           {{ item.index }}
-          <v-col cols="12" lg="6">
+          <v-col cols="12" lg="3">
             <span>
               {{ $t(item.text) }}
             </span>
           </v-col>
           <v-col cols="12" lg="6" v-if="item.text !== 'tags'">
-            <span v-if="item.value.length > 0">
-              {{ item.value }}
+            <span>
+              {{ item.value || '-' }}
             </span>
           </v-col>
 
-          <v-col cols="12" lg="6" v-if="item.text === 'tags'">
+          <v-col cols="12" lg="9" v-if="item.text === 'tags'">
             <template v-for="tag in item.value">
               <span v-if="item.value.length > 0" :key="tag.id">
                 {{ tag.title }} -
