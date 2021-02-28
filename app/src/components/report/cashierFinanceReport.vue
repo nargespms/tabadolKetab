@@ -26,10 +26,10 @@
           </span>
         </v-col>
         <v-col cols="12" md="2">
-          <clientsAutoComplete
-            ref="userAutocomplete"
-            :isRequired="userValidate"
-            :placeHolder="'users'"
+          <staffsAutoComplete
+            @setStaff="setStaff"
+            :placeHolder="'staffs'"
+            :isMultiple="false"
           />
         </v-col>
         <v-col cols="12" md="1">
@@ -56,14 +56,15 @@
 <script>
 import financeReportTable from './financeReportTable.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
-import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
+import staffsAutoComplete from '../structure/staffsAutoComplete.vue';
+import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'cashierFinanceReport',
   components: {
     financeReportTable,
     rangeDatePickerCmp,
-    clientsAutoComplete,
+    staffsAutoComplete,
   },
   data() {
     return {
@@ -91,24 +92,29 @@ export default {
           text: 'invoiceCount',
         },
       ],
-      data: [
-        {
-          invoiceCount: '1',
-          finalTotal: 120000,
-        },
-        {
-          invoiceCount: '1',
-          finalTotal: 58000,
-        },
-        {
-          invoiceCount: '1',
-          finalTotal: 365000,
-        },
-      ],
+      data: [],
+      staffId: '',
+      startDate: '',
+      endDate: '',
     };
   },
+  mixins: [dateTime],
+
   methods: {
     setDate(value) {
+      if (value.fromDate.length > 0) {
+        this.startDate = new Date(
+          this.persionToGregorian(value.fromDate)
+        ).toISOString();
+      }
+      if (value.toDate.length > 0) {
+        this.endDate = new Date(
+          this.persionToGregorian(value.toDate)
+        ).toISOString();
+      }
+    },
+    setStaff(value) {
+      this.staffId = value;
       console.log(value);
     },
     showResult() {
@@ -130,19 +136,25 @@ export default {
       } else {
         this.toDateValidation = true;
       }
-      if (
-        this.$refs.userAutocomplete.model === null ||
-        this.$refs.userAutocomplete.model.length < 1
-      ) {
-        this.userValidate = true;
-      } else {
-        this.userValidate = false;
-      }
+
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation
         if (this.$refs.form.validate()) {
-          this.reset();
-          this.isLoading = false;
+          this.$axios
+            .get('/v1/api/tabaadol-e-ketaab/report/best-buyers', {
+              params: {
+                filter: {
+                  startDate: this.startDate,
+                  endDate: this.endDate,
+                  staffId: this.staffId,
+                },
+              },
+            })
+            .then(res => {
+              this.data = res.data;
+              this.reset();
+              this.isLoading = false;
+            });
         } else {
           this.valid = false;
         }
