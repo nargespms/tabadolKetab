@@ -107,6 +107,11 @@ const routes = [
         component: () => import('../views/login/signIn.vue'),
       },
       {
+        path: '/staff-forgot',
+        name: 'staff-forgot',
+        component: () => import('../views/forgotPassword.vue'),
+      },
+      {
         path: '/forgot',
         name: 'forgot',
         component: () => import('../views/forgotPassword.vue'),

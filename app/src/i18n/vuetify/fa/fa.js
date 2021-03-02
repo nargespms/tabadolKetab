@@ -495,6 +495,10 @@ export default {
   totalBuy: 'جمع خرید',
   show: 'نمایش',
   invoiceCount: 'تعدادفاکتور',
+  wage: 'کارمزد',
+  seller: 'فروشنده',
+  buyer: 'خریدار',
+  total: ' مبلغ کل',
   transactionType: 'نوع تراکنش',
   categoryName: 'نام دسته بندی',
   cash: 'نقدی',
@@ -560,4 +564,5 @@ export default {
   tradesNumber: 'شماره معامله',
   ErrorMessage404: 'متاسفانه صفحه مورد نظر پیدا نشد !',
   ErrorMessage403: 'متاسفانه شما دسترسی این بخش را ندارید !',
+  GENERAL: 'عمومی',
 };

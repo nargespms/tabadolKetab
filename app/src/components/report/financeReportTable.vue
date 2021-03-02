@@ -15,10 +15,11 @@
             {{ index + 1 }}
           </td>
           <td>
-            {{ item.user.fullName }}
+            {{ item.buyer.firstName }}
+            {{ item.buyer.lastName }}
           </td>
           <td>
-            {{ moneyFormat(item.totalBuy) }}
+            {{ moneyFormat(item.total_amount) }}
             {{ $t('rial') }}
           </td>
         </tr>
@@ -29,13 +30,10 @@
             {{ index + 1 }}
           </td>
           <td>
-            {{ item.category.name }}
+            {{ item.category.title }}
           </td>
           <td>
-            {{ item.number }}
-          </td>
-          <td>
-            {{ moneyFormat(item.totalBuy) }}
+            {{ moneyFormat(item.total_amount) }}
             {{ $t('rial') }}
           </td>
         </tr>

@@ -133,7 +133,7 @@
       :totalData="totalData"
       :loading="loading"
     />
-    <tradesTable
+    <lazyTradesTable
       @reloadTable="getData"
       @getData="getData"
       v-if="this.module === 'trades'"
@@ -226,7 +226,7 @@ import lazyBookTable from '../book/lazyBookTable.vue';
 import postTable from '../post/postTable.vue';
 import forbiddenBookTable from '../forbiddenBook/forbiddenBookTable.vue';
 import invoicesTable from '../invoices/invoicesTable.vue';
-import tradesTable from '../trades/tradesTable.vue';
+import lazyTradesTable from '../trades/lazyTradesTable.vue';
 import authorTable from '../author/authorTable.vue';
 import publishersTable from '../publisher/publishersTable.vue';
 import ordersTable from '../orders/ordersTable.vue';
@@ -250,7 +250,7 @@ export default {
     postTable,
     forbiddenBookTable,
     invoicesTable,
-    tradesTable,
+    lazyTradesTable,
     authorTable,
     publishersTable,
     ordersTable,

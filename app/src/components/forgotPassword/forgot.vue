@@ -23,7 +23,12 @@
                     v-model="validMobile"
                     lazy-validation
                   >
-                    <mobilePhone :isRequired="true" />
+                    <mobilePhone
+                      :isRequired="true"
+                      @setMobilePhone="setMobilePhone"
+                    />
+                    <captcha @setCaptcha="setCaptcha" :key="captchaKey" />
+
                     <div class="justify-center d-flex">
                       <v-btn
                         :disabled="!validMobile"
@@ -54,18 +59,24 @@
 <script>
 import mobilePhone from '../userControls/mobilePhone.vue';
 import notifMessage from '../structure/notifMessage.vue';
+import captcha from '../userControls/captcha.vue';
 
 export default {
   name: 'forgot',
   components: {
     mobilePhone,
     notifMessage,
+    captcha,
   },
   data() {
     return {
       saveSuccess: false,
       validMobile: false,
       forgotPass: false,
+      endpoint: '',
+      mobile: '',
+      captcha: {},
+      captchaKey: 0,
     };
   },
   methods: {
@@ -73,12 +84,15 @@ export default {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
         this.$axios
-          .post('/v1/api/tabaadol-e-ketaab/staff/verify-mobile')
+          .post(this.endpoint, {
+            mobile: this.mobile,
+            captcha: this.captcha,
+          })
           .then(res => {
-            console.log(res);
             if (res.status === 200) {
               this.saveSuccess = true;
               this.validMobile = true;
+              this.$emit('verifyMobile');
             }
           });
       } else {
@@ -90,6 +104,20 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    setMobilePhone(value) {
+      this.mobile = value;
+    },
+    setCaptcha(value) {
+      this.captcha = value;
+    },
+  },
+  mounted() {
+    console.log(this.$route.name);
+    if (this.$route.name === 'staff-forgot') {
+      this.endpoint = '/v1/api/tabaadol-e-ketaab/staff/verify-mobile';
+    } else {
+      this.endpoint = '/v1/api/tabaadol-e-ketaab/client/verify-mobile';
+    }
   },
 };
 </script>

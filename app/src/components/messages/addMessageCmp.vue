@@ -44,12 +44,18 @@
             v-if="reciever === 'notAll'"
             :placeHolder="'clients'"
             :isMultiple="true"
+            :editDataId="
+              mode === 'edit' && message.clientId ? message.clientId : ''
+            "
           />
           <staffsAutoComplete
             v-if="reciever === 'notAll'"
             @setStaff="setStaff"
             :placeHolder="'staffs'"
             :isMultiple="true"
+            :editDataId="
+              mode === 'edit' && message.staffId ? message.staffId : ''
+            "
           />
           <v-text-field
             v-model="message.title"

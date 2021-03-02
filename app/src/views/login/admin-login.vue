@@ -15,7 +15,7 @@ export default {
   components: { signInCom },
   methods: {
     forgotPassword() {
-      this.$router.push({ name: 'forgot' });
+      this.$router.push({ name: 'staff-forgot' });
     },
   },
 };

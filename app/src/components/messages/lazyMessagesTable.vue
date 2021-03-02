@@ -207,7 +207,7 @@ export default {
       // preview
       enablePreview: false,
       previewItem: {},
-      tableName: 'PUBLIC',
+      tableName: '',
       filter: {},
       uploadMoreBut: 'uploadeMore',
       status: [

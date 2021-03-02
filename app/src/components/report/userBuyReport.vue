@@ -133,8 +133,8 @@ export default {
             })
             .then(res => {
               if (res.status === 200) {
-                this.data = res.data;
-                this.reset();
+                this.data = res.data.buyers;
+                // this.reset();
                 this.isLoading = false;
               }
             });

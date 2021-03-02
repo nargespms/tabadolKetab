@@ -136,7 +136,7 @@ export default {
             })
             .then(res => {
               if (res.status === 200) {
-                this.data = res.data;
+                this.data = res.data.categories;
                 this.reset();
                 this.isLoading = false;
               }
