@@ -1,7 +1,7 @@
 <template>
   <div class="A5 pa-6">
     <div class="sheet padding-25mm ">
-      <div class="br-3 fn18 pa-8">
+      <div class="br-3 fn18 pa-8" v-if="!isLoading">
         <v-row>
           <v-col cols="12" md="4"> </v-col>
           <v-col cols="12" md="4" class="text-center">
@@ -18,38 +18,34 @@
             <p>
               {{ $t('fullname') }} &nbsp; : &nbsp;
               <span class="pr-4">
-                {{ $t(postReq.fullname) }}
+                {{ postReq.client.firstName }}
+                {{ postReq.client.lastName }}
               </span>
             </p>
-            <p>
-              {{ $t('landLane') }} &nbsp; : &nbsp;
-              <span class="pr-4">
-                {{ $t(postReq.landLane) }}
+            <p class="w250 ">
+              {{ $t('mobile') }} &nbsp; : &nbsp;
+              <span class="pr-4 numberDir">
+                {{ postReq.client.mobile }}
               </span>
             </p>
-            <p>
-              {{ $t('mobilephone') }} &nbsp; : &nbsp;
-              <span class="pr-4">
-                {{ $t(postReq.mobilephone) }}
-              </span>
-            </p>
+
             <p>
               {{ $t('nationalId') }} &nbsp; : &nbsp;
               <span class="pr-4">
-                {{ $t(postReq.nationalId) }}
+                {{ $t(postReq.client.nationalId) }}
               </span>
             </p>
 
             <p>
               {{ $t('numbersOfBook') }} &nbsp; : &nbsp;
               <span class="pr-4">
-                {{ $t(postReq.numbersOfBook) }}
+                {{ $t(postReq.books.length) }}
               </span>
             </p>
             <p>
               {{ $t('address') }} &nbsp; : &nbsp;
               <span class="pr-4">
-                {{ $t(postReq.address) }}
+                {{ $t(postReq.address.address) }}
               </span>
             </p>
           </v-col>
@@ -71,7 +67,12 @@
               <v-radio :label="$t('کنسل شد')" class="pr-12"></v-radio>
               <v-radio :label="$t('دریافت شد')" class="pr-12"></v-radio>
             </div>
-            <p class="mt-8 pa-3 pb-16 br-1-b">{{ $t('description') }} :</p>
+            <p class="mt-8 pa-3 pb-16 br-1-b">
+              {{ $t('description') }} :
+              <span>
+                {{ postReq.description }}
+              </span>
+            </p>
           </v-col>
         </v-row>
 
@@ -113,15 +114,28 @@ export default {
   name: 'postPrintForm',
   data() {
     return {
+      isLoading: true,
       postReq: {
-        fullname: 'محدثه صباغی',
-        landLane: '۰۲۱۳۴۵۶۷۸۹۸',
-        mobilephone: '۰۹۱۲۳۴۵۶۱۲۳۴',
-        nationalId: '۰۰۱۷۸۲۳۲۰۳۴۸',
-        numbersOfBook: '۵۱',
-        address: 'شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷',
+        // fullname: 'محدثه صباغی',
+        // landLane: '۰۲۱۳۴۵۶۷۸۹۸',
+        // mobilephone: '۰۹۱۲۳۴۵۶۱۲۳۴',
+        // nationalId: '۰۰۱۷۸۲۳۲۰۳۴۸',
+        // numbersOfBook: '۵۱',
+        // address: 'شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷',
       },
     };
+  },
+  mounted() {
+    this.$axios
+      .get(`/v1/api/tabaadol-e-ketaab/order/${this.$route.params.postId}`)
+      .then(res => {
+        if (res.status === 200) {
+          this.postReq = res.data;
+          this.orderItems = res.data.books;
+
+          this.isLoading = false;
+        }
+      });
   },
 };
 </script>
@@ -131,5 +145,8 @@ export default {
 }
 .br-1-b {
   border: 1px solid #8f8f8f;
+}
+.w250 {
+  width: 250px;
 }
 </style>

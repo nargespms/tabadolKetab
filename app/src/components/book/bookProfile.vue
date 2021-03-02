@@ -128,6 +128,7 @@ export default {
   border: 1px solid red;
   color: red;
   padding: 2px;
+  width: 200px;
 }
 .v-btn,
 .v-tab {

@@ -114,6 +114,13 @@ export default {
           divider: true,
         },
         {
+          text: 'attachments',
+          value: 'attachments',
+          align: 'center',
+          filterable: true,
+          divider: true,
+        },
+        {
           text: 'sender',
           value: 'sender',
           align: 'center',
@@ -122,8 +129,8 @@ export default {
           divider: true,
         },
         {
-          text: 'status',
-          value: 'status',
+          text: 'type',
+          value: 'type',
           align: 'center',
           filterable: true,
           filterType: 'staticDropDown',

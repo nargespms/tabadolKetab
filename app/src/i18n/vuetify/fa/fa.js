@@ -565,4 +565,9 @@ export default {
   ErrorMessage404: 'متاسفانه صفحه مورد نظر پیدا نشد !',
   ErrorMessage403: 'متاسفانه شما دسترسی این بخش را ندارید !',
   GENERAL: 'عمومی',
+  sentCodeTo: 'کد ارسال شده به شماره',
+  writeTo: 'را وارد نمایید.',
+  invalidCode: 'کد نامعتبر میباشد',
+  copy: 'کپی کردن',
+  ORDER: 'سفارش',
 };
