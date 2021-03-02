@@ -1,6 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12" md="7" class="ma-auto">
+      {{data}}
       <v-card class="pa-3">
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
@@ -22,7 +23,7 @@
             </v-col>
             <v-col cols="12" md="6" class="pa-0">
               <v-text-field
-                v-model="settings.bookNumberPost"
+                v-model="settings.freeDelivery"
                 :rules="requireRule"
                 required
                 outlined
@@ -39,17 +40,17 @@
             </v-col>
             <v-col cols="12" md="6" class="pa-0">
               <v-text-field
-                v-model="settings.PostPrice"
+                v-model="settings.deliveryPrice"
                 :rules="requireRule"
                 required
                 outlined
                 v-mask="'######'"
                 :hint="
-                  this.settings.PostPrice
-                    ? `${$t('costInRial')}${moneyFormat(settings.PostPrice)}`
+                  this.settings.deliveryPrice
+                    ? `${$t('costInRial')}${moneyFormat(settings.deliveryPrice)}`
                     : ''
                 "
-                :persistentHint="settings.PostPrice"
+                :persistentHint="settings.deliveryPrice"
                 error-count="1"
               ></v-text-field
             ></v-col>
@@ -62,17 +63,17 @@
             </v-col>
             <v-col cols="12" md="6" class="pa-0">
               <v-text-field
-                v-model="settings.expireTime"
+                v-model="settings.creditExpired"
                 :rules="requireRule"
                 required
                 outlined
                 v-mask="'######'"
                 :hint="
-                  this.settings.expireTime
-                    ? `${settings.expireTime}${$t('day')}`
+                  this.settings.creditExpired
+                    ? `${settings.creditExpired}${$t('day')}`
                     : ''
                 "
-                :persistentHint="settings.expireTime"
+                :persistentHint="settings.creditExpired"
                 error-count="1"
               ></v-text-field
             ></v-col>
@@ -105,13 +106,13 @@
           </v-row>
           <v-row>
             <v-col cols="12" lg="4">
-              <rangeDateDiscount @setDateRange="setDateRange" />
+              <rangeDateDiscount @setDateRange="setDateRange" :date="settings.firstDate" :percent="settings.firstDiscount"/>
             </v-col>
             <v-col cols="12" lg="4" class="pr-5">
-              <rangeDateDiscount @setDateRange="setDateRange" />
+              <rangeDateDiscount @setDateRange="setDateRange" :date="settings.secondDate" :percent="settings.secondDiscount" />
             </v-col>
             <v-col cols="12" lg="4" class="pr-5">
-              <rangeDateDiscount @setDateRange="setDateRange" />
+              <rangeDateDiscount @setDateRange="setDateRange" :date="settings.thirdDate" :percent="settings.thirdDiscount" />
             </v-col>
           </v-row>
           <div class="justify-center d-flex ">
@@ -146,6 +147,11 @@ export default {
     notifMessage,
     rangeDateDiscount,
   },
+  props: {
+    data: {
+      type: Object,
+    }
+  },
   data() {
     return {
       valid: true,
@@ -161,15 +167,15 @@ export default {
 
       if (this.$refs.form.validate()) {
         this.saveSuccess = true;
-        this.reset();
+        // this.reset();
       } else {
         this.valid = false;
       }
     },
     // reset form
-    reset() {
-      this.$refs.form.reset();
-    },
+    // reset() {
+    //   this.$refs.form.reset();
+    // },
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
@@ -182,6 +188,9 @@ export default {
       this.dateRange.push(value);
       console.log(value);
     },
+  },
+  mounted() {
+    this.settings = this.data;
   },
 };
 </script>
