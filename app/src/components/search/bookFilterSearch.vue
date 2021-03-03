@@ -37,14 +37,6 @@
                   "
                 ></v-range-slider>
               </v-col>
-
-              <v-col cols="12" md="4" class="pa-0 pr-md-2 pr-0 d-flex">
-                <v-checkbox
-                  class="pr-8"
-                  v-model="filter.withDiscount"
-                  :label="$t('discountedBooks')"
-                ></v-checkbox>
-              </v-col>
             </v-row>
 
             <div class="justify-center d-flex">

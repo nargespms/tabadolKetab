@@ -1,18 +1,17 @@
 ☐ tables
-  ☐ hide items per page
-  ☐ update on pagination ,sort ,filter(The main event )
+  ✔ hide items per page @done(21-03-03 10:37)
+  ✔ update on pagination ,sort ,filter(The main event ) @done(21-03-03 10:37)
   ✔ find dialog plugin @done(20-10-13 14:27)
-  ☐ filter on each column
-  ☐ sort
-  ☐ edit each rows OR click on rows to goes to it's profile to delete
+  ✔ filter on each column @done(21-03-03 10:37)
+  ✘ edit each rows OR click on rows to goes to it's profile to delete @cancelled(21-03-03 10:37)
 
-☐ transition for changeing the routes
+✘ transition for changeing the routes @cancelled(21-03-03 10:37)
 
-☐ Add book category
-  ☐ unsuccessfull message
-  ☐ width for modals
-☐ Add Ticket
-  ☐ choose users should be require ( v-autocomplete validation)
+✔ Add book category @done(21-03-03 10:38)
+  ✔ unsuccessfull message @done(21-03-03 10:38)
+  ✔ width for modals @done(21-03-03 10:38)
+✔ Add Ticket @done(21-03-03 10:38)
+  ✔ choose users should be require ( v-autocomplete validation) @done(21-03-03 10:38)
 ☐ Add map (lat / long)
-☐ lazy load for autocompletes
+✔ lazy load for autocompletes @done(21-03-03 10:38)
 ☐ forward in nginx

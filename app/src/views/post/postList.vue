@@ -1,22 +1,29 @@
 <template>
-  <dataTableWrap
-    :headers="
-      this.$store.state.bookShop.userInfo.role !== 'CLIENT'
-        ? headers
-        : clientHeaders
-    "
-    :module="'post'"
-    :endpoint="'/v1/api/tabaadol-e-ketaab/order/list?filter[delivery]=TABADOL'"
-  />
+  <div>
+    <dataTableWrap
+      :headers="
+        this.$store.state.bookShop.userInfo.role !== 'CLIENT'
+          ? headers
+          : clientHeaders
+      "
+      :module="'post'"
+      :endpoint="
+        '/v1/api/tabaadol-e-ketaab/order/list?filter[delivery]=TABADOL'
+      "
+    />
+    <!-- <userMap /> -->
+  </div>
 </template>
 
 <script>
 import dataTableWrap from '../../components/structure/dataTableWrap.vue';
+// import userMap from '../../components/address/userMap.vue';
 
 export default {
   name: 'postList',
   components: {
     dataTableWrap,
+    // userMap,
   },
   data() {
     return {

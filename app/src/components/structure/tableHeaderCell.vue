@@ -207,7 +207,7 @@ export default {
       this.filter[name] = '';
       delete this.filter[name];
       console.log(this.filter);
-      // this.emitFilter(name);
+      this.emitFilter(name);
     },
     // sort funcs
     sort() {

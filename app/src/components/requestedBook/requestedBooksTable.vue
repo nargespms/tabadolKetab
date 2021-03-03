@@ -92,7 +92,11 @@
         <v-icon medium class="ma-2" @click="preview(item)">
           mdi-eye
         </v-icon>
-        <v-icon medium class="ma-2" @click="changeStatusEnable(item)"
+        <v-icon
+          medium
+          class="ma-2"
+          @click="changeStatusEnable(item)"
+          v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
           >mdi-book-open
         </v-icon>
       </template>

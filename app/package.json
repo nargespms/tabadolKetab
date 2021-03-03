@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@aasaam/noto-font": "0.0.8",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "google-libphonenumber": "^3.2.15",
     "jsbarcode": "^3.11.3",

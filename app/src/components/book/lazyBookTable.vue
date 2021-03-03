@@ -95,7 +95,7 @@
             </v-tooltip>
           </td>
           <td>
-            <div class="d-flex">
+            <div>
               <v-tooltip
                 bottom
                 v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
@@ -107,6 +107,7 @@
                     v-bind="attrs"
                     @click="addToBag(item)"
                     v-on="on"
+                    :disabled="item.status !== 'CONFIRMED'"
                   >
                     fas fa-shopping-cart
                   </v-icon>
@@ -127,6 +128,7 @@
                 </template>
                 {{ $t('preview') }}
               </v-tooltip>
+
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
@@ -135,6 +137,12 @@
                     @click="editRecord(item)"
                     v-on="on"
                     v-bind="attrs"
+                    :disabled="
+                      ($store.state.bookShop.userInfo.role === 'CLIENT' &&
+                        item.status !== 'CLIENTREGISTER') ||
+                        ($store.state.bookShop.userInfo.role !== 'CLIENT' &&
+                          item.status !== 'CONFIRMED')
+                    "
                   >
                     mdi-pencil
                   </v-icon>

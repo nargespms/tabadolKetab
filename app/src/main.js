@@ -11,6 +11,7 @@ import './plugins/mask';
 import { Router } from './router/index.js';
 import messages from './i18n/vuetify';
 import store from './store';
+import 'leaflet/dist/leaflet.css';
 
 // console.log(store);
 
