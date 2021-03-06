@@ -1,8 +1,5 @@
 <template>
   <div>
-    <span class="fn-25">
-      🧑‍💻
-    </span>
     <div class="d-flex flex-row-reverse ma-4">
       <v-btn
         color="light-blue darken-2"
@@ -21,8 +18,9 @@
       update:options
       :server-items-length="totalData"
       :loading="loading"
-      class="elevation-1 text-center ma-4"
+      class="elevation-1 text-center ma-4 clear"
       hide-default-header
+      hide-default-footer
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
     >
@@ -105,6 +103,16 @@
           {{ $t('delete') }}
         </v-tooltip>
       </template>
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
+        <v-pagination
+          class="pa-3 float-left"
+          @input="changePage"
+          :value="options.page"
+          :length="props.pagination.pageCount"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+        ></v-pagination>
+      </template>
     </v-data-table>
     <v-dialog v-model="enableEdit" content-class="sh-0">
       <addForbiddenBookCmp
@@ -163,7 +171,7 @@ export default {
   },
   data() {
     return {
-      innerOptions: this.options,
+      innerOptions: { ...this.options },
       // delete
       enableDelete: false,
       deletingItem: {},
@@ -259,13 +267,14 @@ export default {
       });
       window.open(routeData.href, '_blank');
     },
+    changePage(page) {
+      this.$emit('getData', {
+        filter: this.filter,
+        options: { ...this.options, page },
+      });
+    },
   },
   watch: {
-    options: {
-      handler(newVal) {
-        this.innerOptions = newVal;
-      },
-    },
     enableEdit(newVal) {
       if (newVal === false) {
         this.edittingItem = {};

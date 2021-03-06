@@ -31,15 +31,15 @@
             <v-col cols="12" md="6">
               <v-text-field
                 v-model="barcode"
-                :rules="barcodeRules"
                 :label="$t('barcode')"
                 required
                 outlined
-                v-mask="'#########'"
                 error-count="2"
                 @keydown.enter="addItem"
                 autofocus
               >
+                <!-- :rules="barcodeRules" -->
+                <!-- v-mask="'#########'" -->
                 <template v-slot:prepend-inner>
                   <span class="red--text">
                     *
@@ -71,6 +71,12 @@
             :name="'invoiceItems'"
           />
         </v-row>
+        <v-row>
+          <deliveryMethod
+            v-if="invoiceItems.length > 0"
+            @setDeliveryMethod="setDeliveryMethod"
+          />
+        </v-row>
         <v-form class="pt-6" ref="form2" v-model="valid2" lazy-validation>
           <v-row v-if="invoiceItems.length > 0" class="pa-2">
             <v-col cols="12" md="6">
@@ -82,12 +88,9 @@
               ></v-textarea>
             </v-col>
             <v-col cols="12" md="6">
-              <clientsAutoComplete
-                ref="userAutocomplete"
-                :isRequired="userValidate"
-                :placeHolder="'users'"
+              <getClientByMobile
                 @setUser="setUser"
-                :key="usersKey"
+                @clientError="clientError"
               />
             </v-col>
           </v-row>
@@ -118,16 +121,18 @@
 </template>
 
 <script>
-import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import invoiceItems from './invoiceItems.vue';
+import deliveryMethod from '../shoppingBag/deliveryMethod.vue';
+import getClientByMobile from '../users/getClientByMobile.vue';
 
 export default {
   name: 'addInvoiceCmp',
   components: {
-    clientsAutoComplete,
     notifMessage,
     invoiceItems,
+    deliveryMethod,
+    getClientByMobile,
   },
   data() {
     return {
@@ -147,13 +152,19 @@ export default {
       invoice: {},
       // user validation
       userValidate: true,
-      users: [],
+      clientId: '',
       usersKey: 0,
+      delivery: 'PRESENCE',
+      booksId: [],
     };
   },
   methods: {
+    clientError() {
+      this.errorEnable = true;
+      this.errorMsg = 'clientNotFound';
+    },
     setUser(value) {
-      this.users.push(value);
+      this.clientId = value;
     },
     invoiceList() {
       this.$router.push({
@@ -162,23 +173,35 @@ export default {
     },
     addItem() {
       this.$refs.form.validate();
-      console.log(this.barcode);
 
-      // the barcode should check via back and if it was successfull
       // it should add item to invoice item
-      if (this.$refs.form.validate() && this.barcode.length === 9) {
-        this.reset();
-        const item = {
-          name: 'ملت عشق',
-          barcode: '121314156',
-          mainPrice: '22000000',
-          priceWithDiscount: '1100000',
-        };
-        this.invoiceItems.push(item);
-      } else {
-        this.errorEnable = true;
-        this.errorMsg = 'pleaseFillTheInput';
-      }
+      // if (this.$refs.form.validate() && this.barcode.length === 9 && this.clientId.length>0) {
+      this.$axios
+        .get(`/v1/api/tabaadol-e-ketaab/book-number/${this.barcode}`)
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res);
+            this.invoiceItems.push(res.data);
+            this.booksId.push(res.data.id);
+            console.log(this.booksId);
+            this.reset();
+          }
+        })
+        .catch(e => {
+          console.log(e);
+          if (e.response.status === 404) {
+            this.errorEnable = true;
+            this.errorMsg = 'bookNotFound';
+          }
+          if (e.response.status === 422) {
+            this.errorEnable = true;
+            this.errorMsg = 'unvalidCharacter';
+          }
+        });
+      // } else {
+      //   this.errorEnable = true;
+      //   this.errorMsg = 'pleaseFillTheInput';
+      // }
     },
 
     deleteItem(item) {
@@ -192,23 +215,30 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    setDeliveryMethod(value) {
+      this.delivery = value;
+    },
     addInvoice() {
       this.$refs.form2.validate();
       // user validation
-      if (
-        this.$refs.userAutocomplete.model === null ||
-        this.$refs.userAutocomplete.model.length < 1
-      ) {
-        this.userValidate = true;
-      } else {
-        this.userValidate = false;
-      }
+
       if (this.$refs.form2.validate()) {
-        this.users = [];
-        this.usersKey = +1;
-        this.invoice.desc = '';
-        this.invoiceItems = [];
-        this.saveSuccess = true;
+        this.$axios
+          .post('/v1/api/tabaadol-e-ketaab/order', {
+            clientId: this.clientId,
+            type: 'BUY',
+            delivery: this.delivery,
+            booksId: this.booksId,
+          })
+          .then(res => {
+            if (res.status === 200) {
+              console.log(res);
+              this.saveSuccess = true;
+              this.$router.push({
+                path: `/ordersList/${res.data.id}`,
+              });
+            }
+          });
       }
       console.log(this.invoiceItems, this.invoice);
       // this.$router.push({ path: `/invoicesList/${response.id}` });

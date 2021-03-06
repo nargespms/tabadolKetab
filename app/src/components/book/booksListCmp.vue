@@ -16,7 +16,7 @@
 import dataTableWrap from '../structure/dataTableWrap.vue';
 
 export default {
-  name: 'bookListCmp',
+  name: 'booksListCmp',
   components: {
     dataTableWrap,
   },
@@ -59,7 +59,7 @@ export default {
           text: 'tags',
           value: 'tags',
           align: 'center',
-          filterable: true,
+          filterable: false,
           divider: true,
         },
         {
@@ -74,8 +74,8 @@ export default {
           text: 'afterDiscount',
           value: 'afterDiscount',
           align: 'center',
-          filterable: true,
-          filterType: 'text',
+          // filterable: true,
+          // filterType: 'text',
           divider: true,
         },
         {
@@ -149,7 +149,7 @@ export default {
           text: 'tags',
           value: 'tags',
           align: 'center',
-          filterable: true,
+          filterable: false,
           divider: true,
         },
         {

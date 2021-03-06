@@ -1,7 +1,10 @@
 <template>
   <v-row no-gutters class="justify-center">
     <v-col cols="12" sm="6" md="8">
-      <v-card class="pa-4">
+      <v-overlay :value="isLoading">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
+      <v-card class="pa-4" v-if="!isLoading">
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
             <span>
@@ -12,11 +15,11 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon color="white" @click="bookList"> fa fa-table</v-icon>
+                <v-icon color="white" @click="booksList"> fa fa-table</v-icon>
               </v-btn>
             </template>
             <span>
-              {{ $t('bookList') }}
+              {{ $t('booksList') }}
             </span>
           </v-tooltip>
         </v-card-actions>
@@ -58,6 +61,7 @@
                 @sendValue="getBookCat"
                 ref="bookCat"
                 :height="32"
+                :editDataId="mode === 'edit' ? book.category.id : ''"
             /></v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
               <authorAutocomplete
@@ -66,6 +70,10 @@
                 :placeHolder="'writer'"
                 @sendValue="getWriter"
                 :height="32"
+                :editDataId="
+                  mode === 'edit' && book.writer ? book.writer.id : ''
+                "
+                :clearable="true"
               />
             </v-col>
           </v-row>
@@ -77,6 +85,10 @@
                 :placeHolder="'author'"
                 @sendValue="getAuthor"
                 :height="32"
+                :editDataId="
+                  mode === 'edit' && book.author ? book.author.id : ''
+                "
+                :clearable="true"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
@@ -86,6 +98,10 @@
                 :placeHolder="'translator'"
                 @sendValue="getTranslator"
                 :height="32"
+                :editDataId="
+                  mode === 'edit' && book.translator ? book.translator.id : ''
+                "
+                :clearable="true"
               />
             </v-col>
           </v-row>
@@ -97,6 +113,10 @@
                 :placeHolder="'searcher'"
                 @sendValue="getSearcher"
                 :height="32"
+                :editDataId="
+                  mode === 'edit' && book.searcher ? book.searcher.id : ''
+                "
+                :clearable="true"
               />
             </v-col>
             <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
@@ -106,6 +126,10 @@
                 @sendValue="getPublisher"
                 :height="32"
                 :isMultiple="false"
+                :editDataId="
+                  mode === 'edit' && book.publisher ? book.publisher.id : ''
+                "
+                :clearable="true"
               />
             </v-col>
           </v-row>
@@ -173,6 +197,7 @@
                   :placeHolder="'tags'"
                   @sendValue="getTag"
                   :height="32"
+                  :editDataId="mode === 'edit' && book.tags ? book.tags : []"
                 />
               </div>
             </v-col>
@@ -185,6 +210,9 @@
                 @setUser="setClient"
                 :height="32"
                 :isRequired="true"
+                :editDataId="
+                  mode === 'edit' && book.seller ? book.seller.id : ''
+                "
               />
             </v-col>
           </v-row>
@@ -402,12 +430,13 @@ export default {
       // error
       errorEnable: false,
       errorMsg: '',
+      isLoading: true,
     };
   },
   methods: {
-    bookList() {
+    booksList() {
       this.$router.push({
-        name: 'bookList',
+        name: 'booksList',
       });
     },
     setClient(value) {
@@ -481,6 +510,12 @@ export default {
                 this.errorEnable = true;
                 this.errorMsg = 'permissionDenied';
               }
+              if (e.response.status === 412) {
+                this.errorEnable = true;
+                const msg = e.response.data.message.replace(/ /g, '');
+                console.log(msg);
+                this.errorMsg = msg;
+              }
             });
         }
       } else {
@@ -496,6 +531,9 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+    hideError() {
+      this.error = false;
+    },
     moneyFormat(value) {
       return new Intl.NumberFormat('es-ES').format(value);
     },
@@ -505,12 +543,17 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.book = res.data;
+            this.isLoading = false;
           }
         });
     },
   },
   mounted() {
-    this.getBookData();
+    if (this.mode === 'edit') {
+      this.getBookData();
+    } else {
+      this.isLoading = false;
+    }
   },
 };
 </script>

@@ -10,10 +10,6 @@
       <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
       }}</v-btn>
-      <span class="pl-4">
-        {{ $t('status') }} :
-        <span v-for="s in status" :key="s.index"> {{ $t(s) }}, </span>
-      </span>
     </div>
     <v-data-table
       :headers="headers"
@@ -22,9 +18,11 @@
       update:options
       :server-items-length="totalData"
       :loading="loading"
-      class="elevation-1 text-center ma-4"
+      class="elevation-1 text-center ma-4 clear"
       hide-default-header
+      hide-default-footer
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
@@ -50,80 +48,106 @@
         <thead class="tableDataHead grey lighten-2">
           <tr>
             <th class="text-center" v-for="h in headers" :key="h.index">
-              <v-icon
-                v-if="h.sortable"
-                :key="h.index"
-                color="grey"
-                @click="sort"
-              >
-                mdi-menu-down
-              </v-icon>
-              {{ $t(h.text) }}
-              <v-icon
-                v-if="h.filterable"
-                color="grey"
-                size="11"
-                class="pa-2"
-                @click="filter"
-                >fas fa-filter
-              </v-icon>
-              <span class="fn-25">
-                {{ h.icon }}
-              </span>
+              <tableHeaderCell
+                :data="h"
+                @filterCol="filterCol"
+                :items="
+                  h.text === 'type'
+                    ? orderType
+                    : h.value === 'delivery'
+                    ? delivery
+                    : h.text === 'status'
+                    ? status
+                    : []
+                "
+                :editData="options.filter ? options.filter : {}"
+              />
             </th>
           </tr>
         </thead>
       </template>
-      <template v-slot:[`item.title`]="{ item }">
-        {{ item.title }}
+      <template v-slot:[`item.createdAt`]="{ item }">
+        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+      </template>
+
+      <template v-slot:[`item.type`]="{ item }">
+        <span>
+          {{ $t(item.type) }}
+        </span>
+      </template>
+
+      <template v-slot:[`item.clientId`]="{ item }">
+        <span>
+          {{ $t(item.client.firstName) }}
+          {{ $t(item.client.lastName) }}
+        </span>
+      </template>
+
+      <template v-slot:[`item.mobile`]="{ item }">
+        <span class="numberDir">
+          {{ $t(item.client.mobile) }}
+        </span>
+      </template>
+      <template v-slot:[`item.status`]="{ item }">
+        <span>
+          {{ $t(item.status) }}
+        </span>
       </template>
       <template v-slot:[`item.operation`]="{ item }">
-        <div class="d-flex">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                medium
-                class="ma-2"
-                v-bind="attrs"
-                @click="preview(item)"
-                v-on="on"
-              >
-                mdi-eye
-              </v-icon>
-            </template>
-            {{ $t('preview') }}
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                medium
-                class="ma-2"
-                v-bind="attrs"
-                @click="printForm(item)"
-                v-on="on"
-              >
-                mdi-printer
-              </v-icon>
-            </template>
-            {{ $t('print') }}
-          </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              v-bind="attrs"
+              @click="preview(item)"
+              v-on="on"
+            >
+              mdi-eye
+            </v-icon>
+          </template>
+          {{ $t('preview') }}
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              v-bind="attrs"
+              @click="printForm(item)"
+              v-on="on"
+            >
+              mdi-printer
+            </v-icon>
+          </template>
+          {{ $t('print') }}
+        </v-tooltip>
 
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                medium
-                class="ma-2"
-                color="grey darken-3"
-                @click="deleteRecord(item)"
-                v-on="on"
-                v-bind="attrs"
-              >
-                mdi-delete
-              </v-icon>
-            </template>
-            {{ $t('delete') }}
-          </v-tooltip>
-        </div>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              color="grey darken-3"
+              @click="deleteRecord(item)"
+              v-on="on"
+              v-bind="attrs"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          {{ $t('delete') }}
+        </v-tooltip>
+      </template>
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
+        <v-pagination
+          class="pa-3 float-left"
+          @input="changePage"
+          :value="options.page"
+          :length="props.pagination.pageCount"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+        ></v-pagination>
       </template>
     </v-data-table>
 
@@ -149,6 +173,7 @@
 <script>
 import notifMessage from '../structure/notifMessage.vue';
 import promptDialog from '../structure/promptDialog.vue';
+import tableHeaderCell from '../structure/tableHeaderCell.vue';
 
 export default {
   name: 'postTable',
@@ -157,6 +182,11 @@ export default {
     tableData: { type: Array },
     options: {
       type: Object,
+      default: () => ({
+        descending: false,
+        page: 1,
+        limit: 10,
+      }),
     },
     totalData: { type: Number },
     loading: { type: Boolean },
@@ -164,18 +194,32 @@ export default {
   components: {
     notifMessage,
     promptDialog,
+    tableHeaderCell,
   },
   data() {
     return {
-      innerOptions: this.options,
-      status: ['DONE', 'UNDONE', 'CANCEL', 'RETURNED'],
+      innerOptions: { ...this.options },
       // delete
       enableDelete: false,
       deletingItem: {},
       successNotif: false,
-
+      filter: {},
       // print item
       printtingItem: {},
+      orderType: [
+        { text: 'BUY', value: 'BUY' },
+        { text: 'SELL', value: 'SELL' },
+      ],
+      status: [
+        { text: 'PENDING', value: 'PENDING' },
+        { text: 'SUBMITTED', value: 'SUBMITTED' },
+        { text: 'ACCEPTED', value: 'ACCEPTED' },
+        { text: 'CANCELED', value: 'CANCELED' },
+        { text: 'IN_PROGRESS', value: 'IN_PROGRESS' },
+        { text: 'ON_WAY', value: 'ON_WAY' },
+        { text: 'RECEIVED', value: 'RECEIVED' },
+        { text: 'FINISHED', value: 'FINISHED' },
+      ],
     };
   },
   methods: {
@@ -215,13 +259,22 @@ export default {
       });
       window.open(routeLink.href, '_blank');
     },
-    // sort funcs
-    sort() {
-      console.log('sorted');
+    reloadTable() {
+      this.onRequest({
+        options: this.innerOptions,
+      });
     },
-    // filter
-    filter() {
-      console.log('filtered');
+    filterCol(value, name) {
+      this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+        tableSearch: this.tableSearch,
+      });
+    },
+    onRequest(props) {
+      props.filter = this.filter;
+      this.innerOptions = props.options;
+      this.$emit('getData', props);
     },
     excelFile() {
       // getData as excel file with filtered included
@@ -233,12 +286,11 @@ export default {
       });
       window.open(routeData.href, '_blank');
     },
-  },
-  watch: {
-    options: {
-      handler(newVal) {
-        this.innerOptions = newVal;
-      },
+    changePage(page) {
+      this.$emit('getData', {
+        filter: this.filter,
+        options: { ...this.options, page },
+      });
     },
   },
 };

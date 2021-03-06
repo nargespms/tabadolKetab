@@ -160,9 +160,9 @@ const routes = [
         },
       },
       {
-        path: '/bookList',
-        name: 'bookList',
-        component: () => import('../views/book/bookList.vue'),
+        path: '/booksList',
+        name: 'booksList',
+        component: () => import('../views/book/booksList.vue'),
         meta: {
           requiresAuth: true,
           roles: [{ r_book: true }],
@@ -171,7 +171,7 @@ const routes = [
         },
       },
       {
-        path: '/bookList/:bookId',
+        path: '/booksList/:bookId',
         name: 'bookPage',
         component: () => import('../views/book/book.vue'),
         meta: {
@@ -180,6 +180,11 @@ const routes = [
           access: 'BOTH',
           cRole: 'CLIENT',
         },
+      },
+      {
+        path: '/books/:bookId',
+        name: 'bookPreviewPage',
+        component: () => import('../views/book/bookPreview.vue'),
       },
       {
         path: '/addBookCat',
@@ -282,6 +287,15 @@ const routes = [
           roles: [{ cd_discount: true }, { r_discount: true }],
         },
       },
+      {
+        path: '/couponList',
+        name: 'couponList',
+        component: () => import('../views/discount/couponList.vue'),
+        meta: {
+          requiresAuth: true,
+          roles: [{ cd_discount: true }, { r_discount: true }],
+        },
+      },
       // requested books
       {
         path: '/addRequestedBooks',
@@ -343,7 +357,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           roles: [{ r_post: true }],
-          access: 'CLIENT',
+          access: 'BOTH',
           cRole: 'CLIENT',
         },
       },
@@ -403,6 +417,15 @@ const routes = [
           roles: [{ c_invoice: true }, { r_invoice: true }],
           access: 'BOTH',
           cRole: 'CLIENT',
+        },
+      },
+      {
+        path: '/tradesList',
+        name: 'tradesList',
+        component: () => import('../views/billing/tradesList.vue'),
+        meta: {
+          requiresAuth: true,
+          roles: [{ c_invoice: true }, { r_invoice: true }],
         },
       },
       {
@@ -536,6 +559,12 @@ const routes = [
           roles: [{ r_report: true }],
         },
       },
+      {
+        name: 'accessDenied',
+        path: '403',
+        component: () => import('../views/errors/E403.vue'),
+      },
+      { path: '*', component: () => import('../views/errors/E404.vue') },
     ],
   },
 ];

@@ -1,6 +1,6 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <v-col cols="12" sm="6" md="8">
+    <v-col>
       <v-overlay :value="isLoading">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
@@ -61,11 +61,13 @@
                   @setUser="setClient"
                   :placeHolder="'clients'"
                   dynamicClass="pb-7"
+                  :editDataId="clientId"
                 />
               </div>
               <payMethod
                 v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
                 @setMethod="setMethod"
+                :data="payMethods"
               />
               <v-textarea
                 outlined
@@ -115,6 +117,14 @@ export default {
     clientsAutoComplete,
     payMethod,
   },
+  props: {
+    data: {
+      type: Object,
+    },
+    mode: {
+      type: String,
+    },
+  },
   data() {
     return {
       valid: true,
@@ -128,6 +138,7 @@ export default {
       clientId: '',
       isLoading: false,
       queryGet: false,
+      payMethods: ['POZ', 'CARD', 'CASH', 'GIFT'],
     };
   },
   methods: {
@@ -168,8 +179,11 @@ export default {
             if (res.status === 200) {
               if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
                 window.open(res.data.link, '_blank');
-                this.isLoading = false;
               }
+              if (this.mode === 'modal') {
+                this.$emit('closeModal');
+              }
+              this.isLoading = false;
               this.saveSuccess = true;
               this.reset();
             }
@@ -196,10 +210,22 @@ export default {
     credit(newVal) {
       this.credit = newVal;
     },
+    data(newVal) {
+      this.credit.credit = newVal.credit;
+      this.clientId = newVal.clientId;
+      this.queryGet = true;
+    },
+    clientId(newVal) {
+      this.credit.clientId = newVal;
+    },
   },
   mounted() {
-    console.log(this.$route.query.credit);
-    if (this.$route.query.credit) {
+    if (this.mode === 'modal') {
+      this.credit.credit = this.data.credit;
+      this.clientId = this.data.clientId;
+      this.queryGet = true;
+    }
+    if (this.mode !== 'modal' && this.$route.query) {
       this.credit.credit = this.$route.query.credit;
       this.queryGet = true;
     } else {

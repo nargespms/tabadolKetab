@@ -18,8 +18,9 @@
       update:options
       :server-items-length="totalData"
       :loading="loading"
-      class="elevation-1 text-center ma-4"
+      class="elevation-1 text-center ma-4 clear"
       hide-default-header
+      hide-default-footer
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
     >
@@ -68,7 +69,7 @@
         </span>
       </template>
 
-      <template v-slot:[`item.clientId`]="{ item }">
+      <template v-slot:[`item.createdById`]="{ item }">
         <span>
           {{ item.client.firstName }}
           {{ item.client.lastName }}
@@ -81,13 +82,33 @@
         </span>
       </template>
 
+      <template v-slot:[`item.status`]="{ item }">
+        <span>
+          {{ $t(item.status) }}
+        </span>
+      </template>
+
       <template v-slot:[`item.operation`]="{ item }">
         <v-icon medium class="ma-2" @click="preview(item)">
           mdi-eye
         </v-icon>
-        <v-icon medium class="ma-2" @click="changeStatusEnable(item)"
+        <v-icon
+          medium
+          class="ma-2"
+          @click="changeStatusEnable(item)"
+          v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
           >mdi-book-open
         </v-icon>
+      </template>
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
+        <v-pagination
+          class="pa-3 float-left"
+          @input="changePage"
+          :value="options.page"
+          :length="props.pagination.pageCount"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+        ></v-pagination>
       </template>
     </v-data-table>
     <v-dialog
@@ -100,11 +121,7 @@
     <v-dialog v-model="enableStatusChange" max-width="500px">
       <multipleChoiseDialog
         :title="'changeStatus'"
-        :message="
-          `${$t('chooseRequestedBookStatus')}\n${$t('bookNumber')}:${
-            changingStatusItem.id
-          }`
-        "
+        :message="`${$t('chooseRequestedBookStatus')}\n`"
         :data="changingStatusItem"
         :buttons="changeStatusButs"
         @changeStatus="changeStatus"
@@ -144,7 +161,7 @@ export default {
   },
   data() {
     return {
-      innerOptions: this.options,
+      innerOptions: { ...this.options },
       successNotif: false,
       // preview
       enablePreview: false,
@@ -154,23 +171,23 @@ export default {
       changingStatusItem: {},
       changeStatusButs: [
         {
-          name: 'inprogress',
-          color: 'purple',
-        },
-        {
-          name: 'available',
+          name: 'AVAILABLE',
           color: 'green',
         },
         {
-          name: 'unavailable',
+          name: 'UNAVAILABLE',
           color: 'red',
+        },
+        {
+          name: 'PENDING',
+          color: 'purple',
         },
       ],
       filter: {},
       statusItems: [
-        { text: 'inprogress', value: 'inprogress' },
-        { text: 'available', value: 'available' },
-        { text: 'unavailable', value: 'unavailable' },
+        { text: 'AVAILABLE', value: 'AVAILABLE' },
+        { text: 'UNAVAILABLE', value: 'UNAVAILABLE' },
+        { text: 'PENDING', value: 'PENDING' },
       ],
     };
   },
@@ -192,9 +209,19 @@ export default {
     },
     changeStatus(value) {
       console.log(value);
-      this.enableStatusChange = false;
-      this.changingStatusItem = {};
-      this.successNotif = true;
+      this.$axios
+        .patch(
+          `/v1/api/tabaadol-e-ketaab/requested-book/${this.changingStatusItem.id}`,
+          { status: value }
+        )
+        .then(res => {
+          if (res.status === 200) {
+            this.enableStatusChange = false;
+            this.changingStatusItem = {};
+            this.successNotif = true;
+            this.reloadTable();
+          }
+        });
     },
     hideNotif() {
       this.successNotif = false;
@@ -230,13 +257,14 @@ export default {
       this.innerOptions = props.options;
       this.$emit('getData', props);
     },
+    changePage(page) {
+      this.$emit('getData', {
+        filter: this.filter,
+        options: { ...this.options, page },
+      });
+    },
   },
   watch: {
-    options: {
-      handler(newVal) {
-        this.innerOptions = newVal;
-      },
-    },
     enablePreview(newVal) {
       if (newVal === false) {
         this.previewItem = {};

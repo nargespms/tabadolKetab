@@ -130,12 +130,13 @@
                 </v-select>
               </v-col>
             </v-row>
-            <v-row>
-              <v-col cols="12" md="6" class="pa-0">
+
+            <v-row v-if="role === 'staff'">
+              <v-col cols="12" md="6" class="pa-0 ">
                 <v-select
-                  v-model="register.gender"
-                  :items="gender"
-                  :label="$t('gender')"
+                  v-model="register.department"
+                  :items="departments"
+                  :label="$t('department')"
                   outlined
                   clearable
                   hide-selected
@@ -170,6 +171,36 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6" class="pa-0">
+                <v-select
+                  v-model="register.gender"
+                  :items="gender"
+                  :label="$t('gender')"
+                  outlined
+                  clearable
+                  hide-selected
+                  :rules="checkRule"
+                  required
+                >
+                  <template v-slot:item="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template>
+                </v-select>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="6" class="pa-0">
                 <v-textarea
                   outlined
                   required
@@ -200,15 +231,10 @@
                   v-model="register.postalCode"
                   :label="$t('postalCode')"
                   v-mask="'###########'"
-                  :rules="postalCodeRules"
+                  :rules="register.postalCode > 0 ? postalCodeRules : []"
                   outlined
                   error-count="2"
                 >
-                  <template v-slot:prepend-inner>
-                    <span class="red--text">
-                      *
-                    </span>
-                  </template>
                 </v-text-field>
               </v-col>
               <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
@@ -295,10 +321,9 @@ export default {
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
-      postalCodeRules: [
-        v => (v && v.length >= 10) || `${this.$t('minCharaters10')}`,
-      ],
+      postalCodeRules: [v => v.length >= 10 || `${this.$t('minCharaters10')}`],
       checkRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
+
       introductionType: [
         'website',
         'advertising',
@@ -311,6 +336,7 @@ export default {
       captcha: '',
       active: '',
       gender: ['MALE', 'FEMALE', 'OTHER'],
+      departments: ['INFO', 'TECH', 'BILLING'],
     };
   },
   methods: {

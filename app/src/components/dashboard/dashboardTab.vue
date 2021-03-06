@@ -16,9 +16,9 @@
         <v-card flat class="pa-4">
           <usersStatusCards v-if="item.tab === 'users'" />
           <ticketsStatusCard v-if="item.tab === 'tickets'" />
-          <booksStatusCard v-if="item.tab === 'book'" />
           <discountsStatusCard v-if="item.tab === 'discounts'" />
           <postsStatusCard v-if="item.tab === 'post'" />
+          <booksStatusCard v-if="item.tab === 'book'" />
           <billingStatusCard v-if="item.tab === 'billing'" />
           <financialReportWrap class="mt-8" v-if="item.tab === 'billing'" />
         </v-card>

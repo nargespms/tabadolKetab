@@ -1,22 +1,19 @@
 <template>
   <div>
-    <span class="fn-25">
-      🧑‍💻
-    </span>
-    <span class="fn-25">
-      👨‍🔧
-    </span>
     <v-data-table
       :headers="headers"
       :items="tableData"
-      :options.sync="innerOptions"
-      update:options
-      :server-items-length="totalData"
       :loading="loading"
-      class="elevation-1 text-center ma-4"
-      hide-default-header
+      class="elevation-1 text-center ma-4 clear"
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
+      :options.sync="innerOptions"
+      :server-items-length="totalData"
+      hide-default-header
+      hide-default-footer
     >
+      <!-- @page-count="options.page = $event" -->
+      <!-- :page.sync="options.page" -->
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
           <v-tooltip bottom>
@@ -79,6 +76,16 @@
           mdi-delete
         </v-icon>
       </template>
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
+        <v-pagination
+          class="pa-3 float-left"
+          @input="changePage"
+          :value="options.page"
+          :length="props.pagination.pageCount"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+        ></v-pagination>
+      </template>
     </v-data-table>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
@@ -138,7 +145,8 @@ export default {
   },
   data() {
     return {
-      innerOptions: this.options,
+      innerOptions: { ...this.options },
+
       // delete
       enableDelete: false,
       deletingItem: {},
@@ -212,16 +220,16 @@ export default {
       });
     },
     onRequest(props) {
+      console.log('111');
       props.filter = this.filter;
       this.innerOptions = props.options;
       this.$emit('getData', props);
     },
-  },
-  watch: {
-    options: {
-      handler(newVal) {
-        this.innerOptions = newVal;
-      },
+    changePage(page) {
+      this.$emit('getData', {
+        filter: this.filter,
+        options: { ...this.options, page },
+      });
     },
   },
 };

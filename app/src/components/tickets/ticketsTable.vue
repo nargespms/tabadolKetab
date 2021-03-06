@@ -18,8 +18,9 @@
       update:options
       :server-items-length="totalData"
       :loading="loading"
-      class="elevation-1 text-center ma-4"
+      class="elevation-1 text-center ma-4 clear"
       hide-default-header
+      hide-default-footer
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
     >
@@ -45,8 +46,15 @@
             <th class="text-center" v-for="h in headers" :key="h.index">
               <tableHeaderCell
                 :data="h"
-                :items="h.text === 'status' ? statusItems : []"
+                :items="
+                  h.text === 'status'
+                    ? statusItems
+                    : h.text === 'department'
+                    ? departmentItems
+                    : []
+                "
                 @filterCol="filterCol"
+                :editData="options.filter ? options.filter : {}"
               />
             </th>
           </tr>
@@ -62,6 +70,10 @@
       </template>
       <template v-slot:[`item.status`]="{ item }">
         {{ $t(item.status) }}
+      </template>
+
+      <template v-slot:[`item.department`]="{ item }">
+        {{ $t(item.department) }}
       </template>
 
       <template
@@ -92,6 +104,16 @@
           {{ $t('preview') }}
         </v-tooltip>
       </template>
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
+        <v-pagination
+          class="pa-3 float-left"
+          @input="changePage"
+          :value="options.page"
+          :length="props.pagination.pageCount"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+        ></v-pagination>
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -115,7 +137,7 @@ export default {
   },
   data() {
     return {
-      innerOptions: this.options,
+      innerOptions: { ...this.options },
       successNotif: false,
       statusItems: [
         { text: 'CLOSED', value: 'CLOSED' },
@@ -124,6 +146,11 @@ export default {
         { text: 'ANSWERED_BY_CLIENT', value: 'ANSWERED_BY_CLIENT' },
         { text: 'INPROGRESS', value: 'INPROGRESS' },
         { text: 'ONHOLD', value: 'ONHOLD' },
+      ],
+      departmentItems: [
+        { text: 'INFO', value: 'INFO' },
+        { text: 'TECH', value: 'TECH' },
+        { text: 'BILLING', value: 'BILLING' },
       ],
       filter: {},
     };
@@ -168,12 +195,11 @@ export default {
       });
       window.open(routeData.href, '_blank');
     },
-  },
-  watch: {
-    options: {
-      handler(newVal) {
-        this.innerOptions = newVal;
-      },
+    changePage(page) {
+      this.$emit('getData', {
+        filter: this.filter,
+        options: { ...this.options, page },
+      });
     },
   },
 };

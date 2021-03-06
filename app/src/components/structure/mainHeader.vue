@@ -11,7 +11,9 @@
             v-if="
               $route.name !== 'login' &&
                 $route.name !== 'signup' &&
-                $route.name !== 'admin-login'
+                $route.name !== 'admin-login' &&
+                $route.name !== 'staff-forgot' &&
+                $route.name !== 'forgot'
             "
             class="white--text "
             @click="changeDrawer"
@@ -21,16 +23,16 @@
             >{{ $t('changing') }} &nbsp;
           </span>
         </div>
-        <!-- <div v-if="$route.name !== 'login' || $route.name !== 'signup'">
 
-        </div> -->
         <div
           class=" pl-6 enterPannel"
           @click="enterPannel"
           v-if="
             $route.name === 'login' ||
               $route.name === 'signup' ||
-              $route.name === 'admin-login'
+              $route.name === 'admin-login' ||
+              $route.name === 'staff-forgot' ||
+              $route.name === 'forgot'
           "
         >
           <v-icon color="white">mdi-account-key</v-icon>
@@ -75,7 +77,9 @@
       v-if="
         $route.name !== 'login' &&
           $route.name !== 'signup' &&
-          $route.name !== 'admin-login'
+          $route.name !== 'admin-login' &&
+          $route.name !== 'staff-forgot' &&
+          $route.name !== 'forgot'
       "
       :drawer="drawer"
       :state="drawer"

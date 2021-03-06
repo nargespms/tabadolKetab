@@ -25,13 +25,7 @@
             </span>
           </span>
         </v-col>
-        <v-col cols="12" md="3">
-          <bookCatAutocomplete
-            :isRequire="bookCatVallidate"
-            @sendValue="getBookCat"
-            ref="bookCat"
-          />
-        </v-col>
+
         <v-col cols="12" md="1">
           <v-btn
             :disabled="!valid"
@@ -56,14 +50,13 @@
 <script>
 import financeReportTable from './financeReportTable.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
-import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete';
+import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'categoryBuyReport',
   components: {
     financeReportTable,
     rangeDatePickerCmp,
-    bookCatAutocomplete,
   },
   data() {
     return {
@@ -74,9 +67,6 @@ export default {
       fromDateValidation: true,
       toDateValidation: true,
 
-      // bookCategory vlidate
-      bookCatVallidate: true,
-
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
 
       columns: [
@@ -86,45 +76,32 @@ export default {
         {
           text: 'categoryName',
         },
-        {
-          text: 'number',
-        },
+
         {
           text: 'totalBuy',
         },
       ],
-      data: [
-        {
-          category: {
-            name: 'مذهبی ',
-          },
-          number: 5,
-          totalBuy: 120000,
-        },
-        {
-          category: {
-            name: 'اجتماعی ',
-          },
-          number: 10,
-          totalBuy: 120000,
-        },
-        {
-          category: {
-            name: 'سیاسی ',
-          },
-          number: 9,
-          totalBuy: 120000,
-        },
-      ],
+      data: [],
+      startDate: '',
+      endDate: '',
     };
   },
+  mixins: [dateTime],
+
   methods: {
     setDate(value) {
-      console.log(value);
+      if (value.fromDate.length > 0) {
+        this.startDate = new Date(
+          this.persionToGregorian(value.fromDate)
+        ).toISOString();
+      }
+      if (value.toDate.length > 0) {
+        this.endDate = new Date(
+          this.persionToGregorian(value.toDate)
+        ).toISOString();
+      }
     },
-    getBookCat(value) {
-      console.log(value);
-    },
+
     showResult() {
       this.$refs.form.validate();
       // date picker validation
@@ -144,18 +121,26 @@ export default {
       } else {
         this.toDateValidation = true;
       }
-      // book category validation
-      if (this.$refs.bookCat.model.length < 1) {
-        this.bookCatVallidate = false;
-      } else {
-        this.bookCatVallidate = true;
-      }
 
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation
         if (this.$refs.form.validate()) {
-          this.reset();
-          this.isLoading = false;
+          this.$axios
+            .get('/v1/api/tabaadol-e-ketaab/report/categories', {
+              params: {
+                filter: {
+                  startDate: this.startDate,
+                  endDate: this.endDate,
+                },
+              },
+            })
+            .then(res => {
+              if (res.status === 200) {
+                this.data = res.data.categories;
+                this.reset();
+                this.isLoading = false;
+              }
+            });
         } else {
           this.valid = false;
         }
@@ -167,7 +152,6 @@ export default {
       this.dateKey = +1;
       this.toDateValidation = true;
       this.fromDateValidation = true;
-      this.bookCatVallidate = true;
     },
   },
 };

@@ -25,7 +25,7 @@
         <span>{{ $t('addBook') }}</span>
       </v-tooltip>
       <span class="pr-4 font-weight-medium white--text">
-        {{ $t('bookList') }}
+        {{ $t('booksList') }}
       </span>
     </v-toolbar>
 
@@ -45,6 +45,7 @@
             :data="h"
             :items="h.text === 'status' ? status : []"
             @filterCol="filterCol"
+            :editData="options.filter ? options.filter : {}"
           />
         </th>
       </thead>
@@ -62,12 +63,16 @@
           <td>
             {{ $t(item.status) }}
           </td>
-          <td></td>
           <td>
-            {{ item.undergraduatePrice }}
+            <template v-for="tag in item.tags">
+              <span :key="tag.id"> {{ tag.title }}- </span>
+            </template>
           </td>
           <td>
-            {{ item.afterDiscount }}
+            {{ moneyFormat(item.undergraduatePrice) }}
+          </td>
+          <td>
+            {{ moneyFormat(item.afterDiscount) }}
           </td>
 
           <td>
@@ -90,7 +95,7 @@
             </v-tooltip>
           </td>
           <td>
-            <div class="d-flex">
+            <div>
               <v-tooltip
                 bottom
                 v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
@@ -102,6 +107,7 @@
                     v-bind="attrs"
                     @click="addToBag(item)"
                     v-on="on"
+                    :disabled="item.status !== 'CONFIRMED'"
                   >
                     fas fa-shopping-cart
                   </v-icon>
@@ -122,6 +128,7 @@
                 </template>
                 {{ $t('preview') }}
               </v-tooltip>
+
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
@@ -130,6 +137,12 @@
                     @click="editRecord(item)"
                     v-on="on"
                     v-bind="attrs"
+                    :disabled="
+                      ($store.state.bookShop.userInfo.role === 'CLIENT' &&
+                        item.status !== 'CLIENTREGISTER') ||
+                        ($store.state.bookShop.userInfo.role !== 'CLIENT' &&
+                          item.status !== 'CONFIRMED')
+                    "
                   >
                     mdi-pencil
                   </v-icon>
@@ -204,6 +217,7 @@
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import promptDialog from '../structure/promptDialog.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'lazyBookTable',
@@ -226,6 +240,8 @@ export default {
       }),
     },
   },
+  mixins: [moneyFormat],
+
   data() {
     return {
       innerOptions: this.options,
@@ -261,7 +277,7 @@ export default {
     },
     editRecord(item) {
       this.$router.push({
-        path: `/bookList/${item.id}`,
+        path: `/booksList/${item.id}`,
       });
     },
 
@@ -292,6 +308,11 @@ export default {
       });
       window.open(routeData.href, '_blank');
     },
+    preview(item) {
+      this.$router.push({
+        path: `/books/${item.id}`,
+      });
+    },
     printBarCode(value) {
       console.log('inja');
       const routeData = this.$router.resolve({
@@ -318,6 +339,11 @@ export default {
           if (e.response.status === 403) {
             this.error = true;
             this.errorMsg = 'permissionDenied';
+            this.closeDelete();
+          }
+          if (e.response.status === 412) {
+            this.error = true;
+            this.errorMsg = 'thisBookCanNotBeDeleted';
             this.closeDelete();
           }
         });

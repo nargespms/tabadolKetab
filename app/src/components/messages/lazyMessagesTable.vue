@@ -69,11 +69,11 @@
           <td>
             {{ new Date(item.sendDate).toLocaleDateString('fa') }}
           </td>
-          <td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
             {{ item.receiver.firstName }}
             {{ item.receiver.lastName }}
           </td>
-          <td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
             <span class="numberDir">
               {{ item.receiver.mobile }}
             </span>
@@ -88,7 +88,7 @@
           <td>
             {{ $t(item.type) }}
           </td>
-          <td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
             <span v-if="item.sms">
               {{ $t('smsDone') }}
               <v-icon color="success">mdi-check</v-icon>
@@ -115,7 +115,10 @@
                 </template>
                 {{ $t('preview') }}
               </v-tooltip>
-              <v-tooltip bottom>
+              <v-tooltip
+                bottom
+                v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
+              >
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
                     medium
@@ -207,7 +210,7 @@ export default {
       // preview
       enablePreview: false,
       previewItem: {},
-      tableName: 'PUBLIC',
+      tableName: '',
       filter: {},
       uploadMoreBut: 'uploadeMore',
       status: [

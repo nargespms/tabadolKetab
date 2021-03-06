@@ -1,6 +1,10 @@
 <template>
   <div>
-    <dataTableWrap :headers="headers" :module="'discounts'" />
+    <dataTableWrap
+      :headers="headers"
+      :module="'discounts'"
+      :endpoint="'/v1/api/tabaadol-e-ketaab/category-discount/list'"
+    />
   </div>
 </template>
 
@@ -16,17 +20,11 @@ export default {
     return {
       headers: [
         {
-          text: 'id',
-          value: 'id',
-          align: 'center',
-          filterable: true,
-          divider: true,
-        },
-        {
           text: 'title',
           value: 'title',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
         },
 
@@ -34,42 +32,24 @@ export default {
           text: 'createdAt',
           value: 'createdAt',
           filterable: true,
+          filterType: 'date',
           align: 'center',
           divider: true,
         },
         {
           text: 'category',
-          value: 'category',
+          value: 'categoryId',
           filterable: true,
+          filterType: 'bookCategory',
           align: 'center',
-          divider: true,
-        },
-        {
-          text: 'type',
-          value: 'type',
-          align: 'center',
-          filterable: true,
-          divider: true,
-        },
-        {
-          text: 'amount',
-          value: 'amount',
-          filterable: true,
-          align: 'left',
           divider: true,
         },
 
         {
-          text: 'usedNumber',
-          value: 'usedNumber',
-          filterable: false,
-          align: 'left',
-          divider: true,
-        },
-        {
-          text: 'code',
-          value: 'code',
+          text: 'percent',
+          value: 'percent',
           filterable: true,
+          filterType: 'text',
           align: 'center',
           divider: true,
         },
@@ -77,16 +57,10 @@ export default {
           text: 'description',
           value: 'description',
           filterable: true,
+          filterType: 'text',
           align: 'center',
           divider: true,
           body: 150,
-        },
-        {
-          text: 'user',
-          value: 'user',
-          filterable: true,
-          align: 'center',
-          divider: true,
         },
         {
           text: 'operation',

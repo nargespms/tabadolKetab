@@ -27,37 +27,8 @@
           <v-form v-model="valid" lazy-validation ref="form">
             <v-row class="justify-center">
               <v-col cols="12" lg="10" align-self="center">
-                <div class="pa-3 d-flex align-center ">
-                  <span class="font-weight-black"> {{ $t('sendWay') }} : </span>
-                  <v-radio-group
-                    v-model="bag.delivery"
-                    row
-                    class="pr-6"
-                    :rules="requireRule"
-                    required
-                  >
-                    <v-radio
-                      :label="$t('PRESENCE')"
-                      value="PRESENCE"
-                      class="pr-6"
-                    ></v-radio>
-                    <v-radio
-                      :label="$t('TABADOL')"
-                      value="TABADOL"
-                      class="pr-6"
-                    ></v-radio>
-                    <v-radio
-                      :label="$t('TIPAX')"
-                      value="TIPAX"
-                      class="pr-6"
-                    ></v-radio>
-                    <v-radio
-                      :label="$t('POST')"
-                      value="POST"
-                      class="pr-6"
-                    ></v-radio>
-                  </v-radio-group>
-                </div>
+                <deliveryMethod @setDeliveryMethod="setDeliveryMethod" />
+
                 <div
                   class="primary--text  pointer px-2"
                   @click="addressModalEnable = true"
@@ -109,6 +80,7 @@
 import invoiceItems from '../invoices/invoiceItems.vue';
 import addressCmp from '../userControls/addressCmp.vue';
 import notifMessage from '../structure/notifMessage.vue';
+import deliveryMethod from './deliveryMethod.vue';
 
 export default {
   name: 'bag',
@@ -116,6 +88,7 @@ export default {
     invoiceItems,
     addressCmp,
     notifMessage,
+    deliveryMethod,
   },
   data() {
     return {
@@ -159,6 +132,9 @@ export default {
     moneyFormat(value) {
       return new Intl.NumberFormat('es-ES').format(value);
     },
+    setDeliveryMethod(value) {
+      this.bag.delivery = value;
+    },
     pay() {
       this.orderLoading = true;
       this.$refs.form.validate();
@@ -180,6 +156,11 @@ export default {
               this.orderLoading = false;
               this.errorEnable = true;
               this.errorMsg = 'selectYourAddress';
+            }
+            if (e.response.status === 404) {
+              this.orderLoading = false;
+              this.errorEnable = true;
+              this.errorMsg = 'Thisbookissoldorreservedorregisteredbyclient';
             }
           });
       } else {

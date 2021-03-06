@@ -3,7 +3,9 @@
     <v-col>
       <v-card
         class="pa-4 d-flex justify-space-between"
-        :color="userName === 'staff' ? 'teal lighten-5' : 'blue-grey lighten-5'"
+        :color="
+          userName === 'staff' ? 'teal lighten-5' : 'light-blue lighten-5'
+        "
       >
         <div class="d-flex">
           <div class="ticketInfo pa-4">

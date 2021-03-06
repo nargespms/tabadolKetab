@@ -1,5 +1,9 @@
 <template>
-  <dataTableWrap :headers="headers" :module="'invoices'" />
+  <dataTableWrap
+    :headers="headers"
+    :module="'invoices'"
+    :endpoint="'/v1/api/tabaadol-e-ketaab/invoice/list'"
+  />
 </template>
 
 <script>
@@ -15,9 +19,10 @@ export default {
       headers: [
         {
           text: 'invoiceNumber',
-          value: 'invoiceNumber',
+          value: 'number',
           align: 'center',
           filterable: true,
+          filterType: 'text',
           divider: true,
         },
 
@@ -25,29 +30,34 @@ export default {
           text: 'createdAt',
           value: 'createdAt',
           filterable: true,
+          filterType: 'date',
           align: 'center',
           divider: true,
         },
         {
-          text: 'registeredUser',
-          value: 'registeredUser',
+          text: 'staff',
+          value: 'staffId',
           filterable: true,
+          filterType: 'staffUsers',
+          filterName: 'staffId',
           align: 'center',
           divider: true,
           icon: ' 🧑‍💻',
         },
         {
           text: 'client',
-          value: 'client',
+          value: 'clientId',
           filterable: true,
+          filterType: 'clientUsers',
           align: 'center',
           divider: true,
           icon: ' 🧑‍💻',
         },
         {
-          text: 'totalPrice',
-          value: 'totalPrice',
+          text: 'finalTotal',
+          value: 'finalTotal',
           filterable: true,
+          filterType: 'text',
           align: 'center',
           divider: true,
         },

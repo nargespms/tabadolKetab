@@ -29,7 +29,7 @@ export default {
         {
           text: 'firstName',
           align: 'center',
-          sortable: true,
+          sortable: false,
           filterable: true,
           filterType: 'text',
           value: 'firstName',
@@ -38,7 +38,7 @@ export default {
         {
           text: 'lastName',
           align: 'center',
-          sortable: true,
+          sortable: false,
           filterable: true,
           filterType: 'text',
           value: 'lastName',
@@ -82,7 +82,7 @@ export default {
           value: 'createdAt',
           align: 'center',
           filterable: true,
-          filtertype: 'date',
+          filterType: 'date',
           divider: true,
         },
         {

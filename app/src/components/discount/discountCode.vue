@@ -12,7 +12,7 @@
           ></v-text-field>
         </div>
         <v-btn
-          :disabled="discountCode.length < 1"
+          :disabled="discountCode.length < 1 || this.usedCoupon"
           color="success"
           class="align-self-end"
           @click="setDiscount"
@@ -27,19 +27,37 @@
 <script>
 export default {
   name: 'discountCode',
+  props: {
+    invoiceId: {
+      type: String,
+    },
+  },
   data() {
     return {
       discountCode: '',
+      usedCoupon: false,
     };
   },
   methods: {
     setDiscount() {
       console.log(this.discountCode);
-      // this.$axios.post('', this.discountCode).then(res => {
-      //   if (res.status === 200) {
-      //     this.$emit('changeOrderTotal', res.data.total);
-      //   }
-      // });
+      this.$axios
+        .patch(`/v1/api/tabaadol-e-ketaab/invoice/coupon/${this.invoiceId}`, {
+          code: this.discountCode,
+        })
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res);
+            this.$emit('changeOrderTotal', res.data.finalTotal);
+            this.usedCoupon = true;
+          }
+        })
+        .catch(e => {
+          if (e.response.status === 400) {
+            // unvalidDate or used or deleeted
+            this.$emit('errorCoupon');
+          }
+        });
     },
   },
 };

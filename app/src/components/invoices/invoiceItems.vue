@@ -54,20 +54,24 @@
             {{ item.name }}
           </td>
           <td>
-            {{ item.undergraduatePrice }}
+            <span v-if="item.undergraduatePrice">
+              {{ moneyFormat(item.undergraduatePrice) }}{{ $t('rial') }}
+            </span>
           </td>
 
           <td>
             <span v-if="item.discount > 0">
-              {{ item.discount }}
+              {{ moneyFormat(item.discount) }}{{ $t('rial') }}
             </span>
             <span v-else>
-              <v-icon color="red">mdi-close-circle-outline</v-icon>
+              <v-icon color="red">mdi-close</v-icon>
               {{ $t('noDiscount') }}
             </span>
           </td>
           <td>
-            {{ item.afterDiscount }}
+            <span v-if="item.afterDiscount">
+              {{ moneyFormat(item.afterDiscount) }}{{ $t('rial') }}
+            </span>
           </td>
 
           <td v-if="deletable">
@@ -88,6 +92,22 @@
             </v-tooltip>
           </td>
         </tr>
+        <tr v-if="total">
+          <td colspan="3" class="grey lighten-2"></td>
+          <td>
+            <span v-if="total">
+              {{ moneyFormat(total) }} {{ $t('rial') }}
+            </span>
+          </td>
+          <td class="grey lighten-2"></td>
+          <td>
+            <span v-if="finalTotal">
+              {{ moneyFormat(finalTotal) }} {{ $t('rial') }}
+            </span>
+            <span else> </span>
+          </td>
+          <td v-if="deletable" class="grey lighten-2"></td>
+        </tr>
       </tbody>
     </table>
     <v-dialog v-model="enableDelete" max-width="500px">
@@ -104,6 +124,7 @@
 
 <script>
 import promptDialog from '../structure/promptDialog.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'invoiceItems',
@@ -123,6 +144,8 @@ export default {
   components: {
     promptDialog,
   },
+  mixins: [moneyFormat],
+
   data() {
     return {
       items: this.data,
@@ -151,6 +174,24 @@ export default {
   watch: {
     data(newVal) {
       this.items = newVal;
+    },
+  },
+  computed: {
+    finalTotal() {
+      if (this.items.length > 0) {
+        return this.items
+          .map(item => item.afterDiscount)
+          .reduce((prev, next) => Number(prev) + Number(next));
+      }
+      return 0;
+    },
+    total() {
+      if (this.items.length > 0) {
+        return this.items
+          .map(item => item.undergraduatePrice)
+          .reduce((prev, next) => Number(prev) + Number(next));
+      }
+      return 0;
     },
   },
 };

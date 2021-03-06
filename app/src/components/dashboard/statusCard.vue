@@ -1,10 +1,15 @@
 <template>
   <v-card min-height="130" :style="`border:1px solid ${color}`">
     <v-card-title class="justify-center flex-column">
-      <p :style="`color:${color}`">
+      <router-link v-if="link" :to="link">
+        <p :style="`color:${color}`">
+          {{ $t(lable) }}
+        </p>
+      </router-link>
+      <p v-if="!link" :style="`color:${color}`">
         {{ $t(lable) }}
       </p>
-      <span v-if="number">
+      <span>
         {{ number }}
       </span>
       <span v-if="item">
@@ -39,6 +44,9 @@ export default {
     },
 
     color: {
+      type: String,
+    },
+    link: {
       type: String,
     },
   },

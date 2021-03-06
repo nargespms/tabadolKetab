@@ -17,11 +17,12 @@
       :options.sync="innerOptions"
       update:options
       :server-items-length="totalData"
-      :loading="loading"
-      class="elevation-1 text-center ma-4"
       hide-default-header
+      :loading="loading"
+      class="elevation-1 text-center ma-4 clear"
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
+      hide-default-footer
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
@@ -112,6 +113,16 @@
           {{ $t('delete') }}
         </v-tooltip>
       </template>
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
+        <v-pagination
+          class="pa-3 float-left"
+          @input="changePage"
+          :value="options.page"
+          :length="props.pagination.pageCount"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+        ></v-pagination>
+      </template>
     </v-data-table>
     <v-dialog
       v-model="enableEdit"
@@ -166,14 +177,14 @@ export default {
       type: Object,
       default: () => ({
         descending: false,
-        page: 1,
         limit: 10,
       }),
     },
   },
   data() {
+    console.log('run');
     return {
-      innerOptions: this.options,
+      innerOptions: { ...this.options },
       successNotif: false,
       // edit
       enableEdit: false,
@@ -240,10 +251,6 @@ export default {
       this.enableEdit = false;
       this.reloadTable();
     },
-    // sort funcs
-    sort() {
-      console.log('sorted');
-    },
 
     excelFile() {
       // getData as excel file with filtered included
@@ -264,21 +271,20 @@ export default {
       this.filter[name] = value[name];
       this.onRequest({
         options: this.innerOptions,
-        tableSearch: this.tableSearch,
       });
     },
     onRequest(props) {
       props.filter = this.filter;
-      this.innerOptions = props.options;
       this.$emit('getData', props);
+    },
+    changePage(page) {
+      this.$emit('getData', {
+        filter: this.filter,
+        options: { ...this.options, page },
+      });
     },
   },
   watch: {
-    options: {
-      handler(newVal) {
-        this.innerOptions = newVal;
-      },
-    },
     enablePreview(newVal) {
       if (newVal === false) {
         this.previewItem = {};

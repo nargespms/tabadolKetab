@@ -25,27 +25,7 @@
             </span>
           </span>
         </v-col>
-        <v-col cols="12" md="3">
-          <v-select
-            v-model="type"
-            :items="transactionType"
-            :label="$t('transactionType')"
-            outlined
-            required="true"
-            :rules="requireRule"
-          >
-            <template v-slot:item="{ item }">
-              <span>
-                {{ $t(item) }}
-              </span>
-            </template>
-            <template v-slot:selection="{ item }">
-              <span>
-                {{ $t(item) }}
-              </span>
-            </template>
-          </v-select>
-        </v-col>
+
         <v-col cols="12" md="1">
           <v-btn
             :disabled="!valid"
@@ -70,6 +50,7 @@
 <script>
 import financeReportTable from './financeReportTable.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
+import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'userBuyReport',
@@ -87,9 +68,9 @@ export default {
       toDateValidation: true,
 
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
-
+      startDate: '',
+      endDate: '',
       type: '',
-      transactionType: ['cash', 'credit'],
       columns: [
         {
           text: 'radif',
@@ -101,31 +82,22 @@ export default {
           text: 'totalBuy',
         },
       ],
-      data: [
-        {
-          user: {
-            fullName: 'علی تبادلیان',
-          },
-          totalBuy: 120000,
-        },
-        {
-          user: {
-            fullName: 'علی تبادلیان',
-          },
-          totalBuy: 6523000,
-        },
-        {
-          user: {
-            fullName: 'علی تبادلیان',
-          },
-          totalBuy: 520000,
-        },
-      ],
+      data: [],
     };
   },
+  mixins: [dateTime],
   methods: {
     setDate(value) {
-      console.log(value);
+      if (value.fromDate.length > 0) {
+        this.startDate = new Date(
+          this.persionToGregorian(value.fromDate)
+        ).toISOString();
+      }
+      if (value.toDate.length > 0) {
+        this.endDate = new Date(
+          this.persionToGregorian(value.toDate)
+        ).toISOString();
+      }
     },
     showResult() {
       this.$refs.form.validate();
@@ -150,8 +122,22 @@ export default {
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation
         if (this.$refs.form.validate()) {
-          this.reset();
-          this.isLoading = false;
+          this.$axios
+            .get('/v1/api/tabaadol-e-ketaab/report/best-buyers', {
+              params: {
+                filter: {
+                  startDate: this.startDate,
+                  endDate: this.endDate,
+                },
+              },
+            })
+            .then(res => {
+              if (res.status === 200) {
+                this.data = res.data.buyers;
+                // this.reset();
+                this.isLoading = false;
+              }
+            });
         } else {
           this.valid = false;
         }

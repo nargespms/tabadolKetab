@@ -84,6 +84,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    editDataId: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -107,6 +110,28 @@ export default {
       this.model = '';
       this.$emit('setStaff', this.model);
     },
+    getStaff() {
+      const edittingStaff = this.items.find(item => {
+        return item.id === this.editDataId;
+      });
+      this.model = edittingStaff.id;
+      this.$emit('sendValue', this.model);
+    },
+    getData() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/staffs').then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.items = res.data.staffs.map(item => ({
+            id: item.id,
+            fullName: `${item.firstName} ${item.lastName}`,
+          }));
+          this.isLoading = false;
+          if (this.editDataId.length > 0) {
+            this.getStaff();
+          }
+        }
+      });
+    },
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
@@ -124,12 +149,23 @@ export default {
           console.log(this.items);
           // this.items = res.data.staffs;
           this.isLoading = false;
+          if (this.editDataId.length > 0) {
+            this.getStaff();
+          }
         }
       });
     },
     isRequired(newVal) {
       this.localRequire = newVal;
     },
+    editDataId() {
+      this.getData();
+    },
+  },
+  mounted() {
+    if (this.editDataId) {
+      this.getData();
+    }
   },
 };
 </script>

@@ -77,12 +77,12 @@ export default {
       error: false,
       errorMsg: '',
       items: [
-        { tab: 'nationalId', icon: 'mdi-account', require: true },
         {
           tab: 'mobile',
           icon: 'mdi-ticket-account',
           require: true,
         },
+        { tab: 'nationalId', icon: 'mdi-account', require: true },
       ],
       endpoint: '',
     };

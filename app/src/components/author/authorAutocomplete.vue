@@ -35,10 +35,15 @@
           {{ data.item.title }}
         </v-chip>
       </template>
+
       <template v-slot:item="{ item }">
         <v-list-item-content>
           <v-list-item-title v-text="item.title"></v-list-item-title>
         </v-list-item-content>
+      </template>
+
+      <template v-if="clearable && this.model" v-slot:append>
+        <v-icon @click="clear">mdi-close-circle-outline</v-icon>
       </template>
     </v-autocomplete>
   </div>
@@ -61,6 +66,12 @@ export default {
     isMultiple: {
       type: Boolean,
     },
+    clearable: {
+      type: Boolean,
+    },
+    editDataId: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -79,7 +90,30 @@ export default {
         this.localRequire = true;
       }
     },
+    clear() {
+      this.model = null;
+      this.$emit('sendValue', this.model);
+    },
+    getAuthor() {
+      const edittingAuthor = this.items.find(item => {
+        return item.id === this.editDataId;
+      });
+      this.model = edittingAuthor.id;
+      this.$emit('sendValue', this.model);
+    },
+    getData() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/authors').then(res => {
+        if (res.status === 200) {
+          this.items = res.data.authors;
+          this.isLoading = false;
+          if (this.editDataId.length > 0) {
+            this.getAuthor();
+          }
+        }
+      });
+    },
   },
+
   watch: {
     // eslint-disable-next-line no-unused-vars
     search(val) {
@@ -97,6 +131,14 @@ export default {
     isRequire(newVal) {
       this.localRequire = newVal;
     },
+    editDataId() {
+      this.getData();
+    },
+  },
+  mounted() {
+    if (this.editDataId) {
+      this.getData();
+    }
   },
 };
 </script>

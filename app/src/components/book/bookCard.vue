@@ -11,35 +11,39 @@
         : 'width:100%;'
     "
   >
-    <v-img
-      :src="book.image"
-      :lazy-src="book.image"
-      :aspect-ratio="1"
-      max-height="134"
-      max-width="195"
-      class="grey lighten-2 ma-auto"
-    >
-      <template v-slot:placeholder>
-        <v-row class="fill-height ma-0" align="center" justify="center">
-          <v-progress-circular
-            indeterminate
-            color="grey lighten-5"
-          ></v-progress-circular>
-        </v-row>
-      </template>
-    </v-img>
+    <router-link :to="`/books/${book.id}`">
+      <v-img
+        :src="book.image"
+        lazy-src="../../assets/tabadollogo1.png"
+        :aspect-ratio="1"
+        max-height="134"
+        max-width="195"
+        class="grey lighten-2 ma-auto"
+      >
+        <!-- <template v-slot:placeholder>
+          <v-row class="fill-height ma-0" align="center" justify="center">
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template> -->
+      </v-img>
+    </router-link>
     <div class="d-flex flex-column align-center">
-      <p class="py-2 font-weight-medium">{{ book.name }}</p>
+      <router-link :to="`/books/${book.id}`" class="black--text">
+        <p class="py-2 font-weight-medium">{{ book.name }}</p>
+      </router-link>
       <p
         v-if="book.discount > 0"
         :class="
           book.afterDiscount ? 'text-decoration-line-through  grey--text' : ''
         "
       >
-        {{ book.afterDiscount }} {{ $t('rial') }}
+        {{ this.moneyFormat(book.afterDiscount) }} {{ $t('rial') }}
       </p>
       <p v-if="book.undergraduatePrice" class=" primary--text">
-        {{ book.undergraduatePrice }} {{ $t('rial') }}
+        {{ this.moneyFormat(book.undergraduatePrice) }} {{ $t('rial') }}
       </p>
       <v-btn
         color="blue lighten-1"
@@ -60,6 +64,8 @@
 </template>
 
 <script>
+import moneyFormat from '../../mixins/moneyFormat.js';
+
 export default {
   name: 'bookCard',
   props: {
@@ -67,7 +73,7 @@ export default {
       type: Object,
     },
   },
-
+  mixins: [moneyFormat],
   methods: {
     addToBag(book) {
       if (this.$store.state.bookShop.userInfo === null) {
@@ -84,3 +90,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.v-image__image--preload {
+  filter: blur(1px);
+}
+.v-image__image--cover {
+  background-size: auto;
+}
+</style>

@@ -18,7 +18,7 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt update -y \
     && apt upgrade -y \
     && npm run build \ 
-    && apt install nginx -y \
+    # && apt install nginx -y \
     && apt  remove nodejs -y \
     && rm -r /var/lib/apt/lists/* && rm -rf /tmp && mkdir /tmp && chmod 777 /tmp && truncate -s 0 /var/log/*.log \
     && rm -rf /app/var/cache/npm

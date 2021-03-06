@@ -60,10 +60,11 @@ export default {
       });
     },
     searchBook(value) {
+      console.log(value);
       this.filter = value;
       this.$axios
         .get('/v1/api/tabaadol-e-ketaab/books', {
-          params: { ...value },
+          params: { filter: value, limit: 8 },
         })
         .then(res => {
           if (res.status === 200) {
@@ -76,7 +77,7 @@ export default {
 
       this.$axios
         .get('/v1/api/tabaadol-e-ketaab/books', {
-          params: { ...value },
+          params: { filter: value, limit: 8 },
         })
         .then(res => {
           if (res.status === 200) {
@@ -92,13 +93,15 @@ export default {
           params: {
             ...this.filter,
             offset: this.searchResult.length,
-            limit: 9,
+            limit: 8,
           },
         })
         .then(res => {
           if (res.status === 200) {
-            if (res.data.result.docs > 0) {
-              this.searchResult.push(res.data.result.docs);
+            if (res.data.result.docs.length > 0) {
+              this.searchResult.push(...res.data.result.docs);
+              console.log(res.data.result.docs);
+              console.log(this.searchResult);
               this.enableLoadingMore = false;
             } else {
               this.uploadMoreBut = 'endOfList';

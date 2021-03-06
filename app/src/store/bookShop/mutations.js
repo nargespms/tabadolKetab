@@ -18,7 +18,10 @@ export const clearBag = state => {
   state.bag = [];
 };
 export const addToBag = (state, response) => {
-  state.bag.push(response);
+  const findingItem = state.bag.indexOf(response);
+  if (findingItem === -1) {
+    state.bag.push(response);
+  }
 };
 export const removeFromBag = (state, item) => {
   const findingItem = state.bag.indexOf(item);

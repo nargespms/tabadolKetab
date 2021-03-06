@@ -17,10 +17,12 @@
       :options.sync="innerOptions"
       update:options
       :server-items-length="totalData"
-      :loading="loading"
-      class="elevation-1 text-center ma-4"
       hide-default-header
+      hide-default-footer
+      :loading="loading"
+      class="elevation-1 text-center ma-4 clear"
       :loading-text="$t('loadingText')"
+      :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
@@ -113,6 +115,16 @@
           {{ $t('delete') }}
         </v-tooltip>
       </template>
+      <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
+        <v-pagination
+          class="pa-3 float-left"
+          @input="changePage"
+          :value="options.page"
+          :length="props.pagination.pageCount"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+        ></v-pagination>
+      </template>
     </v-data-table>
     <v-dialog v-model="enableEdit" content-class="sh-0">
       <addPublisherCmp
@@ -165,7 +177,8 @@ export default {
   },
   data() {
     return {
-      innerOptions: this.options,
+      innerOptions: { ...this.options },
+
       successNotif: false,
       // edit
       enableEdit: false,
@@ -258,6 +271,12 @@ export default {
     closeDelete() {
       this.enableDelete = false;
       this.deletingItem = {};
+    },
+    changePage(page) {
+      this.$emit('getData', {
+        filter: this.filter,
+        options: { ...this.options, page },
+      });
     },
   },
 };

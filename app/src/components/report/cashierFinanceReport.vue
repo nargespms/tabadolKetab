@@ -26,32 +26,13 @@
           </span>
         </v-col>
         <v-col cols="12" md="2">
-          <clientsAutoComplete
-            ref="userAutocomplete"
-            :isRequired="userValidate"
-            :placeHolder="'users'"
+          <staffsAutoComplete
+            @setStaff="setStaff"
+            :placeHolder="'staffs'"
+            :isMultiple="false"
+            :height="32"
           />
         </v-col>
-        <v-col cols="12" md="2">
-          <v-select
-            v-model="type"
-            :items="transactionType"
-            :label="$t('transactionType')"
-            outlined
-          >
-            <template v-slot:item="{ item }">
-              <span>
-                {{ $t(item) }}
-              </span>
-            </template>
-            <template v-slot:selection="{ item }">
-              <span>
-                {{ $t(item) }}
-              </span>
-            </template>
-          </v-select>
-        </v-col>
-
         <v-col cols="12" md="1">
           <v-btn
             :disabled="!valid"
@@ -64,10 +45,14 @@
         </v-col>
       </v-row>
     </v-form>
+    <v-overlay :value="isLoading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+
     <financeReportTable
-      v-if="!isLoading"
+      v-if="data.hasOwnProperty('count')"
       :columns="columns"
-      :data="data"
+      :singleItem="data"
       :module="'cashierReport'"
     />
   </v-card>
@@ -76,19 +61,20 @@
 <script>
 import financeReportTable from './financeReportTable.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
-import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
+import staffsAutoComplete from '../structure/staffsAutoComplete.vue';
+import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'cashierFinanceReport',
   components: {
     financeReportTable,
     rangeDatePickerCmp,
-    clientsAutoComplete,
+    staffsAutoComplete,
   },
   data() {
     return {
       valid: true,
-      isLoading: true,
+      isLoading: '',
       // rangepcker data
       dateKey: 0,
       fromDateValidation: true,
@@ -102,42 +88,39 @@ export default {
       userValidate: true,
       columns: [
         {
-          text: 'radif',
+          text: 'finalTotal',
         },
         {
-          text: 'transactionType',
-        },
-        {
-          text: 'date',
-        },
-        {
-          text: 'cost',
+          text: 'invoiceCount',
         },
       ],
-      data: [
-        {
-          transactionType: 'cash',
-          date: '2020-12-08T20:30:00.000Z',
-          cost: 120000,
-        },
-        {
-          transactionType: 'credit',
-          date: '2020-12-08T20:30:00.000Z',
-          cost: 58000,
-        },
-        {
-          transactionType: 'cash',
-          date: '2020-12-08T20:30:00.000Z',
-          cost: 365000,
-        },
-      ],
+      data: {},
+      staffId: '',
+      startDate: '',
+      endDate: '',
     };
   },
+  mixins: [dateTime],
+
   methods: {
     setDate(value) {
+      if (value.fromDate.length > 0) {
+        this.startDate = new Date(
+          this.persionToGregorian(value.fromDate)
+        ).toISOString();
+      }
+      if (value.toDate.length > 0) {
+        this.endDate = new Date(
+          this.persionToGregorian(value.toDate)
+        ).toISOString();
+      }
+    },
+    setStaff(value) {
+      this.staffId = value;
       console.log(value);
     },
     showResult() {
+      this.isLoading = true;
       this.$refs.form.validate();
       // date picker validation
       if (
@@ -156,19 +139,28 @@ export default {
       } else {
         this.toDateValidation = true;
       }
-      if (
-        this.$refs.userAutocomplete.model === null ||
-        this.$refs.userAutocomplete.model.length < 1
-      ) {
-        this.userValidate = true;
-      } else {
-        this.userValidate = false;
-      }
+
       if (this.toDateValidation && this.fromDateValidation) {
         // formvalidation
         if (this.$refs.form.validate()) {
-          this.reset();
-          this.isLoading = false;
+          this.$axios
+            .get('/v1/api/tabaadol-e-ketaab/report/cashier', {
+              params: {
+                filter: {
+                  startDate: this.startDate,
+                  endDate: this.endDate,
+                  staffId: this.staffId,
+                },
+              },
+            })
+            .then(res => {
+              this.data = res.data;
+              this.isLoading = false;
+            })
+            .catch(e => {
+              console.log(e);
+              this.isLoading = false;
+            });
         } else {
           this.valid = false;
         }
