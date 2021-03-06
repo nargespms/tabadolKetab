@@ -1,7 +1,6 @@
 <template>
   <v-row>
     <v-col cols="12" md="7" class="ma-auto">
-      {{data}}
       <v-card class="pa-3">
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
@@ -28,6 +27,12 @@
                 required
                 outlined
                 v-mask="'####'"
+                :hint="
+                  this.settings.freeDelivery
+                    ? `${settings.freeDelivery}  عدد`
+                    : ''
+                "
+                persistent-hint
                 error-count="1"
               ></v-text-field
             ></v-col>
@@ -47,10 +52,12 @@
                 v-mask="'######'"
                 :hint="
                   this.settings.deliveryPrice
-                    ? `${$t('costInRial')}${moneyFormat(settings.deliveryPrice)}`
+                    ? `${$t('costInRial')}${moneyFormat(
+                        settings.deliveryPrice
+                      )}`
                     : ''
                 "
-                :persistentHint="settings.deliveryPrice"
+                persistent-hint
                 error-count="1"
               ></v-text-field
             ></v-col>
@@ -73,7 +80,7 @@
                     ? `${settings.creditExpired}${$t('day')}`
                     : ''
                 "
-                :persistentHint="settings.creditExpired"
+                persistent-hint
                 error-count="1"
               ></v-text-field
             ></v-col>
@@ -90,10 +97,10 @@
                 :rules="requireRule"
                 required
                 outlined
-                v-mask="'######'"
                 :hint="this.settings.wage ? `${settings.wage}${$t('%')}` : ''"
-                :persistentHint="settings.wage"
+                persistent-hint
                 error-count="1"
+                v-mask="'######'"
               ></v-text-field
             ></v-col>
           </v-row>
@@ -106,13 +113,31 @@
           </v-row>
           <v-row>
             <v-col cols="12" lg="4">
-              <rangeDateDiscount @setDateRange="setDateRange" :date="settings.firstDate" :percent="settings.firstDiscount"/>
+              <rangeDateDiscount
+                @setDateRange="setDateRange"
+                :date="settings.firstDate"
+                :dateName="'firstDate'"
+                :percent="settings.firstDiscount"
+                :percentName="'firstDiscount'"
+              />
             </v-col>
             <v-col cols="12" lg="4" class="pr-5">
-              <rangeDateDiscount @setDateRange="setDateRange" :date="settings.secondDate" :percent="settings.secondDiscount" />
+              <rangeDateDiscount
+                @setDateRange="setDateRange"
+                :date="settings.secondDate"
+                :dateName="'secondDate'"
+                :percent="settings.secondDiscount"
+                :percentName="'secondDiscount'"
+              />
             </v-col>
             <v-col cols="12" lg="4" class="pr-5">
-              <rangeDateDiscount @setDateRange="setDateRange" :date="settings.thirdDate" :percent="settings.thirdDiscount" />
+              <rangeDateDiscount
+                @setDateRange="setDateRange"
+                :date="settings.thirdDate"
+                :dateName="'thirdDate'"
+                :percent="settings.thirdDiscount"
+                :percentName="'thirdDiscount'"
+              />
             </v-col>
           </v-row>
           <div class="justify-center d-flex ">
@@ -150,7 +175,7 @@ export default {
   props: {
     data: {
       type: Object,
-    }
+    },
   },
   data() {
     return {
@@ -166,16 +191,20 @@ export default {
       this.$refs.form.validate();
 
       if (this.$refs.form.validate()) {
-        this.saveSuccess = true;
-        // this.reset();
+        this.$axios
+          .put(`/v1/api/tabaadol-e-ketaab/setting/${this.data.id}`, {
+            ...this.settings,
+          })
+          .then(res => {
+            if (res.status === 200) {
+              this.saveSuccess = true;
+              this.$emit('reloadSetting');
+            }
+          });
       } else {
         this.valid = false;
       }
     },
-    // reset form
-    // reset() {
-    //   this.$refs.form.reset();
-    // },
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
@@ -185,8 +214,7 @@ export default {
     },
 
     setDateRange(value) {
-      this.dateRange.push(value);
-      console.log(value);
+      Object.assign(this.settings, value);
     },
   },
   mounted() {

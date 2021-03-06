@@ -3,14 +3,15 @@
     <div class="d-flex rangeItem">
       <span> {{ $t('afterDate') }} </span>
       <v-text-field
-        v-model="date"
+        v-model="rangeDate[dateName]"
         :rules="requireRule"
         required
         outlined
-        v-mask="'######'"
         :hint="this.date ? `${date}${$t('day')}` : ''"
         :persistentHint="date ? true : false"
+        v-mask="'######'"
         error-count="1"
+        @input="setDate"
       >
       </v-text-field>
     </div>
@@ -20,18 +21,16 @@
         {{ $t('discountPercent') }}
       </span>
       <v-text-field
-        v-model.lazy="percent"
-        :rules="requireRule"
-        required
+        v-model.lazy="rangeDate[percentName]"
         outlined
-        v-mask="'######'"
         :hint="this.percent ? `${percent}${$t('%')}` : ''"
         :persistentHint="percent ? true : false"
+        v-mask="'######'"
         error-count="1"
+        @input="setPercent"
       >
       </v-text-field>
     </div>
-
   </div>
 </template>
 
@@ -40,11 +39,17 @@ export default {
   name: 'rangeDateDiscount',
   props: {
     date: {
-      type: String,
+      type: Number,
     },
     percent: {
+      type: Number,
+    },
+    dateName: {
       type: String,
-    }
+    },
+    percentName: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -59,8 +64,25 @@ export default {
     reset() {
       this.rangeDate = {};
     },
+    setDate() {
+      // this.rangeDate[this.dateName] = rangeDate[this.dateName];
+      this.sendValue();
+      // console.log(this.rangeDate);
+    },
+    setPercent() {
+      // this.rangeDate[this.percentName] = this.rangeDate.percent;
+      this.sendValue();
+      // console.log(this.rangeDate);
+    },
   },
-
+  watch: {
+    date(newVal) {
+      this.rangeDate[this.dateName] = newVal;
+    },
+    percent(newVal) {
+      this.rangeDate[this.percentName] = newVal;
+    },
+  },
 };
 </script>
 <style lang="scss">
