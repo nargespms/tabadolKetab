@@ -364,6 +364,7 @@ export default {
   from: 'از',
   to: 'تا',
   rangeDate: 'بازه زمانی',
+  afterDate: 'بعد از',
   // booksearch
   bookSearch: 'جستجو کتاب',
   search: 'جستجو',
