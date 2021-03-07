@@ -81,6 +81,7 @@ import invoiceItems from '../invoices/invoiceItems.vue';
 import addressCmp from '../userControls/addressCmp.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import deliveryMethod from './deliveryMethod.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'bag',
@@ -90,6 +91,8 @@ export default {
     notifMessage,
     deliveryMethod,
   },
+  mixins: [moneyFormat],
+
   data() {
     return {
       isLoading: true,
@@ -129,9 +132,7 @@ export default {
       // this.itemsKey = +1;
       this.getItems();
     },
-    moneyFormat(value) {
-      return new Intl.NumberFormat('es-ES').format(value);
-    },
+
     setDeliveryMethod(value) {
       this.bag.delivery = value;
     },

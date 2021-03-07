@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import moneyFormat from '../../mixins/moneyFormat.js';
+
 export default {
   name: 'creditStatusCard',
   props: {
@@ -28,10 +30,6 @@ export default {
       type: String,
     },
   },
-  methods: {
-    moneyFormat(value) {
-      return new Intl.NumberFormat('es-ES').format(value);
-    },
-  },
+  mixins: [moneyFormat],
 };
 </script>

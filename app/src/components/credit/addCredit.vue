@@ -109,6 +109,7 @@
 import notifMessage from '../structure/notifMessage.vue';
 import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import payMethod from '../shoppingBag/payMethod.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'addCredit',
@@ -125,6 +126,8 @@ export default {
       type: String,
     },
   },
+  mixins: [moneyFormat],
+
   data() {
     return {
       valid: true,
@@ -201,9 +204,6 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
       this.userValidate = true;
-    },
-    moneyFormat(value) {
-      return new Intl.NumberFormat('es-ES').format(value);
     },
   },
   watch: {

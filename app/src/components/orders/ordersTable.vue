@@ -240,7 +240,7 @@ export default {
     printForm(item) {
       this.printtingItem = item;
       const routeLink = this.$router.resolve({
-        path: `print/postRequest/${item.id}`,
+        path: `print/orders/${item.id}`,
       });
       window.open(routeLink.href, '_blank');
     },

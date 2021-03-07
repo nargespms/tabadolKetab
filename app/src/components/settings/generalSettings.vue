@@ -165,6 +165,7 @@
 <script>
 import notifMessage from '../structure/notifMessage.vue';
 import rangeDateDiscount from './rangeDateDiscount.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'generalSettings',
@@ -177,6 +178,8 @@ export default {
       type: Object,
     },
   },
+  mixins: [moneyFormat],
+
   data() {
     return {
       valid: true,
@@ -208,9 +211,6 @@ export default {
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
-    },
-    moneyFormat(value) {
-      return new Intl.NumberFormat('es-ES').format(value);
     },
 
     setDateRange(value) {

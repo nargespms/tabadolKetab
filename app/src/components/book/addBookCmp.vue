@@ -401,6 +401,7 @@ import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
 import tagsAutocomplete from '../tags/tagsAutocomplete.vue';
 import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
 import authorAutocomplete from '../author/authorAutocomplete.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'addBookCmp',
@@ -417,6 +418,8 @@ export default {
       type: String,
     },
   },
+  mixins: [moneyFormat],
+
   data() {
     return {
       valid: true,
@@ -534,9 +537,7 @@ export default {
     hideError() {
       this.error = false;
     },
-    moneyFormat(value) {
-      return new Intl.NumberFormat('es-ES').format(value);
-    },
+
     getBookData() {
       this.$axios
         .get(`/v1/api/tabaadol-e-ketaab/book/${this.$route.params.bookId}`)

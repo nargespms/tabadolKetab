@@ -235,6 +235,7 @@ export default {
     },
   },
   changePage(page) {
+    console.log('fff');
     this.$emit('getData', {
       filter: this.filter,
       options: { ...this.options, page },

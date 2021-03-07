@@ -6,6 +6,7 @@
     <postPrintForm
       v-if="!isLoading && this.$route.name === 'printPostRequest'"
     />
+    <orderPrintForm v-if="!isLoading && this.$route.name === 'printOrder'" />
     <invoicePrintForm
       v-if="!isLoading && this.$route.name === 'printInvoice'"
     />
@@ -14,6 +15,7 @@
 
 <script>
 import postPrintForm from '../components/post/postPrintForm.vue';
+import orderPrintForm from '../components/orders/orderPrintForm.vue';
 import invoicePrintForm from '../components/invoices/invoicePrintForm.vue';
 
 export default {
@@ -21,6 +23,7 @@ export default {
   components: {
     postPrintForm,
     invoicePrintForm,
+    orderPrintForm,
   },
   data() {
     return {
@@ -32,6 +35,9 @@ export default {
       this.isLoading = false;
     }
     if (this.$route.name === 'printInvoice') {
+      this.isLoading = false;
+    }
+    if (this.$route.name === 'printOrder') {
       this.isLoading = false;
     }
   },

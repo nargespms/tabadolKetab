@@ -11,7 +11,7 @@
         :persistentHint="date ? true : false"
         v-mask="'######'"
         error-count="1"
-        @input="setDate"
+        @input="sendValue"
       >
       </v-text-field>
     </div>
@@ -27,7 +27,7 @@
         :persistentHint="percent ? true : false"
         v-mask="'######'"
         error-count="1"
-        @input="setPercent"
+        @input="sendValue"
       >
       </v-text-field>
     </div>
@@ -63,16 +63,6 @@ export default {
     },
     reset() {
       this.rangeDate = {};
-    },
-    setDate() {
-      // this.rangeDate[this.dateName] = rangeDate[this.dateName];
-      this.sendValue();
-      // console.log(this.rangeDate);
-    },
-    setPercent() {
-      // this.rangeDate[this.percentName] = this.rangeDate.percent;
-      this.sendValue();
-      // console.log(this.rangeDate);
     },
   },
   watch: {

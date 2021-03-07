@@ -60,6 +60,11 @@ const routes = [
         component: () => import('../views/printForm.vue'),
       },
       {
+        path: 'orders/:orderId',
+        name: 'printOrder',
+        component: () => import('../views/printForm.vue'),
+      },
+      {
         path: 'forbiddenBook',
         name: 'printForbiddenBook',
         component: () => import('../views/print.vue'),
