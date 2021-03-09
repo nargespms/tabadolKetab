@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="d-flex flex-row-reverse ma-4">
-      <v-btn
+      <!-- <v-btn
         color="light-blue darken-2"
         class="white--text"
         @click="printData"
         >{{ $t('print') }}</v-btn
-      >
-      <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
+      > -->
+      <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
       }}</v-btn>
     </div>
@@ -254,14 +254,19 @@ export default {
 
     excelFile() {
       // getData as excel file with filtered included
-    },
-    printData() {
-      // go to print page of this table
-      const routeData = this.$router.resolve({
-        name: 'printAuthors',
+      const pagination = this.options;
+      const excelData = Object.assign(pagination, {
+        filter: this.filter,
       });
-      window.open(routeData.href, '_blank');
+      console.log(excelData);
     },
+    // printData() {
+    //   // go to print page of this table
+    //   const routeData = this.$router.resolve({
+    //     name: 'printAuthors',
+    //   });
+    //   window.open(routeData.href, '_blank');
+    // },
     reloadTable() {
       this.onRequest({
         options: this.innerOptions,

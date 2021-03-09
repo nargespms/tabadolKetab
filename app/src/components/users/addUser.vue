@@ -237,15 +237,6 @@
                 >
                 </v-text-field>
               </v-col>
-              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-                <v-file-input
-                  outlined
-                  show-size
-                  prepend-icon="mdi-image"
-                  :label="$t('avatar')"
-                >
-                </v-file-input>
-              </v-col>
             </v-row>
 
             <passwords v-if="mode !== 'edit'" @setPass="setPass" />
@@ -351,6 +342,7 @@ export default {
     setRole(value) {
       this.register.roleId = value;
     },
+
     validate() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {

@@ -45,10 +45,12 @@ services:
       - files-storage:/storage/files:ro
       - ./app:/usr/src/app
     ports:
-      - 8085:80
+      - 80:80
+    depends_on:
+      - tabadol_api
     networks:
       - front-network
-    command: tail -f /dev/null
+    #command: tail -f /dev/null
 
 networks:
   back-network:

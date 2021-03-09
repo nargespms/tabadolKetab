@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="d-flex flex-row-reverse ma-4">
-      <v-btn
+    <div class="d-flex flex-row-reverse my-4">
+      <!-- <v-btn
         color="light-blue darken-2"
         class="white--text"
         @click="printData"
         >{{ $t('print') }}</v-btn
-      >
-      <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
+      > -->
+      <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
       }}</v-btn>
       <v-btn
@@ -248,6 +248,11 @@ export default {
     },
     excelFile() {
       // getData as excel file with filtered included
+      const pagination = this.options;
+      const excelData = Object.assign(pagination, {
+        filter: this.filter,
+      });
+      console.log(excelData);
     },
     reloadTable() {
       this.onRequest({
@@ -265,13 +270,13 @@ export default {
       this.innerOptions = props.options;
       this.$emit('getData', props);
     },
-    printData() {
-      // go to print page of this table
-      const routeData = this.$router.resolve({
-        name: 'printMessages',
-      });
-      window.open(routeData.href, '_blank');
-    },
+    // printData() {
+    //   // go to print page of this table
+    //   const routeData = this.$router.resolve({
+    //     name: 'printMessages',
+    //   });
+    //   window.open(routeData.href, '_blank');
+    // },
 
     getMoreData() {
       this.loadingMore = true;

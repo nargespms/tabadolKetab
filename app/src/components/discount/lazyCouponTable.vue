@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="d-flex flex-row-reverse ma-4">
-      <v-btn
+    <div class="d-flex flex-row-reverse my-4">
+      <!-- <v-btn
         color="light-blue darken-2"
         class="white--text"
         @click="printData"
         >{{ $t('print') }}</v-btn
-      >
-      <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
+      > -->
+      <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
       }}</v-btn>
     </div>
@@ -234,13 +234,13 @@ export default {
       this.enablePreview = true;
       this.previewItem = item;
     },
-    printData() {
-      // go to print page of this table
-      const routeData = this.$router.resolve({
-        name: 'printBooks',
-      });
-      window.open(routeData.href, '_blank');
-    },
+    // printData() {
+    //   // go to print page of this table
+    //   const routeData = this.$router.resolve({
+    //     name: 'printBooks',
+    //   });
+    //   window.open(routeData.href, '_blank');
+    // },
     // methods for delete notif
     deleteRecord(item) {
       this.deletingItem = item;

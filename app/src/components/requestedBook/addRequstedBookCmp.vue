@@ -102,16 +102,7 @@
               ></v-textarea>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col class="pa-0 pt-0">
-              <v-file-input
-                outlined
-                show-size
-                multiple
-                :label="$t('attachments')"
-              ></v-file-input>
-            </v-col>
-          </v-row>
+
           <div class="justify-center d-flex">
             <v-btn
               :disabled="!valid"

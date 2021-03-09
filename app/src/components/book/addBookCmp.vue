@@ -354,12 +354,7 @@
           </v-row>
           <v-row>
             <v-col class="pa-0 pt-0">
-              <v-file-input
-                outlined
-                show-size
-                multiple
-                :label="$t('attachments')"
-              ></v-file-input>
+              <uploadFile @setUploadedId="setUploadedId" />
             </v-col>
           </v-row>
           <div class="justify-center d-flex">
@@ -402,6 +397,7 @@ import tagsAutocomplete from '../tags/tagsAutocomplete.vue';
 import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
 import authorAutocomplete from '../author/authorAutocomplete.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
+import uploadFile from '../file/uploadFile.vue';
 
 export default {
   name: 'addBookCmp',
@@ -412,6 +408,7 @@ export default {
     publisherAutocomplete,
     authorAutocomplete,
     clientsAutoComplete,
+    uploadFile,
   },
   props: {
     mode: {
@@ -465,6 +462,9 @@ export default {
     },
     getAuthor(value) {
       this.book.authorId = value;
+    },
+    setUploadedId(value) {
+      this.book.attachmentId = value;
     },
     // validate form
     validate() {

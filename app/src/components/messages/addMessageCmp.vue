@@ -119,12 +119,8 @@
               @setDate="setDate"
             />
           </div>
-          <v-file-input
-            outlined
-            show-size
-            multiple
-            :label="$t('attachments')"
-          ></v-file-input>
+          <uploadFile @setUploadedId="setUploadedId" />
+
           <v-row no-gutters>
             <v-col cols="12" md="6">
               <v-checkbox
@@ -181,6 +177,7 @@ import datePickerCmp from '../structure/datePickerCmp.vue';
 import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import staffsAutoComplete from '../structure/staffsAutoComplete.vue';
 import dateTime from '../../mixins/dateTime.js';
+import uploadFile from '../file/uploadFile.vue';
 
 export default {
   name: 'addMessageCmp',
@@ -189,6 +186,7 @@ export default {
     datePickerCmp,
     clientsAutoComplete,
     staffsAutoComplete,
+    uploadFile,
   },
   mixins: [dateTime],
   props: {
@@ -243,6 +241,9 @@ export default {
       this.message.sendDate = new Date(
         this.persionToGregorian(value)
       ).toISOString();
+    },
+    setUploadedId(value) {
+      this.message.attachmentId = value;
     },
     validate() {
       this.$refs.form.validate();

@@ -13,8 +13,6 @@ import messages from './i18n/vuetify';
 import store from './store';
 import 'leaflet/dist/leaflet.css';
 
-// console.log(store);
-
 Vue.use(VueI18n);
 // Vue.use(JsBarcode);
 

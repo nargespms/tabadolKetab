@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex flex-row-reverse ma-4">
-      <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
+    <div class="d-flex flex-row-reverse my-4">
+      <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
       }}</v-btn>
     </div>
@@ -106,6 +106,11 @@ export default {
   methods: {
     excelFile() {
       // getData as excel file with filtered included
+      const pagination = this.options;
+      const excelData = Object.assign(pagination, {
+        filter: this.filter,
+      });
+      console.log(excelData);
     },
 
     reloadTable() {

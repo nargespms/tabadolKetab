@@ -89,12 +89,7 @@
             </clientsAutoComplete>
           </div>
 
-          <v-file-input
-            outlined
-            show-size
-            multiple
-            :label="$t('attachments')"
-          ></v-file-input>
+          <uploadFile @setUploadedId="setUploadedId" />
 
           <div class="justify-center d-flex">
             <v-btn
@@ -125,12 +120,14 @@
 <script>
 import notifMessage from '../structure/notifMessage.vue';
 import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
+import uploadFile from '../file/uploadFile.vue';
 
 export default {
   name: 'addTicket',
   components: {
     notifMessage,
     clientsAutoComplete,
+    uploadFile,
   },
   props: {
     mode: {
@@ -162,6 +159,9 @@ export default {
     },
     setClient(value) {
       this.ticket.clientId = value;
+    },
+    setUploadedId(value) {
+      this.ticket.thread.attachmentId = value;
     },
     // validate form
     validate() {

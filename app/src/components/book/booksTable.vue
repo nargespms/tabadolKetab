@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="d-flex flex-row-reverse ma-4">
-      <v-btn
+      <!-- <v-btn
         color="light-blue darken-2"
         class="white--text"
         @click="printData"
         >{{ $t('print') }}</v-btn
-      >
-      <v-btn class="ml-4 white--text" color="green" @click="excelFile">{{
+      > -->
+      <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
       }}</v-btn>
       <span class="pl-4">
@@ -212,12 +212,12 @@ export default {
       });
       window.open(routeData.href, '_blank');
     },
-    printBarCode(value) {
-      const routeData = this.$router.resolve({
-        path: `/print/barcode/${value.id}`,
-      });
-      window.open(routeData.href, '_blank');
-    },
+    // printBarCode(value) {
+    //   const routeData = this.$router.resolve({
+    //     path: `/print/barcode/${value.id}`,
+    //   });
+    //   window.open(routeData.href, '_blank');
+    // },
   },
   watch: {
     options: {
