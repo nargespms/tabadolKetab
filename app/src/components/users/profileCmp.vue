@@ -37,7 +37,10 @@
                 :editData="data"
                 @reloadUserData="reloadUserData"
               />
-              <changePassword v-if="item.tab === 'changePassword'" />
+              <changePassword
+                v-if="item.tab === 'changePassword'"
+                @success="success"
+              />
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
@@ -84,6 +87,10 @@ export default {
     reloadUserData() {
       this.tab = 'personalInformation';
       this.$emit('reloadUserData');
+    },
+    success() {
+      this.tab = 'personalInformation';
+      this.$emit('success');
     },
   },
 };
