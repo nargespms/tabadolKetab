@@ -28,6 +28,9 @@ export default {
     isRequire: {
       type: Boolean,
     },
+    editData: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -52,6 +55,12 @@ export default {
     submitEmail() {
       this.$emit('setEmail', this.email);
     },
+  },
+
+  mounted() {
+    if (this.editData) {
+      this.email = this.editData;
+    }
   },
 };
 </script>

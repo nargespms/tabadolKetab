@@ -11,9 +11,6 @@
     <template v-slot:prepend>
       <v-list color="teal">
         <v-list-item class="px-2">
-          <v-list-item-avatar>
-            <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
-          </v-list-item-avatar>
           <v-list-item
             link
             :to="`/users/profile/${$store.state.bookShop.userInfo.id}`"

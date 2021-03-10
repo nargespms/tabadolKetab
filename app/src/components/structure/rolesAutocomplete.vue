@@ -82,6 +82,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    editDataId: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -108,6 +111,24 @@ export default {
       const index = this.model.indexOf(item.symbol);
       if (index >= 0) this.model.splice(index, 1);
     },
+    getRole() {
+      const edittingRole = this.items.find(item => {
+        return item.id === this.editDataId;
+      });
+      this.model = edittingRole.id;
+      this.$emit('setRole', this.model);
+    },
+    getData() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/roles').then(res => {
+        if (res.status === 200) {
+          this.items = res.data.roles;
+          this.isLoading = false;
+          if (this.editDataId.length > 0) {
+            this.getRole();
+          }
+        }
+      });
+    },
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
@@ -123,21 +144,18 @@ export default {
           this.isLoading = false;
         }
       });
-      // // Lazily load input items
-      // fetch('https://api.coingecko.com/api/v3/coins/list')
-      //   .then(res => res.clone().json())
-      //   .then(res => {
-      //     this.items = res;
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   })
-      //   // eslint-disable-next-line no-return-assign
-      //   .finally(() => (this.isLoading = false));
     },
     isRequired(newVal) {
       this.localRequire = newVal;
     },
+    editDataId() {
+      this.getData();
+    },
+  },
+  mounted() {
+    if (this.editDataId) {
+      this.getData();
+    }
   },
 };
 </script>

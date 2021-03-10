@@ -9,143 +9,83 @@
             </span>
           </v-card-title>
         </v-card-actions>
-        <v-container>
-          <v-row>
-            <v-tabs vertical color="teal">
-              <v-avatar size="160">
-                <img
-                  src="https://cdn.vuetifyjs.com/images/john.jpg"
-                  alt="John"
-                />
-              </v-avatar>
-              <v-btn text>{{ $t('imageEditing') }} </v-btn>
-              <v-tab>
-                {{ $t('personalInformation') }}
-              </v-tab>
-              <v-tab>
-                {{ $t('edit') }}
-              </v-tab>
-              <v-tab>
-                {{ $t('changePassword') }}
-              </v-tab>
 
-              <v-tab-item>
-                <v-card flat>
-                  <v-card-text>
-                    <template>
-                      <v-simple-table>
-                        <template v-slot:default>
-                          <tbody>
-                            <tr v-for="item in info" :key="item.name">
-                              <td>{{ item.name }}</td>
-                              <td>{{ item.value }}</td>
-                            </tr>
-                          </tbody>
-                        </template>
-                      </v-simple-table>
-                    </template>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
-              <v-tab-item>
-                <v-card flat>
-                  <v-card-text>
-                    <editUser :mode="'edit'" />
-                    <addUser />
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
-              <v-tab-item>
-                <v-card flat>
-                  <v-card-text>
-                    <passwords :mode="'edit'" />
-                    <div class="justify-center d-flex">
-                      <v-btn color="success" class="mr-4">
-                        {{ $t('save') }}
-                      </v-btn>
-                      <v-btn color="error" class="mr-4"
-                        >{{ $t('resetForm') }}
-                      </v-btn>
-                    </div>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
-            </v-tabs>
-          </v-row>
-        </v-container>
+        <v-tabs
+          :vertical="$vuetify.breakpoint.xs ? false : true"
+          class="pa-3"
+          color="teal"
+          v-model="tab"
+        >
+          <v-tab
+            v-for="item in items"
+            :key="item.index"
+            :class="$vuetify.breakpoint.xs ? 'mt-4' : ''"
+            class="pl-4"
+          >
+            {{ $t(item.tab) }}
+          </v-tab>
+
+          <v-tabs-items v-model="tab" class="pr-5">
+            <v-tab-item v-for="item in items" :key="item.index">
+              <userInfo
+                v-if="item.tab === 'personalInformation'"
+                :data="data"
+              />
+              <addUser
+                v-if="item.tab === 'edit'"
+                :mode="'edit'"
+                :editData="data"
+                @reloadUserData="reloadUserData"
+              />
+              <changePassword v-if="item.tab === 'changePassword'" />
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
       </v-card>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import editUser from './addUser.vue';
-import passwords from '../userControls/passwords.vue';
+import addUser from './addUser.vue';
+import userInfo from './userInfo.vue';
+import changePassword from './changePassword.vue';
 
 export default {
   name: 'profilecmp',
 
   components: {
-    editUser,
-    passwords,
+    addUser,
+    userInfo,
+    changePassword,
+  },
+  props: {
+    data: {
+      type: Object,
+    },
   },
   data() {
     return {
       valid: true,
       saveSuccess: false,
-      info: [
+      tab: null,
+      items: [
+        { tab: 'personalInformation' },
         {
-          name: 'نام',
-          value: 'علی',
+          tab: 'edit',
         },
         {
-          name: 'نام خانوادگی',
-          value: 'تبادلیان',
-        },
-        {
-          name: 'جنسیت',
-          value: 'جنسیت',
-        },
-        {
-          name: 'کدملی',
-          value: '0010020030',
-        },
-        {
-          name: 'موبایل',
-          value: '09121111111',
-        },
-        {
-          name: 'تلفن ثابت',
-          value: '02111111111',
-        },
-        {
-          name: 'ایمیل',
-          value: 'example@mail.com',
-        },
-        {
-          name: 'نقش',
-          value: 'نقش',
-        },
-        {
-          name: 'وضعیت',
-          value: 'فعال',
-        },
-        {
-          name: 'آدرس',
-          value: 'آدرس آدرس',
-        },
-        {
-          name: 'کدپستی',
-          value: 1234567890,
-        },
-        {
-          name: 'توضیحات',
-          value: 'توضیحات',
+          tab: 'changePassword',
         },
       ],
     };
   },
-  methods: {},
+  methods: {
+    reloadUserData() {
+      this.tab = 'personalInformation';
+      this.$emit('reloadUserData');
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

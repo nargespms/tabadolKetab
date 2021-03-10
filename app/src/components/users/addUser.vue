@@ -1,7 +1,10 @@
 <template>
   <v-row no-gutters class="justify-center">
     <v-col cols="12" :md="mode ? '12' : '8'" :sm="mode ? '12' : '6'">
-      <v-card class="pa-4">
+      <v-overlay :value="isLoading">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
+      <v-card class="pa-4" v-if="!isLoading">
         <v-card-actions class="teal" v-if="mode !== 'edit'">
           <v-card-title class="white--text pa-0">
             <span>
@@ -59,14 +62,18 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6" class="pa-0">
-                <nationalId @setNationalId="setNationalId" :isRequire="true" />
+                <nationalId
+                  @setNationalId="setNationalId"
+                  :isRequire="true"
+                  :editData="mode === 'edit' ? editData.nationalId : ''"
+                />
               </v-col>
               <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <mobilePhone
                   @setMobilePhone="setMobilePhone"
                   :validate="true"
                   :mode="'edit'"
-                  :editData="this.mode === 'edit' ? publisher.phone : ''"
+                  :editData="this.mode === 'edit' ? editData.mobile : ''"
                   :isRequired="true"
                   :phone="false"
                 />
@@ -74,11 +81,32 @@
             </v-row>
             <v-row>
               <v-col cols="12" md="6" class="pa-0">
-                <mobilePhone
-                  :phone="true"
-                  @setMobilePhone="setPhone"
-                  :validate="true"
-                />
+                <v-select
+                  v-model="register.gender"
+                  :items="gender"
+                  :label="$t('gender')"
+                  outlined
+                  clearable
+                  hide-selected
+                  :rules="checkRule"
+                  required
+                >
+                  <template v-slot:item="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    <span>
+                      {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
+                    </span>
+                  </template>
+                </v-select>
               </v-col>
               <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <v-select
@@ -105,7 +133,11 @@
 
             <v-row>
               <v-col cols="12" md="6" class="pa-0">
-                <email :isRequire="true" @setEmail="setEmail" />
+                <email
+                  :isRequire="true"
+                  @setEmail="setEmail"
+                  :editData="this.mode === 'edit' ? editData.email : ''"
+                />
               </v-col>
               <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <v-select
@@ -166,52 +198,13 @@
                   :placeHolder="$t('staffAccess')"
                   :height="32"
                   :disable="role === 'client' || role === '' ? true : false"
+                  :editDataId="mode === 'edit' ? editData.role.id : ''"
                 />
               </v-col>
             </v-row>
+
             <v-row>
-              <v-col cols="12" md="6" class="pa-0">
-                <v-select
-                  v-model="register.gender"
-                  :items="gender"
-                  :label="$t('gender')"
-                  outlined
-                  clearable
-                  hide-selected
-                  :rules="checkRule"
-                  required
-                >
-                  <template v-slot:item="{ item }">
-                    <span>
-                      {{ $t(item) }}
-                    </span>
-                  </template>
-                  <template v-slot:selection="{ item }">
-                    <span>
-                      {{ $t(item) }}
-                    </span>
-                  </template>
-                  <template v-slot:prepend-inner>
-                    <span class="red--text">
-                      *
-                    </span>
-                  </template>
-                </v-select>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="6" class="pa-0">
-                <v-textarea
-                  outlined
-                  required
-                  name="input-7-4"
-                  :label="$t('address')"
-                  v-model="register.address"
-                  v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
-                >
-                </v-textarea>
-              </v-col>
-              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+              <v-col cols="12" md="6" class="pa-0 ">
                 <v-textarea
                   outlined
                   required
@@ -224,21 +217,6 @@
               </v-col>
             </v-row>
 
-            <v-row>
-              <v-col cols="12" md="6" class="pa-0">
-                <v-text-field
-                  v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
-                  v-model="register.postalCode"
-                  :label="$t('postalCode')"
-                  v-mask="'###########'"
-                  :rules="register.postalCode > 0 ? postalCodeRules : []"
-                  outlined
-                  error-count="2"
-                >
-                </v-text-field>
-              </v-col>
-            </v-row>
-
             <passwords v-if="mode !== 'edit'" @setPass="setPass" />
             <v-row v-if="mode === 'edit'">
               <v-col cols="12" md="6">
@@ -247,11 +225,6 @@
                   :label="$t('activeinactive')"
                   required
                 >
-                  <template v-slot:prepend>
-                    <span class="fn-25">
-                      🧑‍💻
-                    </span>
-                  </template>
                 </v-checkbox>
               </v-col>
             </v-row>
@@ -295,6 +268,9 @@ export default {
     mode: {
       type: String,
     },
+    editData: {
+      type: Object,
+    },
   },
   components: {
     notifMessage,
@@ -328,6 +304,7 @@ export default {
       active: '',
       gender: ['MALE', 'FEMALE', 'OTHER'],
       departments: ['INFO', 'TECH', 'BILLING'],
+      isLoading: true,
     };
   },
   methods: {
@@ -345,7 +322,7 @@ export default {
 
     validate() {
       this.$refs.form.validate();
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && this.mode === 'add') {
         let endpoint = '';
         if (this.role === 'client') {
           endpoint = '/v1/api/tabaadol-e-ketaab/client';
@@ -357,10 +334,26 @@ export default {
             ...this.register,
           })
           .then(res => {
-            console.log(res);
             if (res.status === 200) {
               this.saveSuccess = true;
               this.reset();
+            }
+          });
+      } else if (this.$refs.form.validate() && this.mode === 'edit') {
+        let endpoint = '';
+        if (this.role === 'client') {
+          endpoint = `/v1/api/tabaadol-e-ketaab/client/${this.$route.params.userId}`;
+        } else if (this.role === 'staff') {
+          endpoint = `/v1/api/tabaadol-e-ketaab/staff/${this.$route.params.userId}`;
+        }
+        this.$axios
+          .put(endpoint, {
+            ...this.register,
+          })
+          .then(res => {
+            if (res.status === 200) {
+              this.saveSuccess = true;
+              this.$emit('reloadUserData');
             }
           });
       } else {
@@ -389,6 +382,20 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
     },
+  },
+  watch: {
+    editData(newVal) {
+      this.register = newVal;
+    },
+  },
+  mounted() {
+    if (this.mode === 'edit') {
+      this.register = this.editData;
+      this.role = this.editData.role === 'CLIENT' ? 'client' : 'staff';
+      this.isLoading = false;
+    } else {
+      this.isLoading = false;
+    }
   },
 };
 </script>

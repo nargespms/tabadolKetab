@@ -8,7 +8,7 @@
 import profileCmp from '../../components/users/profileCmp.vue';
 
 export default {
-  name: 'profile',
+  name: 'userProfile',
   components: { profileCmp },
   data() {
     return {
@@ -27,10 +27,11 @@ export default {
     },
   },
   mounted() {
-    if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
-      this.endpoint = `/v1/api/tabaadol-e-ketaab/client/${this.$route.params.userId}`;
-    } else {
+    console.log(this.$route.name);
+    if (this.$route.name === 'staffProfile') {
       this.endpoint = `/v1/api/tabaadol-e-ketaab/staff/${this.$route.params.userId}`;
+    } else {
+      this.endpoint = `/v1/api/tabaadol-e-ketaab/client/${this.$route.params.userId}`;
     }
     this.getData();
   },

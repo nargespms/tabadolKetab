@@ -54,17 +54,6 @@
         </thead>
       </template>
 
-      <template v-slot:[`item.avatar`]="{ item }">
-        <div class="pa-3 align-center">
-          <v-avatar>
-            <img
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
-              :alt="item.id"
-            />
-          </v-avatar>
-        </div>
-      </template>
-
       <template v-slot:[`item.createdAt`]="{ item }">
         {{ new Date(item.createdAt).toLocaleDateString('fa') }}
       </template>
@@ -210,7 +199,7 @@ export default {
     },
     editRecord(item) {
       this.$router.push({
-        path: `/users/profile/${item.id}`,
+        path: `/users/staff/${item.id}`,
       });
     },
     // methods for delete notif

@@ -146,7 +146,6 @@ export default {
             id: name.id,
             fullName: `${name.firstName} ${name.lastName}`,
           }));
-          console.log(this.items);
           // this.items = res.data.staffs;
           this.isLoading = false;
           if (this.editDataId.length > 0) {

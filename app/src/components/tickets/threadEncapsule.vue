@@ -55,13 +55,6 @@ export default {
       type: String,
     },
   },
-  data() {
-    return {
-      attachments: {
-        name: 'file.txt',
-      },
-    };
-  },
 };
 </script>
 

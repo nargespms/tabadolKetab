@@ -54,17 +54,6 @@
           </tr>
         </thead>
       </template>
-      <template v-slot:[`item.avatar`]="{ item }">
-        <div class="pa-3 align-center">
-          {{ item.avatar }}
-          <v-avatar>
-            <img
-              src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
-              :alt="item.id"
-            />
-          </v-avatar>
-        </div>
-      </template>
 
       <template v-slot:[`item.createdAt`]="{ item }">
         {{ new Date(item.createdAt).toLocaleDateString('fa') }}
@@ -90,6 +79,20 @@
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              class="pl-4"
+              color="grey darken-3"
+              @click="editRecord(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+          {{ $t('edit') }}
+        </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
@@ -180,6 +183,11 @@ export default {
     addClient() {
       this.$router.push({
         path: `/users/addUser`,
+      });
+    },
+    editRecord(item) {
+      this.$router.push({
+        path: `/users/client/${item.id}`,
       });
     },
     // methods for delete notif

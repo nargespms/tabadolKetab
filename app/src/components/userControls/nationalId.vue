@@ -30,6 +30,9 @@ export default {
     isRequire: {
       type: Boolean,
     },
+    editData: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -64,6 +67,16 @@ export default {
     isRequire(newVal) {
       this.isRequired = newVal;
     },
+    editData(newVal) {
+      this.nationalId = newVal;
+      this.checkNationalId();
+    },
+  },
+  mounted() {
+    if (this.editData) {
+      this.nationalId = this.editData;
+      this.checkNationalId();
+    }
   },
 };
 </script>

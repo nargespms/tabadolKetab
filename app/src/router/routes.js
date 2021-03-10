@@ -154,6 +154,16 @@ const routes = [
         component: () => import('../views/usersManagements/profile.vue'),
       },
       {
+        path: '/users/staff/:userId',
+        name: 'staffProfile',
+        component: () => import('../views/usersManagements/userProfile.vue'),
+      },
+      {
+        path: '/users/client/:userId',
+        name: 'clientProfile',
+        component: () => import('../views/usersManagements/userProfile.vue'),
+      },
+      {
         path: '/addBook',
         name: 'addBook',
         component: () => import('../views/book/addBook.vue'),

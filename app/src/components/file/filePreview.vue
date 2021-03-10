@@ -4,9 +4,10 @@
     width="160"
     height="125"
   >
-    <v-icon color="grey " x-large class="d-flex">
+    <img :src="data.fullViewUrl" />
+    <!-- <v-icon color="grey " x-large class="d-flex">
       mdi-file-document
-    </v-icon>
+    </v-icon> -->
     <v-card-actions class="grey lighten-2">
       <v-spacer></v-spacer>
       <span>

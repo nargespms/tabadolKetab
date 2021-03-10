@@ -20,13 +20,6 @@ export default {
     return {
       headers: [
         {
-          text: 'avatar',
-          align: 'center',
-          sortable: false,
-          value: 'avatar',
-          divider: true,
-        },
-        {
           text: 'firstName',
           align: 'center',
           sortable: false,
