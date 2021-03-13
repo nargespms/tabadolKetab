@@ -20,43 +20,45 @@
             </span>
           </v-tooltip>
         </v-card-actions>
-        <v-form ref="form" v-model="valid" lazy-validation>
-          <v-text-field
-            v-model="bookCat.title"
-            :counter="10"
-            :rules="titleRules"
-            :label="$t('title')"
-            required
-            outlined
-            class="pt-4"
+        <!-- <v-form ref="form" v-model="valid" lazy-validation> -->
+        <v-text-field
+          ref="title"
+          v-model="bookCat.title"
+          :counter="10"
+          :rules="titleRules"
+          :label="$t('title')"
+          required
+          outlined
+          class="pt-4"
+          @keyup.enter="validate"
+        >
+          <template v-slot:prepend-inner>
+            <span class="red--text">
+              *
+            </span>
+          </template>
+        </v-text-field>
+        <v-checkbox
+          v-if="mode === 'edit'"
+          v-model="bookCat.active"
+          :label="$t('activeinactive')"
+          required
+        ></v-checkbox>
+        <div class="justify-center d-flex">
+          <v-btn
+            :disabled="!bookCat.title"
+            color="success"
+            class="mr-4"
+            @click="validate"
           >
-            <template v-slot:prepend-inner>
-              <span class="red--text">
-                *
-              </span>
-            </template>
-          </v-text-field>
-          <v-checkbox
-            v-if="mode === 'edit'"
-            v-model="bookCat.active"
-            :label="$t('activeinactive')"
-            required
-          ></v-checkbox>
-          <div class="justify-center d-flex">
-            <v-btn
-              :disabled="!valid"
-              color="success"
-              class="mr-4"
-              @click="validate"
-            >
-              {{ $t('save') }}
-            </v-btn>
+            {{ $t('save') }}
+          </v-btn>
 
-            <v-btn color="error" class="mr-4" @click="reset"
-              >{{ $t('resetForm') }}
-            </v-btn>
-          </div>
-        </v-form>
+          <v-btn color="error" class="mr-4" @click="reset"
+            >{{ $t('resetForm') }}
+          </v-btn>
+        </div>
+        <!-- </v-form> -->
       </v-card>
     </v-col>
 
@@ -110,8 +112,8 @@ export default {
   },
   methods: {
     validate() {
-      this.$refs.form.validate();
-      if (this.$refs.form.validate()) {
+      this.$refs.title.validate();
+      if (this.$refs.title.validate()) {
         if (this.mode === 'addPage') {
           this.$axios
             .post('/v1/api/tabaadol-e-ketaab/category', { ...this.bookCat })
@@ -153,7 +155,7 @@ export default {
       }
     },
     reset() {
-      this.$refs.form.reset();
+      this.$refs.title.reset();
     },
     // notif hide
     hideNotif() {

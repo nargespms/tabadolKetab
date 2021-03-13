@@ -6,6 +6,7 @@
       height="48"
       class="pointer "
       @click="show = !show"
+      v-if="toolBar"
     >
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -30,6 +31,7 @@
     <addressList
       v-show="expand ? show : true"
       v-if="mode === 'list'"
+      :clientId="clientId"
       @editAddress="editAddress"
       @addNewAddress="addNewAddress"
       @deleteAddress="deleteAddress"
@@ -51,6 +53,12 @@ export default {
     },
     expand: {
       type: Boolean,
+    },
+    toolBar: {
+      type: Boolean,
+    },
+    clientId: {
+      type: String,
     },
   },
   components: {

@@ -29,7 +29,7 @@ export default {
     getData() {
       this.$axios
         .get(`/v1/api/tabaadol-e-ketaab/role/${this.$route.params.role}`)
-        .then((res) => {
+        .then(res => {
           if (res.status === 200) {
             this.permission.title = res.data.title;
             this.editData = res.data;

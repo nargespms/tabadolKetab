@@ -45,7 +45,7 @@
                 v-model="book.coverPrice"
                 :label="$t('coverPrice')"
                 outlined
-                v-mask="'#############'"
+                v-mask="'#########'"
                 :hint="
                   this.book.coverPrice
                     ? `${$t('costInRial')}${moneyFormat(book.coverPrice)}`
@@ -229,7 +229,7 @@
                 outlined
                 required
                 :rules="requireRule"
-                v-mask="'#############'"
+                v-mask="'#########'"
                 :hint="
                   this.book.undergraduatePrice
                     ? `${$t('costInRial')}${moneyFormat(

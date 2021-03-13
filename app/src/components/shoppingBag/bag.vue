@@ -49,6 +49,7 @@
                     @hideAddressList="hideAddressList"
                     @setAddress="setAddress"
                     state="list"
+                    :toolBar="true"
                   />
                 </v-dialog>
               </v-col>
@@ -78,7 +79,7 @@
 
 <script>
 import invoiceItems from '../invoices/invoiceItems.vue';
-import addressCmp from '../userControls/addressCmp.vue';
+import addressCmp from '../address/addressCmp.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import deliveryMethod from './deliveryMethod.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';

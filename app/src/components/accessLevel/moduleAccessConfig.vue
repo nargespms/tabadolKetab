@@ -13,13 +13,14 @@
     </v-card-actions>
     <v-form
       v-if="mode === 'edit'"
-      class="pt-6 d-flex justify-space-around"
+      class="pt-6 d-flex justify-space-around flex-wrap"
       ref="form"
       v-model="valid"
       lazy-validation
     >
       <template v-for="item in data.items">
         <roleAccessBut
+          class="mb-4"
           :mode="mode"
           :item="item"
           :key="item.index"
@@ -36,6 +37,7 @@
     >
       <template v-for="item in module.items">
         <roleAccessBut
+          class="mb-4"
           :item="item"
           :key="item.index"
           @changeAccess="changeAccess"

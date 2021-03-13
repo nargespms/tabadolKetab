@@ -16,14 +16,16 @@
           color="teal"
           v-model="tab"
         >
-          <v-tab
-            v-for="item in items"
-            :key="item.index"
-            :class="$vuetify.breakpoint.xs ? 'mt-4' : ''"
-            class="pl-4"
-          >
-            {{ $t(item.tab) }}
-          </v-tab>
+          <template v-for="item in items">
+            <v-tab
+              v-if="item.condition"
+              :key="item.index"
+              :class="$vuetify.breakpoint.xs ? 'mt-4' : ''"
+              class="pl-4"
+            >
+              {{ $t(item.tab) }}
+            </v-tab>
+          </template>
 
           <v-tabs-items v-model="tab" class="pr-5">
             <v-tab-item v-for="item in items" :key="item.index">
@@ -41,6 +43,17 @@
                 v-if="item.tab === 'changePassword'"
                 @success="success"
               />
+              <addressCmp
+                v-if="
+                  item.tab === 'addresses' &&
+                    (($route.name === 'profile' &&
+                      $store.state.bookShop.userInfo.role === 'CLIENT') ||
+                      $route.name === 'clientProfile')
+                "
+                :state="'list'"
+                :toolBar="false"
+                :clientId="$route.params.userId"
+              />
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
@@ -53,6 +66,7 @@
 import addUser from './addUser.vue';
 import userInfo from './userInfo.vue';
 import changePassword from './changePassword.vue';
+import addressCmp from '../address/addressCmp.vue';
 
 export default {
   name: 'profilecmp',
@@ -61,6 +75,7 @@ export default {
     addUser,
     userInfo,
     changePassword,
+    addressCmp,
   },
   props: {
     data: {
@@ -73,12 +88,21 @@ export default {
       saveSuccess: false,
       tab: null,
       items: [
-        { tab: 'personalInformation' },
+        { tab: 'personalInformation', condition: true },
         {
           tab: 'edit',
+          condition: true,
         },
         {
           tab: 'changePassword',
+          condition: true,
+        },
+        {
+          tab: 'addresses',
+          condition:
+            (this.$route.name === 'profile' &&
+              this.$store.state.bookShop.userInfo.role === 'CLIENT') ||
+            this.$route.name === 'clientProfile',
         },
       ],
     };
@@ -92,6 +116,9 @@ export default {
       this.tab = 'personalInformation';
       this.$emit('success');
     },
+  },
+  mounted() {
+    console.log(this.$route.name);
   },
 };
 </script>

@@ -37,7 +37,7 @@ export default {
           divider: true,
         },
         {
-          text: 'status',
+          text: 'code',
           value: 'code',
           align: 'center',
           filterable: true,
@@ -66,7 +66,7 @@ export default {
           text: 'ip',
           value: 'ip',
           align: 'center',
-          filterable: true,
+          filterable: false,
           filterType: 'text',
           divider: true,
         },

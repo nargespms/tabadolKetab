@@ -86,6 +86,7 @@
         @hideAddressList="hideAddressList"
         @setAddress="setAddress"
         state="list"
+        :toolBar="true"
       />
     </v-dialog>
     <notifMessage
@@ -100,7 +101,7 @@
 <script>
 import notifMessage from '../structure/notifMessage.vue';
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
-import addressCmp from '../userControls/addressCmp.vue';
+import addressCmp from '../address/addressCmp.vue';
 
 export default {
   name: 'postRequestTable',

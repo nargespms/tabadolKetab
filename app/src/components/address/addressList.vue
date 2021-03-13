@@ -9,7 +9,11 @@
       >
         <template v-for="item in addresses">
           <v-list-item :key="item.title" class="addressItem pa-0">
-            <v-radio @click="itemSelect(item)" :value="item"></v-radio>
+            <v-radio
+              @click="itemSelect(item)"
+              :value="item"
+              v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
+            ></v-radio>
 
             <v-list-item-content class="text-right  ">
               <v-row class="justify-center clear ">
@@ -27,6 +31,7 @@
                   cols="12"
                   lg="2"
                   class="d-flex justify-center align-self-center"
+                  v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
                 >
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -46,12 +51,11 @@
                 </v-col>
               </v-row>
               <div
-                class="primary--text  pointer px-2"
+                class="pointer px-2"
                 @click="editAddress(item)"
+                v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
               >
-                <v-icon color="primary" class="fn18"
-                  >mdi-subdirectory-arrow-left</v-icon
-                >
+                <v-icon class="fn18">mdi-subdirectory-arrow-left</v-icon>
                 <span class="fn13">
                   {{ $t('editAddress') }}
                 </span>
@@ -60,7 +64,10 @@
           </v-list-item>
         </template>
       </v-radio-group>
-      <v-list-item class=" ma-0 br-t-g">
+      <v-list-item
+        class=" ma-0 br-t-g"
+        v-if="this.$store.state.bookShop.userInfo.role === 'CLIENT'"
+      >
         <v-btn
           text
           :disabled="addresses.length >= 3"
@@ -112,6 +119,11 @@ import promptDialog from '../structure/promptDialog.vue';
 
 export default {
   name: 'addressList',
+  props: {
+    clientId: {
+      type: String,
+    },
+  },
   components: {
     promptDialog,
   },
@@ -158,7 +170,14 @@ export default {
       this.deletingItem = {};
     },
     getAddress() {
-      this.$axios.get(`/v1/api/tabaadol-e-ketaab/addresses`).then(res => {
+      let endpoint;
+      if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
+        endpoint = `/v1/api/tabaadol-e-ketaab/addresses/${this.$store.state.bookShop.userInfo.id}`;
+      } else {
+        endpoint = `/v1/api/tabaadol-e-ketaab/addresses/${this.clientId}`;
+      }
+
+      this.$axios.get(endpoint).then(res => {
         console.log(res);
         if (res.status === 200) {
           this.addresses = res.data.addresses;

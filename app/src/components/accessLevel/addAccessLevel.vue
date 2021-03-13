@@ -265,7 +265,15 @@ export default {
             .then(res => {
               if (res.status === 200) {
                 this.saveSuccess = true;
-                this.reset();
+                // change route with delay
+                setTimeout(
+                  function changeRoute() {
+                    this.$router.push({
+                      name: 'accessLevelList',
+                    });
+                  }.bind(this),
+                  1000
+                );
               }
             })
             .catch(e => {
