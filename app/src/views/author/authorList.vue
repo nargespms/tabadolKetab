@@ -11,6 +11,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'authorList',
+  metaInfo: {
+    title: 'لیست مولف ها',
+  },
   components: {
     dataTableWrap,
   },

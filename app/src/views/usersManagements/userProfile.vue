@@ -1,19 +1,30 @@
 <template>
   <div>
-    <profileCmp :data="userData" @reloadUserData="getData" />
+    <profileCmp :data="userData" @reloadUserData="getData" @success="success" />
+    <notifMessage
+      v-if="saveSuccess"
+      :msg="'operationSuccessfullyOcured'"
+      @hideNotif="hideNotif"
+      :type="'success'"
+    />
   </div>
 </template>
 
 <script>
 import profileCmp from '../../components/users/profileCmp.vue';
+import notifMessage from '../../components/structure/notifMessage.vue';
 
 export default {
   name: 'userProfile',
-  components: { profileCmp },
+  metaInfo: {
+    title: ' پروفایل ',
+  },
+  components: { profileCmp, notifMessage },
   data() {
     return {
       endpoint: '',
       userData: {},
+      saveSuccess: false,
     };
   },
   methods: {
@@ -24,6 +35,13 @@ export default {
           this.userData = res.data.user;
         }
       });
+    },
+    success() {
+      this.saveSuccess = true;
+    },
+    // notif hide
+    hideNotif() {
+      this.saveSuccess = false;
     },
   },
   mounted() {

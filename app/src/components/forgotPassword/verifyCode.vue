@@ -19,14 +19,23 @@
             :height="32"
             class="w250 ma-auto my-4"
           ></v-text-field>
-          <v-btn
-            :disabled="!validCode"
-            color="success "
-            class="px-6 d-flex ma-auto"
-            @click="validateCode"
-          >
-            {{ $t('send') }}
-          </v-btn>
+          <div class="d-flex">
+            <v-btn
+              :disabled="!validCode"
+              color="success "
+              class="px-6 d-flex ma-auto"
+              @click="validateCode"
+            >
+              {{ $t('send') }}
+            </v-btn>
+            <v-btn
+              color="primary "
+              class="px-6 d-flex ma-auto"
+              @click="returntoForgot"
+            >
+              {{ $t('resendRetriveCode') }}
+            </v-btn>
+          </div>
         </div>
       </v-form>
     </v-col>
@@ -79,6 +88,9 @@ export default {
       } else {
         this.validCode = false;
       }
+    },
+    returntoForgot() {
+      this.$emit('enableMobileForgot');
     },
   },
 

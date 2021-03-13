@@ -11,6 +11,9 @@ import generalSettings from '../../components/settings/generalSettings.vue';
 
 export default {
   name: 'settings',
+  metaInfo: {
+    title: 'تنظیمات',
+  },
   components: {
     generalSettings,
   },

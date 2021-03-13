@@ -23,6 +23,7 @@
       update:options
       :server-items-length="totalData"
       hide-default-footer
+      :mobile-breakpoint="100"
     >
       <template v-slot:top>
         <v-toolbar color="teal" flat height="48">

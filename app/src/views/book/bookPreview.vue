@@ -1,6 +1,10 @@
 <template>
   <div>
-    <bookProfile @loginProblem="loginProblem" @staffBuy="staffBuy" />
+    <bookProfile
+      @loginProblem="loginProblem"
+      @staffBuy="staffBuy"
+      @setBookName="setBookName"
+    />
     <v-dialog v-model="loginMsgEnable" max-width="500px">
       <promptDialog
         :title="loginTitle"
@@ -25,6 +29,9 @@ import notifMessage from '../../components/structure/notifMessage.vue';
 
 export default {
   name: 'bookPreview',
+  metaInfo: {
+    title: 'مشاهده کتاب',
+  },
   components: {
     bookProfile,
     promptDialog,
@@ -39,6 +46,7 @@ export default {
       // error
       errorEnable: false,
       errorMsg: '',
+      pageTitle: '',
     };
   },
   methods: {
@@ -61,6 +69,9 @@ export default {
     },
     hideError() {
       this.errorEnable = false;
+    },
+    setBookName(value) {
+      this.pageTitle = value;
     },
   },
 };

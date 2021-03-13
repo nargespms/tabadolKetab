@@ -13,6 +13,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'logsList',
+  metaInfo: {
+    title: 'وقایع',
+  },
   components: {
     dataTableWrap,
   },

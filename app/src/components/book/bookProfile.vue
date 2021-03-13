@@ -102,6 +102,7 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.book = res.data;
+            this.$emit('setBookName', res.data.name);
             this.isLoading = false;
           }
         });

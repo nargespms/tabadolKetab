@@ -54,8 +54,13 @@
           {{ $t(item.text) }}
         </span>
       </template>
-
-      <template v-slot:append v-if="filter[data.value]">
+      <template
+        v-slot:append
+        v-if="
+          filter[data.value] ||
+            (data.text === 'status' && filter.hasOwnProperty([data.value]))
+        "
+      >
         <v-icon @click="clear(data.value)">mdi-close-circle-outline</v-icon>
       </template>
     </v-select>

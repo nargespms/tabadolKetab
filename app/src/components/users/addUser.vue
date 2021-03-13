@@ -1,6 +1,10 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <v-col cols="12" :md="mode ? '12' : '8'" :sm="mode ? '12' : '6'">
+    <v-col
+      cols="12"
+      :md="mode === 'edit' ? '12' : '8'"
+      :sm="mode === 'edit' ? '12' : '10'"
+    >
       <v-overlay :value="isLoading">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
@@ -30,8 +34,8 @@
               <v-col cols="12" md="6" class="pa-0">
                 <v-text-field
                   v-model="register.firstName"
-                  :rules="nameRules"
                   :label="$t('name')"
+                  :rules="nameRules"
                   required
                   outlined
                   error-count="2"
@@ -148,6 +152,8 @@
                   outlined
                   clearable
                   hide-selected
+                  :rules="checkRule"
+                  required
                 >
                   <template v-slot:item="{ item }">
                     <span>
@@ -157,6 +163,11 @@
                   <template v-slot:selection="{ item }">
                     <span>
                       {{ $t(item) }}
+                    </span>
+                  </template>
+                  <template v-slot:prepend-inner>
+                    <span class="red--text">
+                      *
                     </span>
                   </template>
                 </v-select>
@@ -303,7 +314,7 @@ export default {
       captcha: '',
       active: '',
       gender: ['MALE', 'FEMALE', 'OTHER'],
-      departments: ['INFO', 'TECH', 'BILLING'],
+      departments: ['INFO', 'IT', 'GENERAL', 'BILLING', 'BOOK'],
       isLoading: true,
     };
   },
@@ -322,6 +333,7 @@ export default {
 
     validate() {
       this.$refs.form.validate();
+      console.log(this.$refs.form.validate());
       if (this.$refs.form.validate() && this.mode === 'add') {
         let endpoint = '';
         if (this.role === 'client') {

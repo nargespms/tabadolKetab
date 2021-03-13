@@ -124,6 +124,9 @@ import uploadFile from '../file/uploadFile.vue';
 
 export default {
   name: 'addTicket',
+  metaInfo: {
+    title: 'افزودن تیکت',
+  },
   components: {
     notifMessage,
     clientsAutoComplete,

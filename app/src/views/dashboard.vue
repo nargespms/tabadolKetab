@@ -9,7 +9,9 @@ import dashboardTab from '../components/dashboard/dashboardTab.vue';
 
 export default {
   name: 'dashboard',
-
+  metaInfo: {
+    title: 'داشبورد',
+  },
   components: {
     dashboardTab,
   },

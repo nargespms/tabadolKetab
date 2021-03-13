@@ -524,6 +524,7 @@ export default {
   INFO: 'روابط عمومی',
   TECH: 'فنی',
   nextLevel: 'مرحله بعدی',
+  resendRetriveCode: 'ارسال مجدد کد',
   saveOrder: 'ثبت سفارش',
   costInRial: 'مبلغ به ریال',
   PRESENCE: 'حضوری',

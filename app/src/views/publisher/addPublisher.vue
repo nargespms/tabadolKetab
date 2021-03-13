@@ -6,7 +6,10 @@
 import addPublisherCmp from '../../components/publisher/addPublisherCmp.vue';
 
 export default {
-  components: { addPublisherCmp },
   name: 'addPublisher',
+  metaInfo: {
+    title: 'افزودن ناشر',
+  },
+  components: { addPublisherCmp },
 };
 </script>

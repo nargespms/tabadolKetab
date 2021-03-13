@@ -1,6 +1,6 @@
 <template>
   <div>
-    <addUser />
+    <addUser :mode="'add'" />
   </div>
 </template>
 
@@ -9,7 +9,9 @@ import addUser from '../../components/users/addUser.vue';
 
 export default {
   name: 'addmember',
-
+  metaInfo: {
+    title: 'افزودن کاربر',
+  },
   components: { addUser },
 };
 </script>

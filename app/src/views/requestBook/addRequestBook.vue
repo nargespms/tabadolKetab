@@ -9,6 +9,9 @@ import addRequestBookCmp from '../../components/requestedBook/addRequstedBookCmp
 
 export default {
   name: 'addRequestBook',
+  metaInfo: {
+    title: 'افزودن کتاب درخواستی',
+  },
   components: {
     addRequestBookCmp,
   },

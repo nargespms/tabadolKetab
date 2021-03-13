@@ -181,6 +181,9 @@ import uploadFile from '../file/uploadFile.vue';
 
 export default {
   name: 'addMessageCmp',
+  metaInfo: {
+    title: 'افزودن پیام ',
+  },
   components: {
     notifMessage,
     datePickerCmp,

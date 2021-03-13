@@ -11,6 +11,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'tradesList',
+  metaInfo: {
+    title: 'لیست معاملات',
+  },
   components: {
     dataTableWrap,
   },

@@ -15,6 +15,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'ordersList',
+  metaInfo: {
+    title: 'لیست سفارشات',
+  },
   components: {
     dataTableWrap,
   },

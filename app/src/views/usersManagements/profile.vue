@@ -16,6 +16,9 @@ import notifMessage from '../../components/structure/notifMessage.vue';
 
 export default {
   name: 'profile',
+  metaInfo: {
+    title: 'پروفایل ',
+  },
   components: { profileCmp, notifMessage },
   data() {
     return {
@@ -28,12 +31,12 @@ export default {
     getData() {
       this.$axios.get(this.endpoint).then(res => {
         if (res.status === 200) {
-          console.log(res.data);
           this.userData = res.data.user;
         }
       });
     },
     success() {
+      console.log('jj');
       this.saveSuccess = true;
     },
     // notif hide

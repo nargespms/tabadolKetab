@@ -11,6 +11,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'bookCatList',
+  metaInfo: {
+    title: 'لیست دسته بندی های کتاب ',
+  },
   components: {
     dataTableWrap,
   },

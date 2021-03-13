@@ -11,6 +11,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'accessLevelList',
+  metaInfo: {
+    title: 'لیست نقش ها ',
+  },
   components: {
     dataTableWrap,
   },

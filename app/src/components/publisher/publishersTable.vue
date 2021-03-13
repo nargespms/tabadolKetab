@@ -23,6 +23,7 @@
       class="elevation-1 text-center ma-4 clear"
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
+      :mobile-breakpoint="100"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">

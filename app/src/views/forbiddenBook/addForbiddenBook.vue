@@ -7,6 +7,9 @@ import addForbiddenBookCmp from '../../components/forbiddenBook/addForbiddenBook
 
 export default {
   name: 'addForbiddenBook',
+  metaInfo: {
+    title: 'افزودن کتاب ممنوعه',
+  },
   components: {
     addForbiddenBookCmp,
   },

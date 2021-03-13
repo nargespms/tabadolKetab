@@ -9,6 +9,9 @@ import addAccessLevel from '../../components/accessLevel/addAccessLevel.vue';
 
 export default {
   name: 'accessLevelCreation',
+  metaInfo: {
+    title: '  ایجاد نقش ',
+  },
   components: {
     addAccessLevel,
   },

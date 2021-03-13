@@ -16,6 +16,7 @@
               v-if="codeCheck"
               :mobile="mobile"
               @error="errorVerify"
+              @enableMobileForgot="enableMobileForgot"
             />
             <v-card-text> </v-card-text>
           </v-card>
@@ -77,6 +78,9 @@ export default {
     },
     hideError() {
       this.error = false;
+    },
+    enableMobileForgot() {
+      this.codeCheck = false;
     },
   },
 };

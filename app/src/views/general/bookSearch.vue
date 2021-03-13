@@ -39,6 +39,9 @@ import bookSearchForm from '../../components/search/bookSearchForm.vue';
 
 export default {
   name: 'bookSearch',
+  metaInfo: {
+    title: 'جستجو کتاب',
+  },
   components: {
     booksSearchResults,
     bookSearchForm,

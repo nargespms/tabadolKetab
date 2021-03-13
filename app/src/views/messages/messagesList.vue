@@ -17,6 +17,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'messagesList',
+  metaInfo: {
+    title: 'لیست پیام ها',
+  },
   components: {
     dataTableWrap,
   },

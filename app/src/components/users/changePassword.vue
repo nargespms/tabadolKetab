@@ -45,13 +45,15 @@ export default {
   mounted() {
     console.log(this.$route.name);
     if (
-      this.$route.name === 'profile' &&
-      this.$store.state.bookShop.userInfo.role !== 'CLIENT'
+      (this.$route.name === 'profile' &&
+        this.$store.state.bookShop.userInfo.role !== 'CLIENT') ||
+      this.$route.name === 'staffProfile'
     ) {
       this.endpoint = `/v1/api/tabaadol-e-ketaab/staff/reset-password/${this.$route.params.userId}`;
     } else if (
-      this.$route.name === 'profile' &&
-      this.$store.state.bookShop.userInfo.role === 'CLIENT'
+      (this.$route.name === 'profile' &&
+        this.$store.state.bookShop.userInfo.role === 'CLIENT') ||
+      this.$route.name === 'clientProfile'
     ) {
       this.endpoint = `/v1/api/tabaadol-e-ketaab/client/reset-password/${this.$route.params.userId}`;
     }

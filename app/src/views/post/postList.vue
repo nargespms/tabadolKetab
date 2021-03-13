@@ -21,6 +21,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'postList',
+  metaInfo: {
+    title: 'لیست درخواست های پیک ',
+  },
   components: {
     dataTableWrap,
     // userMap,

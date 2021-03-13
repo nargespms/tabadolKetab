@@ -11,6 +11,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'forbiddenBookList',
+  metaInfo: {
+    title: 'لیست کتاب های ممنوعه',
+  },
   components: {
     dataTableWrap,
   },

@@ -13,6 +13,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'discountsList',
+  metaInfo: {
+    title: 'لیست تخفیف های دسته بندی',
+  },
   components: {
     dataTableWrap,
   },

@@ -11,6 +11,9 @@ import tagsList from '../../components/tags/tagsList.vue';
 
 export default {
   name: 'tags',
+  metaInfo: {
+    title: 'برچسب ها',
+  },
   components: {
     addTag,
     tagsList,

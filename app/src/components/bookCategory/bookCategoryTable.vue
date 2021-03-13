@@ -11,6 +11,7 @@
       :server-items-length="totalData"
       hide-default-header
       hide-default-footer
+      :mobile-breakpoint="100"
     >
       <!-- @page-count="options.page = $event" -->
       <!-- :page.sync="options.page" -->

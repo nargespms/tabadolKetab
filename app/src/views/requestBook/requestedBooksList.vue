@@ -11,6 +11,9 @@ import dataTableWrap from '../../components/structure/dataTableWrap.vue';
 
 export default {
   name: 'requestedBooksList',
+  metaInfo: {
+    title: 'لیست کتاب های درخواستی',
+  },
   components: {
     dataTableWrap,
   },
