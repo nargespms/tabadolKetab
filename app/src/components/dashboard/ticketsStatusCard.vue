@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row>
+    <v-row class="justify-center">
       <v-col cols="12" lg="3">
         <statusCard
           :lable="'ticketsNumber'"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row v-if="!isLoading">
+    <v-row v-if="!isLoading" class="justify-center">
       <v-col cols="12" lg="3">
         <statusCard
           :lable="'allClientsNumber'"
