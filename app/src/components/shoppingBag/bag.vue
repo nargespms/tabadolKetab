@@ -50,6 +50,7 @@
                     @setAddress="setAddress"
                     state="list"
                     :toolBar="true"
+                    :selective="true"
                   />
                 </v-dialog>
               </v-col>

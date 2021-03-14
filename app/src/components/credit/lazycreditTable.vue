@@ -58,7 +58,7 @@
               class="numberDir"
             >
               <span>
-                {{ item.total }}
+                {{ moneyFormat(item.total) }}
                 <span class="float-left pr-2">
                   {{ $t('rial') }}
                 </span>
@@ -116,9 +116,12 @@
 <script>
 import notifMessage from '../structure/notifMessage.vue';
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'lazycreditTable',
+  mixins: [moneyFormat],
+
   components: {
     notifMessage,
     tableHeaderCell,

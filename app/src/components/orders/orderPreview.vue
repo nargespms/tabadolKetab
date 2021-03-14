@@ -88,7 +88,7 @@
                   :class="changeAmount"
                   transition="scale-transition"
                 >
-                  {{ total }}{{ $t('rial') }}
+                  {{ moneyFormat(total) }}{{ $t('rial') }}
                 </td>
               </tbody>
             </table>
@@ -172,6 +172,7 @@ import notifMessage from '../structure/notifMessage.vue';
 import discountCode from '../discount/discountCode.vue';
 import creditWarning from '../credit/creditWarning.vue';
 import addCredit from '../credit/addCredit.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'orderPreview',
@@ -189,6 +190,7 @@ export default {
       type: String,
     },
   },
+  mixins: [moneyFormat],
   data() {
     return {
       valid: true,

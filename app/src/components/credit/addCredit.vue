@@ -75,7 +75,6 @@
                 :label="$t('description')"
                 v-model="credit.description"
                 counter
-                :rules="rules"
               ></v-textarea>
             </v-col>
           </v-row>

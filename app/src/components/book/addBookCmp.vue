@@ -506,6 +506,9 @@ export default {
               console.log(res);
               if (res.status === 200) {
                 this.saveSuccess = true;
+                this.$router.push({
+                  name: 'booksList',
+                });
               }
             })
             .catch(e => {

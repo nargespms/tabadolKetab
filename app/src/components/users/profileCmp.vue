@@ -53,6 +53,7 @@
                 :state="'list'"
                 :toolBar="false"
                 :clientId="$route.params.userId"
+                :selective="false"
               />
             </v-tab-item>
           </v-tabs-items>

@@ -10,9 +10,11 @@
         <template v-for="item in addresses">
           <v-list-item :key="item.title" class="addressItem pa-0">
             <v-radio
-              @click="itemSelect(item)"
+              @click="confirmAddress(item)"
               :value="item"
-              v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
+              v-if="
+                $store.state.bookShop.userInfo.role === 'CLIENT' && selective
+              "
             ></v-radio>
 
             <v-list-item-content class="text-right  ">
@@ -82,24 +84,6 @@
             حداکثر تعداد آدرس ۳ میباشد
           </span>
         </v-btn>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              rounded
-              color="green"
-              left
-              fab
-              absolute
-              class="pointer"
-              v-bind="attrs"
-              v-on="on"
-              @click="confirmAddress"
-            >
-              <v-icon color="white"> mdi-checkbox-marked-outline</v-icon>
-            </v-btn>
-          </template>
-          {{ $t('bookSendReq') }}
-        </v-tooltip>
       </v-list-item>
     </v-list>
     <v-dialog v-model="enableDelete" max-width="500px">
@@ -122,6 +106,9 @@ export default {
   props: {
     clientId: {
       type: String,
+    },
+    selective: {
+      type: Boolean,
     },
   },
   components: {

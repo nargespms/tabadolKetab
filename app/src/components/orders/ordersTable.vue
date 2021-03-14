@@ -107,7 +107,10 @@
           </template>
           {{ $t('preview') }}
         </v-tooltip>
-        <v-tooltip bottom>
+        <v-tooltip
+          bottom
+          v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-icon
               medium

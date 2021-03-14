@@ -32,6 +32,7 @@
       v-show="expand ? show : true"
       v-if="mode === 'list'"
       :clientId="clientId"
+      :selective="selective"
       @editAddress="editAddress"
       @addNewAddress="addNewAddress"
       @deleteAddress="deleteAddress"
@@ -59,6 +60,9 @@ export default {
     },
     clientId: {
       type: String,
+    },
+    selective: {
+      type: Boolean,
     },
   },
   components: {

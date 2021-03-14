@@ -114,7 +114,7 @@
               </v-col>
               <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <v-select
-                  v-model="register.introductionType"
+                  v-model="register.introduction"
                   :items="introductionType"
                   :label="$t('introduction')"
                   outlined
