@@ -1,7 +1,6 @@
 <template>
   <div>
     <bookSearchForm @searchBook="searchBook" />
-    <bookFilterSearch @filterSearch="filterSearch" class="mt-6" />
     <booksSearchResults
       v-if="searchResult.length > 0"
       class="mt-6"
@@ -34,7 +33,6 @@
 
 <script>
 import booksSearchResults from '../../components/search/booksSearchResults.vue';
-import bookFilterSearch from '../../components/search/bookFilterSearch.vue';
 import bookSearchForm from '../../components/search/bookSearchForm.vue';
 
 export default {
@@ -45,7 +43,6 @@ export default {
   components: {
     booksSearchResults,
     bookSearchForm,
-    bookFilterSearch,
   },
   data() {
     return {
@@ -75,19 +72,7 @@ export default {
           }
         });
     },
-    filterSearch(value) {
-      this.filter = value;
 
-      this.$axios
-        .get('/v1/api/tabaadol-e-ketaab/books', {
-          params: { filter: value, limit: 8 },
-        })
-        .then(res => {
-          if (res.status === 200) {
-            this.searchResult = res.data.result.docs;
-          }
-        });
-    },
     getMoreData() {
       this.loadingMore = true;
       this.enableLoadingMore = true;

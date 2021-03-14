@@ -122,7 +122,26 @@
                   :height="32"
                 />
               </v-col>
+              <v-col cols="12" md="6" class="pa-0 d-flex align-self-end pr-4">
+                <span class="pl-6">
+                  {{ $t('priceRange') }}
+                </span>
+
+                <v-range-slider
+                  :max="max"
+                  :min="min"
+                  v-model="range"
+                  @change="priceRange"
+                  persistent-hint
+                  :hint="
+                    `${filter.minPrice}${this.$t('rial')}-${
+                      filter.maxPrice
+                    }${this.$t('rial')}`
+                  "
+                ></v-range-slider>
+              </v-col>
             </v-row>
+
             <div class="justify-center d-flex">
               <v-btn
                 :disabled="!valid"
@@ -155,13 +174,22 @@ export default {
   data() {
     return {
       valid: true,
-      show: false,
-      filter: {},
+      show: true,
+      filter: {
+        minPrice: 10000,
+        maxPrice: 4000000,
+      },
+      min: 10000,
+      max: 4000000,
+      range: [10000, 4000000],
     };
   },
   methods: {
     getBookCat(value) {
       this.filter.categoryId = value;
+    },
+    priceRange() {
+      this.filter = { minPrice: this.range[0], maxPrice: this.range[1] };
     },
     searchBook() {
       this.$refs.form.validate();
