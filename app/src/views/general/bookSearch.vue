@@ -115,5 +115,8 @@ export default {
         });
     },
   },
+  mounted() {
+    this.searchBook();
+  },
 };
 </script>

@@ -152,7 +152,9 @@ export default {
           action: 'mdi-account',
           title: 'Users',
           active: false,
-          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
+          condition:
+            this.$store.state.bookShop.userInfo.role !== 'CLIENT' &&
+            this.$store.state.bookShop.userInfo.role.cu_client === true,
           items: [
             {
               title: 'AddUser',
@@ -278,7 +280,8 @@ export default {
           action: 'mdi-android-messages',
           title: 'messages',
           active: false,
-          condition: true,
+          condition:
+            this.$store.state.bookShop.userInfo.role.cu_message === true,
           badge: this.unreadMessages !== '0' ? this.unreadMessages : '',
           badgeColor: 'red',
           items: [
@@ -303,7 +306,8 @@ export default {
           active: false,
           badge: this.unreadTickets !== '0' ? this.unreadTickets : '',
           badgeColor: 'red',
-          condition: true,
+          condition:
+            this.$store.state.bookShop.userInfo.role.cu_ticket === true,
           items: [
             {
               title: 'AddTicket',
@@ -496,9 +500,7 @@ export default {
           title: 'trades',
           active: false,
           condition:
-            this.$store.state.bookShop.userInfo.role !== 'CLIENT' ||
-            this.$store.state.bookShop.userInfo.role.c_invoice === true ||
-            this.$store.state.bookShop.userInfo.role.r_invoice === true,
+            this.$store.state.bookShop.userInfo.role.r_invoices === true,
           items: [
             {
               title: 'tradesList',

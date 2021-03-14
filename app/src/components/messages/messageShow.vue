@@ -17,17 +17,6 @@
             </v-chip>
           </v-card-title>
 
-          <v-card-subtitle>
-            {{ $t('sendDate') }}:
-            {{ new Date(message.sendDate).toLocaleTimeString('fa') }}
-            <v-icon small color="red">
-              mdi-clock
-            </v-icon>
-            {{ new Date(message.sendDate).toLocaleDateString('fa') }}
-            <v-icon small color="black">
-              mdi-calendar
-            </v-icon>
-          </v-card-subtitle>
           <v-card-actions class="justify-end">
             <div @click="show = !show">
               <v-btn color="blue darken-2" text>

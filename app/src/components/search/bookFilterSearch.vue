@@ -9,6 +9,8 @@
             </span>
           </v-card-title>
           <v-spacer></v-spacer>
+          <v-icon v-if="!show" class="white--text">mdi-arrow-down-thick</v-icon>
+          <v-icon v-if="show" class="white--text">mdi-arrow-up-thick</v-icon>
         </v-card-actions>
         <v-expand-transition>
           <v-form
@@ -62,7 +64,7 @@ export default {
   data() {
     return {
       valid: true,
-      show: true,
+      show: false,
       min: 10000,
       max: 4000000,
       range: [10000, 4000000],
