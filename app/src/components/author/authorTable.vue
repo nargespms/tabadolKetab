@@ -134,6 +134,7 @@
         :mode="'edit'"
         :data="edittingItem"
         @editAuthor="editAuthor"
+        @closeModal="closeModal"
       />
     </v-dialog>
 
@@ -221,6 +222,9 @@ export default {
       this.enableEdit = false;
       this.successNotif = true;
       this.reloadTable();
+    },
+    closeModal() {
+      this.enableEdit = false;
     },
     // methods for preview
     preview(item) {

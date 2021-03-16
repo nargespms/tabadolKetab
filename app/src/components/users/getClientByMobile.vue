@@ -13,13 +13,20 @@
           :key="mobileKey"
         />
       </div>
-      <v-btn
-        :disabled="mobile.length < 1"
-        color="success"
-        @click="getClientInfo"
-      >
-        {{ $t('getClient') }}
-      </v-btn>
+      <div>
+        <v-btn color="success" @click="getClientInfo" class="d-block mb-3">
+          <v-icon color="white" v-bind="attrs" v-on="on" class="pl-1">
+            mdi-account-check
+          </v-icon>
+          {{ $t('getClient') }}
+        </v-btn>
+        <v-btn color="primary" @click="addUserModal" class="d-block mb-3">
+          <v-icon color="white" v-bind="attrs" v-on="on" class="pl-2"
+            >mdi-account-plus
+          </v-icon>
+          {{ $t('AddUser') }}
+        </v-btn>
+      </div>
     </div>
     <div v-if="client.firstName">
       <span class="font-weight-black"> {{ $t('fullname') }} : </span>
@@ -28,28 +35,34 @@
         {{ client.lastName }}
       </span>
     </div>
+    <v-dialog v-model="adduserModal" hide-overlay max-width="900px">
+      <addUser :mode="'add'" @closeModal="closeModal" :colWidth="'12'" />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import mobilePhone from '../userControls/mobilePhone.vue';
+import AddUser from './addUser.vue';
 
 export default {
   name: 'getClientByMobile',
   components: {
     mobilePhone,
+    AddUser,
   },
   data() {
     return {
       mobile: '',
       client: {},
       mobileKey: 0,
+      adduserModal: false,
     };
   },
   methods: {
     setMobilePhone(value) {
-      console.log(value);
       this.mobile = value;
+      console.log('ddd');
     },
     getClientInfo() {
       console.log(this.mobile);
@@ -69,6 +82,12 @@ export default {
             this.$emit('clientError');
           }
         });
+    },
+    addUserModal() {
+      this.adduserModal = true;
+    },
+    closeModal() {
+      this.adduserModal = false;
     },
   },
 };

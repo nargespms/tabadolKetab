@@ -21,7 +21,12 @@
               </v-icon>
               {{ $t('noResultsText') }}
             </p>
-            <v-btn color="success" class="mr-4 px-8" @click="reqBook">
+            <v-btn
+              color="success"
+              class="mr-4 px-8"
+              @click="reqBook"
+              v-if="this.$store.state.bookShop.userInfo.role === 'CLIENT'"
+            >
               {{ $t('addRequestedBooks') }}
             </v-btn>
           </div>

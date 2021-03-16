@@ -2,7 +2,8 @@
   <v-row no-gutters class="justify-center">
     <v-col
       cols="12"
-      :md="mode === 'edit' ? '12' : '8'"
+      :lg="mode === 'edit' ? '12' : colWidth ? colWidth : '8'"
+      :md="mode === 'edit' ? '12' : colWidth ? colWidth : '8'"
       :sm="mode === 'edit' ? '12' : '10'"
     >
       <v-overlay :value="isLoading">
@@ -282,6 +283,9 @@ export default {
     editData: {
       type: Object,
     },
+    colWidth: {
+      type: String,
+    },
   },
   components: {
     notifMessage,
@@ -349,6 +353,7 @@ export default {
             if (res.status === 200) {
               this.saveSuccess = true;
               this.reset();
+              this.$emit('closeModal');
             }
           });
       } else if (this.$refs.form.validate() && this.mode === 'edit') {

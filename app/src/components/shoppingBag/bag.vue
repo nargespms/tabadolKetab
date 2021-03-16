@@ -32,6 +32,7 @@
                 <div
                   class="primary--text  pointer px-2"
                   @click="addressModalEnable = true"
+                  v-if="$store.state.bookShop.loggedIn"
                 >
                   <v-icon color="primary" class="fn18"
                     >mdi-subdirectory-arrow-left</v-icon
@@ -69,6 +70,14 @@
         </div>
       </v-card>
     </v-col>
+    <v-dialog v-model="loginMsgEnable" max-width="500px">
+      <promptDialog
+        :title="loginTitle"
+        :message="loginMsg"
+        @accept="acceptLogin"
+        @reject="closeLogin"
+      />
+    </v-dialog>
     <notifMessage
       v-if="errorEnable"
       :msg="errorMsg"
@@ -84,6 +93,7 @@ import addressCmp from '../address/addressCmp.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import deliveryMethod from './deliveryMethod.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
+import promptDialog from '../structure/promptDialog.vue';
 
 export default {
   name: 'bag',
@@ -92,6 +102,7 @@ export default {
     addressCmp,
     notifMessage,
     deliveryMethod,
+    promptDialog,
   },
   mixins: [moneyFormat],
 
@@ -116,6 +127,11 @@ export default {
       // error
       errorEnable: false,
       errorMsg: '',
+      // login error
+      loginProblem: false,
+      loginMsgEnable: false,
+      loginMsg: '',
+      loginTitle: '',
     };
   },
   methods: {
@@ -138,10 +154,23 @@ export default {
     setDeliveryMethod(value) {
       this.bag.delivery = value;
     },
+    acceptLogin() {
+      this.$router.push({
+        name: 'login',
+      });
+    },
+    closeLogin() {
+      this.loginMsgEnable = false;
+    },
     pay() {
       this.orderLoading = true;
       this.$refs.form.validate();
-      if (this.$refs.form.validate()) {
+
+      if (!this.$store.state.bookShop.loggedIn) {
+        this.loginProblem = true;
+      }
+
+      if (this.$refs.form.validate() && !this.loginProblem) {
         this.$axios
           .post('/v1/api/tabaadol-e-ketaab/order', { ...this.bag, type: 'BUY' })
           .then(res => {
@@ -166,6 +195,10 @@ export default {
               this.errorMsg = 'Thisbookissoldorreservedorregisteredbyclient';
             }
           });
+      } else if (this.loginProblem) {
+        this.loginMsgEnable = true;
+        this.loginTitle = 'registerOrLogin';
+        this.loginMsg = 'youShouldregisterOrloginFirst';
       } else {
         this.orderLoading = false;
         this.errorEnable = true;

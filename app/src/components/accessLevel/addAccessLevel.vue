@@ -342,7 +342,7 @@ export default {
       }
     },
     setAccessCategory(value) {
-      if (value.itemName === 'addORedit') {
+      if (value.itemName === 'all') {
         this.accessLevel.cu_category = value.status;
       }
     },
@@ -400,7 +400,7 @@ export default {
       }
     },
     setAccessRole(value) {
-      if (value.itemName === 'addORedit') {
+      if (value.itemName === 'all') {
         this.accessLevel.cu_role = value.status;
       }
     },

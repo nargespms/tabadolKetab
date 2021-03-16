@@ -101,6 +101,9 @@
             <v-btn color="success" class="mr-4 px-16" @click="addInvoice">
               {{ $t('register') }}
             </v-btn>
+            <v-btn color="error" class="mr-4 px-16" @click="clearInvoice">
+              {{ $t('resetForm') }}
+            </v-btn>
           </div>
         </v-form>
       </v-card>
@@ -114,7 +117,7 @@
     <notifMessage
       v-if="errorEnable"
       :msg="errorMsg"
-      @hideNotif="hideNotif"
+      @hideNotif="hideError"
       :type="'error'"
     />
   </v-row>
@@ -181,10 +184,16 @@ export default {
         .then(res => {
           if (res.status === 200) {
             console.log(res);
-            this.invoiceItems.push(res.data);
-            this.booksId.push(res.data.id);
-            console.log(this.booksId);
-            this.reset();
+            // check if book is not repeated then push book
+            const foundBook = this.booksId.indexOf(res.data.id);
+            if (foundBook === -1) {
+              this.booksId.push(res.data.id);
+              this.invoiceItems.push(res.data);
+              this.reset();
+            } else {
+              this.errorEnable = true;
+              this.errorMsg = 'repeatedItem';
+            }
           }
         })
         .catch(e => {
@@ -211,9 +220,16 @@ export default {
     reset() {
       this.$refs.form.reset();
     },
+    clearInvoice() {
+      this.$refs.form.reset();
+      this.invoiceItems = [];
+    },
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
+    },
+    hideError() {
+      this.errorEnable = false;
     },
     setDeliveryMethod(value) {
       this.delivery = value;

@@ -24,13 +24,13 @@
     </router-link>
     <div class="d-flex flex-column align-center">
       <router-link :to="`/books/${book.id}`" class="black--text">
-        <p class="py-2 font-weight-medium" v-if="book.publisher">
-          {{ $t('publisher') }}:{{ book.publisher.title }}
+        <p class="py-2 font-weight-medium text-center">{{ book.name }}</p>
+        <p class="py-2 my-0 fn13" v-if="book.publisher">
+          {{ $t('publisher') }} : {{ book.publisher.title }}
         </p>
-        <p class="py-2 font-weight-medium" v-if="book.writer">
-          {{ $t('writer') }}:{{ book.writer.title }}
+        <p class="py-2 my-0 fn13" v-if="book.writer">
+          {{ $t('writer') }} : {{ book.writer.title }}
         </p>
-        <p class="py-2 font-weight-medium">{{ book.name }}</p>
       </router-link>
       <p
         v-if="book.discount > 0"
@@ -75,8 +75,10 @@ export default {
   methods: {
     addToBag(book) {
       if (this.$store.state.bookShop.userInfo === null) {
-        console.log('inji');
-        this.$emit('loginProblem');
+        this.$store.commit('bookShop/addToBag', book, {
+          module: 'bookShop',
+        });
+        // this.$emit('loginProblem');
       } else if (this.$store.state.bookShop.userInfo.role !== 'CLIENT') {
         this.$emit('staffBuy');
       } else if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {

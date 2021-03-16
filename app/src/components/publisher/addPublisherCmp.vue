@@ -83,6 +83,13 @@
             <v-btn color="error" class="mr-4" @click="reset"
               >{{ $t('resetForm') }}
             </v-btn>
+            <v-btn
+              v-if="mode === 'edit'"
+              color="error"
+              class="mr-4"
+              @click="close"
+              >{{ $t('close') }}
+            </v-btn>
           </div>
         </v-form>
       </v-card>
@@ -184,6 +191,9 @@ export default {
     },
     reset() {
       this.$refs.form.reset();
+    },
+    close() {
+      this.$emit('closeModal');
     },
     // notif hide
     hideNotif() {

@@ -6,7 +6,7 @@
     "icon": "fas fa-users-cog",
     "items": [
       {
-        "name": "addORedit",
+        "name": "all",
         "value": false
       }
     ]
@@ -177,7 +177,7 @@
     "icon": "fas fa-object-group",
     "items": [
       {
-        "name": "addORedit",
+        "name": "all",
         "value": false
       }
     ]

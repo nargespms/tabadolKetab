@@ -54,8 +54,12 @@
             {{ $t('save') }}
           </v-btn>
 
-          <v-btn color="error" class="mr-4" @click="reset"
-            >{{ $t('resetForm') }}
+          <v-btn
+            v-if="mode === 'edit'"
+            color="error"
+            class="mr-4"
+            @click="close"
+            >{{ $t('close') }}
           </v-btn>
         </div>
         <!-- </v-form> -->
@@ -153,6 +157,9 @@ export default {
       } else {
         this.valid = false;
       }
+    },
+    close() {
+      this.$emit('closeModal');
     },
     reset() {
       this.$refs.title.reset();

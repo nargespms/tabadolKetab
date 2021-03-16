@@ -287,6 +287,7 @@ export default {
     'آیا می خواهید این کتاب ممنوعه را حذف نمایید',
   date: 'تاریخ',
   repeatedBook: 'عنوان کتاب تکراری است',
+  repeatedItem: ' کتاب تکراری است',
   // post form
   fullname: 'نام و نام خانوادگی',
   numbersOfBook: 'تعداد کتاب',
@@ -574,4 +575,6 @@ export default {
   invalidCode: 'کد نامعتبر میباشد',
   copy: 'کپی کردن',
   ORDER: 'سفارش',
+  all: 'همه',
+  close: 'بستن',
 };

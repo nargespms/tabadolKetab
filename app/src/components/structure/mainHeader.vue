@@ -4,47 +4,29 @@
       <v-app-bar
         app
         color="grey darken-4"
-        class="white--text justify-space-between navBar "
+        class="white--text justify-space-between navBar"
       >
         <div>
           <v-app-bar-nav-icon
-            v-if="
-              $route.name !== 'login' &&
-                $route.name !== 'signup' &&
-                $route.name !== 'admin-login' &&
-                $route.name !== 'staff-forgot' &&
-                $route.name !== 'forgot'
-            "
+            v-if="$store.state.bookShop.loggedIn"
             class="white--text "
             @click="changeDrawer"
           ></v-app-bar-nav-icon>
 
-          <span class="red--text text--darken-4"
+          <span class="red--text text--darken-4 pa-3"
             >{{ $t('changing') }} &nbsp;
           </span>
         </div>
 
-        <div
-          class=" pl-6 enterPannel"
-          @click="enterPannel"
-          v-if="
-            $route.name === 'login' ||
-              $route.name === 'signup' ||
-              $route.name === 'admin-login' ||
-              $route.name === 'staff-forgot' ||
-              $route.name === 'forgot'
-          "
-        >
-          <v-icon color="white">mdi-account-key</v-icon>
-          <span class="white--text">
-            {{ $t('enter') }}
-          </span>
-        </div>
-        <div class="pl-6 enterPannel d-flex" v-else>
+        <div class="pl-6 enterPannel d-flex">
           <div
             class="pl-3 shoppingBasket"
             @click="shoppingBag"
-            v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
+            v-if="
+              !$store.state.bookShop.loggedIn ||
+                ($store.state.bookShop.loggedIn &&
+                  $store.state.bookShop.userInfo.role === 'CLIENT')
+            "
           >
             <v-badge
               v-if="bagLength"
@@ -63,24 +45,28 @@
               {{ $t('shoppingBasket') }}
             </span>
           </div>
-          <div @click="exitPannel" class="pr-4">
+
+          <div
+            @click="exitPannel"
+            class="pr-4"
+            v-if="$store.state.bookShop.loggedIn"
+          >
             <v-icon color="white">mdi-exit-to-app</v-icon>
             <span class="white--text">
               {{ $t('exit') }}
             </span>
           </div>
+          <div class="pr-6 enterPannel" @click="enterPannel" v-else>
+            <v-icon color="white">mdi-account-key</v-icon>
+            <span class="white--text">
+              {{ $t('enter') }}
+            </span>
+          </div>
         </div>
       </v-app-bar>
     </div>
-
     <mainRightMenu
-      v-if="
-        $route.name !== 'login' &&
-          $route.name !== 'signup' &&
-          $route.name !== 'admin-login' &&
-          $route.name !== 'staff-forgot' &&
-          $route.name !== 'forgot'
-      "
+      v-if="this.$store.state.bookShop.loggedIn"
       :drawer="drawer"
       :state="drawer"
       @changeState="changeState"

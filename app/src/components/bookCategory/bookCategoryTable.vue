@@ -13,8 +13,6 @@
       hide-default-footer
       :mobile-breakpoint="100"
     >
-      <!-- @page-count="options.page = $event" -->
-      <!-- :page.sync="options.page" -->
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
           <v-tooltip bottom>
@@ -102,6 +100,7 @@
         :mode="'edit'"
         :data="edittingItem"
         @savedSuccessfully="editBookSuccess"
+        @closeModal="closeModal"
       />
     </v-dialog>
     <notifMessage
@@ -201,6 +200,9 @@ export default {
       this.enableEdit = false;
       this.successNotif = true;
       this.edittingItem = {};
+    },
+    closeModal() {
+      this.enableEdit = false;
     },
     // add
     addBookCategory() {

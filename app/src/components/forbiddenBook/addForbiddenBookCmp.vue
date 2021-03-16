@@ -1,8 +1,5 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <span class="fn-25">
-      🧑‍💻
-    </span>
     <v-col cols="12" sm="6" md="8">
       <v-card class="pa-4">
         <v-card-actions class="teal">
@@ -66,6 +63,13 @@
 
             <v-btn color="error" class="mr-4" @click="reset"
               >{{ $t('resetForm') }}
+            </v-btn>
+            <v-btn
+              v-if="mode === 'edit'"
+              color="error"
+              class="mr-4"
+              @click="close"
+              >{{ $t('close') }}
             </v-btn>
           </div>
         </v-form>
@@ -174,6 +178,9 @@ export default {
     // reset form
     reset() {
       this.$refs.form.reset();
+    },
+    close() {
+      this.$emit('closeModal');
     },
     // notif hide
     hideNotif() {

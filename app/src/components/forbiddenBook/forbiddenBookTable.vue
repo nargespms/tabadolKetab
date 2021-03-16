@@ -120,6 +120,7 @@
         :mode="'edit'"
         :editData="edittingItem"
         @reloadTable="editSubmit"
+        @closeModal="closeModal"
       />
     </v-dialog>
     <v-dialog v-model="enableDelete" max-width="500px">
@@ -227,6 +228,9 @@ export default {
     editRecord(item) {
       this.enableEdit = true;
       this.edittingItem = item;
+    },
+    closeModal() {
+      this.enableEdit = false;
     },
     // sort funcs
     sort() {
