@@ -577,4 +577,5 @@ export default {
   ORDER: 'سفارش',
   all: 'همه',
   close: 'بستن',
+  bagIsEmpty: 'سبد خرید  خالی است',
 };

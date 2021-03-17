@@ -12,8 +12,13 @@
               {{ $t(item.text) }}
             </span>
           </v-col>
-          <v-col cols="12" lg="9"
-            ><span>
+          <v-col cols="12" lg="9">
+            <span v-if="item.text === 'mobile'" class="float-right d-block">
+              <span class="numberDir">
+                {{ $t(item.value) }}
+              </span>
+            </span>
+            <span v-else>
               {{ $t(item.value) }}
             </span>
           </v-col>

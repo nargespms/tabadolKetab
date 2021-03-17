@@ -134,9 +134,9 @@
                   @change="priceRange"
                   persistent-hint
                   :hint="
-                    `${filter.minPrice}${this.$t('rial')}-${
-                      filter.maxPrice
-                    }${this.$t('rial')}`
+                    `${moneyFormat(filter.minPrice)}${this.$t(
+                      'rial'
+                    )}-${moneyFormat(filter.maxPrice)}${this.$t('rial')}`
                   "
                 ></v-range-slider>
               </v-col>
@@ -163,6 +163,7 @@
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
 import authorAutocomplete from '../author/authorAutocomplete.vue';
 import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'bookSearchForm',
@@ -171,17 +172,18 @@ export default {
     authorAutocomplete,
     publisherAutocomplete,
   },
+  mixins: [moneyFormat],
   data() {
     return {
       valid: true,
       show: true,
       filter: {
         minPrice: 10000,
-        maxPrice: 4000000,
+        maxPrice: 9000000,
       },
       min: 10000,
-      max: 4000000,
-      range: [10000, 4000000],
+      max: 9000000,
+      range: [10000, 9000000],
     };
   },
   methods: {

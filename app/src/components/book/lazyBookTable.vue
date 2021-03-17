@@ -84,7 +84,7 @@
             {{ item.seller.firstName }}
             {{ item.seller.lastName }}
           </td>
-          <td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon @click="printBarCode(item)" v-bind="attrs" v-on="on"
@@ -96,24 +96,6 @@
           </td>
           <td>
             <div>
-              <v-tooltip
-                bottom
-                v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    medium
-                    class="ma-2"
-                    v-bind="attrs"
-                    @click="addToBag(item)"
-                    v-on="on"
-                    :disabled="item.status !== 'CONFIRMED'"
-                  >
-                    fas fa-shopping-cart
-                  </v-icon>
-                </template>
-                {{ $t('buy') }}
-              </v-tooltip>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
@@ -141,7 +123,7 @@
                       ($store.state.bookShop.userInfo.role === 'CLIENT' &&
                         item.status !== 'CLIENTREGISTER') ||
                         ($store.state.bookShop.userInfo.role !== 'CLIENT' &&
-                          item.status !== 'CONFIRMED')
+                          item.status === 'CONFIRMED')
                     "
                   >
                     mdi-pencil
@@ -158,6 +140,12 @@
                     @click="deleteRecord(item)"
                     v-on="on"
                     v-bind="attrs"
+                    :disabled="
+                      ($store.state.bookShop.userInfo.role === 'CLIENT' &&
+                        item.status !== 'CLIENTREGISTER') ||
+                        ($store.state.bookShop.userInfo.role !== 'CLIENT' &&
+                          item.status === 'CONFIRMED')
+                    "
                   >
                     mdi-delete
                   </v-icon>
@@ -265,11 +253,6 @@ export default {
     };
   },
   methods: {
-    addToBag(book) {
-      this.$store.commit('bookShop/addToBag', book, {
-        module: 'bookShop',
-      });
-    },
     addRequestedBook() {
       this.$router.push({
         name: 'addBook',

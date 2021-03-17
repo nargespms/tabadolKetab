@@ -177,13 +177,7 @@ export default {
           filterName: 'confirmDate',
           divider: true,
         },
-        {
-          text: 'barcode',
-          value: 'barcode',
-          align: 'center',
-          filterable: false,
-          divider: true,
-        },
+
         {
           text: 'operation',
           value: 'operation',

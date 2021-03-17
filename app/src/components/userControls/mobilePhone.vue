@@ -60,9 +60,7 @@ export default {
   },
   methods: {
     checkTel() {
-      console.log('InCheckTel');
       if (this.$refs.phoneInput.validate()) {
-        console.log('validate');
         const number = phoneUtil.parseAndKeepRawInput(this.mobilePhone, 'IR');
         const completeNum = phoneUtil.format(number, PNF.E164);
         this.valid = phoneUtil.isValidNumber(phoneUtil.parse(completeNum));
@@ -86,4 +84,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.ltr {
+  direction: ltr;
+}
+</style>

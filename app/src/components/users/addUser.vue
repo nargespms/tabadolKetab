@@ -230,7 +230,13 @@
             </v-row>
 
             <passwords v-if="mode !== 'edit'" @setPass="setPass" />
-            <v-row v-if="mode === 'edit'">
+            <v-row
+              v-if="
+                mode === 'edit' &&
+                  this.$route.params.userId !==
+                    this.$store.state.bookShop.userInfo.id
+              "
+            >
               <v-col cols="12" md="6">
                 <v-checkbox
                   v-model="register.active"

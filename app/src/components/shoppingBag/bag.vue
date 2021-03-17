@@ -141,7 +141,6 @@ export default {
     setAddress(value) {
       this.selectedAddress = value.address;
       this.bag.addressId = value.id;
-      console.log(value);
     },
     deleteItem(item) {
       this.$store.commit('bookShop/removeFromBag', item, {
@@ -170,7 +169,11 @@ export default {
         this.loginProblem = true;
       }
 
-      if (this.$refs.form.validate() && !this.loginProblem) {
+      if (
+        this.$refs.form.validate() &&
+        !this.loginProblem &&
+        this.bag.booksId.length > 0
+      ) {
         this.$axios
           .post('/v1/api/tabaadol-e-ketaab/order', { ...this.bag, type: 'BUY' })
           .then(res => {
@@ -199,6 +202,10 @@ export default {
         this.loginMsgEnable = true;
         this.loginTitle = 'registerOrLogin';
         this.loginMsg = 'youShouldregisterOrloginFirst';
+      } else if (this.bag.booksId.length <= 0) {
+        this.orderLoading = false;
+        this.errorEnable = true;
+        this.errorMsg = 'bagIsEmpty';
       } else {
         this.orderLoading = false;
         this.errorEnable = true;

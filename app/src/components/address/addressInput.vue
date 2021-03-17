@@ -12,7 +12,7 @@
       ></v-text-field>
       <v-text-field
         v-model="localData.zipCode"
-        :rules="requireRule"
+        :rules="postalCodeRule"
         :label="$t('postalCode')"
         v-mask="'############'"
         :hint="`${$t('numbersOnly')}`"
@@ -61,6 +61,10 @@ export default {
       error: false,
       valid: true,
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
+      postalCodeRule: [
+        v => !!v || `${this.$t('thisFieldIsRequired')}`,
+        v => (v && v.length >= 10) || `${this.$t('minCharaters10')}`,
+      ],
       localData: this.mode === 'edit' ? this.data : {},
     };
   },
