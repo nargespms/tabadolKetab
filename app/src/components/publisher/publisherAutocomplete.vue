@@ -20,7 +20,6 @@
       <template v-slot:no-data>
         <v-list-item>
           <v-list-item-title>
-            {{ $t('noDataText') }}
             (حداقل یک حرف را وارد نمایید)
           </v-list-item-title>
         </v-list-item>

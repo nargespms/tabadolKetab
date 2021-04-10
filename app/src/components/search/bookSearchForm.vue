@@ -188,7 +188,12 @@ export default {
   },
   methods: {
     getBookCat(value) {
-      this.filter.categoryId = value;
+      if (value.length > 0) {
+        this.filter.categoryId = value;
+      } else {
+        delete this.filter.categoryId;
+        this.$emit('searchBook', this.filter);
+      }
     },
     priceRange() {
       this.filter = { minPrice: this.range[0], maxPrice: this.range[1] };
@@ -208,44 +213,51 @@ export default {
       this.$refs.form.reset();
     },
     getWriter(value) {
-      if (value.length > 0) {
+      if (value && value.length > 0) {
         this.filter.writerId = value;
       } else {
         delete this.filter.writerId;
+        console.log(`filter:${this.filter}`);
+        this.$emit('searchBook', this.filter);
       }
     },
     getAuthor(value) {
-      if (value.length > 0) {
+      if (value && value.length > 0) {
         this.filter.authorId = value;
-      } else {
+      } else if (value === null) {
         delete this.filter.authorId;
+        this.$emit('searchBook', this.filter);
       }
     },
     getTranslator(value) {
-      if (value.length > 0) {
+      if (value && value.length > 0) {
         this.filter.translatorId = value;
-      } else {
+      } else if (value === null) {
         delete this.filter.translatorId;
+        this.$emit('searchBook', this.filter);
       }
     },
     getSearcher(value) {
-      if (value.length > 0) {
+      if (value && value.length > 0) {
         this.filter.searcherId = value;
       } else {
         delete this.filter.searcherId;
+        this.$emit('searchBook', this.filter);
       }
     },
     getPublisher(value) {
-      if (value.length > 0) {
+      if (value && value.length > 0) {
         this.filter.publisherId = value;
       } else {
         delete this.filter.publisherId;
+        this.$emit('searchBook', this.filter);
       }
     },
     clear(name) {
       console.log(name);
       this.filter[name] = '';
       delete this.filter.name;
+      this.$emit('searchBook', this.filter);
     },
   },
 };

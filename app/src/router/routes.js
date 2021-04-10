@@ -89,6 +89,7 @@ const routes = [
 
   {
     path: '/',
+    redirect: '/login',
     name: 'default',
     component: () => import('../layouts/default.vue'),
     children: [
@@ -584,7 +585,11 @@ const routes = [
         path: '403',
         component: () => import('../views/errors/E403.vue'),
       },
-      { path: '*', component: () => import('../views/errors/E404.vue') },
+      {
+        name: 'notFound',
+        path: '*',
+        component: () => import('../views/errors/E404.vue'),
+      },
     ],
   },
 ];

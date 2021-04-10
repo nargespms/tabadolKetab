@@ -269,6 +269,12 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="error"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
@@ -326,6 +332,8 @@ export default {
       gender: ['MALE', 'FEMALE', 'OTHER'],
       departments: ['INFO', 'IT', 'GENERAL', 'BILLING', 'BOOK'],
       isLoading: true,
+      error: false,
+      errorMsg: '',
     };
   },
   methods: {
@@ -377,6 +385,16 @@ export default {
             if (res.status === 200) {
               this.saveSuccess = true;
               this.$emit('reloadUserData');
+              // update data in menu
+              this.$store.commit('bookShop/userEnter', res.data.user, {
+                module: 'bookShop',
+              });
+            }
+          })
+          .catch(e => {
+            if (e.response.status === 403) {
+              this.error = true;
+              this.errorMsg = 'accessDenied';
             }
           });
       } else {
@@ -404,6 +422,9 @@ export default {
     // notif hide
     hideNotif() {
       this.saveSuccess = false;
+    },
+    hideError() {
+      this.error = false;
     },
   },
   watch: {

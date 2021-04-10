@@ -17,8 +17,9 @@ Router.beforeEach((to, from, next) => {
   if (to.matched.some(route => route.meta.requiresAuth)) {
     // this route requires authentication. See if the user is not authenticated.
     if (!store.state.bookShop.loggedIn) {
+      console.log('yani login hast');
       // User is not authenticated, so we lead him into login
-      next();
+      next({ name: 'login' });
     } else {
       // check permission level
       const data = JSON.parse(localStorage.getItem('vuex'));
@@ -67,6 +68,8 @@ Router.beforeEach((to, from, next) => {
       }
     }
   } else {
+    console.log(to);
+    console.log(from);
     next();
   }
 });
