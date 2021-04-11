@@ -57,6 +57,7 @@
 
       <template v-slot:[`item.createdById`]="{ item }">
         <router-link
+          v-if="item.createdBy"
           :to="`/users/profile/${item.createdBy.id}`"
           class="black--text"
         >

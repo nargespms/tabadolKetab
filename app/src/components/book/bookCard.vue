@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="pa-3 mb-6 min-330h"
+    class="pa-3 mb-6 min-360h"
     :style="
       $vuetify.breakpoint.lg
         ? 'width:80%;'
@@ -25,10 +25,10 @@
     <div class="d-flex flex-column align-center">
       <router-link :to="`/books/${book.id}`" class="black--text">
         <p class="py-2 font-weight-medium text-center">{{ book.name }}</p>
-        <p class="py-2 my-0 fn13" v-if="book.publisher">
+        <p class="py-2 my-0 fn13 text-center" v-if="book.publisher">
           {{ $t('publisher') }} : {{ book.publisher.title }}
         </p>
-        <p class="py-2 my-0 fn13" v-if="book.writer">
+        <p class="py-2 my-0 fn13 text-center" v-if="book.writer">
           {{ $t('writer') }} : {{ book.writer.title }}
         </p>
       </router-link>

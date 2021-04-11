@@ -130,7 +130,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.min-330h {
-  min-height: 330px;
+.min-360h {
+  min-height: 360px;
 }
 </style>
