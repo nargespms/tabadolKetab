@@ -23,7 +23,7 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && rm -r /var/lib/apt/lists/* && rm -rf /tmp && mkdir /tmp && chmod 777 /tmp && truncate -s 0 /var/log/*.log \
     && rm -rf /app/var/cache/npm
 
-COPY ./nginx/dev.conf /etc/nginx/nginx.conf
+COPY ./nginx/prod.conf /etc/nginx/nginx.conf
 COPY ./nginx/mime.types /etc/nginx/mime.types
 
 
