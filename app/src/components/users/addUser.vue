@@ -386,9 +386,11 @@ export default {
               this.saveSuccess = true;
               this.$emit('reloadUserData');
               // update data in menu
-              this.$store.commit('bookShop/userEnter', res.data.user, {
-                module: 'bookShop',
-              });
+              if (this.$route.name === 'profile') {
+                this.$store.commit('bookShop/userEnter', res.data.user, {
+                  module: 'bookShop',
+                });
+              }
             }
           })
           .catch(e => {
