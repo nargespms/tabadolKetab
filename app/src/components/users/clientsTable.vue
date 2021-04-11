@@ -57,7 +57,9 @@
       </template>
 
       <template v-slot:[`item.createdAt`]="{ item }">
-        {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+        <span v-if="item.createdAt">
+          {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+        </span>
       </template>
 
       <template v-slot:[`item.mobile`]="{ item }">
