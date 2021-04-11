@@ -18,7 +18,7 @@
         :aspect-ratio="1"
         max-height="134"
         max-width="195"
-        class="grey lighten-2 ma-auto"
+        class="grey lighten-2 ma-auto bg-auto"
       >
       </v-img>
     </router-link>
@@ -43,13 +43,7 @@
       <p v-if="book.undergraduatePrice" class=" primary--text">
         {{ this.moneyFormat(book.undergraduatePrice) }} {{ $t('rial') }}
       </p>
-      <v-btn
-        color="blue lighten-1"
-        class="px-6"
-        absolute
-        bottom
-        @click="addToBag(book)"
-      >
+      <v-btn color="blue lighten-1" class="px-6" @click="addToBag(book)">
         <v-icon color="white">
           fas fa-shopping-cart
         </v-icon>
@@ -96,6 +90,6 @@ export default {
   filter: blur(1px);
 }
 .v-image__image--cover {
-  background-size: auto;
+  background-size: auto !important;
 }
 </style>

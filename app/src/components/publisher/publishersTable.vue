@@ -66,6 +66,7 @@
         <router-link
           :to="`/users/profile/${item.createdBy.id}`"
           class="black--text"
+          v-if="item.createdBy"
         >
           {{ item.createdBy.firstName }} &nbsp; {{ item.createdBy.lastName }}
         </router-link>

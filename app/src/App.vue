@@ -74,7 +74,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: initial;
+  font-family: inherit;
   font-weight: normal;
 }
 .v-application .headline {
@@ -107,7 +107,7 @@ a {
 }
 .v-btn,
 .v-tab {
-  letter-spacing: inherit !important;
+  letter-spacing: 0 !important;
 }
 .numberDir {
   direction: ltr;
