@@ -290,6 +290,7 @@ export default {
   },
   methods: {
     getData(props) {
+      console.log('clients');
       // const { page, limit } = props.options;
       // const { filter } = props;
       const {

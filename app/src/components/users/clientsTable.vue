@@ -112,7 +112,7 @@
       </template>
       <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
         <v-pagination
-          class="pa-3 float-left"
+          class="pa-3 flex-wrap d-flex"
           @input="changePage"
           :value="options.page"
           :length="props.pagination.pageCount"
@@ -234,6 +234,13 @@ export default {
       this.innerOptions = props.options;
       this.$emit('getData', props);
     },
+    changePage(page) {
+      console.log('fff');
+      this.$emit('getData', {
+        filter: this.filter,
+        options: { ...this.options, page },
+      });
+    },
     excelFile() {
       // getData as excel file with filtered included
       const pagination = this.options;
@@ -250,13 +257,6 @@ export default {
     //   window.open(routeData.href, '_blank');
     // },
   },
-  changePage(page) {
-    console.log('fff');
-    this.$emit('getData', {
-      filter: this.filter,
-      options: { ...this.options, page },
-    });
-  },
 };
 </script>
 
@@ -268,5 +268,9 @@ export default {
       border-right: thin solid rgba(0, 0, 0, 0.12);
     }
   }
+}
+.v-pagination {
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>

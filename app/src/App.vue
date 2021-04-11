@@ -117,4 +117,8 @@ a {
   position: fixed !important;
   left: 0 !important;
 }
+.v-pagination {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
 </style>

@@ -99,7 +99,7 @@
       </template>
       <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
         <v-pagination
-          class="pa-3 float-left"
+          class="pa-3 flex-wrap d-flex"
           @input="changePage"
           :value="options.page"
           :length="props.pagination.pageCount"

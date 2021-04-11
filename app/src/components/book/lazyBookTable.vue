@@ -97,7 +97,7 @@
             </v-tooltip>
           </td>
           <td>
-            <div>
+            <div class="flex">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
