@@ -139,6 +139,6 @@ export default {
   filter: blur(1px);
 }
 .v-image__image--cover {
-  background-size: auto;
+  background-size: auto !important;
 }
 </style>

@@ -55,7 +55,9 @@
             {{ item.name }}
           </td>
           <td>
-            {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+            <span v-if="item.createdAt">
+              {{ new Date(item.createdAt).toLocaleDateString('fa') }}
+            </span>
           </td>
           <td>
             {{ item.category.title }}
