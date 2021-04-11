@@ -175,7 +175,7 @@
             <v-btn
               :disabled="!valid"
               color="success"
-              class="mr-4 px-16"
+              class="mr-4 px-16 mt-3"
               @click="saveAccess"
             >
               {{ $t('save') }}

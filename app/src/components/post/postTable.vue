@@ -7,9 +7,9 @@
         @click="printData"
         >{{ $t('print') }}</v-btn
       > -->
-      <v-btn class="white--text" color="green" @click="excelFile">{{
+      <!-- <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
-      }}</v-btn>
+      }}</v-btn> -->
     </div>
     <v-data-table
       :headers="headers"
@@ -186,7 +186,7 @@ export default {
       default: () => ({
         descending: false,
         page: 1,
-        limit: 10,
+        limit: 20,
       }),
     },
     totalData: { type: Number },

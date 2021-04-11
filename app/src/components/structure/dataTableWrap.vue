@@ -280,7 +280,7 @@ export default {
       options: {
         page: 1,
         // sortBy: 'time',
-        limit: 10,
+        limit: 20,
       },
       // error
       errorEnable: false,

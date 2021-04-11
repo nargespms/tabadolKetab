@@ -189,6 +189,9 @@ export default {
               if (res.status === 200) {
                 this.saveSuccess = true;
                 this.reset();
+                this.$router.push({
+                  name: 'ticketsList',
+                });
               }
             });
         }

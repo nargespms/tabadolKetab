@@ -307,7 +307,8 @@ export default {
           badge: this.unreadTickets !== '0' ? this.unreadTickets : '',
           badgeColor: 'red',
           condition:
-            this.$store.state.bookShop.userInfo.role.cu_ticket === true,
+            this.$store.state.bookShop.userInfo.role.cu_ticket === true ||
+            this.$store.state.bookShop.userInfo.role === 'CLIENT',
           items: [
             {
               title: 'AddTicket',

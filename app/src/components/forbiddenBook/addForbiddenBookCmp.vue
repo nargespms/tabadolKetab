@@ -61,9 +61,6 @@
               {{ $t('save') }}
             </v-btn>
 
-            <v-btn color="error" class="mr-4" @click="reset"
-              >{{ $t('resetForm') }}
-            </v-btn>
             <v-btn
               v-if="mode === 'edit'"
               color="error"

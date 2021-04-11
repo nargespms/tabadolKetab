@@ -7,9 +7,9 @@
         @click="printData"
         >{{ $t('print') }}</v-btn
       > -->
-      <v-btn class="white--text" color="green" @click="excelFile">{{
+      <!-- <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
-      }}</v-btn>
+      }}</v-btn> -->
       <span class="pl-4">
         {{ $t('status') }} :
         <span v-for="s in status" :key="s.index"> {{ $t(s) }}, </span>

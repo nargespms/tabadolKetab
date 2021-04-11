@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="d-flex flex-row-reverse my-4">
-      <v-btn class="white--text" color="green" @click="excelFile">{{
+      <!-- <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
-      }}</v-btn>
+      }}</v-btn> -->
     </div>
     <v-toolbar color="teal " flat height="48">
       <span class="pr-4 font-weight-medium white--text">
@@ -88,7 +88,7 @@ export default {
       default: () => ({
         descending: false,
         page: 1,
-        limit: 10,
+        limit: 20,
       }),
     },
     totalData: { type: Number },

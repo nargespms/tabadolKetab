@@ -1,5 +1,5 @@
 <template>
-  <v-card class="relative" v-if="!isLoading">
+  <div class="relative" v-if="!isLoading">
     <v-list two-line class="relative">
       <v-radio-group
         :mandatory="true"
@@ -66,8 +66,11 @@
           </v-list-item>
         </template>
       </v-radio-group>
+
+      <!--  -->
       <v-list-item
-        class=" ma-0 br-t-g"
+        class="ma-0"
+        :class="addresses.length > 0 ? 'br-t-g' : ''"
         v-if="this.$store.state.bookShop.userInfo.role === 'CLIENT'"
       >
         <v-btn
@@ -86,6 +89,15 @@
         </v-btn>
       </v-list-item>
     </v-list>
+    <div
+      class="noAddress"
+      v-if="
+        (this.$store.state.bookShop.userInfo.role !== 'CLIENT') &
+          (addresses.length === 0)
+      "
+    >
+      {{ $t('Nodataavailable') }}
+    </div>
     <v-dialog v-model="enableDelete" max-width="500px">
       <promptDialog
         :title="'deleteAddress'"
@@ -95,7 +107,7 @@
         @reject="closeDelete"
       />
     </v-dialog>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -194,5 +206,12 @@ export default {
 }
 .relative {
   position: relative;
+}
+.noAddress {
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
 }
 </style>

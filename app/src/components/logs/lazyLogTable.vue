@@ -106,7 +106,7 @@ export default {
       default: () => ({
         descending: false,
         page: 1,
-        limit: 10,
+        limit: 20,
       }),
     },
   },

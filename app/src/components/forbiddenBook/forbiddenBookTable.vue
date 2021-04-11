@@ -7,9 +7,9 @@
         @click="printData"
         >{{ $t('print') }}</v-btn
       > -->
-      <v-btn class="white--text" color="green" @click="excelFile">{{
+      <!-- <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
-      }}</v-btn>
+      }}</v-btn> -->
     </div>
     <v-data-table
       :headers="headers"
@@ -231,6 +231,7 @@ export default {
     },
     closeModal() {
       this.enableEdit = false;
+      this.reloadTable();
     },
     // sort funcs
     sort() {

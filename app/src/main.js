@@ -33,7 +33,7 @@ Vue.use({
     Vue.prototype.$jsbarcode = JsBarcode;
   },
 });
-
+console.log(axiosInstance);
 Vue.config.productionTip = false;
 
 new Vue({

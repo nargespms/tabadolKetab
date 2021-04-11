@@ -7,9 +7,9 @@
         @click="printData"
         >{{ $t('print') }}</v-btn
       > -->
-      <v-btn class="white--text" color="green" @click="excelFile">{{
+      <!-- <v-btn class="white--text" color="green" @click="excelFile">{{
         $t('filteredFileDl')
-      }}</v-btn>
+      }}</v-btn> -->
       <v-btn
         class="ml-4 white--text"
         color="blue lighten-1"
@@ -194,7 +194,7 @@ export default {
       default: () => ({
         descending: false,
         page: 1,
-        limit: 10,
+        limit: 20,
       }),
     },
   },

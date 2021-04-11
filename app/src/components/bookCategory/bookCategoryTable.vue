@@ -68,12 +68,34 @@
       </template>
 
       <template v-slot:[`item.operation`]="{ item }">
-        <v-icon medium class="ml-3" @click="editRecord(item)">
-          mdi-pencil
-        </v-icon>
-        <v-icon medium color="grey darken-3" @click="deleteRecord(item)">
-          mdi-delete
-        </v-icon>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ml-3"
+              @click="editRecord(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+          <span>{{ $t('edit') }}</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              color="grey darken-3"
+              @click="deleteRecord(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          <span>{{ $t('delete') }}</span>
+        </v-tooltip>
       </template>
       <template v-if="totalData > 0" v-slot:[`footer`]="{ props }">
         <v-pagination

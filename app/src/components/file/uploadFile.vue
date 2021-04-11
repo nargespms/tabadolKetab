@@ -23,7 +23,7 @@ export default {
         const extension = name.slice(name.lastIndexOf('.') + 1);
         // Create a new tus upload
         const upload = new tus.Upload(file, {
-          endpoint: 'http://localhost/v1/api/tabaadol-e-ketaab/upload',
+          endpoint: `${process.env.BASE_URL}/v1/api/tabaadol-e-ketaab/upload`,
           retryDelays: [0, 3000, 5000, 10000, 20000],
           chunkSize: 1024 * 1024,
           metadata: {

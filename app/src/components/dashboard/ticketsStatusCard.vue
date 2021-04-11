@@ -33,8 +33,8 @@ export default {
     return {
       color: '#43A047',
       tickets: {
-        total: 150,
-        todayNumber: 10,
+        total: null,
+        todayNumber: null,
       },
     };
   },

@@ -49,7 +49,6 @@ export default {
   //  refresh token
   created() {
     if (this.$store.state.bookShop.loggedIn) {
-      console.log('inja nabayad biay');
       this.refreshToken();
       this.timer = setInterval(this.refreshToken, 3600000);
     }
@@ -75,7 +74,7 @@ input,
 optgroup,
 select,
 textarea {
-  font: initial;
+  font-family: initial;
   font-weight: normal;
 }
 .v-application .headline {
@@ -108,7 +107,7 @@ a {
 }
 .v-btn,
 .v-tab {
-  letter-spacing: inherit;
+  letter-spacing: inherit !important;
 }
 .numberDir {
   direction: ltr;

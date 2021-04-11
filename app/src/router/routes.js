@@ -1,5 +1,9 @@
 const routes = [
   {
+    path: '/',
+    redirect: '/login',
+  },
+  {
     path: '/print',
     name: 'printLayout',
     component: () => import('../layouts/printLayout'),
@@ -84,13 +88,16 @@ const routes = [
         name: 'printAuthors',
         component: () => import('../views/print.vue'),
       },
+      {
+        name: 'notFound',
+        path: '*',
+        component: () => import('../views/errors/E404.vue'),
+      },
     ],
   },
 
   {
     path: '/',
-    redirect: '/login',
-    name: 'default',
     component: () => import('../layouts/default.vue'),
     children: [
       {
