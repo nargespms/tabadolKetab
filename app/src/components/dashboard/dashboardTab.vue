@@ -1,28 +1,31 @@
 <template>
   <v-card>
     <v-tabs v-model="tab" background-color="teal" dark grow>
-      <v-tab v-for="item in items" :key="item.tab">
-        <v-icon class="pl-3">
-          {{ item.icon }}
-        </v-icon>
-        <span class="font-weight-bold">
-          {{ $t(item.tab) }}
-        </span>
-      </v-tab>
+      <template v-for="item in items">
+        <v-tab v-if="item.condition" :key="item.tab">
+          <v-icon class="pl-3">
+            {{ item.icon }}
+          </v-icon>
+          <span class="font-weight-bold">
+            {{ $t(item.tab) }}
+          </span>
+        </v-tab>
+      </template>
     </v-tabs>
-
     <v-tabs-items v-model="tab">
-      <v-tab-item v-for="item in items" :key="item.tab">
-        <v-card flat class="pa-4">
-          <usersStatusCards v-if="item.tab === 'users'" />
-          <ticketsStatusCard v-if="item.tab === 'tickets'" />
-          <discountsStatusCard v-if="item.tab === 'discounts'" />
-          <postsStatusCard v-if="item.tab === 'post'" />
-          <booksStatusCard v-if="item.tab === 'book'" />
-          <billingStatusCard v-if="item.tab === 'billing'" />
-          <financialReportWrap class="mt-8" v-if="item.tab === 'billing'" />
-        </v-card>
-      </v-tab-item>
+      <template v-for="item in items">
+        <v-tab-item v-if="item.condition" :key="item.tab">
+          <v-card flat class="pa-4">
+            <usersStatusCards v-if="item.tab === 'users'" />
+            <ticketsStatusCard v-if="item.tab === 'tickets'" />
+            <discountsStatusCard v-if="item.tab === 'discounts'" />
+            <postsStatusCard v-if="item.tab === 'post'" />
+            <booksStatusCard v-if="item.tab === 'book'" />
+            <billingStatusCard v-if="item.tab === 'billing'" />
+            <financialReportWrap class="mt-8" v-if="item.tab === 'billing'" />
+          </v-card>
+        </v-tab-item>
+      </template>
     </v-tabs-items>
   </v-card>
 </template>
@@ -51,23 +54,35 @@ export default {
     return {
       tab: null,
       items: [
-        { tab: 'users', icon: 'mdi-account' },
+        {
+          tab: 'users',
+          icon: 'mdi-account',
+          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
+        },
         {
           tab: 'tickets',
           icon: 'mdi-ticket-account',
+          condition: true,
         },
         {
           tab: 'discounts',
           icon: ' mdi-ticket-percent',
+          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
         },
-        { tab: 'post', content: 'Tab 4 Content', icon: 'fas fa-motorcycle' },
+        {
+          tab: 'post',
+          icon: 'fas fa-motorcycle',
+          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
+        },
         {
           tab: 'billing',
           icon: 'fas fa-file-invoice-dollar',
+          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
         },
         {
           tab: 'book',
           icon: 'mdi-book-open-variant',
+          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
         },
       ],
     };
