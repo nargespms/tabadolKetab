@@ -185,9 +185,6 @@ export default {
               if (this.mode === 'modal') {
                 this.$emit('closeModal');
               }
-              this.$router.push({
-                name: 'creditList',
-              });
               this.isLoading = false;
               this.saveSuccess = true;
               this.reset();
