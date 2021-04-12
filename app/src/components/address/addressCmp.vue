@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="ma-3">
     <v-toolbar
       color="teal "
       flat

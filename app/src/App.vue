@@ -97,7 +97,7 @@ a {
   font-size: 18px !important;
 }
 .fn12 {
-  font-size: 12px;
+  font-size: 12px !important;
 }
 .clear {
   overflow: auto;

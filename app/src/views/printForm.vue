@@ -20,6 +20,9 @@ import invoicePrintForm from '../components/invoices/invoicePrintForm.vue';
 
 export default {
   name: 'printForm',
+  metaInfo: {
+    title: 'پرینت',
+  },
   components: {
     postPrintForm,
     invoicePrintForm,

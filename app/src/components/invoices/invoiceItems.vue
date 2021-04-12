@@ -64,7 +64,7 @@
               {{ moneyFormat(item.discount) }}{{ $t('rial') }}
             </span>
             <span v-else>
-              <v-icon color="red">mdi-close</v-icon>
+              <v-icon color="red" class="fn12">mdi-close</v-icon>
               {{ $t('noDiscount') }}
             </span>
           </td>

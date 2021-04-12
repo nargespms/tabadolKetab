@@ -20,40 +20,50 @@
     </v-row>
     <v-row class="px-5">
       <v-col cols="12" md="6" class="pa-0">
-        <table class="generalTable ">
+        <table class="generalTable colaps">
           <tr>
-            <th class="text-right">{{ $t('booksPrice') }}</th>
-            <td>{{ invoice.booksPrice }}</td>
+            <th class="text-right minh-77">{{ $t('finalTotalBuy') }}</th>
+            <td class="minh-77">
+              {{ this.moneyFormat(invoice.finalTotal) }}{{ $t('rial') }}
+            </td>
           </tr>
           <tr>
-            <th class="text-right">{{ $t('cashier') }}</th>
-            <td>{{ invoice.cashier }}</td>
+            <th class="text-right minh-77">{{ $t('cashier') }}</th>
+            <td class="minh-77">
+              {{ invoice.staff.firstName }} {{ invoice.staff.lastName }}
+            </td>
           </tr>
           <tr>
-            <th class="text-right">{{ $t('remainedCredit') }}</th>
-            <td>{{ invoice.remainedCredit }}</td>
+            <th class="text-right minh-77">{{ $t('remainedCredit') }}</th>
+            <td class="minh-77">
+              {{ this.moneyFormat(invoice.credit) }} {{ $t('rial') }}
+            </td>
           </tr>
         </table>
       </v-col>
 
       <v-col cols="12" md="6" class="pa-0"
-        ><table class="generalTable ">
+        ><table class="generalTable colaps">
           <tr>
-            <th class="text-right">
+            <th class="text-right minh-77">
               {{ $t('booksPriceWithoutDiscount') }}
             </th>
-            <td>
-              {{ invoice.booksPriceWithoutDiscount }}
+            <td class="minh-77">
+              <span>
+                {{ this.moneyFormat(invoice.total) }}{{ $t('rial') }}
+              </span>
             </td>
           </tr>
           <tr>
-            <th class="text-right">{{ $t('clientName') }}</th>
-            <td>{{ invoice.clientName }}</td>
+            <th class="text-right minh-77">{{ $t('clientName') }}</th>
+            <td class="minh-77">
+              {{ invoice.client.firstName }} {{ invoice.client.lastName }}
+            </td>
           </tr>
           <tr>
-            <th class="text-right">{{ $t('issueDate') }}</th>
-            <td>
-              {{ new Date(invoice.issueDate).toLocaleDateString('fa') }}
+            <th class="text-right minh-77">{{ $t('issueDate') }}</th>
+            <td class="minh-77">
+              {{ new Date(invoice.createdAt).toLocaleDateString('fa') }}
             </td>
           </tr>
         </table>
@@ -68,6 +78,7 @@
 <script>
 import invoiceItems from './invoiceItems.vue';
 import tabadolInfo from '../structure/tabadolInfo.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'invoicePrintForm',
@@ -75,45 +86,33 @@ export default {
     invoiceItems,
     tabadolInfo,
   },
+  mixins: [moneyFormat],
   data() {
     return {
       invoiceItems: [],
       isLoading: true,
-      invoice: {
-        number: 1213456,
-        issueDate: '2020-11-24T20:30:00.000Z',
-        clientName: 'علی مشتری',
-        cashier: 'علی تبادلیان',
-        phone: '۰۹۱۲۶۷۸۹۳۴۵',
-        postalCode: '۱۴۷۵۲۳۶۸۶۳۴',
-        booksPriceWithoutDiscount: '125000 ریال',
-        remainedCredit: '20000 ریال',
-        booksPrice: '20000 ریال',
-        address: 'شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷',
-      },
+      invoice: {},
     };
   },
+  methods: {
+    getData() {
+      console.log(this.$route.params.invoiceId);
+      this.$axios
+        .get(
+          `/v1/api/tabaadol-e-ketaab/invoice/${this.$route.params.invoiceId}`
+        )
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res.data);
+            this.invoice = res.data;
+            this.invoiceItems = res.data.books;
+            this.isLoading = false;
+          }
+        });
+    },
+  },
   mounted() {
-    this.invoiceItems = [
-      {
-        name: 'ملت عشق',
-        barcode: '121314156',
-        mainPrice: '22000000',
-        priceWithDiscount: '1100000',
-      },
-      {
-        name: ' جین ایر',
-        barcode: '45678900',
-        mainPrice: '7900000',
-        priceWithDiscount: '560000',
-      },
-      {
-        name: ' دیوانه ای بالای بام ',
-        barcode: '678900342',
-        mainPrice: '20000',
-        priceWithDiscount: '15000',
-      },
-    ];
+    this.getData();
     this.isLoading = false;
   },
 };
@@ -124,5 +123,12 @@ export default {
   width: 8cm;
   margin: auto;
   font-size: 10px;
+}
+.minh-77 {
+  min-height: 77px;
+}
+.colaps {
+  /* display: inline-flex; */
+  border-collapse: initial;
 }
 </style>
