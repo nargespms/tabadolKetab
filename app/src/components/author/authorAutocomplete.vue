@@ -19,7 +19,7 @@
       <template v-slot:no-data>
         <v-list-item>
           <v-list-item-title>
-            (حداقل یک حرف را وارد نمایید)
+            (حداقل سه حرف را وارد نمایید)
           </v-list-item-title>
         </v-list-item>
       </template>
@@ -118,14 +118,24 @@ export default {
     search(val) {
       // Items have already been loaded
       if (this.items.length > 0) return;
-
-      this.isLoading = true;
-      this.$axios.get('/v1/api/tabaadol-e-ketaab/authors').then(res => {
-        if (res.status === 200) {
-          this.items = res.data.authors;
-          this.isLoading = false;
-        }
-      });
+      console.log(val);
+      if (val.length >= 3) {
+        this.isLoading = true;
+        this.$axios
+          .get('/v1/api/tabaadol-e-ketaab/authors', {
+            params: {
+              filter: {
+                title: val,
+              },
+            },
+          })
+          .then(res => {
+            if (res.status === 200) {
+              this.items = res.data.authors;
+              this.isLoading = false;
+            }
+          });
+      }
     },
     isRequire(newVal) {
       this.localRequire = newVal;
