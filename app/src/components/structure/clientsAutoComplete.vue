@@ -23,7 +23,7 @@
         <v-list-item>
           <v-list-item-title>
             {{ $t('noDataText') }}
-            (حداقل یک حرف را وارد نمایید)
+            (حداقل سه حرف را وارد نمایید)
           </v-list-item-title>
         </v-list-item>
       </template>
@@ -137,21 +137,22 @@ export default {
     search(val) {
       // Items have already been loaded
       if (this.items.length > 0) return;
-
-      this.isLoading = true;
-      this.$axios.get('/v1/api/tabaadol-e-ketaab/clients').then(res => {
-        console.log(res);
-        if (res.status === 200) {
-          this.items = res.data.clients.map(item => ({
-            id: item.id,
-            fullName: `${item.firstName} ${item.lastName}`,
-          }));
-          this.isLoading = false;
-          if (this.editDataId.length > 0) {
-            this.getClient();
+      if (val.length >= 3) {
+        this.isLoading = true;
+        this.$axios.get('/v1/api/tabaadol-e-ketaab/clients').then(res => {
+          console.log(res);
+          if (res.status === 200) {
+            this.items = res.data.clients.map(item => ({
+              id: item.id,
+              fullName: `${item.firstName} ${item.lastName}`,
+            }));
+            this.isLoading = false;
+            if (this.editDataId.length > 0) {
+              this.getClient();
+            }
           }
-        }
-      });
+        });
+      }
     },
 
     isRequired(newVal) {
