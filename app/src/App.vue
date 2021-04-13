@@ -52,6 +52,8 @@ export default {
       this.refreshToken();
       this.timer = setInterval(this.refreshToken, 3600000);
     }
+    console.log(process.env);
+    console.log(process.env.NODE_ENV);
   },
   beforeDestroy() {
     clearInterval(this.timer);

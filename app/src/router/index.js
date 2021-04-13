@@ -9,6 +9,7 @@ export const Router = new VueRouter({
   scrollBehavior: () => ({ x: 0, y: 0 }),
   routes,
   mode: 'history',
+  base: '/',
 });
 
 Router.beforeEach((to, from, next) => {
