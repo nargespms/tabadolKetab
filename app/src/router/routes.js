@@ -474,11 +474,11 @@ const routes = [
         path: '/shoppingBag',
         name: 'shoppingBag',
         component: () => import('../views/general/shoppingBag.vue'),
-        meta: {
-          requiresAuth: true,
-          access: 'CLIENT',
-          cRole: 'CLIENT',
-        },
+        // meta: {
+        //   requiresAuth: true,
+        //   access: 'CLIENT',
+        //   cRole: 'CLIENT',
+        // },
       },
       {
         path: '/tags',

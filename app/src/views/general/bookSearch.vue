@@ -25,7 +25,11 @@
               color="success"
               class="mr-4 px-8"
               @click="reqBook"
-              v-if="this.$store.state.bookShop.userInfo.role === 'CLIENT'"
+              v-if="
+                this.$store.state.bookShop.userInfo
+                  ? this.$store.state.bookShop.userInfo.role === 'CLIENT'
+                  : false
+              "
             >
               {{ $t('addRequestedBooks') }}
             </v-btn>
@@ -65,7 +69,7 @@ export default {
       });
     },
     searchBook(value) {
-      console.log(value);
+      // console.log(value);
       this.filter = value;
       this.$axios
         .get('/v1/api/tabaadol-e-ketaab/books', {

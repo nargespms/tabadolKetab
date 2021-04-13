@@ -68,7 +68,7 @@ export default {
   mixins: [moneyFormat],
   methods: {
     addToBag(book) {
-      if (this.$store.state.bookShop.userInfo === null) {
+      if (this.$store.state.bookShop.userInfo) {
         this.$store.commit('bookShop/addToBag', book, {
           module: 'bookShop',
         });

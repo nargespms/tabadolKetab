@@ -18,7 +18,8 @@ export const clearBag = state => {
   state.bag = [];
 };
 export const addToBag = (state, response) => {
-  const findingItem = state.bag.indexOf(response);
+  const findingItem = state.bag.findIndex(book => book.id === response.id);
+
   if (findingItem === -1) {
     state.bag.push(response);
   }
