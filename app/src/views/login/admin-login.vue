@@ -12,6 +12,9 @@ import signInCom from '../../components/signInCom/signInCom.vue';
 
 export default {
   name: 'admin-login',
+  metaInfo: {
+    title: 'ورود ',
+  },
   components: { signInCom },
   methods: {
     forgotPassword() {

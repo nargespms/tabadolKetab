@@ -15,6 +15,9 @@ import signInCom from '../../components/signInCom/signInCom.vue';
 
 export default {
   name: 'signIn',
+  metaInfo: {
+    title: 'ورود ',
+  },
   components: { signInCom },
   methods: {
     data() {
