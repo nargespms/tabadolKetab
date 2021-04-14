@@ -1,6 +1,14 @@
 <template>
   <div>
-    <profileCmp :data="userData" @reloadUserData="getData" @success="success" />
+    <v-overlay :value="isLoading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
+    <profileCmp
+      v-if="!isLoading"
+      :data="userData"
+      @reloadUserData="getData"
+      @success="success"
+    />
     <notifMessage
       v-if="saveSuccess"
       :msg="'operationSuccessfullyOcured'"
@@ -22,6 +30,7 @@ export default {
   components: { profileCmp, notifMessage },
   data() {
     return {
+      isLoading: true,
       endpoint: '',
       userData: {},
       saveSuccess: false,
@@ -33,6 +42,7 @@ export default {
         if (res.status === 200) {
           console.log(res.data);
           this.userData = res.data.user;
+          this.isLoading = false;
         }
       });
     },

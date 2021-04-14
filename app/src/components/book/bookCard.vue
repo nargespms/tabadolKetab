@@ -68,15 +68,18 @@ export default {
   mixins: [moneyFormat],
   methods: {
     addToBag(book) {
+      console.log(this.$store.state.bookShop.userInfo);
       if (
         this.$store.state.bookShop.userInfo ||
         this.$store.state.bookShop.userInfo === null
       ) {
+        console.log('ddddd');
         this.$store.commit('bookShop/addToBag', book, {
           module: 'bookShop',
         });
         // this.$emit('loginProblem');
       } else if (this.$store.state.bookShop.userInfo.role !== 'CLIENT') {
+        console.log('sdadas');
         this.$emit('staffBuy');
       } else if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
         this.$store.commit('bookShop/addToBag', book, {

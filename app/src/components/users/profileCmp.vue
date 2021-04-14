@@ -33,6 +33,7 @@
                 v-if="item.tab === 'personalInformation'"
                 :data="data"
               />
+
               <addUser
                 v-if="item.tab === 'edit'"
                 :mode="'edit'"
@@ -85,6 +86,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       valid: true,
       saveSuccess: false,
       tab: null,
