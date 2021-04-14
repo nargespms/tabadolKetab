@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import mainRightMenu from './mainRightMenu.vue';
 
 export default {
@@ -116,20 +115,11 @@ export default {
     exitPannel() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/log-out').then(res => {
         if (res.status === 204) {
-          if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
-            this.$router.push({
-              name: 'login',
-            });
-          } else {
-            this.$router.push({
-              name: 'admin-login',
-            });
-          }
+          this.setStore();
         }
       });
-      this.setStore();
     },
-    setStore: _.debounce(function b() {
+    setStore() {
       this.$store.commit('bookShop/userEnter', null, {
         module: 'bookShop',
       });
@@ -148,7 +138,13 @@ export default {
       this.$store.commit('bookShop/clearBag', {
         module: 'bookShop',
       });
-    }, 2000),
+      this.changeRoute();
+    },
+    changeRoute() {
+      this.$router.push({
+        name: 'login',
+      });
+    },
     getUnreadTickets() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/unreadTickets').then(res => {
         this.$store.commit('bookShop/unreadTicketCal', res.data.toString(), {
