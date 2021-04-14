@@ -16,13 +16,23 @@
             :to="`/users/profile/${$store.state.bookShop.userInfo.id}`"
           >
             <v-list-item-content>
-              <v-list-item-title class="fn18 pa-4">
+              <v-list-item-title class="fn18 my-5">
                 {{ $store.state.bookShop.userInfo.firstName }}
                 {{ $store.state.bookShop.userInfo.lastName }}
               </v-list-item-title>
-              <v-list-item-subtitle>{{
-                $store.state.bookShop.userInfo.email
-              }}</v-list-item-subtitle>
+              <v-list-item-subtitle>
+                <span
+                  class="my-2"
+                  v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
+                >
+                  {{ $t('ceditAmount') }} &nbsp;: &nbsp;{{ credit }} &nbsp;{{
+                    $t('rial')
+                  }}
+                </span>
+                <span class="my-2" v-else>
+                  {{ $store.state.bookShop.userInfo.email }}
+                </span>
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list-item>
@@ -130,8 +140,18 @@ export default {
       type: String,
     },
   },
+  methods: {
+    getCreditAmount() {
+      this.$axios.get(`/v1/api/tabaadol-e-ketaab/credit`).then(res => {
+        console.log(res.data);
+
+        this.credit = res.data;
+      });
+    },
+  },
   data() {
     return {
+      credit: 0,
       localDrawer: this.state,
       simpleItems: [
         {
@@ -574,6 +594,11 @@ export default {
     unreadMessages(newVal) {
       this.unreadMessages = newVal;
     },
+  },
+  mounted() {
+    if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
+      this.getCreditAmount();
+    }
   },
 };
 </script>
