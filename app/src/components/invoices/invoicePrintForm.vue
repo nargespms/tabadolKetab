@@ -20,7 +20,7 @@
     </v-row>
     <v-row class="px-5">
       <v-col cols="12" md="6" class="pa-0">
-        <table class="generalTable colaps">
+        <table class="generalTable colaps h184">
           <tr>
             <th class="text-right minh-77">{{ $t('finalTotalBuy') }}</th>
             <td class="minh-77">
@@ -30,7 +30,9 @@
           <tr>
             <th class="text-right minh-77">{{ $t('cashier') }}</th>
             <td class="minh-77">
-              {{ invoice.staff.firstName }} {{ invoice.staff.lastName }}
+              <span v-if="invoice.staff">
+                {{ invoice.staff.firstName }} {{ invoice.staff.lastName }}
+              </span>
             </td>
           </tr>
           <tr>
@@ -43,7 +45,7 @@
       </v-col>
 
       <v-col cols="12" md="6" class="pa-0"
-        ><table class="generalTable colaps">
+        ><table class="generalTable colaps h184">
           <tr>
             <th class="text-right minh-77">
               {{ $t('booksPriceWithoutDiscount') }}
@@ -130,5 +132,8 @@ export default {
 .colaps {
   /* display: inline-flex; */
   border-collapse: initial;
+}
+.h184 {
+  height: 184px;
 }
 </style>

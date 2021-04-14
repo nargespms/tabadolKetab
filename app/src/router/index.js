@@ -69,6 +69,14 @@ Router.beforeEach((to, from, next) => {
   } else {
     // console.log(to);
     // console.log(from);
-    next();
+    console.log(to);
+    if (
+      store.state.bookShop.loggedIn &&
+      to.matched.some(route => route.meta.withoutToken)
+    ) {
+      next({ name: '404' });
+    } else {
+      next();
+    }
   }
 });

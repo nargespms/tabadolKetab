@@ -104,35 +104,52 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: () => import('../views/dashboard.vue'),
-        // meta: {
-        //   requiresAuth: true,
-        //   roles: [{ r_report: true }],
-        // },
+        meta: {
+          requiresAuth: true,
+          access: 'BOTH',
+          cRole: 'CLIENT',
+          roles: [{ r_report: true }],
+        },
       },
       {
         path: '/signup',
         name: 'signup',
         component: () => import('../views/signUp.vue'),
+        meta: {
+          withoutToken: true,
+        },
       },
       {
         path: '/login',
         name: 'login',
         component: () => import('../views/login/signIn.vue'),
+        meta: {
+          withoutToken: true,
+        },
       },
       {
         path: '/forgot',
         name: 'forgot',
         component: () => import('../views/forgotPassword.vue'),
+        meta: {
+          withoutToken: true,
+        },
       },
       {
         path: '/staff-forgot',
         name: 'staff-forgot',
         component: () => import('../views/forgotPassword.vue'),
+        meta: {
+          withoutToken: true,
+        },
       },
       {
         path: '/admin-login',
         name: 'admin-login',
         component: () => import('../views/login/admin-login.vue'),
+        meta: {
+          withoutToken: true,
+        },
       },
       {
         path: '/users/adduser',
@@ -591,6 +608,11 @@ const routes = [
         name: 'accessDenied',
         path: '403',
         component: () => import('../views/errors/E403.vue'),
+      },
+      {
+        name: '404',
+        path: '404',
+        component: () => import('../views/errors/E404.vue'),
       },
       {
         name: 'notFound',
