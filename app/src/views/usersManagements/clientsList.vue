@@ -74,6 +74,13 @@ export default {
           divider: true,
         },
         {
+          text: 'creditAmount',
+          value: 'credit',
+          align: 'center',
+          filterable: false,
+          divider: true,
+        },
+        {
           text: 'createdAt',
           value: 'createdAt',
           align: 'center',

@@ -578,5 +578,5 @@ export default {
   all: 'همه',
   close: 'بستن',
   bagIsEmpty: 'سبد خرید  خالی است',
-  ceditAmount: 'اعتبار حساب',
+  creditAmount: 'اعتبار حساب',
 };

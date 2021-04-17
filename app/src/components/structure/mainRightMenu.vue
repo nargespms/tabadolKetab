@@ -25,7 +25,7 @@
                   class="my-2"
                   v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
                 >
-                  {{ $t('ceditAmount') }} &nbsp;: &nbsp;{{
+                  {{ $t('creditAmount') }} &nbsp;: &nbsp;{{
                     moneyFormat(credit)
                   }}
                   &nbsp;{{ $t('rial') }}

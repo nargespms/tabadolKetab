@@ -67,6 +67,9 @@
           {{ item.mobile }}
         </span>
       </template>
+      <template v-slot:[`item.credit`]="{ item }">
+        <span> {{ moneyFormat(item.credit) }} {{ $t('rial') }} </span>
+      </template>
 
       <template v-slot:[`item.active`]="{ item }">
         <span v-if="item.active">
@@ -143,10 +146,12 @@
 import promptDialog from '../structure/promptDialog.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'clientsTable',
   components: { promptDialog, notifMessage, tableHeaderCell },
+  mixins: [moneyFormat],
 
   props: {
     headers: {
