@@ -400,7 +400,10 @@ export default {
           active: false,
           badge: this.unreadBookRequest !== '0' ? this.unreadBookRequest : '',
           badgeColor: 'green',
-          condition: true,
+          condition:
+            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+            this.$store.state.bookShop.userInfo.role.r_requestedBook === true,
+
           items: [
             {
               title: 'addRequestedBooks',

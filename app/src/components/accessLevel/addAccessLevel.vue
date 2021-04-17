@@ -152,6 +152,18 @@
                 :data="this.mode === 'edit' ? this.permission.publishers : {}"
               />
             </v-col>
+            <v-col cols="12" lg="3">
+              <moduleAccessConfig
+                :mode="mode"
+                :module="modules.requestedBooks"
+                @setAccess="setAccessRequestedBook"
+                :data="
+                  this.mode === 'edit' ? this.permission.requestedBooks : {}
+                "
+              />
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col cols="12" lg="6">
               <moduleAccessConfig
                 :mode="mode"
@@ -160,8 +172,6 @@
                 :data="this.mode === 'edit' ? this.permission.invoices : {}"
               />
             </v-col>
-          </v-row>
-          <v-row>
             <v-col cols="12" lg="6">
               <moduleAccessConfig
                 :mode="mode"
@@ -339,6 +349,11 @@ export default {
     setAccessTransactions(value) {
       if (value.itemName === 'preview') {
         this.accessLevel.r_transaction = value.status;
+      }
+    },
+    setAccessRequestedBook(value) {
+      if (value.itemName === 'preview') {
+        this.accessLevel.r_requestedBook = value.status;
       }
     },
     setAccessCategory(value) {

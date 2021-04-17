@@ -170,6 +170,18 @@
       }
     ]
   },
+  "requestedBooks": {
+    "name": "requestedBooks",
+    "headerColor": "blue darken-2",
+    "bgColor": "#0288D1",
+    "icon": "mdi-book-open-page-variant",
+    "items": [
+      {
+        "name": "preview",
+        "value": false
+      }
+    ]
+  },
   "category": {
     "name": "category",
     "headerColor": "blue darken-2",
