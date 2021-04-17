@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row v-if="!isLoading" class="justify-center">
-      <v-col cols="12" lg="3">
+      <v-col cols="12" lg="4">
         <statusCard
           :lable="'allClientsNumber'"
           :number="users.clients"
@@ -9,7 +9,7 @@
           :link="'/users/clients'"
         />
       </v-col>
-      <v-col cols="12" lg="3">
+      <v-col cols="12" lg="4">
         <statusCard
           :lable="'staffsNumber'"
           :number="users.staffs"
@@ -17,7 +17,7 @@
           :link="'/users/staffs'"
         />
       </v-col>
-      <v-col cols="12" lg="3">
+      <v-col cols="12" lg="4">
         <statusCard
           :lable="'registeredClientTodayNumber'"
           :number="users.clientsReqister"
