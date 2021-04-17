@@ -579,4 +579,5 @@ export default {
   close: 'بستن',
   bagIsEmpty: 'سبد خرید  خالی است',
   creditAmount: 'اعتبار حساب',
+  emailORmobileORnationalIdisRepeated: 'ایمیل ، موبایل و یا کدملی تکراری است',
 };

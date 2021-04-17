@@ -369,6 +369,12 @@ export default {
               this.reset();
               this.$emit('closeModal');
             }
+          })
+          .catch(e => {
+            if (e.response.status === 409) {
+              this.error = true;
+              this.errorMsg = 'emailORmobileORnationalIdisRepeated';
+            }
           });
       } else if (this.$refs.form.validate() && this.mode === 'edit') {
         let endpoint = '';
@@ -397,6 +403,9 @@ export default {
             if (e.response.status === 403) {
               this.error = true;
               this.errorMsg = 'accessDenied';
+            } else if (e.response.status === 409) {
+              this.error = true;
+              this.errorMsg = 'emailORmobileORnationalIdisRepeated';
             }
           });
       } else {
