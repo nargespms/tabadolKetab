@@ -281,6 +281,7 @@ export default {
         page: 1,
         // sortBy: 'time',
         limit: 20,
+        itemsPerPage: 20,
       },
       // error
       errorEnable: false,
@@ -295,7 +296,7 @@ export default {
       // const { filter } = props;
       const {
         filter,
-        options: { page, limit },
+        options: { page, limit, itemsPerPage },
       } = props;
 
       this.$axios
@@ -303,6 +304,7 @@ export default {
           params: {
             page,
             limit,
+            itemsPerPage,
             filter,
           },
         })
@@ -310,7 +312,7 @@ export default {
           if (res.status === 200) {
             this.tableData = res.data.result.docs;
             this.totalData = res.data.result.totalDocs;
-            this.options = { ...this.options, page, limit };
+            this.options = { ...this.options, page, limit, itemsPerPage };
             // console.log(this.tableData);
             // console.log(this.totalData);
             this.loading = false;
