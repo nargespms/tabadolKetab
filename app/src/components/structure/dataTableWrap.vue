@@ -304,7 +304,6 @@ export default {
           params: {
             page,
             limit,
-            itemsPerPage,
             filter,
           },
         })
