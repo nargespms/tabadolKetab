@@ -13,7 +13,7 @@ COPY ./app /usr/src/app
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt install -y nodejs \
     && echo 'cache = "/tmp/npm"' > /root/.npmrc \
-    && npm install \
+    && npm install --production \
     && npm update -g \
     && apt update -y \
     && apt upgrade -y \
