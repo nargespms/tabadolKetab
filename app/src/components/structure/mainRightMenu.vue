@@ -178,7 +178,8 @@ export default {
           active: false,
           condition:
             this.$store.state.bookShop.userInfo.role !== 'CLIENT' &&
-            this.$store.state.bookShop.userInfo.role.cu_client === true,
+            (this.$store.state.bookShop.userInfo.role.cu_client === true ||
+              this.$store.state.bookShop.userInfo.role.cu_staff === true),
           items: [
             {
               title: 'AddUser',
@@ -379,7 +380,9 @@ export default {
           action: 'fas fa-cart-arrow-down',
           title: 'orders',
           active: false,
-          condition: true,
+          condition:
+            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+            this.$store.state.bookShop.userInfo.role.r_order === true,
           items: [
             {
               title: 'ordersList',
@@ -438,7 +441,9 @@ export default {
           action: 'fas fa-motorcycle',
           title: 'post',
           active: false,
-          condition: true,
+          condition:
+            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+            this.$store.state.bookShop.userInfo.role.r_post === true,
           items: [
             {
               title: 'postRequest',
