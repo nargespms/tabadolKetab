@@ -25,9 +25,10 @@
                   class="my-2"
                   v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
                 >
-                  {{ $t('ceditAmount') }} &nbsp;: &nbsp;{{ credit }} &nbsp;{{
-                    $t('rial')
+                  {{ $t('ceditAmount') }} &nbsp;: &nbsp;{{
+                    moneyFormat(credit)
                   }}
+                  &nbsp;{{ $t('rial') }}
                 </span>
                 <span class="my-2" v-else>
                   {{ $store.state.bookShop.userInfo.email }}
@@ -124,8 +125,11 @@
 </template>
 
 <script>
+import moneyFormat from '../../mixins/moneyFormat.js';
+
 export default {
   name: 'mainRightMenu',
+  mixins: [moneyFormat],
   props: {
     state: {
       type: Boolean,
@@ -143,9 +147,9 @@ export default {
   methods: {
     getCreditAmount() {
       this.$axios.get(`/v1/api/tabaadol-e-ketaab/credit`).then(res => {
-        console.log(res.data);
-
-        this.credit = res.data;
+        if (res.status === 200) {
+          this.credit = res.data.credit;
+        }
       });
     },
   },
@@ -521,7 +525,8 @@ export default {
           title: 'trades',
           active: false,
           condition:
-            this.$store.state.bookShop.userInfo.role.r_invoices === true,
+            this.$store.state.bookShop.userInfo.role.r_invoices === true ||
+            this.$store.state.bookShop.userInfo.role === 'CLIENT',
           items: [
             {
               title: 'tradesList',

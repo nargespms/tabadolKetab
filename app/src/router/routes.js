@@ -471,6 +471,8 @@ const routes = [
         meta: {
           requiresAuth: true,
           roles: [{ c_invoice: true }, { r_invoice: true }],
+          access: 'BOTH',
+          cRole: 'CLIENT',
         },
       },
       {
