@@ -580,4 +580,5 @@ export default {
   bagIsEmpty: 'سبد خرید  خالی است',
   creditAmount: 'اعتبار حساب',
   emailORmobileORnationalIdisRepeated: 'ایمیل ، موبایل و یا کدملی تکراری است',
+  allowDiscount: ' شامل تخفیف',
 };

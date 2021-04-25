@@ -352,6 +352,15 @@
               </div>
             </v-col>
           </v-row>
+          <v-row v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'">
+            <v-col>
+              <v-checkbox
+                v-model="book.allowDiscount"
+                :label="$t('allowDiscount')"
+                :key="allowKey"
+              ></v-checkbox>
+            </v-col>
+          </v-row>
           <v-row>
             <v-col class="pa-0 pt-0">
               <uploadFile @setUploadedId="setUploadedId" />
@@ -424,13 +433,16 @@ export default {
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       langs: ['fa', 'en', 'ar'],
       bookStatus: ['CLIENTREGISTER', 'RECEIVED', 'CONFIRMED', 'SOLD'],
-      book: {},
+      book: {
+        allowDiscount: true,
+      },
       // bookCategory vlidate
       bookCatVallidate: true,
       // error
       errorEnable: false,
       errorMsg: '',
       isLoading: true,
+      allowKey: 0,
     };
   },
   methods: {
@@ -532,6 +544,8 @@ export default {
     reset() {
       this.$refs.form.reset();
       this.bookCatVallidate = true;
+      this.book.allowDiscount = true;
+      this.allowKey += 1;
     },
     // notif hide
     hideNotif() {
@@ -550,6 +564,11 @@ export default {
             this.isLoading = false;
           }
         });
+    },
+  },
+  watch: {
+    book(newVal) {
+      this.book.allowDiscount = newVal.allowDiscount;
     },
   },
   mounted() {
