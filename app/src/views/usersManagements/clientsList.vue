@@ -58,6 +58,13 @@ export default {
           divider: true,
         },
         {
+          text: 'landLane',
+          value: 'landLane',
+          align: 'left',
+          filterable: false,
+          divider: true,
+        },
+        {
           text: 'nationalId',
           value: 'nationalId',
           align: 'center',

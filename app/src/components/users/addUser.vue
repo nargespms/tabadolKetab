@@ -216,7 +216,16 @@
             </v-row>
 
             <v-row>
-              <v-col cols="12" md="6" class="pa-0 ">
+              <v-col cols="12" md="6" class="pa-0">
+                <v-text-field
+                  v-model="register.landLane"
+                  :label="$t('landLane')"
+                  v-mask="'###########'"
+                  outlined
+                >
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
                 <v-textarea
                   outlined
                   required

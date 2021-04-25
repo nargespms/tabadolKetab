@@ -109,6 +109,7 @@
         <v-row v-if="order.type !== 'SELL'">
           <v-col cols="12" md="7">
             <payMethod
+              v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
               :data="clientData"
               @setMethod="setMethod"
               :initValue="paidWay"
