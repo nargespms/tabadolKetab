@@ -28,6 +28,10 @@
                     <v-icon>mdi-mailbox</v-icon>
                     {{ item.zipCode }}
                   </v-list-item-subtitle>
+                  <v-list-item-subtitle v-if="item.phone" class="pa-2">
+                    <v-icon>mdi-phone-classic</v-icon>
+                    {{ item.phone }}
+                  </v-list-item-subtitle>
                 </v-col>
                 <v-col
                   cols="12"

@@ -21,6 +21,14 @@
         error-count="1"
         :height="32"
       ></v-text-field>
+      <v-text-field
+        v-model="localData.phone"
+        :label="$t('landLane')"
+        v-mask="'############'"
+        :hint="`${$t('numbersOnly')}`"
+        outlined
+        :height="32"
+      ></v-text-field>
       <div v-if="error">
         <p class=" error--text">
           <v-icon color="error">mdi-alert-octagon</v-icon>
