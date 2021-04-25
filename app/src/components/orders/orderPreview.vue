@@ -24,6 +24,17 @@
                 </span>
               </p>
               <p>
+                <span class="font-weight-black"> {{ $t('status') }} : </span>
+                <span v-if="order.invoice.paid">
+                  {{ $t('paid') }}
+                  <v-icon color="success">mdi-check</v-icon>
+                </span>
+                <span v-if="!order.invoice.paid">
+                  {{ $t('unpaid') }}
+                  <v-icon color="error">mdi-close</v-icon>
+                </span>
+              </p>
+              <p>
                 <span class="font-weight-black"> {{ $t('address') }} : </span>
                 <span v-if="order.address">
                   {{ order.address.address }}
@@ -98,7 +109,6 @@
         <v-row v-if="order.type !== 'SELL'">
           <v-col cols="12" md="7">
             <payMethod
-              v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
               :data="clientData"
               @setMethod="setMethod"
               :initValue="paidWay"

@@ -12,10 +12,30 @@
       </v-col>
     </v-row>
     <div class="justify-center d-flex">
-      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="px-5"
+        @click="validate"
+        width="200"
+      >
         {{ $t('enter') }}
       </v-btn>
     </div>
+    <v-row>
+      <v-col class="text-center my-3">
+        <router-link
+          v-if="$route.name === 'login'"
+          class="primary--text "
+          :to="{ name: 'admin-login' }"
+        >
+          آیا کارمند هستید ؟ اینجا را کلیک کنید
+        </router-link>
+        <router-link v-else class="primary--text" :to="{ name: 'login' }">
+          آیا عضو مشتریان تبادل هستید ؟ اینجا را کلیک کنید
+        </router-link>
+      </v-col>
+    </v-row>
   </v-form>
 </template>
 

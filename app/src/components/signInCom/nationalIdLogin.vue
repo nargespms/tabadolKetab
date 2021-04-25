@@ -16,7 +16,7 @@
       </v-col>
     </v-row>
     <div class="justify-center d-flex">
-      <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
+      <v-btn :disabled="!valid" color="success" class="px-5" @click="validate">
         {{ $t('enter') }}
       </v-btn>
     </div>
