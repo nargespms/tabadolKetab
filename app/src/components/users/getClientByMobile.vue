@@ -28,19 +28,19 @@
         </v-btn>
       </div>
     </div>
-    <div v-if="client.firstName">
-      <div class="mt-2">
+    <v-row class="justify-center" v-if="client.firstName">
+      <v-col class="mt-2 text-center">
         <span class="font-weight-black fn13 "> {{ $t('fullname') }} : </span>
         <span>
           {{ client.firstName }}
           {{ client.lastName }}
         </span>
-      </div>
-      <div>
-        <span class="font-weight-black fn13"> {{ $t('creditAmount') }} : </span>
+        <span class="font-weight-black fn13 mr-7">
+          {{ $t('creditAmount') }} :
+        </span>
         <span>{{ this.moneyFormat(client.credit) }} {{ $t('rial') }}</span>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
     <v-dialog v-model="adduserModal" hide-overlay max-width="900px">
       <addUser :mode="'add'" @closeModal="closeModal" :colWidth="'12'" />
     </v-dialog>
