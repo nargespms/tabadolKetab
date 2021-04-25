@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="clientNumberWrap pa-3 d-flex align-center justify-space-between"
+      class="clientNumberWrap px-3 pt-3 d-flex align-center justify-space-between"
     >
       <div class="w250">
         <mobilePhone
@@ -29,11 +29,17 @@
       </div>
     </div>
     <div v-if="client.firstName">
-      <span class="font-weight-black"> {{ $t('fullname') }} : </span>
-      <span>
-        {{ client.firstName }}
-        {{ client.lastName }}
-      </span>
+      <div class="mt-2">
+        <span class="font-weight-black fn13 "> {{ $t('fullname') }} : </span>
+        <span>
+          {{ client.firstName }}
+          {{ client.lastName }}
+        </span>
+      </div>
+      <div>
+        <span class="font-weight-black fn13"> {{ $t('creditAmount') }} : </span>
+        <span>{{ this.moneyFormat(client.credit) }} {{ $t('rial') }}</span>
+      </div>
     </div>
     <v-dialog v-model="adduserModal" hide-overlay max-width="900px">
       <addUser :mode="'add'" @closeModal="closeModal" :colWidth="'12'" />
@@ -44,6 +50,7 @@
 <script>
 import mobilePhone from '../userControls/mobilePhone.vue';
 import AddUser from './addUser.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'getClientByMobile',
@@ -51,6 +58,8 @@ export default {
     mobilePhone,
     AddUser,
   },
+  mixins: [moneyFormat],
+
   data() {
     return {
       mobile: '',
