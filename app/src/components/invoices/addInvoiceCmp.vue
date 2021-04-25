@@ -254,6 +254,10 @@ export default {
                 path: `/ordersList/${res.data.id}`,
               });
             }
+          })
+          .catch(() => {
+            this.errorEnable = true;
+            this.errorMsg = `someThingWentWrong`;
           });
       }
       console.log(this.invoiceItems, this.invoice);

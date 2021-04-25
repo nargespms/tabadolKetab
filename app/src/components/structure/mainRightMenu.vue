@@ -350,6 +350,63 @@ export default {
           ],
         },
         {
+          action: 'mdi-cash-multiple',
+          title: 'billing',
+          active: false,
+          condition: true,
+          items: [
+            {
+              title: 'addInvoice',
+              link: '/addInvoice',
+              icon: 'fas fa-plus',
+              condition:
+                this.$store.state.bookShop.userInfo.role !== 'CLIENT' ||
+                this.$store.state.bookShop.userInfo.role.c_invoice === true,
+            },
+            {
+              title: 'invoicesList',
+              link: '/invoicesList',
+              icon: 'fas fa-file-invoice-dollar',
+              condition:
+                this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+                this.$store.state.bookShop.userInfo.role.c_invoice === true ||
+                this.$store.state.bookShop.userInfo.role.r_invoice === true,
+            },
+            {
+              title: 'ordersList',
+              link: '/ordersList',
+              icon: 'fas fa-cart-arrow-down',
+              condition:
+                this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+                this.$store.state.bookShop.userInfo.role.r_order === true,
+            },
+            {
+              title: 'increaseCredit',
+              link: '/increaseCredit',
+              icon: 'fas fa-plus',
+              condition:
+                this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+                this.$store.state.bookShop.userInfo.role.cu_credit === true,
+            },
+            {
+              title: 'transactionsList',
+              link: '/creditList',
+              icon: 'mdi-credit-card-plus',
+              condition:
+                this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+                this.$store.state.bookShop.userInfo.role.cu_credit === true,
+            },
+            {
+              title: 'tradesList',
+              link: '/tradesList',
+              icon: 'mdi-cash-multiple',
+              condition:
+                this.$store.state.bookShop.userInfo.role.r_invoices === true ||
+                this.$store.state.bookShop.userInfo.role === 'CLIENT',
+            },
+          ],
+        },
+        {
           action: 'mdi-ticket-percent',
           title: 'discounts',
           active: false,
@@ -376,24 +433,24 @@ export default {
             },
           ],
         },
-        {
-          action: 'fas fa-cart-arrow-down',
-          title: 'orders',
-          active: false,
-          condition:
-            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
-            this.$store.state.bookShop.userInfo.role.r_order === true,
-          items: [
-            {
-              title: 'ordersList',
-              link: '/ordersList',
-              icon: 'fa fa-table',
-              condition:
-                this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
-                this.$store.state.bookShop.userInfo.role.r_order === true,
-            },
-          ],
-        },
+        // {
+        //   action: 'fas fa-cart-arrow-down',
+        //   title: 'orders',
+        //   active: false,
+        //   condition:
+        //     this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+        //     this.$store.state.bookShop.userInfo.role.r_order === true,
+        //   items: [
+        //     {
+        //       title: 'ordersList',
+        //       link: '/ordersList',
+        //       icon: 'fa fa-table',
+        //       condition:
+        //         this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+        //         this.$store.state.bookShop.userInfo.role.r_order === true,
+        //     },
+        //   ],
+        // },
         {
           action: 'mdi-book-open-page-variant',
           title: 'requestedBooks',
@@ -483,67 +540,78 @@ export default {
         //   ],
         // },
 
-        {
-          action: 'mdi-credit-card-plus',
-          title: 'credits',
-          active: false,
-          condition:
-            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
-            this.$store.state.bookShop.userInfo.role.cu_credit === true,
-          items: [
-            {
-              title: 'increaseCredit',
-              link: '/increaseCredit',
-              icon: 'fas fa-plus',
-              condition: true,
-            },
-            {
-              title: 'transactionsList',
-              link: '/creditList',
-              icon: 'fas fa-table',
-              condition: true,
-            },
-          ],
-        },
-        {
-          action: 'fas fa-file-invoice-dollar',
-          title: 'invoices',
-          active: false,
-          condition:
-            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
-            this.$store.state.bookShop.userInfo.role.c_invoice === true ||
-            this.$store.state.bookShop.userInfo.role.r_invoice === true,
-          items: [
-            {
-              title: 'addInvoice',
-              link: '/addInvoice',
-              icon: 'fas fa-plus',
-              condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
-            },
-            {
-              title: 'invoicesList',
-              link: '/invoicesList',
-              icon: 'fas fa-table',
-              condition: true,
-            },
-          ],
-        },
-        {
-          action: 'mdi-cash-multiple',
-          title: 'trades',
-          active: false,
-          condition:
-            this.$store.state.bookShop.userInfo.role.r_invoices === true ||
-            this.$store.state.bookShop.userInfo.role === 'CLIENT',
-          items: [
-            {
-              title: 'tradesList',
-              link: '/tradesList',
-              icon: 'fas fa-table',
-              condition: true,
-            },
-          ],
-        },
+        // {
+        //   action: 'mdi-credit-card-plus',
+        //   title: 'credits',
+        //   active: false,
+        //   condition:
+        //     this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+        //     this.$store.state.bookShop.userInfo.role.cu_credit === true,
+        //   items: [
+        //     {
+        //       title: 'increaseCredit',
+        //       link: '/increaseCredit',
+        //       icon: 'fas fa-plus',
+        //       condition:
+        //         this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+        //         this.$store.state.bookShop.userInfo.role.cu_credit === true,
+        //     },
+        //     {
+        //       title: 'transactionsList',
+        //       link: '/creditList',
+        //       icon: 'fas fa-table',
+        //       condition:
+        //         this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+        //         this.$store.state.bookShop.userInfo.role.cu_credit === true,
+        //     },
+        //   ],
+        // },
+        // {
+        //   action: 'fas fa-file-invoice-dollar',
+        //   title: 'invoices',
+        //   active: false,
+        //   condition:
+        //     this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+        //     this.$store.state.bookShop.userInfo.role.c_invoice === true ||
+        //     this.$store.state.bookShop.userInfo.role.r_invoice === true,
+        //   items: [
+        //     {
+        //       title: 'addInvoice',
+        //       link: '/addInvoice',
+        //       icon: 'fas fa-plus',
+        //       condition:
+        //         this.$store.state.bookShop.userInfo.role !== 'CLIENT' ||
+        //         this.$store.state.bookShop.userInfo.role.c_invoice === true,
+        //     },
+        //     {
+        //       title: 'invoicesList',
+        //       link: '/invoicesList',
+        //       icon: 'fas fa-table',
+        //       condition:
+        //         this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+        //         this.$store.state.bookShop.userInfo.role.c_invoice === true ||
+        //         this.$store.state.bookShop.userInfo.role.r_invoice === true,
+        //     },
+        //   ],
+        // },
+        // {
+        //   action: 'mdi-cash-multiple',
+        //   title: 'trades',
+        //   active: false,
+        //   condition:
+        //     this.$store.state.bookShop.userInfo.role.r_invoices === true ||
+        //     this.$store.state.bookShop.userInfo.role === 'CLIENT',
+        //   items: [
+        //     {
+        //       title: 'tradesList',
+        //       link: '/tradesList',
+        //       icon: 'fas fa-table',
+        //       condition:
+        //         this.$store.state.bookShop.userInfo.role.r_invoices === true ||
+        //         this.$store.state.bookShop.userInfo.role === 'CLIENT',
+        //     },
+        //   ],
+        // },
 
         {
           action: 'fas fa-tags',

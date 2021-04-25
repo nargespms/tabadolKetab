@@ -52,6 +52,12 @@
           <td>
             {{ new Date(item.createdAt).toLocaleDateString('fa') }}
           </td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
+            <span v-if="item.client">
+              {{ item.client.firstName }}
+              {{ item.client.lastName }}
+            </span>
+          </td>
           <td>
             <span
               :class="item.total > 0 ? 'success--text' : 'error--text'"
@@ -65,6 +71,12 @@
               </span>
             </span>
           </td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
+            <span v-if="item.staff">
+              {{ item.staff.firstName }}
+              {{ item.staff.lastName }}
+            </span>
+          </td>
           <td>
             <span v-if="item.paymentId">
               {{ item.paymentId }}
@@ -75,12 +87,6 @@
           </td>
           <td>
             {{ item.description }}
-          </td>
-          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
-            <span v-if="item.client">
-              {{ item.client.firstName }}
-              {{ item.client.lastName }}
-            </span>
           </td>
         </tr>
       </tbody>

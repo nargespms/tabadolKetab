@@ -42,11 +42,28 @@ export default {
           divider: true,
         },
         {
+          text: 'client',
+          value: 'clientId',
+          filterable: true,
+          filterType: 'clientUsers',
+          align: 'center',
+          divider: true,
+        },
+        {
           text: 'price',
           value: 'total',
           align: 'center',
           filterable: true,
           filterType: 'text',
+          divider: true,
+        },
+        {
+          text: 'staff',
+          value: 'staffId',
+          filterable: true,
+          filterType: 'staffUsers',
+          filterName: 'staffId',
+          align: 'center',
           divider: true,
         },
         {
@@ -68,14 +85,6 @@ export default {
         {
           text: 'description',
           value: 'description',
-          align: 'center',
-          divider: true,
-        },
-        {
-          text: 'client',
-          value: 'clientId',
-          filterable: true,
-          filterType: 'clientUsers',
           align: 'center',
           divider: true,
         },
