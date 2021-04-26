@@ -82,6 +82,16 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <registeredBookTable
+      @reloadTable="getData"
+      @getData="getData"
+      v-if="this.module === 'registeredBooks'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
     <lazyMessagesTable
       @reloadTable="getData"
       @getData="getData"
@@ -223,6 +233,7 @@ import discountsTable from '../discount/discountsTable.vue';
 import lazyCouponTable from '../discount/lazyCouponTable.vue';
 import requestedBooksTable from '../requestedBook/requestedBooksTable.vue';
 import lazyBookTable from '../book/lazyBookTable.vue';
+import registeredBookTable from '../book/registeredBookTable.vue';
 import postTable from '../post/postTable.vue';
 import forbiddenBookTable from '../forbiddenBook/forbiddenBookTable.vue';
 import invoicesTable from '../invoices/invoicesTable.vue';
@@ -247,6 +258,7 @@ export default {
     lazyCouponTable,
     requestedBooksTable,
     lazyBookTable,
+    registeredBookTable,
     postTable,
     forbiddenBookTable,
     invoicesTable,

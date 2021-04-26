@@ -239,6 +239,20 @@ export default {
           ],
         },
         {
+          action: 'mdi-notebook',
+          title: 'librarian',
+          active: false,
+          condition: this.$store.state.bookShop.userInfo.role.cu_book === true,
+          items: [
+            {
+              title: 'registeredBooks',
+              link: '/registeredBooks',
+              icon: 'fa fa-table',
+              condition: true,
+            },
+          ],
+        },
+        {
           action: 'fas fa-object-group',
           title: 'BookCategory',
           active: false,

@@ -205,6 +205,15 @@ const routes = [
         },
       },
       {
+        path: '/registeredBooks',
+        name: 'registeredBooks',
+        component: () => import('../views/book/registeredBooks.vue'),
+        meta: {
+          requiresAuth: true,
+          roles: [{ cu_book: true }],
+        },
+      },
+      {
         path: '/booksList',
         name: 'booksList',
         component: () => import('../views/book/booksList.vue'),

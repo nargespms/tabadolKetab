@@ -582,4 +582,7 @@ export default {
   emailORmobileORnationalIdisRepeated: 'ایمیل ، موبایل و یا کدملی تکراری است',
   allowDiscount: ' شامل تخفیف',
   allCategories: 'همه دسته بندی ها',
+  librarian: 'کتابدار',
+  registeredBooks: 'کتاب های ثبت شده',
+  clientsWhoRegisteredBook: 'کاربرانی که ثبت کتاب داشتند',
 };
