@@ -103,7 +103,7 @@
               md="6"
               class="pa-0 pb-6 pa-md-0 pa-lg-0"
             >
-              <bookCatAutocomplete
+              <multiBookCatAutocomplete
                 :isRequire="bookCatVallidate"
                 @sendValue="getBookCat"
                 :height="32"
@@ -211,7 +211,8 @@
 </template>
 
 <script>
-import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
+// import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
+import multiBookCatAutocomplete from '../bookCategory/multiBookCatAutocomplete.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
 import dateTime from '../../mixins/dateTime.js';
@@ -220,8 +221,9 @@ export default {
   name: 'addDiscountCmp',
   components: {
     notifMessage,
-    bookCatAutocomplete,
+    // bookCatAutocomplete,
     rangeDatePickerCmp,
+    multiBookCatAutocomplete,
   },
   mixins: [dateTime],
   data() {

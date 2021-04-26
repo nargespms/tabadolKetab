@@ -34,6 +34,7 @@
           :input-value="data.selected"
           :close="isMultiple"
           @click="data.select"
+          @click:close="remove(data.item)"
         >
           {{ data.item.fullName }}
         </v-chip>
@@ -109,6 +110,10 @@ export default {
     clear() {
       this.model = '';
       this.$emit('setStaff', this.model);
+    },
+    remove(item) {
+      const index = this.model.indexOf(item.id);
+      if (index >= 0) this.model.splice(index, 1);
     },
     getStaff() {
       const edittingStaff = this.items.find(item => {

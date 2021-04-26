@@ -34,10 +34,12 @@
           :input-value="data.selected"
           :close="isMultiple"
           @click="data.select"
+          @click:close="remove(data.item)"
         >
           {{ data.item.fullName }}
         </v-chip>
       </template>
+
       <template v-slot:item="{ item }">
         <v-list-item-content>
           <v-list-item-title v-text="item.fullName"></v-list-item-title>
@@ -98,6 +100,7 @@ export default {
       localRequire: this.isRequired,
     };
   },
+
   methods: {
     sendValue() {
       if (this.model && this.model.length > 0) {
@@ -108,6 +111,10 @@ export default {
     clear() {
       this.model = '';
       this.$emit('setUser', this.model);
+    },
+    remove(item) {
+      const index = this.model.indexOf(item.id);
+      if (index >= 0) this.model.splice(index, 1);
     },
     getClient() {
       const edittingClient = this.items.find(item => {

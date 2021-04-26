@@ -94,6 +94,13 @@
           {{ $t(item.status) }}
         </span>
       </template>
+
+      <template v-slot:[`item.address`]="{ item }">
+        <span>
+          {{ $t(item.address.address) }}
+        </span>
+      </template>
+
       <template v-slot:[`item.operation`]="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -108,6 +115,23 @@
             </v-icon>
           </template>
           {{ $t('preview') }}
+        </v-tooltip>
+        <v-tooltip
+          bottom
+          v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              @click="changeStatusOrder(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-table-edit
+            </v-icon>
+          </template>
+          {{ $t('changeStatus') }}
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -161,7 +185,14 @@
         @reject="closeDelete"
       />
     </v-dialog>
-
+    <v-dialog v-model="enableStatusChange" max-width="500px">
+      <multipleChoiseDialog
+        :title="'changeStatus'"
+        :message="`${$t('chooseOrderStatus')}`"
+        :buttons="changeStatusButs"
+        @changeStatus="changeStatus"
+      />
+    </v-dialog>
     <notifMessage
       v-if="successNotif"
       :msg="'operationSuccessfullyOcured'"
@@ -175,6 +206,7 @@
 import notifMessage from '../structure/notifMessage.vue';
 import promptDialog from '../structure/promptDialog.vue';
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
+import multipleChoiseDialog from '../structure/multipleChoiseDialog.vue';
 
 export default {
   name: 'postTable',
@@ -196,6 +228,7 @@ export default {
     notifMessage,
     promptDialog,
     tableHeaderCell,
+    multipleChoiseDialog,
   },
   data() {
     return {
@@ -207,6 +240,35 @@ export default {
       filter: {},
       // print item
       printtingItem: {},
+      // edit
+      enableStatusChange: false,
+      edittingItem: {},
+      changeStatusButs: [
+        {
+          name: 'ACCEPTED',
+          color: 'green darken-1',
+        },
+        {
+          name: 'RECEIVED',
+          color: 'blue-grey lighten-1',
+        },
+        {
+          name: 'IN_PROGRESS',
+          color: 'purple lighten-3',
+        },
+        {
+          name: 'ON_WAY',
+          color: 'grey darken-1',
+        },
+        {
+          name: 'CANCELED',
+          color: 'red',
+        },
+        {
+          name: 'CLOSED',
+          color: 'red',
+        },
+      ],
       orderType: [
         { text: 'BUY', value: 'BUY' },
         { text: 'SELL', value: 'SELL' },
@@ -228,6 +290,23 @@ export default {
       this.$router.push({
         name: 'postRequest',
       });
+    },
+    changeStatusOrder(item) {
+      this.enableStatusChange = true;
+      this.edittingItem = item;
+    },
+    changeStatus(value) {
+      this.$axios
+        .patch(`/v1/api/tabaadol-e-ketaab/order/${this.edittingItem.id}`, {
+          status: value,
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.reloadTable();
+            this.edittingItem = {};
+            this.enableStatusChange = false;
+          }
+        });
     },
     // methods for delete notif
     deleteRecord(item) {
@@ -253,13 +332,13 @@ export default {
         path: `/ordersList/${item.id}`,
       });
     },
-    // printForm(item) {
-    //   this.printtingItem = item;
-    //   const routeLink = this.$router.resolve({
-    //     path: `print/postRequest/${item.id}`,
-    //   });
-    //   window.open(routeLink.href, '_blank');
-    // },
+    printForm(item) {
+      this.printtingItem = item;
+      const routeLink = this.$router.resolve({
+        path: `print/postRequest/${item.id}`,
+      });
+      window.open(routeLink.href, '_blank');
+    },
     reloadTable() {
       this.onRequest({
         options: this.innerOptions,

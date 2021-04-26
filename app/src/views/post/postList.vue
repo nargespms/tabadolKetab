@@ -117,6 +117,14 @@ export default {
           divider: true,
         },
         {
+          text: 'address',
+          value: 'address',
+          filterable: true,
+          filterType: 'text',
+          align: 'center',
+          divider: true,
+        },
+        {
           text: 'operation',
           value: 'operation',
           align: 'center',

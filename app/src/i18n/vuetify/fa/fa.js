@@ -581,4 +581,5 @@ export default {
   creditAmount: 'اعتبار حساب',
   emailORmobileORnationalIdisRepeated: 'ایمیل ، موبایل و یا کدملی تکراری است',
   allowDiscount: ' شامل تخفیف',
+  allCategories: 'همه دسته بندی ها',
 };
