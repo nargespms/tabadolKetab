@@ -208,6 +208,7 @@ export default {
         { text: 'ON_WAY', value: 'ON_WAY' },
         { text: 'RECEIVED', value: 'RECEIVED' },
         { text: 'CLOSED', value: 'CLOSED' },
+        { text: 'POST', value: 'POST' },
       ],
       filter: {},
       changeStatusButs: [
@@ -234,6 +235,10 @@ export default {
         {
           name: 'CLOSED',
           color: 'red',
+        },
+        {
+          name: 'POST',
+          color: 'blue-grey darken-3',
         },
       ],
       enableStatusChange: false,
