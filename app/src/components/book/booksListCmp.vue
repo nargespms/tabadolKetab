@@ -57,7 +57,7 @@ export default {
         },
         {
           text: 'tags',
-          value: 'tags',
+          value: 'tagsId',
           align: 'center',
           filterable: true,
           filterType: 'tags',
@@ -157,7 +157,7 @@ export default {
         },
         {
           text: 'tags',
-          value: 'tags',
+          value: 'tagsId',
           align: 'center',
           filterable: true,
           filterType: 'tags',

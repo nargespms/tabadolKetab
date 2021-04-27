@@ -238,8 +238,8 @@ export default {
     },
     getTag(value) {
       if (value.length > 0) {
-        this.filter[this.data.value] = value;
-        this.emitFilter('tags');
+        this.filter[this.data.value] = value.toString();
+        this.emitFilter(this.data.value);
       } else {
         delete this.filter[this.data.value];
         this.emitFilter(this.data.value);

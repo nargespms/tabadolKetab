@@ -87,6 +87,7 @@ export default {
     remove(item) {
       const index = this.model.indexOf(item.id);
       if (index >= 0) this.model.splice(index, 1);
+      this.$emit('sendValue', this.model);
     },
     getData() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/tags').then(res => {

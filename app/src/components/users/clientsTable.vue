@@ -15,8 +15,6 @@
       :headers="headers"
       :items="tableData"
       :options.sync="innerOptions"
-      :sort-by.sync="sort"
-      :sort-desc.sync="sortMode"
       update:options
       :server-items-length="totalData"
       hide-default-header
