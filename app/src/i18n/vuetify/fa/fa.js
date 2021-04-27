@@ -586,4 +586,5 @@ export default {
   registeredBooks: 'کتاب های ثبت شده',
   clientsWhoRegisteredBook: 'کاربرانی که ثبت کتاب داشتند',
   forbiddenBookRegister: 'ثبت این کتاب ممنوع است',
+  bookCount: 'تعداد کتاب',
 };

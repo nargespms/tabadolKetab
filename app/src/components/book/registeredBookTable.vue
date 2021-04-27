@@ -46,26 +46,26 @@
 
       <template v-slot:[`item.mobile`]="{ item }">
         <span class="numberDir">
-          {{ item.mobile }}
+          {{ item.client.mobile }}
         </span>
+      </template>
+
+      <template v-slot:[`item.fullName`]="{ item }">
+        <span> {{ item.client.firstName }} {{ item.client.lastName }} </span>
       </template>
 
       <template v-slot:[`item.credit`]="{ item }">
-        <span> {{ moneyFormat(item.credit) }} {{ $t('rial') }} </span>
+        <span> {{ moneyFormat(item.client.credit) }} {{ $t('rial') }} </span>
       </template>
 
-      <template v-slot:[`item.active`]="{ item }">
-        <span v-if="item.active">
-          <v-icon color="success" class="pa-2">mdi-account-check </v-icon>
-          {{ $t('active') }}
-        </span>
-        <span v-else>
-          <v-icon color="error" class="pa-2">
-            mdi-account-alert
-          </v-icon>
-          {{ $t('inactive') }}
-        </span>
+      <template v-slot:[`item.email`]="{ item }">
+        <span> {{ item.client.email }} </span>
       </template>
+
+      <template v-slot:[`item.nationalId`]="{ item }">
+        <span> {{ item.client.nationalId }} </span>
+      </template>
+
       <!-- expanded rows for books  -->
       <template v-slot:expanded-item="{ headers }">
         <td :colspan="headers.length - 1" class="pa-0 pt-4 pr-4 pb-4">
@@ -251,6 +251,7 @@ export default {
     },
     getClientBooks(expandedRow) {
       if (expandedRow.length > 0) {
+        console.log(expandedRow);
         expandedRow.forEach(client => {
           const { id } = client;
           this.$axios

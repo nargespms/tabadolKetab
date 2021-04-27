@@ -29,23 +29,15 @@ export default {
           divider: true,
         },
         {
-          text: 'firstName',
+          text: 'fullName',
+          value: 'fullName',
           align: 'center',
           sortable: false,
           filterable: true,
           filterType: 'text',
-          value: 'firstName',
           divider: true,
         },
-        {
-          text: 'lastName',
-          align: 'center',
-          sortable: false,
-          filterable: true,
-          filterType: 'text',
-          value: 'lastName',
-          divider: true,
-        },
+
         {
           text: 'mobile',
           value: 'mobile',
@@ -72,11 +64,10 @@ export default {
           divider: true,
         },
         {
-          text: 'status',
-          value: 'active',
+          text: 'bookCount',
+          value: 'bookCount',
           align: 'center',
-          filterable: true,
-          filterType: 'staticDropDown',
+
           divider: true,
         },
         {
