@@ -51,6 +51,13 @@
           </td>
         </tr>
       </tbody>
+      <tbody v-if="this.module === 'booksTag'">
+        <tr>
+          <td>
+            booksTag
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
