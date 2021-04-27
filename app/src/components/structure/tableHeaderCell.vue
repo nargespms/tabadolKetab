@@ -1,8 +1,21 @@
 <template>
   <div class="text-center">
     <div :class="filterEnable && data.filterable ? 'mt-4' : ''">
-      <v-icon v-if="data.sortable" :key="data.index" color="grey" @click="sort">
+      <v-icon
+        v-if="data.sortable && descSort"
+        :key="data.index"
+        color="grey"
+        @click="sortFun(data.value)"
+      >
         mdi-menu-down
+      </v-icon>
+      <v-icon
+        v-if="data.sortable && !descSort"
+        :key="data.index"
+        color="grey"
+        @click="sortFun(data.value)"
+      >
+        mdi-menu-up
       </v-icon>
       {{ $t(data.text) }}
       <v-icon
@@ -136,6 +149,9 @@ export default {
       filterEnable: false,
       date: '',
       filter: {},
+      sort: '',
+      sortMode: '',
+      descSort: true,
     };
   },
   methods: {
@@ -215,8 +231,17 @@ export default {
       this.emitFilter(name);
     },
     // sort funcs
-    sort() {
-      console.log('sorted');
+    sortFun(value) {
+      this.descSort = !this.descSort;
+
+      if (this.descSort) {
+        this.sortMode = 'DESC';
+      } else {
+        this.sortMode = 'ASC';
+      }
+
+      this.sort = value;
+      this.$emit('sortCol', this.sort, this.sortMode);
     },
     emitFilter: _.debounce(function b(name) {
       console.log(name);

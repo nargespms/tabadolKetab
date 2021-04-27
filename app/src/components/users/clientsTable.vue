@@ -15,6 +15,8 @@
       :headers="headers"
       :items="tableData"
       :options.sync="innerOptions"
+      :sort-by.sync="sort"
+      :sort-desc.sync="sortMode"
       update:options
       :server-items-length="totalData"
       hide-default-header
@@ -48,6 +50,7 @@
               <tableHeaderCell
                 :data="h"
                 @filterCol="filterCol"
+                @sortCol="sortCol"
                 :items="h.text === 'status' ? statusItems : []"
                 :editData="options.filter ? options.filter : {}"
               />
@@ -230,6 +233,13 @@ export default {
     },
     filterCol(value, name) {
       this.filter[name] = value[name];
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
+    sortCol(value, mode) {
+      this.innerOptions.sort = value;
+      this.innerOptions.sortMode = mode;
       this.onRequest({
         options: this.innerOptions,
       });

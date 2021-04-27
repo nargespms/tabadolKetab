@@ -292,6 +292,8 @@ export default {
       options: {
         page: 1,
         // sortBy: 'time',
+        sort: 'createdAt',
+        sortMode: 'DESC',
         limit: 20,
         itemsPerPage: 20,
       },
@@ -308,7 +310,7 @@ export default {
       // const { filter } = props;
       const {
         filter,
-        options: { page, limit, itemsPerPage },
+        options: { page, limit, itemsPerPage, sort, sortMode },
       } = props;
 
       this.$axios
@@ -317,15 +319,23 @@ export default {
             page,
             limit,
             filter,
+            sort,
+            sortMode,
           },
         })
         .then(res => {
           if (res.status === 200) {
             this.tableData = res.data.result.docs;
             this.totalData = res.data.result.totalDocs;
-            this.options = { ...this.options, page, limit, itemsPerPage };
-            // console.log(this.tableData);
-            // console.log(this.totalData);
+            this.options = {
+              ...this.options,
+              page,
+              limit,
+              itemsPerPage,
+              sort,
+              sortMode,
+            };
+
             this.loading = false;
           }
         })

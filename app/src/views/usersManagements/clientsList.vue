@@ -85,6 +85,7 @@ export default {
           value: 'credit',
           align: 'center',
           filterable: false,
+          sortable: true,
           divider: true,
         },
         {
