@@ -489,6 +489,10 @@ export default {
                 this.errorEnable = true;
                 this.errorMsg = 'permissionDenied';
               }
+              if (e.response.status === 409) {
+                this.errorEnable = true;
+                this.errorMsg = 'forbiddenBookRegister';
+              }
             });
         } else if (this.mode === 'edit') {
           let id;
@@ -524,6 +528,10 @@ export default {
                 const msg = e.response.data.message.replace(/ /g, '');
                 console.log(msg);
                 this.errorMsg = msg;
+              }
+              if (e.response.status === 409) {
+                this.errorEnable = true;
+                this.errorMsg = 'forbiddenBookRegister';
               }
             });
         }

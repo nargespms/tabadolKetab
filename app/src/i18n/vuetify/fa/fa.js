@@ -585,4 +585,5 @@ export default {
   librarian: 'کتابدار',
   registeredBooks: 'کتاب های ثبت شده',
   clientsWhoRegisteredBook: 'کاربرانی که ثبت کتاب داشتند',
+  forbiddenBookRegister: 'ثبت این کتاب ممنوع است',
 };

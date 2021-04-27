@@ -215,6 +215,7 @@ export default {
     closeModal() {
       this.enableEdit = false;
       this.edittingItem = {};
+      this.getClientBooks(this.expanded);
     },
 
     // filter

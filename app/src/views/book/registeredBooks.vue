@@ -3,7 +3,7 @@
     <dataTableWrap
       :headers="headers"
       :module="'registeredBooks'"
-      :endpoint="'/v1/api/tabaadol-e-ketaab/client/list'"
+      :endpoint="'/v1/api/tabaadol-e-ketaab/clients/register-book'"
     />
   </div>
 </template>
