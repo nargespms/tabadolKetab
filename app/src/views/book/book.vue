@@ -1,5 +1,9 @@
 <template>
-  <addBookCmp :mode="'edit'" />
+  <v-row no-gutters class="justify-center">
+    <v-col cols="12" sm="12" md="8">
+      <addBookCmp :mode="'edit'" />
+    </v-col>
+  </v-row>
 </template>
 
 <script>

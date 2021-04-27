@@ -114,7 +114,7 @@
                         medium
                         class="ma-2"
                         v-bind="attrs"
-                        @click="edit(book.id)"
+                        @click="edit(book)"
                         v-on="on"
                       >
                         mdi-pencil
@@ -145,16 +145,25 @@
         ></v-pagination>
       </template>
     </v-data-table>
+    <v-dialog v-model="enableEdit" content-class="sh-0" max-width="1000">
+      <addBookCmp
+        :edittingData="edittingItem"
+        :state="'modal'"
+        :mode="'edit'"
+        @closeModal="closeModal"
+      />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
+import addBookCmp from './addBookCmp.vue';
 
 export default {
   name: 'registeredBookTable',
-  components: { tableHeaderCell },
+  components: { tableHeaderCell, addBookCmp },
   mixins: [moneyFormat],
 
   props: {
@@ -179,7 +188,9 @@ export default {
       expanded: [],
       innerOptions: { ...this.options },
       filter: {},
-
+      // edit
+      enableEdit: false,
+      edittingItem: {},
       // fiter
       statusItems: [
         { text: 'active', value: true },
@@ -197,10 +208,13 @@ export default {
         path: `/users/addUser`,
       });
     },
-    edit(id) {
-      this.$router.push({
-        path: `/booksList/${id}`,
-      });
+    edit(book) {
+      this.enableEdit = true;
+      this.edittingItem = book;
+    },
+    closeModal() {
+      this.enableEdit = false;
+      this.edittingItem = {};
     },
 
     // filter
