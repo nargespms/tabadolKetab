@@ -82,6 +82,11 @@
               {{ new Date(item.confirmDate).toLocaleDateString('fa') }}
             </span>
           </td>
+          <td>
+            <span v-if="item.soldDate.length > 0">
+              {{ new Date(item.soldDate).toLocaleDateString('fa') }}
+            </span>
+          </td>
           <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
             {{ item.seller.firstName }}
             {{ item.seller.lastName }}

@@ -587,4 +587,7 @@ export default {
   clientsWhoRegisteredBook: 'کاربرانی که ثبت کتاب داشتند',
   forbiddenBookRegister: 'ثبت این کتاب ممنوع است',
   bookCount: 'تعداد کتاب',
+  incomingPost: 'تعداد پست های دریافتی',
+  todayIncomingPost: 'تعداد پست های دریافتی امروز',
+  soldDate: 'تاریخ فروش',
 };

@@ -111,6 +111,16 @@
         />
       </div>
     </template>
+    <template v-if="filterEnable && data.filterType === 'tags'">
+      <div class="ma-auto w250">
+        <tagsAutocomplete
+          :isRequire="false"
+          :placeHolder="'tags'"
+          @sendValue="getTag"
+          :height="32"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -122,6 +132,7 @@ import clientsAutoComplete from './clientsAutoComplete.vue';
 import dateTime from '../../mixins/dateTime.js';
 import rolesAutoComplete from './rolesAutocomplete.vue';
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
+import tagsAutocomplete from '../tags/tagsAutocomplete.vue';
 
 export default {
   name: 'tableHeaderCell',
@@ -131,6 +142,7 @@ export default {
     clientsAutoComplete,
     rolesAutoComplete,
     bookCatAutocomplete,
+    tagsAutocomplete,
   },
   mixins: [dateTime],
   props: {
@@ -219,6 +231,15 @@ export default {
         this.filter[this.data.value] = value;
         console.log(this.filter[this.data.value]);
         this.emitFilter('categoryId');
+      } else {
+        delete this.filter[this.data.value];
+        this.emitFilter(this.data.value);
+      }
+    },
+    getTag(value) {
+      if (value.length > 0) {
+        this.filter[this.data.value] = value;
+        this.emitFilter('tags');
       } else {
         delete this.filter[this.data.value];
         this.emitFilter(this.data.value);

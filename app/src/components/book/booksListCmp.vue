@@ -59,7 +59,8 @@ export default {
           text: 'tags',
           value: 'tags',
           align: 'center',
-          filterable: false,
+          filterable: true,
+          filterType: 'tags',
           divider: true,
         },
         {
@@ -85,6 +86,15 @@ export default {
           filterable: true,
           filterType: 'date',
           filterName: 'confirmDate',
+          divider: true,
+        },
+        {
+          text: 'soldDate',
+          value: 'soldDate',
+          align: 'center',
+          filterable: true,
+          filterType: 'dateRange',
+          filterName: 'soldDate',
           divider: true,
         },
         {
@@ -149,7 +159,8 @@ export default {
           text: 'tags',
           value: 'tags',
           align: 'center',
-          filterable: false,
+          filterable: true,
+          filterType: 'tags',
           divider: true,
         },
         {
@@ -175,6 +186,15 @@ export default {
           filterable: true,
           filterType: 'date',
           filterName: 'confirmDate',
+          divider: true,
+        },
+        {
+          text: 'soldDate',
+          value: 'soldDate',
+          align: 'center',
+          filterable: true,
+          filterType: 'dateRange',
+          filterName: 'soldDate',
           divider: true,
         },
 
