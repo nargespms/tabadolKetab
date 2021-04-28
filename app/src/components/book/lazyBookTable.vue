@@ -65,9 +65,11 @@
           <td>
             {{ $t(item.status) }}
           </td>
-          <td>
+          <td class="tag">
             <template v-for="tag in item.tags">
-              <span :key="tag.id"> {{ tag.title }}- </span>
+              <p class="pb-2 ma-0 " :key="tag.id">
+                <span> {{ tag.title }} </span>
+              </p>
             </template>
           </td>
           <td>
@@ -391,3 +393,13 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.tag {
+  p {
+    border-bottom: 1px solid #ddd;
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+</style>

@@ -19,7 +19,7 @@
       <template v-slot:no-data>
         <v-list-item>
           <v-list-item-title>
-            (حداقل سه حرف را وارد نمایید)
+            (حداقل دو حرف را وارد نمایید)
           </v-list-item-title>
         </v-list-item>
       </template>
@@ -104,7 +104,7 @@ export default {
     search(val) {
       // Items have already been loaded
       if (this.items.length > 0) return;
-      if (val.length >= 3) {
+      if (val.length >= 2) {
         this.isLoading = true;
         this.$axios.get('/v1/api/tabaadol-e-ketaab/tags').then(res => {
           console.log(res);
