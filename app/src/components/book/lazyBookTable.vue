@@ -45,6 +45,7 @@
             :data="h"
             :items="h.text === 'status' ? status : []"
             @filterCol="filterCol"
+            @filterColRange="filterColRange"
             :editData="options.filter ? options.filter : {}"
           />
         </th>
@@ -292,6 +293,14 @@ export default {
         options: this.innerOptions,
       });
     },
+    filterColRange(value, first, second) {
+      this.filter[first] = value[first];
+      this.filter[second] = value[second];
+
+      this.onRequest({
+        options: this.innerOptions,
+      });
+    },
     onRequest(props) {
       props.filter = this.filter;
       this.innerOptions = props.options;
@@ -362,6 +371,7 @@ export default {
           params: {
             offset: this.tableData.length,
             limit: this.innerOptions.limit,
+            filter: this.filter,
           },
         })
         .then(res => {

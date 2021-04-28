@@ -286,6 +286,7 @@ export default {
           params: {
             offset: this.tableData.length,
             limit: this.innerOptions.limit,
+            filter: this.filter,
           },
         })
         .then(res => {

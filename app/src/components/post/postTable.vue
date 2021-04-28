@@ -96,7 +96,7 @@
       </template>
 
       <template v-slot:[`item.address`]="{ item }">
-        <span>
+        <span v-if="item.address">
           {{ $t(item.address.address) }}
         </span>
       </template>

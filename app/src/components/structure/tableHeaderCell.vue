@@ -121,12 +121,24 @@
         />
       </div>
     </template>
+    <template v-if="filterEnable && data.filterType === 'dateRange'">
+      <div class="ma-auto ">
+        <rangeDatePickerCmp
+          ref="datePicker"
+          :fromValidate="fromDateValidation"
+          :toValidate="toDateValidation"
+          :key="dateKey"
+          @setDate="setRangeDate"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
 import _ from 'lodash';
 import datePickerCmp from './datePickerCmp.vue';
+import rangeDatePickerCmp from './rangeDatePickerCmp.vue';
 import staffsAutoComplete from './staffsAutoComplete.vue';
 import clientsAutoComplete from './clientsAutoComplete.vue';
 import dateTime from '../../mixins/dateTime.js';
@@ -143,6 +155,7 @@ export default {
     rolesAutoComplete,
     bookCatAutocomplete,
     tagsAutocomplete,
+    rangeDatePickerCmp,
   },
   mixins: [dateTime],
   props: {
@@ -164,6 +177,10 @@ export default {
       sort: '',
       sortMode: '',
       descSort: true,
+      // rangeDate
+      dateKey: 0,
+      fromDateValidation: true,
+      toDateValidation: true,
     };
   },
   methods: {
@@ -225,8 +242,37 @@ export default {
         this.emitFilter(this.data.value);
       }
     },
+    setRangeDate(value) {
+      if (
+        this.$refs.datePicker.date.fromDate.length < 1 ||
+        this.$refs.datePicker.date === null
+      ) {
+        this.fromDateValidation = false;
+      } else {
+        this.fromDateValidation = true;
+      }
+      if (
+        this.$refs.datePicker.date === null ||
+        this.$refs.datePicker.date.toDate.length < 1
+      ) {
+        this.toDateValidation = false;
+      } else {
+        this.toDateValidation = true;
+      }
+
+      if (this.toDateValidation && this.fromDateValidation) {
+        if (this.data.value === 'soldDate') {
+          this.filter.soldDateFrom = new Date(
+            this.persionToGregorian(value.fromDate)
+          ).toISOString();
+          this.filter.soldDateTo = new Date(
+            this.persionToGregorian(value.toDate)
+          ).toISOString();
+          this.emitFilterRange('soldDateFrom', 'soldDateTo');
+        }
+      }
+    },
     getBookCat(value) {
-      console.log(value);
       if (value.length > 0) {
         this.filter[this.data.value] = value;
         console.log(this.filter[this.data.value]);
@@ -264,9 +310,13 @@ export default {
       this.sort = value;
       this.$emit('sortCol', this.sort, this.sortMode);
     },
+
     emitFilter: _.debounce(function b(name) {
-      console.log(name);
       this.$emit('filterCol', this.filter, name);
+    }, 1500),
+
+    emitFilterRange: _.debounce(function b(first, second) {
+      this.$emit('filterColRange', this.filter, first, second);
     }, 1500),
   },
   watch: {

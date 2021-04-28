@@ -91,7 +91,7 @@
         </tr>
       </tbody>
       <tbody v-if="tableData.length === 0">
-        <td colspan="6" class=" pa-4 ma-auto ">
+        <td :colspan="headers.length" class=" pa-4 ma-auto ">
           <span class="text-center">
             {{ $t('noResultsText') }}
           </span>
@@ -212,6 +212,7 @@ export default {
           params: {
             offset: this.tableData.length,
             limit: this.innerOptions.limit,
+            filter: this.filter,
           },
         })
         .then(res => {
