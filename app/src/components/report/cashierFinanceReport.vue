@@ -88,10 +88,23 @@ export default {
       userValidate: true,
       columns: [
         {
-          text: 'finalTotal',
+          text: 'invoiceCount',
         },
         {
-          text: 'invoiceCount',
+          text: 'finalTotalInvoices',
+        },
+
+        {
+          text: 'creditByCash',
+        },
+        {
+          text: 'creditByGift',
+        },
+        {
+          text: 'tabadolBankAccount',
+        },
+        {
+          text: 'totalCreditSell',
         },
       ],
       data: {},

@@ -41,24 +41,63 @@
       <tbody v-if="this.module === 'cashierReport'">
         <tr>
           <td>
+            {{ singleItem.count }}
+          </td>
+          <td>
             <span v-if="singleItem.sum">
               {{ moneyFormat(singleItem.sum) }}
               {{ $t('rial') }}
             </span>
           </td>
           <td>
-            {{ singleItem.count }}
+            <span v-if="singleItem.creditByCash">
+              {{ moneyFormat(singleItem.creditByCash) }}
+              {{ $t('rial') }}
+            </span>
+            <span v-else>
+              0
+              {{ $t('rial') }}
+            </span>
+          </td>
+          <td v-if="singleItem.creditByGift">
+            {{ moneyFormat(singleItem.creditByGift) }}
+            {{ $t('rial') }}
+          </td>
+          <td>
+            {{
+              moneyFormat(
+                singleItem.credit -
+                  singleItem.creditByGift -
+                  singleItem.creditByCash
+              )
+            }}
+            {{ $t('rial') }}
+          </td>
+          <td>
+            <span v-if="singleItem.credit">
+              {{ moneyFormat(singleItem.credit) }}
+              {{ $t('rial') }}
+            </span>
           </td>
         </tr>
       </tbody>
       <tbody v-if="this.module === 'booksTag'">
         <tr>
           <td>
-            booksTag
+            {{ singleItem.count }}
+          </td>
+          <td>
+            {{ moneyFormat(singleItem.sum) }}
+            {{ $t('rial') }}
           </td>
         </tr>
       </tbody>
     </table>
+    <span class="pt-3 mt-3 d-block" v-if="this.module === 'cashierReport'">
+      <v-icon class="red--text">mdi-alert-circle-outline</v-icon>
+      افزایش اعتبار از طریق حساب بانکی: هر نوعی افزایش اعتباری که کارت به کارت
+      یا از طریق کارت خوان صورت گرفته است
+    </span>
   </div>
 </template>
 

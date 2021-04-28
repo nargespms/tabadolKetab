@@ -48,7 +48,7 @@
     <financeReportTable
       v-if="!isLoading"
       :columns="columns"
-      :data="data"
+      :singleItem="data"
       :module="'booksTag'"
     />
   </v-card>
@@ -80,19 +80,17 @@ export default {
 
       columns: [
         {
-          text: 'radif',
-        },
-        {
-          text: 'tag',
+          text: 'bookCount',
         },
 
         {
-          text: 'totalBuy',
+          text: 'total',
         },
       ],
       data: [],
       startDate: '',
       endDate: '',
+      tagsId: '',
     };
   },
   mixins: [dateTime],
@@ -111,6 +109,7 @@ export default {
     },
     getTag(value) {
       console.log(value);
+      this.tagsId = value.toString();
     },
     showResult() {
       this.$refs.form.validate();
@@ -136,6 +135,22 @@ export default {
         // formvalidation
         if (this.$refs.form.validate()) {
           //   request
+          this.$axios
+            .get('/v1/api/tabaadol-e-ketaab/report/sold-books', {
+              params: {
+                filter: {
+                  soldDateFrom: this.startDate,
+                  soldDateTo: this.endDate,
+                  tagsId: this.tagsId,
+                },
+              },
+            })
+            .then(res => {
+              if (res.status === 200) {
+                this.data = res.data;
+                this.isLoading = false;
+              }
+            });
         } else {
           this.valid = false;
         }
