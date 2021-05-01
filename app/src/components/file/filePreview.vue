@@ -4,7 +4,7 @@
     width="160"
     height="125"
   >
-    <img :src="data.fullViewUrl" />
+    <img :src="data.view" />
     <!-- <v-icon color="grey " x-large class="d-flex">
       mdi-file-document
     </v-icon> -->
