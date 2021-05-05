@@ -57,7 +57,7 @@
           <v-col>
             <table
               class="generalTable"
-              :class="$vuetify.breakpoint.lg ? '' : 'tableMobileScroll'"
+              :class="$vuetify.breakpoint.xl ? '' : 'tableMobileScroll'"
             >
               <thead class=" grey lighten-2">
                 <th>
