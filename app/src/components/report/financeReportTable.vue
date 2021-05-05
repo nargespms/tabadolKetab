@@ -59,19 +59,30 @@
               {{ $t('rial') }}
             </span>
           </td>
-          <td v-if="singleItem.creditByGift">
-            {{ moneyFormat(singleItem.creditByGift) }}
-            {{ $t('rial') }}
+          <td>
+            <span v-if="singleItem.creditByGift">
+              {{ moneyFormat(singleItem.creditByGift) }}
+              {{ $t('rial') }}
+            </span>
+            <span else> </span>
           </td>
           <td>
-            {{
-              moneyFormat(
-                singleItem.credit -
-                  singleItem.creditByGift -
+            <span
+              v-if="
+                singleItem.credit &&
+                  singleItem.creditByGift &&
                   singleItem.creditByCash
-              )
-            }}
-            {{ $t('rial') }}
+              "
+            >
+              {{
+                moneyFormat(
+                  singleItem.credit -
+                    singleItem.creditByGift -
+                    singleItem.creditByCash
+                )
+              }}
+              {{ $t('rial') }}
+            </span>
           </td>
           <td>
             <span v-if="singleItem.credit">
