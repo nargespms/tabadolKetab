@@ -311,13 +311,13 @@
               <span class="font-weight-black"> {{ $t('recycle') }} : </span>
               <v-radio-group mandatory v-model="book.recycle" row class="pr-6">
                 <v-radio
-                  :label="$t('RECEIVEBOOK')"
-                  value="RECEIVEBOOK"
+                  :label="$t('NOPROBLEM')"
+                  value="NOPROBLEM"
                   class="pr-4"
                 ></v-radio>
                 <v-radio
-                  :label="$t('NOPROBLEM')"
-                  value="NOPROBLEM"
+                  :label="$t('RECEIVEBOOK')"
+                  value="RECEIVEBOOK"
                   class="pr-4"
                 ></v-radio>
                 <v-radio

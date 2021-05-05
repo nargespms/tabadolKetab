@@ -379,11 +379,11 @@ export default {
       .then(res => {
         if (res.status === 200) {
           this.order = res.data;
-          if (res.data.type !== 'SELL') {
-            console.log('ss');
+          console.log(res.data.type);
+          if (res.data.type === 'BUY') {
             this.finalTotal = res.data.invoice.finalTotal;
             this.orderItems = res.data.invoice.books;
-          } else {
+          } else if (res.data.type === 'SELL') {
             this.orderItems = res.data.books;
           }
 
