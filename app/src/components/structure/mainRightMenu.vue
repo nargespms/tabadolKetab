@@ -402,7 +402,7 @@ export default {
                 this.$store.state.bookShop.userInfo.role.r_order === true,
             },
             {
-              title: 'increaseCredit',
+              title: 'increaseOrDecreaseCredit',
               link: '/increaseCredit',
               icon: 'fas fa-plus',
               condition:
