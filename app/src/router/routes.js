@@ -569,6 +569,15 @@ const routes = [
         },
       },
       {
+        path: '/UncompletedOrders',
+        name: 'UncompletedOrders',
+        component: () => import('../views/orders/UncompletedOrders.vue'),
+        meta: {
+          requiresAuth: true,
+          roles: [{ r_order: true }, { cu_book: true }],
+        },
+      },
+      {
         path: '/ordersList/:orderId',
         name: 'orderPage',
         component: () => import('../views/orders/orderPage.vue'),

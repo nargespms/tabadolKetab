@@ -183,6 +183,16 @@
       :totalData="totalData"
       :loading="loading"
     />
+    <uncompletedOrdersTable
+      @reloadTable="getData"
+      @getData="getData"
+      v-if="this.module === 'UncompletedOrders'"
+      :headers="headers"
+      :tableData="tableData"
+      :options="options"
+      :totalData="totalData"
+      :loading="loading"
+    />
     <accessLevelTable
       @reloadTable="getData"
       @getData="getData"
@@ -241,6 +251,7 @@ import lazyTradesTable from '../trades/lazyTradesTable.vue';
 import authorTable from '../author/authorTable.vue';
 import publishersTable from '../publisher/publishersTable.vue';
 import ordersTable from '../orders/ordersTable.vue';
+import uncompletedOrdersTable from '../orders/uncompletedOrdersTable.vue';
 import accessLevelTable from '../accessLevel/accessLevelTable.vue';
 import notifMessage from './notifMessage.vue';
 import lazyMessagesTable from '../messages/lazyMessagesTable.vue';
@@ -266,6 +277,7 @@ export default {
     authorTable,
     publishersTable,
     ordersTable,
+    uncompletedOrdersTable,
     accessLevelTable,
     notifMessage,
     lazyMessagesTable,

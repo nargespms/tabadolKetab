@@ -21,6 +21,7 @@ export default {
   accept: 'تایید',
   send: 'ارسال',
   reject: 'لغو',
+  UncompletedOrders: 'سفارش های بررسی نشده',
   Nodataavailable: 'داده ای برای نمایش وجود ندارد',
   changeStatus: 'تغییر وضعیت',
   operationSuccessfullyOcured: 'عملیات با موفقیت انجام شد',

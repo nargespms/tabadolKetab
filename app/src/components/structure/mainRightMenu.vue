@@ -245,13 +245,22 @@ export default {
             },
           ],
         },
-        // {
-        //   action: 'mdi-notebook',
-        //   title: 'librarian',
-        //   active: false,
-        //   condition: this.$store.state.bookShop.userInfo.role.cu_book === true,
-
-        // },
+        {
+          action: 'mdi-notebook',
+          title: 'librarian',
+          active: false,
+          condition:
+            this.$store.state.bookShop.userInfo.role.cu_book === true &&
+            this.$store.state.bookShop.userInfo.role.r_order === true,
+          items: [
+            {
+              icon: 'fas fa-cart-arrow-down',
+              title: 'UncompletedOrders',
+              link: '/UncompletedOrders',
+              condition: true,
+            },
+          ],
+        },
         {
           action: 'fas fa-object-group',
           title: 'BookCategory',
