@@ -240,6 +240,10 @@ export default {
           name: 'POST',
           color: 'blue-grey darken-3',
         },
+        {
+          name: 'PENDING',
+          color: 'orange darken-3',
+        },
       ],
       enableStatusChange: false,
       edittingItem: {},

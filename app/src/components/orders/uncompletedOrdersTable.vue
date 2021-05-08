@@ -23,7 +23,7 @@
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">
           <span class="pr-4 font-weight-medium white--text">
-            {{ $t('clientsWhoRegisteredBook') }}
+            {{ $t('UncompletedOrders') }}
           </span>
         </v-toolbar>
       </template>
@@ -69,16 +69,38 @@
       <template v-slot:[`item.nationalId`]="{ item }">
         <span> {{ item.client.nationalId }} </span>
       </template>
+
       <template v-slot:[`item.delivery`]="{ item }">
         <span> {{ $t(item.delivery) }} </span>
       </template>
+
       <template v-slot:[`item.status`]="{ item }">
         <span> {{ $t(item.status) }} </span>
       </template>
 
+      <template v-slot:[`item.operation`]="{ item }">
+        <v-tooltip
+          bottom
+          v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              medium
+              class="ma-2"
+              @click="changeStatusOrder(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-table-edit
+            </v-icon>
+          </template>
+          {{ $t('changeStatus') }}
+        </v-tooltip>
+      </template>
+
       <!-- expanded rows for books  -->
       <template v-slot:expanded-item="{ headers }">
-        <td :colspan="headers.length - 1" class="pa-0 pt-4 pr-4 pb-4">
+        <td :colspan="headers.length - 3" class="pa-0 pt-4 pr-4 pb-4">
           <table
             v-if="books.length > 0"
             class="generalTable"
@@ -94,18 +116,12 @@
               <th>
                 {{ $t('name') }}
               </th>
-              <th>
-                {{ $t('createdAt') }}
-              </th>
+
               <th>
                 {{ $t('category') }}
               </th>
               <th>
                 {{ $t('barcode') }}
-              </th>
-
-              <th>
-                {{ $t('operation') }}
               </th>
             </thead>
             <tbody class="grey lighten-4">
@@ -113,31 +129,12 @@
                 <td>
                   {{ book.name }}
                 </td>
-                <td>
-                  {{ new Date(book.createdAt).toLocaleDateString('fa') }}
-                </td>
+
                 <td>
                   {{ book.category.title }}
                 </td>
                 <td>
                   {{ book.number }}
-                </td>
-
-                <td>
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon
-                        medium
-                        class="ma-2"
-                        v-bind="attrs"
-                        @click="edit(book)"
-                        v-on="on"
-                      >
-                        mdi-pencil
-                      </v-icon>
-                    </template>
-                    {{ $t('edit') }}
-                  </v-tooltip>
                 </td>
               </tr>
             </tbody>
@@ -161,16 +158,25 @@
         ></v-pagination>
       </template>
     </v-data-table>
+    <v-dialog v-model="enableStatusChange" max-width="500px">
+      <multipleChoiseDialog
+        :title="'changeStatus'"
+        :message="`${$t('chooseOrderStatus')}`"
+        :buttons="changeStatusButs"
+        @changeStatus="changeStatus"
+      />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
+import multipleChoiseDialog from '../structure/multipleChoiseDialog.vue';
 
 export default {
   name: 'uncompletedOrdersTable',
-  components: { tableHeaderCell },
+  components: { tableHeaderCell, multipleChoiseDialog },
   mixins: [moneyFormat],
   props: {
     headers: {
@@ -194,7 +200,9 @@ export default {
       expanded: [],
       innerOptions: { ...this.options },
       filter: {},
-
+      // edit
+      enableStatusChange: false,
+      edittingItem: {},
       // fiter
       statusItems: [
         { text: 'active', value: true },
@@ -204,6 +212,51 @@ export default {
         },
       ],
       books: [],
+      status: [
+        { text: 'PENDING', value: 'PENDING' },
+        { text: 'SUBMITTED', value: 'SUBMITTED' },
+        { text: 'ACCEPTED', value: 'ACCEPTED' },
+        { text: 'CANCELED', value: 'CANCELED' },
+        { text: 'IN_PROGRESS', value: 'IN_PROGRESS' },
+        { text: 'ON_WAY', value: 'ON_WAY' },
+        { text: 'RECEIVED', value: 'RECEIVED' },
+        { text: 'CLOSED', value: 'CLOSED' },
+        { text: 'POST', value: 'POST' },
+      ],
+      changeStatusButs: [
+        {
+          name: 'ACCEPTED',
+          color: 'green darken-1',
+        },
+        {
+          name: 'RECEIVED',
+          color: 'blue-grey lighten-1',
+        },
+        {
+          name: 'IN_PROGRESS',
+          color: 'purple lighten-3',
+        },
+        {
+          name: 'ON_WAY',
+          color: 'grey darken-1',
+        },
+        {
+          name: 'CANCELED',
+          color: 'red',
+        },
+        {
+          name: 'CLOSED',
+          color: 'red',
+        },
+        {
+          name: 'POST',
+          color: 'blue-grey darken-3',
+        },
+        {
+          name: 'PENDING',
+          color: 'orange darken-3',
+        },
+      ],
     };
   },
   methods: {
@@ -212,6 +265,23 @@ export default {
       this.onRequest({
         options: this.innerOptions,
       });
+    },
+    changeStatusOrder(item) {
+      this.enableStatusChange = true;
+      this.edittingItem = item;
+    },
+    changeStatus(value) {
+      this.$axios
+        .patch(`/v1/api/tabaadol-e-ketaab/order/${this.edittingItem.id}`, {
+          status: value,
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.reloadTable();
+            this.edittingItem = {};
+            this.enableStatusChange = false;
+          }
+        });
     },
     filterCol(value, name) {
       this.filter[name] = value[name];
@@ -240,23 +310,8 @@ export default {
     },
     getClientBooks(expandedRow) {
       if (expandedRow.length > 0) {
-        console.log(expandedRow);
-        expandedRow.forEach(client => {
-          const { id } = client;
-          this.$axios
-            .get('/v1/api/tabaadol-e-ketaab/books/list', {
-              params: {
-                filter: {
-                  sellerId: id,
-                  status: 'CLIENTREGISTER',
-                },
-              },
-            })
-            .then(res => {
-              if (res.status === 200) {
-                this.books = res.data.result.docs;
-              }
-            });
+        expandedRow.forEach(order => {
+          this.books = order.books;
         });
       }
     },

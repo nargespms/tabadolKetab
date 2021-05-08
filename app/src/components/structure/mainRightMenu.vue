@@ -249,8 +249,7 @@ export default {
           action: 'mdi-notebook',
           title: 'librarian',
           active: false,
-          condition:
-            this.$store.state.bookShop.userInfo.role.cu_book === true
+          condition: this.$store.state.bookShop.userInfo.role.cu_book === true,
           items: [
             {
               icon: 'fas fa-cart-arrow-down',

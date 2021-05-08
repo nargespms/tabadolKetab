@@ -268,6 +268,10 @@ export default {
           name: 'CLOSED',
           color: 'red',
         },
+        {
+          name: 'PENDING',
+          color: 'orange darken-3',
+        },
       ],
       orderType: [
         { text: 'BUY', value: 'BUY' },
