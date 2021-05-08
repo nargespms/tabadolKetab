@@ -23,7 +23,7 @@
                   {{ order.client.lastName }}
                 </span>
               </p>
-              <p>
+              <p v-if="order.type !== 'SELL'">
                 <span class="font-weight-black"> {{ $t('status') }} : </span>
                 <span v-if="order.invoice.paid">
                   {{ $t('paid') }}
