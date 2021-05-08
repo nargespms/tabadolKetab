@@ -574,7 +574,7 @@ const routes = [
         component: () => import('../views/orders/UncompletedOrders.vue'),
         meta: {
           requiresAuth: true,
-          roles: [{ r_order: true }, { cu_book: true }],
+          roles: [{ cu_book: true }],
         },
       },
       {
