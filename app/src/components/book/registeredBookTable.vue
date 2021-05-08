@@ -90,6 +90,9 @@
               <th>
                 {{ $t('category') }}
               </th>
+              <th>
+                {{ $t('barcode') }}
+              </th>
 
               <th>
                 {{ $t('operation') }}
@@ -105,6 +108,9 @@
                 </td>
                 <td>
                   {{ book.category.title }}
+                </td>
+                <td>
+                  {{ book.number }}
                 </td>
 
                 <td>
