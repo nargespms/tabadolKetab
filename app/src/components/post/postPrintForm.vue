@@ -131,7 +131,11 @@ export default {
       .then(res => {
         if (res.status === 200) {
           this.postReq = res.data;
-          this.orderItems = res.data.books;
+          if (res.data.type === 'BUY') {
+            this.orderItems = res.data.invoice.books;
+          } else if (res.data.type === 'SELL') {
+            this.orderItems = res.data.books;
+          }
 
           this.isLoading = false;
         }
