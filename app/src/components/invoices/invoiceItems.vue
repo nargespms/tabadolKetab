@@ -10,6 +10,8 @@
           ? ''
           : $vuetify.breakpoint.lg
           ? ''
+          : $vuetify.breakpoint.md
+          ? ''
           : 'tableMobileScroll'
       "
     >

@@ -38,13 +38,16 @@
 
             <p>
               {{ $t('numbersOfBook') }} &nbsp; : &nbsp;
-              <span class="pr-4">
-                {{ $t(postReq.books.length) }}
+              <span class="pr-4" v-if="postReq.type === 'BUY'">
+                {{ postReq.invoice.books.length }}
+              </span>
+              <span class="pr-4" v-else>
+                {{ postReq.books.length }}
               </span>
             </p>
             <p>
               {{ $t('address') }} &nbsp; : &nbsp;
-              <span class="pr-4">
+              <span class="pr-4" v-if="postReq.address">
                 {{ $t(postReq.address.address) }}
               </span>
             </p>
