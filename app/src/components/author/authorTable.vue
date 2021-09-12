@@ -18,12 +18,12 @@
       update:options
       :server-items-length="totalData"
       hide-default-header
+      hide-default-footer
       :loading="loading"
       class="elevation-1 text-center ma-4 clear"
+      :mobile-breakpoint="100"
       :loading-text="$t('loadingText')"
       :no-data-text="$t('Nodataavailable')"
-      hide-default-footer
-      :mobile-breakpoint="100"
     >
       <template v-slot:top>
         <v-toolbar color="teal " flat height="48">

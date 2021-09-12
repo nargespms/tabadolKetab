@@ -55,7 +55,6 @@ export default {
           filterType: 'clientUsers',
           align: 'center',
           divider: true,
-          icon: '🧑‍💻',
         },
 
         {
@@ -120,6 +119,14 @@ export default {
           text: 'address',
           value: 'address',
           filterable: true,
+          filterType: 'text',
+          align: 'center',
+          divider: true,
+        },
+        {
+          text: 'landLane',
+          value: 'landLane',
+          filterable: false,
           filterType: 'text',
           align: 'center',
           divider: true,

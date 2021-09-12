@@ -101,6 +101,12 @@
         </span>
       </template>
 
+      <template v-slot:[`item.landLane`]="{ item }">
+        <span v-if="item.landLane">
+          {{ $t(item.address.landLane) }}
+        </span>
+      </template>
+
       <template v-slot:[`item.operation`]="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">

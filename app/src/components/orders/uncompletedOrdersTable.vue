@@ -205,11 +205,10 @@ export default {
       edittingItem: {},
       // fiter
       statusItems: [
-        { text: 'active', value: true },
-        {
-          text: 'inactive',
-          value: false,
-        },
+        { text: 'PENDING', value: 'PENDING' },
+        { text: 'SUBMITTED', value: 'SUBMITTED' },
+        { text: 'ACCEPTED', value: 'ACCEPTED' },
+        { text: 'IN_PROGRESS', value: 'IN_PROGRESS' },
       ],
       books: [],
       status: [

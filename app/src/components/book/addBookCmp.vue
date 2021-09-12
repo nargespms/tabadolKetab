@@ -305,7 +305,7 @@
           ></v-col>
         </v-row>
 
-        <v-row>
+        <v-row v-if="$store.state.bookShop.userInfo.role === 'CLIENT'">
           <v-col cols="12">
             <div class="recieveUserWrap d-flex align-center ">
               <span class="font-weight-black"> {{ $t('recycle') }} : </span>
