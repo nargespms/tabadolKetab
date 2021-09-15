@@ -17,6 +17,15 @@
 
         <v-tab-item background-color="transparent" class="w250">
           <div class="w250 pr-8">
+            <nationalId
+              @setNationalId="setNationalId"
+              :isRequire="true"
+              :key="nationalIdKey"
+            />
+          </div>
+        </v-tab-item>
+        <v-tab-item>
+          <div class="w250 pr-8">
             <mobilePhone
               @setMobilePhone="setMobilePhone"
               :validate="true"
@@ -24,15 +33,6 @@
               :isRequired="true"
               :phone="false"
               :key="mobileKey"
-            />
-          </div>
-        </v-tab-item>
-        <v-tab-item>
-          <div class="w250 pr-8">
-            <nationalId
-              @setNationalId="setNationalId"
-              :isRequire="true"
-              :key="nationalIdKey"
             />
           </div>
         </v-tab-item>
@@ -98,8 +98,8 @@ export default {
 
       tab: '',
       tabs: [
-        { text: 'mobile', icon: 'mdi-card-account-phone-outline' },
         { text: 'nationalId', icon: 'mdi-card-account-details-star-outline' },
+        { text: 'mobile', icon: 'mdi-card-account-phone-outline' },
       ],
     };
   },
