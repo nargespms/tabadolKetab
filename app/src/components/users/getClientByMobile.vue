@@ -112,9 +112,9 @@ export default {
     },
     getClientInfo() {
       this.client = {};
-      if (this.tab === 0) {
+      if (this.tab === 1) {
         this.getClientBymobile();
-      } else if (this.tab === 1) {
+      } else if (this.tab === 0) {
         this.getClientByNationalId();
       }
     },
