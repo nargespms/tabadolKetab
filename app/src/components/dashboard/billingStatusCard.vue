@@ -47,11 +47,11 @@
       </v-col>
     </v-row>
 
-    <v-row no-gutters>
+    <v-row>
       <v-col cols="12" lg="4">
         <creditStatusCard
-          :lable="'totalBuyandSell'"
-          :number="billing.totalBuyandSell"
+          :lable="'totalBuyToday'"
+          :number="billing.totalBuy"
           :color="color"
         />
       </v-col>
@@ -77,7 +77,7 @@ export default {
         todayOnlineShop: 0,
 
         totalDeposit: 0,
-        totalBuyandSell: 0,
+        totalBuy: 0,
       },
     };
   },
@@ -140,12 +140,18 @@ export default {
           }
         });
     },
-    totalBuyandSell() {
+    totalBuy() {
       this.$axios
-        .get('/v1/api/tabaadol-e-ketaab/report/total-buy')
+        .get('/v1/api/tabaadol-e-ketaab/report/total-buy', {
+          params: {
+            filter: {
+              createdAt: new Date(),
+            },
+          },
+        })
         .then(res => {
           if (res.status === 200) {
-            this.billing.totalBuyandSell = res.data.sum;
+            this.billing.totalBuy = res.data.sum;
           }
         });
     },
@@ -157,7 +163,7 @@ export default {
     this.sumOfWage();
     this.usersCreditSumFromboooksTrade();
     this.totalDeposit();
-    this.totalBuyandSell();
+    this.totalBuy();
   },
 };
 </script>

@@ -598,5 +598,5 @@ export default {
   creditByGift: ' افزایش اعتبار هدیه  ',
   tabadolBankAccount: ' افزایش اعتبار از طریق حساب بانکی  ',
   finalTotalInvoices: ' مبلغ کل فاکتورها',
-  totalBuyandSell: 'مجموع خرید و فروش امروز',
+  totalBuyToday: 'مجموع خرید امروز',
 };
