@@ -46,6 +46,16 @@
         />
       </v-col>
     </v-row>
+
+    <v-row no-gutters>
+      <v-col cols="12" lg="4">
+        <creditStatusCard
+          :lable="'totalBuyandSell'"
+          :number="billing.totalBuyandSell"
+          :color="color"
+        />
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -67,6 +77,7 @@ export default {
         todayOnlineShop: 0,
 
         totalDeposit: 0,
+        totalBuyandSell: 0,
       },
     };
   },
@@ -129,6 +140,15 @@ export default {
           }
         });
     },
+    totalBuyandSell() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/report/total-buy')
+        .then(res => {
+          if (res.status === 200) {
+            this.billing.totalBuyandSell = res.data.sum;
+          }
+        });
+    },
   },
   mounted() {
     this.getBooksValue();
@@ -137,6 +157,7 @@ export default {
     this.sumOfWage();
     this.usersCreditSumFromboooksTrade();
     this.totalDeposit();
+    this.totalBuyandSell();
   },
 };
 </script>
