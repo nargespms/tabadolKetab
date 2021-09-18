@@ -8,7 +8,7 @@
             class="white--text"
             @click="addressModal"
             :disabled="request.length < 1"
-            >{{ $t('bookSendReq') }}</v-btn
+            >{{ $t('postRequest') }}</v-btn
           >
           <div v-if="request.length < 1" class="warnReq ml-3">
             <v-icon color="red"> fas fa-exclamation-triangle </v-icon>

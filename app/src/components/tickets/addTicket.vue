@@ -145,7 +145,7 @@ export default {
         v => !!v || `${this.$t('thisFieldIsRequired')}`,
         v => (v && v.length >= 3) || `${this.$t('minCharaters3')}`,
       ],
-      departments: ['INFO', 'TECH', 'BILLING'],
+      departments: ['INFO', 'IT', 'GENERAL', 'BILLING', 'BOOK'],
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       ticket: {
         title: '',
