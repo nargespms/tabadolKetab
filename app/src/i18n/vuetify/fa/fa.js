@@ -599,4 +599,5 @@ export default {
   tabadolBankAccount: ' افزایش اعتبار از طریق حساب بانکی  ',
   finalTotalInvoices: ' مبلغ کل فاکتورها',
   totalBuyToday: 'مجموع خرید امروز',
+  addedTocart: 'کتاب مورد نظر به سبد خرید اضافه شد',
 };

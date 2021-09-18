@@ -37,22 +37,32 @@
         </v-card>
       </v-col>
     </v-row>
+    <notifMessage
+      v-if="cartEnable"
+      :msg="'addedTocart'"
+      @hideNotif="hideNotif"
+      :type="'success'"
+    />
   </div>
 </template>
 
 <script>
 import booksSearchResults from '../../components/search/booksSearchResults.vue';
 import bookSearchForm from '../../components/search/bookSearchForm.vue';
+import notifMessage from '../../components/structure/notifMessage.vue';
 
 export default {
   name: 'bookSearch',
   metaInfo: {
     title: 'جستجو کتاب',
   },
+
   components: {
     booksSearchResults,
     bookSearchForm,
+    notifMessage,
   },
+
   data() {
     return {
       searchResult: [],
@@ -60,8 +70,19 @@ export default {
       loadingMore: false,
       enableLoadingMore: false,
       filter: {},
+
+      cartEnable: false,
+
+      cart: this.$store.state.bookShop.bag,
     };
   },
+
+  watch: {
+    cart() {
+      this.cartEnable = true;
+    },
+  },
+
   methods: {
     reqBook() {
       this.$router.push({
@@ -107,6 +128,9 @@ export default {
             this.loadingMore = false;
           }
         });
+    },
+    hideNotif() {
+      this.cartEnable = false;
     },
   },
   mounted() {

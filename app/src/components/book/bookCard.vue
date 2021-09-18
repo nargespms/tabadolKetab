@@ -43,7 +43,12 @@
       <p v-if="book.undergraduatePrice" class=" primary--text">
         {{ this.moneyFormat(book.undergraduatePrice) }} {{ $t('rial') }}
       </p>
-      <v-btn color="blue lighten-1" class="px-6" @click="addToBag(book)">
+      <v-btn
+        color="blue lighten-1"
+        class="px-6"
+        :disabled="bought"
+        @click="addToBag(book)"
+      >
         <v-icon color="white">
           fas fa-shopping-cart
         </v-icon>
@@ -65,7 +70,37 @@ export default {
       type: Object,
     },
   },
+
   mixins: [moneyFormat],
+
+  data() {
+    return {
+      bought: false,
+    };
+  },
+
+  computed: {
+    bag() {
+      return this.$store.state.bookShop.bag;
+    },
+  },
+
+  created() {
+    const findingItem = this.bag.findIndex(book => book.id === this.book.id);
+    if (findingItem !== -1) {
+      this.bought = true;
+    }
+  },
+
+  watch: {
+    bag() {
+      const findingItem = this.bag.findIndex(book => book.id === this.book.id);
+      if (findingItem !== -1) {
+        this.bought = true;
+      }
+    },
+  },
+
   methods: {
     addToBag(book) {
       if (this.$store.state.bookShop.userInfo === null) {
