@@ -13,7 +13,11 @@
       <span>
         {{ data.name }}
       </span>
-      <v-icon left color="primary" medium class="pointer">mdi-download </v-icon>
+      <a :href="data.view" class="text-white" download>
+        <v-icon left color="primary" medium class="pointer"
+          >mdi-download
+        </v-icon>
+      </a>
     </v-card-actions>
   </v-card>
 </template>
