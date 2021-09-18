@@ -328,6 +328,7 @@ export default {
           title: 'messages',
           active: false,
           condition:
+            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
             this.$store.state.bookShop.userInfo.role.cu_message === true,
           badge: this.unreadMessages !== '0' ? this.unreadMessages : '',
           badgeColor: 'red',
