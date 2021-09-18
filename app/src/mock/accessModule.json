@@ -34,10 +34,6 @@
         "value": false
       },
       {
-        "name": "delete",
-        "value": false
-      },
-      {
         "name": "previewAll",
         "value": false
       },
@@ -189,7 +185,7 @@
     "icon": "fas fa-object-group",
     "items": [
       {
-        "name": "all",
+        "name": "addORedit",
         "value": false
       }
     ]

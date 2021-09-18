@@ -128,7 +128,7 @@ export default {
       this.permission.category = {
         items: [
           {
-            name: 'preview',
+            name: 'addORedit',
             value: data.cu_category,
           },
         ],
@@ -202,10 +202,6 @@ export default {
           {
             name: 'add',
             value: data.c_invoice,
-          },
-          {
-            name: 'delete',
-            value: data.d_invoice,
           },
           {
             name: 'previewAll',

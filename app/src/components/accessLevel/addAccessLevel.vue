@@ -359,7 +359,7 @@ export default {
       }
     },
     setAccessCategory(value) {
-      if (value.itemName === 'all') {
+      if (value.itemName === 'addORedit') {
         this.accessLevel.cu_category = value.status;
       }
     },
@@ -408,8 +408,6 @@ export default {
     setAccessInvoices(value) {
       if (value.itemName === 'add') {
         this.accessLevel.c_invoice = value.status;
-      } else if (value.itemName === 'delete') {
-        this.accessLevel.d_invoice = value.status;
       } else if (value.itemName === 'previewAll') {
         this.accessLevel.r_invoices = value.status;
       } else if (value.itemName === 'preview') {
@@ -417,7 +415,7 @@ export default {
       }
     },
     setAccessRole(value) {
-      if (value.itemName === 'all') {
+      if (value.itemName === 'addORedit') {
         this.accessLevel.cu_role = value.status;
       }
     },
