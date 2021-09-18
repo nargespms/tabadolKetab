@@ -57,7 +57,9 @@ export default {
         {
           tab: 'users',
           icon: 'mdi-account',
-          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
+          condition:
+            this.$store.state.bookShop.userInfo.role !== 'CLIENT' &&
+            this.$store.state.bookShop.userInfo.role.r_report === true,
         },
         {
           tab: 'tickets',
@@ -67,22 +69,30 @@ export default {
         {
           tab: 'discounts',
           icon: ' mdi-ticket-percent',
-          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
+          condition:
+            this.$store.state.bookShop.userInfo.role !== 'CLIENT' &&
+            this.$store.state.bookShop.userInfo.role.r_report === true,
         },
         {
           tab: 'post',
           icon: 'fas fa-motorcycle',
-          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
+          condition:
+            this.$store.state.bookShop.userInfo.role !== 'CLIENT' &&
+            this.$store.state.bookShop.userInfo.role.r_report === true,
         },
         {
           tab: 'billing',
           icon: 'fas fa-file-invoice-dollar',
-          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
+          condition:
+            this.$store.state.bookShop.userInfo.role !== 'CLIENT' &&
+            this.$store.state.bookShop.userInfo.role.r_report === true,
         },
         {
           tab: 'book',
           icon: 'mdi-book-open-variant',
-          condition: this.$store.state.bookShop.userInfo.role !== 'CLIENT',
+          condition:
+            this.$store.state.bookShop.userInfo.role !== 'CLIENT' &&
+            this.$store.state.bookShop.userInfo.role.r_report === true,
         },
       ],
     };

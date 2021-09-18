@@ -162,7 +162,7 @@ export default {
           title: 'Dashboard',
           action: 'mdi-view-dashboard',
           link: '/dashboard',
-          condition: this.$store.state.bookShop.userInfo.role.r_report === true,
+          condition: true,
         },
         {
           title: 'bookSearch',
