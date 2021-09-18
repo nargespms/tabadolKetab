@@ -52,7 +52,7 @@
         <v-icon color="white">
           fas fa-shopping-cart
         </v-icon>
-        <span class=" white--text">
+        <span :class="!bought ? 'white--text' : ''">
           {{ $t('buy') }}
         </span>
       </v-btn>
