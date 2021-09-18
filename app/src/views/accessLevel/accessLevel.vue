@@ -92,7 +92,7 @@ export default {
       this.permission.discount = {
         items: [
           {
-            name: 'addORedit',
+            name: 'addORdelete',
             value: data.cd_discount,
           },
         ],

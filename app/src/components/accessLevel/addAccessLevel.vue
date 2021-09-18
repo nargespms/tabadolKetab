@@ -329,9 +329,11 @@ export default {
       }
     },
     setAccessDiscount(value) {
+      console.log(value);
       if (value.itemName === 'addORdelete') {
         this.accessLevel.cd_discount = value.status;
       }
+      console.log(this.accessLevel.cd_discount);
     },
 
     setAccessBook(value) {
