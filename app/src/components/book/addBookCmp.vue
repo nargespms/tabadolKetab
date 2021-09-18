@@ -429,6 +429,7 @@ export default {
       allowKey: 0,
     };
   },
+
   methods: {
     booksList() {
       this.$router.push({
@@ -568,7 +569,15 @@ export default {
   watch: {
     book(newVal) {
       this.book.allowDiscount = newVal.allowDiscount;
+
+      if (
+        this.$store.state.bookShop.userInfo.role !== 'CLIENT' ||
+        this.edittingData.recycle === undefined
+      ) {
+        this.book.recycle = 'NOPROBLEM';
+      }
     },
+
     edittingData(newVal) {
       this.book = newVal;
     },
@@ -578,9 +587,17 @@ export default {
       this.getBookData();
     } else if (this.mode === 'edit' && this.state === 'modal') {
       this.book = { ...this.edittingData };
+
       this.isLoading = false;
     } else {
       this.isLoading = false;
+    }
+
+    if (
+      this.$store.state.bookShop.userInfo.role !== 'CLIENT' ||
+      this.edittingData.recycle === undefined
+    ) {
+      this.book.recycle = 'NOPROBLEM';
     }
   },
 };
