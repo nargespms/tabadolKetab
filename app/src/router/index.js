@@ -32,6 +32,7 @@ Router.beforeEach((to, from, next) => {
           next();
         } else if (to.meta.cRole !== userRole) {
           if (
+            routeRules.length === 0 ||
             routeRules.some(role => userRole[Object.keys(role)[0]] === true)
           ) {
             // console.log('Both & staff HAPPY');

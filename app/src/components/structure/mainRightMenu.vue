@@ -228,7 +228,8 @@ export default {
               title: 'addBook',
               link: '/addBook',
               icon: 'fas fa-plus',
-              condition: true,
+              condition:
+                this.$store.state.bookShop.userInfo.role.cu_book === true,
             },
             {
               title: 'booksList',
@@ -374,7 +375,12 @@ export default {
           action: 'mdi-cash-multiple',
           title: 'billing',
           active: false,
-          condition: true,
+          condition:
+            this.$store.state.bookShop.userInfo.role === 'CLIENT' ||
+            this.$store.state.bookShop.userInfo.role.c_invoice === true ||
+            this.$store.state.bookShop.userInfo.role.r_invoice === true ||
+            this.$store.state.bookShop.userInfo.role.r_order === true ||
+            this.$store.state.bookShop.userInfo.role.cu_credit === true,
           items: [
             {
               title: 'addInvoice',

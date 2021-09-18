@@ -108,7 +108,7 @@ const routes = [
           requiresAuth: true,
           access: 'BOTH',
           cRole: 'CLIENT',
-          roles: [{ r_report: true }],
+          roles: [],
         },
       },
       {
