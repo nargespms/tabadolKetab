@@ -122,23 +122,42 @@
                   :height="32"
                 />
               </v-col>
-              <v-col cols="12" md="6" class="pa-0 d-flex align-self-end pr-4">
-                <span class="pl-6">
-                  {{ $t('priceRange') }}
-                </span>
+              <v-col cols="12" md="9" class="pa-0 d-flex align-self-end pr-4">
+                <span class="pl-6"> {{ $t('priceRange') }}: </span>
 
                 <v-range-slider
+                  v-model="range"
                   :max="max"
                   :min="min"
-                  v-model="range"
+                  class="mb-3"
+                  hide-details
                   @change="priceRange"
-                  persistent-hint
-                  :hint="
-                    `${moneyFormat(filter.minPrice)}${this.$t(
-                      'rial'
-                    )}-${moneyFormat(filter.maxPrice)}${this.$t('rial')}`
-                  "
-                ></v-range-slider>
+                >
+                  <template v-slot:prepend>
+                    <span class="pt-3">
+                      از
+                    </span>
+                    <v-text-field
+                      :value="`${moneyFormat(filter.minPrice)} ${$t('rial')}`"
+                      class="mt-0 pt-0 px-3"
+                      hide-details
+                      single-line
+                      @change="$set(range, 0, $event)"
+                    ></v-text-field>
+                  </template>
+                  <template v-slot:append>
+                    <span class="pt-3">
+                      تا
+                    </span>
+                    <v-text-field
+                      :value="`${moneyFormat(filter.maxPrice)} ${$t('rial')}`"
+                      class="mt-0 pt-0 px-3"
+                      hide-details
+                      single-line
+                      @change="$set(range, 1, $event)"
+                    ></v-text-field>
+                  </template>
+                </v-range-slider>
               </v-col>
             </v-row>
 
@@ -196,7 +215,11 @@ export default {
       }
     },
     priceRange() {
-      this.filter = { minPrice: this.range[0], maxPrice: this.range[1] };
+      this.filter = {
+        ...this.filter,
+        minPrice: this.range[0],
+        maxPrice: this.range[1],
+      };
     },
     searchBook() {
       this.$refs.form.validate();
