@@ -70,6 +70,13 @@
           </span>
           <p>{{ book.summary }}</p>
         </div>
+
+        <div class="pa-3 mt-4" v-if="book.description">
+          <span class="font-weight-bold my-3 d-block">
+            {{ $t('description') }} :
+          </span>
+          <p>{{ book.description }}</p>
+        </div>
         <div class="detailsBook mt-4">
           <bookDetails :data="book" />
         </div>
