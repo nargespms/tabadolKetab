@@ -118,8 +118,11 @@ export default {
     isRequire(newVal) {
       this.localRequire = newVal;
     },
+
     editDataId(newVal) {
-      this.model = newVal;
+      if (newVal.length > 0) {
+        this.model = newVal;
+      }
     },
   },
   mounted() {

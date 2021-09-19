@@ -447,7 +447,14 @@ export default {
     },
     getTag(value) {
       this.book.tags = value;
+
+      if (value.length > 0) {
+        this.book.allowDiscount = false;
+      } else {
+        this.book.allowDiscount = true;
+      }
     },
+
     getWriter(value) {
       this.book.writerId = value;
     },
