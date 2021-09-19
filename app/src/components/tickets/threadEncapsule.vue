@@ -36,7 +36,10 @@
             {{ data.description }}
           </div>
         </div>
-        <filePreview :data="data.attachment" />
+        <filePreview
+          v-if="data.attachment"
+          :data="data.attachment ? data.attachment : {}"
+        />
       </v-card>
     </v-col>
   </v-row>
