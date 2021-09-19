@@ -32,7 +32,10 @@
                 <div
                   class="primary--text  pointer px-2"
                   @click="addressModalEnable = true"
-                  v-if="$store.state.bookShop.loggedIn"
+                  v-if="
+                    $store.state.bookShop.loggedIn &&
+                      this.bag.delivery !== 'PRESENCE'
+                  "
                 >
                   <v-icon color="primary" class="fn18"
                     >mdi-subdirectory-arrow-left</v-icon
