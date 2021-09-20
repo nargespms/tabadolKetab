@@ -600,4 +600,5 @@ export default {
   finalTotalInvoices: ' مبلغ کل فاکتورها',
   totalBuyToday: 'مجموع خرید امروز',
   addedTocart: 'کتاب مورد نظر به سبد خرید اضافه شد',
+  saveandBarcode: 'ذخیره و دریافت بارکد',
 };

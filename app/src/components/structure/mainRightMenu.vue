@@ -229,7 +229,8 @@ export default {
               link: '/addBook',
               icon: 'fas fa-plus',
               condition:
-                this.$store.state.bookShop.userInfo.role.cu_book === true,
+                this.$store.state.bookShop.userInfo.role.cu_book === true ||
+                this.$store.state.bookShop.userInfo.role === 'CLIENT',
             },
             {
               title: 'booksList',

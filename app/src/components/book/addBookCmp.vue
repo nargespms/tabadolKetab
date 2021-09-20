@@ -353,12 +353,34 @@
             {{ $t('save') }}
           </v-btn>
 
+          <v-btn
+            v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="validate('barcode')"
+          >
+            {{ $t('saveandBarcode') }}
+          </v-btn>
+
           <v-btn color="error" class="mr-4" @click="reset"
             >{{ $t('resetForm') }}
           </v-btn>
         </div>
       </v-form>
     </v-card>
+
+    <v-dialog
+      v-model="showBorcode"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      @click:outside="closeBarcode"
+    >
+      <v-card class="pa-3 ">
+        <barcodePrint :id="bookId" />
+      </v-card>
+    </v-dialog>
 
     <notifMessage
       v-if="saveSuccess"
@@ -384,6 +406,7 @@ import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
 import authorAutocomplete from '../author/authorAutocomplete.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
 import uploadFile from '../file/uploadFile.vue';
+import barcodePrint from '../barcode/barcodePrint.vue';
 
 export default {
   name: 'addBookCmp',
@@ -395,6 +418,7 @@ export default {
     authorAutocomplete,
     clientsAutoComplete,
     uploadFile,
+    barcodePrint,
   },
   props: {
     mode: {
@@ -427,6 +451,9 @@ export default {
       errorMsg: '',
       isLoading: true,
       allowKey: 0,
+
+      showBorcode: false,
+      bookId: undefined,
     };
   },
 
@@ -471,7 +498,7 @@ export default {
       this.book.attachmentId = value;
     },
     // validate form
-    validate() {
+    validate(barcode) {
       this.$refs.form.validate();
       // book category validation
       if (this.$refs.bookCat.model === null) {
@@ -515,7 +542,13 @@ export default {
             })
             .then(res => {
               console.log(res);
-              if (res.status === 200) {
+              if (res.status === 200 && barcode === 'barcode') {
+                console.log(res.data.number, 'barcode');
+                this.showBorcode = true;
+                this.bookId = res.data.id;
+
+                this.saveSuccess = true;
+              } else {
                 this.saveSuccess = true;
                 if (this.state === 'modal') {
                   this.$emit('closeModal');
@@ -547,7 +580,7 @@ export default {
         this.valid = false;
       }
     },
-    // reset form
+
     reset() {
       this.$refs.form.reset();
       this.bookCatVallidate = true;
@@ -555,6 +588,7 @@ export default {
       this.allowKey += 1;
     },
     // notif hide
+
     hideNotif() {
       this.saveSuccess = false;
     },
@@ -571,6 +605,11 @@ export default {
             this.isLoading = false;
           }
         });
+    },
+
+    closeBarcode() {
+      this.showBorcode = false;
+      this.bookNumber = '';
     },
   },
   watch: {

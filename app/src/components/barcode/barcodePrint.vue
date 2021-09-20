@@ -19,12 +19,23 @@
 <script>
 export default {
   name: 'barcodePrint',
+
   data() {
     return {
       book: {},
       isLoading: true,
+
+      bookId: '',
     };
   },
+
+  props: {
+    id: {
+      type: String,
+      default: '',
+    },
+  },
+
   methods: {
     getBarcode(data) {
       console.log(data);
@@ -39,7 +50,7 @@ export default {
     },
     getBookData() {
       this.$axios
-        .get(`/v1/api/tabaadol-e-ketaab/book/${this.$route.params.bookId}`)
+        .get(`/v1/api/tabaadol-e-ketaab/book/${this.bookId}`)
         .then(res => {
           if (res.status === 200) {
             console.log(res);
@@ -49,6 +60,14 @@ export default {
         });
     },
   },
+  created() {
+    if (this.id.length > 0) {
+      this.bookId = this.id;
+    } else {
+      this.bookId = this.$route.params.bookId;
+    }
+  },
+
   mounted() {
     this.getBookData();
   },
