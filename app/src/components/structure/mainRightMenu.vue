@@ -144,18 +144,9 @@ export default {
       type: String,
     },
   },
-  methods: {
-    getCreditAmount() {
-      this.$axios.get(`/v1/api/tabaadol-e-ketaab/credit`).then(res => {
-        if (res.status === 200) {
-          this.credit = res.data.credit;
-        }
-      });
-    },
-  },
+
   data() {
     return {
-      credit: 0,
       localDrawer: this.state,
       simpleItems: [
         {
@@ -705,10 +696,11 @@ export default {
       this.unreadMessages = newVal;
     },
   },
-  mounted() {
-    if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
-      this.getCreditAmount();
-    }
+
+  computed: {
+    credit() {
+      return this.$store.state.bookShop.credit;
+    },
   },
 };
 </script>

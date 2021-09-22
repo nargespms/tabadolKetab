@@ -179,6 +179,7 @@ export default {
         this.$axios[this.method](this.endpoint, { ...this.credit }).then(
           res => {
             if (res.status === 200) {
+              console.log(res.data);
               if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
                 window.open(res.data.link, '_blank');
               }
@@ -187,6 +188,7 @@ export default {
               }
               this.isLoading = false;
               this.saveSuccess = true;
+
               this.reset();
             }
           }

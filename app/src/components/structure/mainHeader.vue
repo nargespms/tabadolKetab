@@ -182,6 +182,16 @@ export default {
           this.menuKey += 1;
         });
     },
+
+    getCreditAmount() {
+      this.$axios.get(`/v1/api/tabaadol-e-ketaab/credit`).then(res => {
+        if (res.status === 200) {
+          this.$store.commit('bookShop/setClientCredit', res.data.credit, {
+            module: 'bookShop',
+          });
+        }
+      });
+    },
   },
   computed: {
     bagLength() {
@@ -196,11 +206,13 @@ export default {
     this.timer2 = setInterval(this.getUnreadBookRequest, 300000);
     this.timer = setInterval(this.getUnreadTickets, 300000);
     this.timer3 = setInterval(this.getUnreadMessages, 300000);
+    this.timer4 = setInterval(this.getCreditAmount, 300000);
   },
   beforeDestroy() {
     clearInterval(this.timer);
     clearInterval(this.timer2);
     clearInterval(this.timer3);
+    clearInterval(this.timer4);
   },
 };
 </script>

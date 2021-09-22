@@ -14,6 +14,9 @@ export const unreadMessagesCal = (state, response) => {
 export const loggedIn = (state, response) => {
   state.loggedIn = response;
 };
+export const setClientCredit = (state, response) => {
+  state.credit = response;
+};
 export const clearBag = state => {
   state.bag = [];
 };
