@@ -142,8 +142,12 @@
                       class="mt-0 pt-0 px-3"
                       hide-details
                       single-line
-                      @change="$set(range, 0, $event)"
+                      v-model.number="range[0]"
+                      @input="priceRange"
                     ></v-text-field>
+                    <span class="pt-3">
+                      {{ $t('rial') }}
+                    </span>
                   </template>
                   <template v-slot:append>
                     <span class="pt-3">
@@ -154,8 +158,12 @@
                       class="mt-0 pt-0 px-3"
                       hide-details
                       single-line
-                      @change="$set(range, 1, $event)"
+                      v-model.number="range[1]"
+                      @input="priceRange"
                     ></v-text-field>
+                    <span class="pt-3">
+                      {{ $t('rial') }}
+                    </span>
                   </template>
                 </v-range-slider>
               </v-col>
