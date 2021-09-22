@@ -38,24 +38,40 @@
         </v-col>
       </v-row>
     </v-form>
-    <financeReportTable
-      v-if="!isLoading"
-      :columns="columns"
-      :data="data"
-      :module="'mostBuyUser'"
-    />
+
+    <v-row v-if="!isLoading" class="justify-center">
+      <v-col cols="12" lg="4">
+        <statusCard
+          :lable="
+            `بیشترین خرید /n ${data.bestBuyer.firstName}${data.bestBuyer.lastName}`
+          "
+          :number="data.bestBuyer.total"
+          :color="'#0277BD'"
+        />
+      </v-col>
+      <v-col cols="12" lg="4">
+        <statusCard
+          :lable="
+            `بیشترین فروش /n ${data.bestBuyer.firstName}${data.bestBuyer.lastName}`
+          "
+          :number="data.bestSeller.total"
+          :color="'#0277BD'"
+        />
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 
 <script>
-import financeReportTable from './financeReportTable.vue';
+import statusCard from '../dashboard/statusCard.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
 import dateTime from '../../mixins/dateTime.js';
 
 export default {
   name: 'userBuyReport',
   components: {
-    financeReportTable,
+    statusCard,
+
     rangeDatePickerCmp,
   },
   data() {

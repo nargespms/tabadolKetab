@@ -170,13 +170,6 @@ export default {
       ],
       clientsCols: [
         {
-          text: 'avatar',
-          align: 'center',
-          sortable: false,
-          value: 'avatar',
-          divider: true,
-        },
-        {
           text: 'fullName',
           align: 'center',
           sortable: true,

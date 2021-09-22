@@ -9,12 +9,6 @@
       >
         <div class="d-flex">
           <div class="ticketInfo pa-4">
-            <v-avatar size="32">
-              <img
-                :src="data[userName].avatar"
-                :alt="`${data[userName].firstName} ${data[userName].lastName}`"
-              />
-            </v-avatar>
             <span class="grey--text text--darken-3" v-if="data[userName]">
               {{ data[userName].firstName }}
             </span>
