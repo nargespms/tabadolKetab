@@ -370,18 +370,6 @@
       </v-form>
     </v-card>
 
-    <v-dialog
-      v-model="showBorcode"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      @click:outside="closeBarcode"
-    >
-      <v-card class="pa-3 ">
-        <barcodePrint :id="bookId" />
-      </v-card>
-    </v-dialog>
-
     <notifMessage
       v-if="saveSuccess"
       :msg="'operationSuccessfullyOcured'"
@@ -406,7 +394,6 @@ import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
 import authorAutocomplete from '../author/authorAutocomplete.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
 import uploadFile from '../file/uploadFile.vue';
-import barcodePrint from '../barcode/barcodePrint.vue';
 
 export default {
   name: 'addBookCmp',
@@ -418,7 +405,6 @@ export default {
     authorAutocomplete,
     clientsAutoComplete,
     uploadFile,
-    barcodePrint,
   },
   props: {
     mode: {
@@ -543,9 +529,11 @@ export default {
             .then(res => {
               console.log(res);
               if (res.status === 200 && barcode === 'barcode') {
-                console.log(res.data.number, 'barcode');
-                this.showBorcode = true;
-                this.bookId = res.data.id;
+                const routeData = this.$router.resolve({
+                  path: `/print/barcode/${id}`,
+                });
+                window.open(routeData.href, '_blank');
+                this.$emit('closeModal');
 
                 this.saveSuccess = true;
               } else {
