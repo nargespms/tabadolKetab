@@ -58,6 +58,9 @@
       <template v-slot:[`item.createdAt`]="{ item }">
         {{ new Date(item.createdAt).toLocaleDateString('fa') }}
       </template>
+      <template v-slot:[`item.expireDate`]="{ item }">
+        {{ new Date(item.expireDate).toLocaleDateString('fa') }}
+      </template>
 
       <template v-slot:[`item.categoryId`]="{ item }">
         {{ item.category.title }}

@@ -40,6 +40,15 @@ export default {
           divider: true,
         },
         {
+          text: 'expireDate',
+          value: 'expireDate',
+          filterName: 'expireDate',
+          filterable: true,
+          filterType: 'date',
+          align: 'center',
+          divider: true,
+        },
+        {
           text: 'category',
           value: 'categoryId',
           filterable: true,
