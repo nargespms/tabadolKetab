@@ -135,6 +135,8 @@ export default {
               this.isLoading = false;
             }
           });
+      } else {
+        this.getData();
       }
     },
     isRequire(newVal) {

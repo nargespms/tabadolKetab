@@ -15,6 +15,7 @@ export default {
       fileInfo: {},
     };
   },
+
   methods: {
     upload() {
       const file = document.querySelector('input[type=file]').files[0];
