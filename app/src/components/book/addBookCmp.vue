@@ -499,8 +499,14 @@ export default {
               ...this.book,
             })
             .then(res => {
-              console.log(res);
-              if (res.status === 200) {
+              if (res.status === 200 && barcode === 'barcode') {
+                const routeData = this.$router.resolve({
+                  path: `/print/barcode/${res.data.id}`,
+                });
+                window.open(routeData.href, '_blank');
+                this.saveSuccess = true;
+                this.reset();
+              } else {
                 this.saveSuccess = true;
                 this.reset();
               }
@@ -527,7 +533,6 @@ export default {
               ...this.book,
             })
             .then(res => {
-              console.log(res);
               if (res.status === 200 && barcode === 'barcode') {
                 const routeData = this.$router.resolve({
                   path: `/print/barcode/${id}`,
