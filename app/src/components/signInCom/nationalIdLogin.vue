@@ -44,7 +44,7 @@ export default {
     return {
       captcha: {},
       login: {},
-      valid: false,
+      valid: true,
       captchaKey: 0,
     };
   },

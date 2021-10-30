@@ -601,4 +601,5 @@ export default {
   totalBuyToday: 'مجموع خرید امروز',
   addedTocart: 'کتاب مورد نظر به سبد خرید اضافه شد',
   saveandBarcode: 'ذخیره و دریافت بارکد',
+  sellernotfound: 'فروشنده کتاب وارد نشده است ',
 };

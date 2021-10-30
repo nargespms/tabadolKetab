@@ -22,7 +22,10 @@
         </v-card-actions>
         <v-row>
           <v-col>
-            <getClientByMobile @setUser="setUser" @clientError="clientError" />
+            <getClientByIdentity
+              @setUser="setUser"
+              @clientError="clientError"
+            />
           </v-col>
         </v-row>
         <v-divider class="my-3"></v-divider>
@@ -127,7 +130,7 @@
 import notifMessage from '../structure/notifMessage.vue';
 import invoiceItems from './invoiceItems.vue';
 import deliveryMethod from '../shoppingBag/deliveryMethod.vue';
-import getClientByMobile from '../users/getClientByMobile.vue';
+import getClientByIdentity from '../users/getClientByIdentity.vue';
 
 export default {
   name: 'addInvoiceCmp',
@@ -135,7 +138,7 @@ export default {
     notifMessage,
     invoiceItems,
     deliveryMethod,
-    getClientByMobile,
+    getClientByIdentity,
   },
   data() {
     return {

@@ -22,6 +22,45 @@
           </span>
         </v-tooltip>
       </v-card-actions>
+
+      <v-row class="px-6" v-if="mode === 'edit' && book.seller">
+        <v-col cols="12" md="4">
+          <span class="font-weight-black fn13 "> {{ $t('fullname') }} : </span>
+          <span>
+            {{ book.seller.firstName }}
+            {{ book.seller.lastName }}
+          </span>
+        </v-col>
+        <v-col v-if="book.seller.nationalId" cols="12" md="4" class="pr-md-5">
+          <span class="font-weight-black fn13 ">
+            {{ $t('nationalId') }} :
+          </span>
+          <span>
+            {{ book.seller.nationalId }}
+          </span>
+        </v-col>
+        <v-col cols="12" md="4" class="pr-md-5">
+          <span class="font-weight-black fn13 "> {{ $t('mobile') }} : </span>
+          <span class="numberDir">
+            {{ book.seller.mobile }}
+          </span>
+        </v-col>
+      </v-row>
+
+      <v-row class="pt-6 px-6" v-if="isAdmin">
+        <v-col cols="12" class="pa-0">
+          <span class="fn13 pb-2 d-block primary--text">
+            برای ثبت کاربر با توجه به اطلاعات داده شده ، کاربر را دریافت کنید.
+          </span>
+          <getClientByIdentity
+            :key="getClientKey"
+            :edit-data="mode === 'edit' ? book.seller : {}"
+            @setUser="setUser"
+            @clientError="clientError"
+          />
+        </v-col>
+      </v-row>
+
       <v-form class="pt-6 pa-6" ref="form" v-model="valid" lazy-validation>
         <v-row>
           <v-col cols="12" md="6" class="pa-0">
@@ -197,18 +236,7 @@
             </div>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="12" md="6" class="pa-0">
-            <clientsAutoComplete
-              v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
-              :placeHolder="'client'"
-              @setUser="setClient"
-              :height="32"
-              :isRequired="true"
-              :editDataId="mode === 'edit' && book.seller ? book.seller.id : ''"
-            />
-          </v-col>
-        </v-row>
+
         <v-row>
           <v-col
             cols="12"
@@ -387,13 +415,13 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
 import tagsAutocomplete from '../tags/tagsAutocomplete.vue';
 import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
 import authorAutocomplete from '../author/authorAutocomplete.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
 import uploadFile from '../file/uploadFile.vue';
+import getClientByIdentity from '../users/getClientByIdentity.vue';
 
 export default {
   name: 'addBookCmp',
@@ -403,8 +431,8 @@ export default {
     tagsAutocomplete,
     publisherAutocomplete,
     authorAutocomplete,
-    clientsAutoComplete,
     uploadFile,
+    getClientByIdentity,
   },
   props: {
     mode: {
@@ -440,7 +468,15 @@ export default {
 
       showBorcode: false,
       bookId: undefined,
+
+      getClientKey: 0,
     };
+  },
+
+  computed: {
+    isAdmin() {
+      return this.$store.state.bookShop.userInfo.role !== 'CLIENT';
+    },
   },
 
   methods: {
@@ -449,8 +485,12 @@ export default {
         name: 'booksList',
       });
     },
-    setClient(value) {
+    setUser(value) {
       this.book.sellerId = value;
+    },
+    clientError() {
+      this.errorEnable = true;
+      this.errorMsg = 'clientNotFound';
     },
     getBookCat(value) {
       this.book.categoryId = value;
@@ -492,7 +532,10 @@ export default {
       } else {
         this.bookCatVallidate = false;
       }
-      if (this.$refs.form.validate()) {
+      if (
+        (this.$refs.form.validate() && this.isAdmin && this.book.sellerId) ||
+        (this.$refs.form.validate() && !this.isAdmin)
+      ) {
         if (this.mode === 'add') {
           this.$axios
             .post('/v1/api/tabaadol-e-ketaab/book', {
@@ -510,11 +553,18 @@ export default {
                 this.saveSuccess = true;
                 this.reset();
               }
+              this.getClientKey += 1;
+              delete this.book.categoryId;
+              delete this.book.sellerId;
             })
             .catch(e => {
               if (e.response.status === 403) {
                 this.errorEnable = true;
                 this.errorMsg = 'permissionDenied';
+              }
+              if (e.response.status === 404) {
+                this.errorEnable = true;
+                this.errorMsg = 'sellernotfound ';
               }
               if (e.response.status === 409) {
                 this.errorEnable = true;
@@ -550,6 +600,9 @@ export default {
                     name: 'booksList',
                   });
                 }
+                delete this.book.categoryId;
+                delete this.book.sellerId;
+                this.getClientKey += 1;
               }
             })
             .catch(e => {
@@ -569,6 +622,13 @@ export default {
               }
             });
         }
+      } else if (
+        this.$refs.form.validate() &&
+        this.isAdmin &&
+        !this.book.sellerId
+      ) {
+        this.errorEnable = true;
+        this.errorMsg = 'sellernotfound';
       } else {
         this.valid = false;
       }

@@ -18,21 +18,21 @@
         <v-tab-item background-color="transparent" class="w250">
           <div class="w250 pr-8">
             <nationalId
-              @setNationalId="setNationalId"
-              :isRequire="true"
+              :isRequire="tab === 0"
               :key="nationalIdKey"
+              @setNationalId="setNationalId"
             />
           </div>
         </v-tab-item>
         <v-tab-item>
           <div class="w250 pr-8">
             <mobilePhone
-              @setMobilePhone="setMobilePhone"
+              :key="mobileKey"
               :validate="true"
               :mode="'edit'"
-              :isRequired="true"
+              :isRequired="tab > 0"
               :phone="false"
-              :key="mobileKey"
+              @setMobilePhone="setMobilePhone"
             />
           </div>
         </v-tab-item>
@@ -77,7 +77,7 @@ import AddUser from './addUser.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
-  name: 'getClientByMobile',
+  name: 'getClientByIdentity',
   components: {
     mobilePhone,
     AddUser,
@@ -103,6 +103,7 @@ export default {
       ],
     };
   },
+
   methods: {
     setMobilePhone(value) {
       this.mobile = value;
