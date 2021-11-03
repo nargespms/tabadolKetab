@@ -49,7 +49,7 @@
 
       <v-row class="pt-6 px-6" v-if="isAdmin">
         <v-col cols="12" class="pa-0">
-          <span class="fn13 pb-2 d-block primary--text">
+          <span v-if="mode === 'edit'" class="fn13 pb-2 d-block primary--text">
             برای ثبت کاربر با توجه به اطلاعات داده شده ، کاربر را دریافت کنید.
           </span>
           <getClientByIdentity
