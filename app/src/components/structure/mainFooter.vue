@@ -1,5 +1,5 @@
 <template>
-  <v-footer app class="grey darken-4">
+  <v-footer absolute bottom padless class="grey darken-4">
     <!-- -->
     <span class="white--text pa-4"> </span>
   </v-footer>

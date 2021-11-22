@@ -1,16 +1,5 @@
 <template>
-  <v-card
-    class="pa-3 mb-6 min-360h"
-    :style="
-      $vuetify.breakpoint.lg
-        ? 'width:80%;'
-        : $vuetify.breakpoint.md
-        ? 'width:60%;'
-        : $vuetify.breakpoint.sm
-        ? 'width:90%;'
-        : 'width:100%;'
-    "
-  >
+  <v-card class="pa-3 mb-6 min-360h">
     <router-link :to="`/books/${book.id}`">
       <v-img
         :src="book.image"

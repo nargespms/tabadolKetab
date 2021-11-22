@@ -16,6 +16,7 @@
               cols="12"
               md="4"
               lg="3"
+              class="px-3"
               sm="6"
               v-for="item in localData"
               :key="item.index"
