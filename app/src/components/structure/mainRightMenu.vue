@@ -26,7 +26,7 @@
                   v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
                 >
                   {{ $t('creditAmount') }} &nbsp;: &nbsp;{{
-                    moneyFormat(credit)
+                    moneyFormat($store.state.bookShop.credit)
                   }}
                   &nbsp;{{ $t('rial') }}
                 </span>
@@ -694,12 +694,6 @@ export default {
     },
     unreadMessages(newVal) {
       this.unreadMessages = newVal;
-    },
-  },
-
-  computed: {
-    credit() {
-      return this.$store.state.bookShop.credit;
     },
   },
 };
