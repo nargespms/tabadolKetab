@@ -71,8 +71,11 @@
           {{ $t(item.client.lastName) }}
         </span>
       </template>
+
       <template v-slot:[`item.finalTotal`]="{ item }">
-        <span> {{ item.finalTotal }} {{ $t('rial') }} </span>
+        <span>
+          {{ moneyFormat(item.finalTotal) }} &nbsp; {{ $t('rial') }}
+        </span>
       </template>
 
       <template v-slot:[`item.mobile`]="{ item }">
@@ -165,9 +168,11 @@
 <script>
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
 import multipleChoiseDialog from '../structure/multipleChoiseDialog.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'ordersTable',
+  mixins: [moneyFormat],
   components: {
     tableHeaderCell,
     multipleChoiseDialog,

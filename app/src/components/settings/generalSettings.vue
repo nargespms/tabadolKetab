@@ -50,41 +50,21 @@
                 required
                 outlined
                 v-mask="'######'"
-                :hint="
-                  this.settings.deliveryPrice
-                    ? `${$t('costInRial')}${moneyFormat(
-                        settings.deliveryPrice
-                      )}`
-                    : ''
-                "
-                persistent-hint
                 error-count="1"
-              ></v-text-field
-            ></v-col>
+              >
+                <template v-slot:append>
+                  <span class="primary--text">
+                    {{
+                      settings.deliveryPrice
+                        ? `${moneyFormat(settings.deliveryPrice)} ${$t('rial')}`
+                        : ''
+                    }}
+                  </span>
+                </template>
+              </v-text-field></v-col
+            >
           </v-row>
-          <v-row>
-            <v-col cols="12" md="6" class="pa-0">
-              <span class="d-block mt-md-3 mb-3 mb-md-0">
-                {{ $t('creditExpireTimeFromSellBook') }}
-              </span>
-            </v-col>
-            <v-col cols="12" md="6" class="pa-0">
-              <v-text-field
-                v-model="settings.creditExpired"
-                :rules="requireRule"
-                required
-                outlined
-                v-mask="'######'"
-                :hint="
-                  this.settings.creditExpired
-                    ? `${settings.creditExpired}${$t('day')}`
-                    : ''
-                "
-                persistent-hint
-                error-count="1"
-              ></v-text-field
-            ></v-col>
-          </v-row>
+
           <v-row>
             <v-col cols="12" md="6" class="pa-0">
               <span class="d-block mt-md-3 mb-3 mb-md-0">

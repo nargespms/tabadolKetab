@@ -67,6 +67,11 @@
           {{ item.staff.lastName }}
         </span>
       </template>
+      <template v-slot:[`item.finalTotal`]="{ item }">
+        <span>
+          {{ moneyFormat(item.finalTotal) }} &nbsp; {{ $t('rial') }}
+        </span>
+      </template>
 
       <template v-slot:[`item.operation`]="{ item }">
         <v-tooltip bottom>
@@ -117,9 +122,11 @@
 import promptDialog from '../structure/promptDialog.vue';
 import notifMessage from '../structure/notifMessage.vue';
 import tableHeaderCell from '../structure/tableHeaderCell.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'invoicesTable',
+  mixins: [moneyFormat],
   components: {
     promptDialog,
     notifMessage,

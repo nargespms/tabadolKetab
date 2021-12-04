@@ -84,12 +84,17 @@
               :label="$t('coverPrice')"
               outlined
               v-mask="'#########'"
-              :hint="
-                this.book.coverPrice
-                  ? `${$t('costInRial')}${moneyFormat(book.coverPrice)}`
-                  : ''
-              "
-            ></v-text-field>
+            >
+              <template v-slot:append>
+                <span class="primary--text">
+                  {{
+                    book.coverPrice
+                      ? `${moneyFormat(book.coverPrice)} ${$t('rial')}`
+                      : ''
+                  }}
+                </span>
+              </template>
+            </v-text-field>
           </v-col>
         </v-row>
         <v-row>
@@ -251,12 +256,16 @@
               required
               :rules="requireRule"
               v-mask="'#########'"
-              :hint="
-                this.book.undergraduatePrice
-                  ? `${$t('costInRial')}${moneyFormat(book.undergraduatePrice)}`
-                  : ''
-              "
             >
+              <template v-slot:append>
+                <span class="primary--text">
+                  {{
+                    book.undergraduatePrice
+                      ? `${moneyFormat(book.undergraduatePrice)} ${$t('rial')}`
+                      : ''
+                  }}
+                </span>
+              </template>
               <template v-slot:prepend-inner>
                 <span class="red--text">
                   *
@@ -323,12 +332,12 @@
               </span>
 
               <v-radio-group mandatory v-model="book.donation" row class="pr-6">
+                <v-radio :label="$t('no')" :value="false" color="red"></v-radio>
                 <v-radio
                   :label="$t('yes')"
                   :value="true"
                   color="green"
                 ></v-radio>
-                <v-radio :label="$t('no')" :value="false" color="red"></v-radio>
               </v-radio-group></div
           ></v-col>
         </v-row>

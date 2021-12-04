@@ -30,19 +30,21 @@
             <v-col>
               <v-text-field
                 v-if="queryGet"
-                v-model="credit.credit"
+                v-model.number="credit.credit"
                 :rules="requireRule"
                 :label="$t('cost')"
                 required
                 outlined
-                error-count="1"
-                :hint="
-                  this.credit.credit
-                    ? `${$t('costInRial')}${moneyFormat(credit.credit)}`
-                    : ''
-                "
-                persistent-hint
               >
+                <template v-slot:append>
+                  <span class="primary--text">
+                    {{
+                      credit.credit
+                        ? `${moneyFormat(credit.credit)} ${$t('rial')}`
+                        : ''
+                    }}
+                  </span>
+                </template>
                 <template v-slot:prepend-inner>
                   <span class="red--text">
                     *

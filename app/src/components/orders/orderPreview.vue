@@ -311,8 +311,9 @@ export default {
               this.$store.commit('bookShop/clearBag', {
                 module: 'bookShop',
               });
+
               this.$router.push({
-                name: 'ordersList',
+                path: `/invoicesList/${res.data.id}`,
               });
             }
           })
@@ -334,6 +335,9 @@ export default {
           .then(res => {
             if (res.status === 200) {
               this.submitPay = true;
+              this.$router.push({
+                path: `/invoicesList/${res.data.id}`,
+              });
             }
           });
       }
