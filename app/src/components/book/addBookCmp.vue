@@ -98,14 +98,15 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" md="6" class="pa-0">
+          <v-col v-if="isAdmin" cols="12" md="6" class="pa-0">
             <bookCatAutocomplete
               :isRequire="bookCatVallidate"
               @sendValue="getBookCat"
               ref="bookCat"
               :height="32"
               :editDataId="mode === 'edit' ? book.category.id : ''"
-          /></v-col>
+            />
+          </v-col>
           <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
             <authorAutocomplete
               :isRequire="false"
@@ -551,7 +552,7 @@ export default {
     validate(barcode) {
       this.$refs.form.validate();
       // book category validation
-      if (this.$refs.bookCat.model === null) {
+      if (this.isAdmin && this.$refs.bookCat.model === null) {
         this.bookCatVallidate = true;
       } else {
         this.bookCatVallidate = false;

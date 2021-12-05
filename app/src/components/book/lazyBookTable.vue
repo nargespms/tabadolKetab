@@ -95,6 +95,12 @@
             {{ item.seller.lastName }}
           </td>
           <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
+            <span v-if="item.confirmedBy">
+              {{ item.confirmedBy.firstName }}
+              {{ item.confirmedBy.lastName }}
+            </span>
+          </td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon @click="printBarCode(item)" v-bind="attrs" v-on="on"

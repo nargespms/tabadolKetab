@@ -106,6 +106,15 @@ export default {
           filterName: 'sellerId',
           divider: true,
         },
+        {
+          text: 'confirmerUser',
+          value: 'confirmedById',
+          align: 'center',
+          filterable: true,
+          filterType: 'staffUsers',
+          filterName: 'confirmedById',
+          divider: true,
+        },
 
         {
           text: 'barcode',
