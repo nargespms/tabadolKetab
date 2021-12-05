@@ -21,6 +21,13 @@
         error-count="1"
         :height="32"
       ></v-text-field>
+      <mobilePhone
+        :isRequired="false"
+        @setMobilePhone="setMobilePhone"
+        :phone="false"
+        :editData="this.mode === 'edit' && data.mobile ? data.mobile : ''"
+        :mode="mode"
+      />
       <v-text-field
         v-model="localData.phone"
         :label="$t('landLane')"
@@ -53,8 +60,14 @@
 </template>
 
 <script>
+import mobilePhone from '../userControls/mobilePhone.vue';
+
 export default {
   name: 'addressInput',
+  components: {
+    mobilePhone,
+  },
+
   props: {
     data: {
       type: Object,
@@ -77,6 +90,9 @@ export default {
     };
   },
   methods: {
+    setMobilePhone(mobile) {
+      this.localData.mobile = mobile;
+    },
     validate() {
       this.$refs.form.validate();
 
