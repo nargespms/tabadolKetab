@@ -45,6 +45,7 @@
                 outlined
                 error-count="2"
                 @keydown.enter="addItem"
+                @input="conditionalAddItem"
                 autofocus
               >
                 <!-- :rules="barcodeRules" -->
@@ -176,6 +177,12 @@ export default {
       this.$router.push({
         name: 'invoicesList',
       });
+    },
+
+    conditionalAddItem() {
+      if (this.barcode.length === 9) {
+        this.addItem();
+      }
     },
     addItem() {
       this.$refs.form.validate();

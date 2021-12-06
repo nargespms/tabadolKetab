@@ -18,6 +18,7 @@ export default {
   methods: {
     // refresh token
     refreshToken() {
+      console.log('refresh token');
       this.$axios.get('/v1/api/tabaadol-e-ketaab/refresh-token').catch(e => {
         if (e.response.status === 403) {
           if (
@@ -50,7 +51,7 @@ export default {
   created() {
     if (this.$store.state.bookShop.loggedIn) {
       this.refreshToken();
-      this.timer = setInterval(this.refreshToken, 3600000);
+      this.timer = setInterval(this.refreshToken, 1800000);
     }
     console.log(process.env);
     console.log(process.env.NODE_ENV);
