@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pa-4">
+  <v-card class="pa-4 mb-5">
     <v-card-actions class="teal mb-7">
       <v-card-title class="white--text pa-0">
         <span>
@@ -40,16 +40,14 @@
     </v-form>
 
     <v-row v-if="!isLoading" class="justify-center">
-      <v-col cols="12" lg="4">
+      <v-col v-for="user in bestBuyers" :key="user.id" cols="12" lg="2">
         <statusCard
-          :lable="
-            `بیشترین خرید /n ${data.bestBuyer.firstName}${data.bestBuyer.lastName}`
-          "
-          :number="data.bestBuyer.total"
+          :lable="` ${user.firstName}${user.lastName}`"
+          :number="`${moneyFormat(user.total)} ${$t('rial')}`"
           :color="'#0277BD'"
         />
       </v-col>
-      <v-col cols="12" lg="4">
+      <!-- <v-col cols="12" lg="4">
         <statusCard
           :lable="
             `بیشترین فروش /n ${data.bestBuyer.firstName}${data.bestBuyer.lastName}`
@@ -57,7 +55,7 @@
           :number="data.bestSeller.total"
           :color="'#0277BD'"
         />
-      </v-col>
+      </v-col> -->
     </v-row>
   </v-card>
 </template>
@@ -66,6 +64,7 @@
 import statusCard from '../dashboard/statusCard.vue';
 import rangeDatePickerCmp from '../structure/rangeDatePickerCmp.vue';
 import dateTime from '../../mixins/dateTime.js';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'userBuyReport',
@@ -98,10 +97,10 @@ export default {
           text: 'totalBuy',
         },
       ],
-      data: [],
+      bestBuyers: [],
     };
   },
-  mixins: [dateTime],
+  mixins: [dateTime, moneyFormat],
   methods: {
     setDate(value) {
       if (value.fromDate.length > 0) {
@@ -149,7 +148,7 @@ export default {
             })
             .then(res => {
               if (res.status === 200) {
-                this.data = res.data.buyers;
+                this.bestBuyers = res.data.result;
                 // this.reset();
                 this.isLoading = false;
               }

@@ -97,82 +97,95 @@
             </v-text-field>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col v-if="isAdmin" cols="12" md="6" class="pa-0">
-            <bookCatAutocomplete
-              :isRequire="bookCatVallidate"
-              @sendValue="getBookCat"
-              ref="bookCat"
-              :height="32"
-              :editDataId="mode === 'edit' ? book.category.id : ''"
-            />
-          </v-col>
-          <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-            <authorAutocomplete
-              :isRequire="false"
-              :isMultiple="false"
-              :placeHolder="'writer'"
-              @sendValue="getWriter"
-              :height="32"
-              :editDataId="mode === 'edit' && book.writer ? book.writer.id : ''"
-              :clearable="true"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" md="6" class="pa-0 ">
-            <authorAutocomplete
-              :isRequire="false"
-              :isMultiple="false"
-              :placeHolder="'author'"
-              @sendValue="getAuthor"
-              :height="32"
-              :editDataId="mode === 'edit' && book.author ? book.author.id : ''"
-              :clearable="true"
-            />
-          </v-col>
-          <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-            <authorAutocomplete
-              :isRequire="false"
-              :isMultiple="false"
-              :placeHolder="'translator'"
-              @sendValue="getTranslator"
-              :height="32"
-              :editDataId="
-                mode === 'edit' && book.translator ? book.translator.id : ''
-              "
-              :clearable="true"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" md="6" class="pa-0 ">
-            <authorAutocomplete
-              :isRequire="false"
-              :isMultiple="false"
-              :placeHolder="'searcher'"
-              @sendValue="getSearcher"
-              :height="32"
-              :editDataId="
-                mode === 'edit' && book.searcher ? book.searcher.id : ''
-              "
-              :clearable="true"
-            />
-          </v-col>
-          <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
-            <publisherAutocomplete
-              :isRequire="false"
-              :placeHolder="'publisher'"
-              @sendValue="getPublisher"
-              :height="32"
-              :isMultiple="false"
-              :editDataId="
-                mode === 'edit' && book.publisher ? book.publisher.id : ''
-              "
-              :clearable="true"
-            />
-          </v-col>
-        </v-row>
+
+        <div v-if="isAdmin">
+          <v-row>
+            <v-col cols="12" md="6" class="pa-0">
+              <bookCatAutocomplete
+                :isRequire="bookCatVallidate"
+                @sendValue="getBookCat"
+                ref="bookCat"
+                :height="32"
+                :editDataId="mode === 'edit' ? book.category.id : ''"
+              />
+            </v-col>
+          </v-row>
+        </div>
+
+        <div v-else>
+          <v-row>
+            <v-col cols="12" md="6" class="pa-0 ">
+              <authorAutocomplete
+                :isRequire="false"
+                :isMultiple="false"
+                :placeHolder="'author'"
+                @sendValue="getAuthor"
+                :height="32"
+                :editDataId="
+                  mode === 'edit' && book.author ? book.author.id : ''
+                "
+                :clearable="true"
+              />
+            </v-col>
+            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+              <authorAutocomplete
+                :isRequire="false"
+                :isMultiple="false"
+                :placeHolder="'translator'"
+                @sendValue="getTranslator"
+                :height="32"
+                :editDataId="
+                  mode === 'edit' && book.translator ? book.translator.id : ''
+                "
+                :clearable="true"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6" class="pa-0 ">
+              <authorAutocomplete
+                :isRequire="false"
+                :isMultiple="false"
+                :placeHolder="'searcher'"
+                @sendValue="getSearcher"
+                :height="32"
+                :editDataId="
+                  mode === 'edit' && book.searcher ? book.searcher.id : ''
+                "
+                :clearable="true"
+              />
+            </v-col>
+            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+              <publisherAutocomplete
+                :isRequire="false"
+                :placeHolder="'publisher'"
+                @sendValue="getPublisher"
+                :height="32"
+                :isMultiple="false"
+                :editDataId="
+                  mode === 'edit' && book.publisher ? book.publisher.id : ''
+                "
+                :clearable="true"
+              />
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col cols="12" md="6" class="pa-0">
+              <authorAutocomplete
+                :isRequire="false"
+                :isMultiple="false"
+                :placeHolder="'writer'"
+                @sendValue="getWriter"
+                :height="32"
+                :editDataId="
+                  mode === 'edit' && book.writer ? book.writer.id : ''
+                "
+                :clearable="true"
+              />
+            </v-col>
+          </v-row>
+        </div>
         <v-row>
           <v-col cols="12" md="6" class="pa-0 ">
             <v-text-field
