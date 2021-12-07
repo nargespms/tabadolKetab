@@ -26,7 +26,10 @@
 
     <div class="teal py-2 px-4  d-flex justify-space-between" flat height="48">
       <div>
-        <v-tooltip bottom>
+        <v-tooltip
+          v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'"
+          bottom
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-icon color="white" @click="addMessage" v-bind="attrs" v-on="on"
               >mdi-comment-plus-outline

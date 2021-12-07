@@ -126,7 +126,6 @@ export default {
   IT: 'فناوری اطلاعات',
   BILLING: 'مالی',
   MANAGEMENT: 'مدیریت',
-  POST: 'پست',
   CULTURAL: 'فرهنگی',
   BOOK_REGISTER: 'ثبت کتاب',
   department: 'واحد',
@@ -618,4 +617,6 @@ export default {
   addedTocart: 'کتاب مورد نظر به سبد خرید اضافه شد',
   saveandBarcode: 'ذخیره و دریافت بارکد',
   sellernotfound: 'فروشنده کتاب وارد نشده است ',
+  youCanUploadFileWithFormatsjpegpnggifwebpmp4mp3pdftxt:
+    '  فایل با فرمت های  jpeg, png, gif, webp, mp4, mp3, pdf, txt   .قابل بارگزاری هستند',
 };

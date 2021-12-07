@@ -1,6 +1,19 @@
 <template>
   <div>
-    <v-file-input outlined show-size @change="upload"> </v-file-input>
+    <v-file-input
+      :label="$t('attachments')"
+      outlined
+      show-size
+      hide-details
+      @change="upload"
+    >
+    </v-file-input>
+    <p class="mt-2">
+      <v-icon color="error" class="pl-2">mdi-exclamation-thick</v-icon>
+      <span class="grey--text text--darken-2 ">
+        {{ $t('youCanUploadFileWithFormatsjpegpnggifwebpmp4mp3pdftxt') }}.
+      </span>
+    </p>
   </div>
 </template>
 
