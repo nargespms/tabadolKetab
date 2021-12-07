@@ -15,7 +15,7 @@
         <img src="../../assets/tabadollogo1.png" />
       </v-col>
     </v-row>
-    <v-row class="pa-2">
+    <v-row class="px-2">
       <invoiceItems v-if="!isLoading" :data="invoiceItems" :deletable="false" />
     </v-row>
     <v-row class="px-5">
@@ -71,6 +71,18 @@
         </table>
       </v-col>
     </v-row>
+    <v-row v-if="invoice.delivery !== 'PRESENCE'" class="px-5">
+      <v-col cols="12" class="double-br">
+        <div class="d-flex justify-space-between">
+          <span>
+            {{ $t('postPrice') }}
+          </span>
+          <span>
+            {{ moneyFormat(deliveryCalculatedPrice) }} {{ $t('rial') }}
+          </span>
+        </div>
+      </v-col>
+    </v-row>
     <v-row>
       <tabadolInfo />
     </v-row>
@@ -94,7 +106,18 @@ export default {
       invoiceItems: [],
       isLoading: true,
       invoice: {},
+
+      freeDelivery: undefined,
+      deliveryPrice: undefined,
     };
+  },
+
+  computed: {
+    deliveryCalculatedPrice() {
+      return this.invoice.books.length < this.freeDelivery
+        ? this.deliveryPrice
+        : this.$t('free');
+    },
   },
   methods: {
     getData() {
@@ -108,15 +131,25 @@ export default {
             console.log(res.data);
             this.invoice = res.data;
             this.invoiceItems = res.data.books;
-            this.isLoading = false;
           }
         });
     },
+    getSetting() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/setting').then(res => {
+        if (res.status === 200) {
+          this.freeDelivery = res.data.freeDelivery;
+          this.deliveryPrice = res.data.deliveryPrice;
+          this.isLoading = false;
+        }
+      });
+    },
   },
-  mounted() {
+  created() {
     this.getData();
-    this.isLoading = false;
+    this.getSetting();
   },
+
+  mounted() {},
 };
 </script>
 
@@ -135,5 +168,9 @@ export default {
 }
 .h184 {
   height: 184px;
+}
+.double-br {
+  border-style: double;
+  border-color: #e3e3e3;
 }
 </style>

@@ -57,13 +57,13 @@
           </td>
           <td>
             <span v-if="item.undergraduatePrice">
-              {{ moneyFormat(item.undergraduatePrice) }}{{ $t('rial') }}
+              {{ moneyFormat(item.undergraduatePrice) }} {{ $t('rial') }}
             </span>
           </td>
 
           <td>
             <span v-if="item.discount > 0">
-              {{ moneyFormat(item.discount) }}{{ $t('rial') }}
+              {{ moneyFormat(item.discount) }} {{ $t('rial') }}
             </span>
             <span v-else>
               <v-icon color="red" class="fn12">mdi-close</v-icon>
@@ -72,7 +72,7 @@
           </td>
           <td>
             <span v-if="item.afterDiscount">
-              {{ moneyFormat(item.afterDiscount) }}{{ $t('rial') }}
+              {{ moneyFormat(item.afterDiscount) }} {{ $t('rial') }}
             </span>
           </td>
 
