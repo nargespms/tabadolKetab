@@ -11,19 +11,28 @@
         $t('filteredFileDl')
       }}</v-btn> -->
     </div>
-    <v-toolbar color="teal " flat height="48">
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-icon color="white" @click="addDiscount" v-bind="attrs" v-on="on"
-            >mdi-ticket-percent
-          </v-icon>
-        </template>
-        <span>{{ $t('addDiscount') }}</span>
-      </v-tooltip>
-      <span class="pr-4 font-weight-medium white--text">
-        {{ $t('couponList') }}
+    <div class="teal py-2 px-4  d-flex justify-space-between" flat height="48">
+      <div>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="white" @click="addDiscount" v-bind="attrs" v-on="on"
+              >mdi-ticket-percent
+            </v-icon>
+          </template>
+          <span>{{ $t('addDiscount') }}</span>
+        </v-tooltip>
+        <span class="pr-4 font-weight-medium white--text">
+          {{ $t('couponList') }}
+        </span>
+      </div>
+
+      <span class="white--text ">
+        <span>
+          تعداد رکوردهای یافت شده :
+        </span>
+        {{ totalData }}
       </span>
-    </v-toolbar>
+    </div>
 
     <table
       class="generalTable "

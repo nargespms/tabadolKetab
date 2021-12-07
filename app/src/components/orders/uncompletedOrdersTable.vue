@@ -21,11 +21,22 @@
       @update:expanded="getClientBooks(expanded)"
     >
       <template v-slot:top>
-        <v-toolbar color="teal " flat height="48">
+        <div
+          class="teal py-2 px-4  d-flex justify-space-between"
+          flat
+          height="48"
+        >
           <span class="pr-4 font-weight-medium white--text">
             {{ $t('UncompletedOrders') }}
           </span>
-        </v-toolbar>
+
+          <span class="white--text ">
+            <span>
+              تعداد رکوردهای یافت شده :
+            </span>
+            {{ totalData }}
+          </span>
+        </div>
       </template>
 
       <template v-slot:header="{ props: { headers } }">

@@ -26,19 +26,46 @@
       :mobile-breakpoint="100"
     >
       <template v-slot:top>
-        <v-toolbar color="teal " flat height="48">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon color="white" @click="addInvoice" v-bind="attrs" v-on="on"
-                >fas fa-file-invoice-dollar
-              </v-icon>
-            </template>
-            <span>{{ $t('addInvoice') }}</span>
-          </v-tooltip>
-          <span class="pr-4 font-weight-medium white--text">
-            {{ $t('invoicesList') }}
-          </span>
-        </v-toolbar>
+        <div
+          class="teal py-2 px-4  d-flex justify-space-between"
+          flat
+          height="48"
+        >
+          <div class="d-flex align-center">
+            <span class="pr-4 font-weight-medium white--text ">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    color="white"
+                    @click="addInvoice"
+                    v-bind="attrs"
+                    v-on="on"
+                    >fas fa-file-invoice-dollar
+                  </v-icon>
+                </template>
+                <span>{{ $t('addInvoice') }}</span>
+              </v-tooltip>
+              <span class="pr-2">
+                {{ $t('invoicesList') }}
+              </span>
+            </span>
+          </div>
+
+          <div>
+            <p class="white--text text-right">
+              <span>
+                تعداد رکوردهای یافت شده :
+              </span>
+              {{ totalData }}
+            </p>
+            <p class="white--text text-right">
+              <span>
+                مجموع مبلغ کل :
+              </span>
+              {{ moneyFormat(sumFinalTotal) }} {{ $t('rial') }}
+            </p>
+          </div>
+        </div>
       </template>
 
       <template v-slot:header="{ props: { headers } }">
@@ -145,6 +172,7 @@ export default {
     },
     totalData: { type: Number },
     loading: { type: Boolean },
+    sumFinalTotal: { type: Number },
   },
   data() {
     return {

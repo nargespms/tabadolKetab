@@ -4,9 +4,11 @@
       <p :style="`color:${color}`">
         {{ $t(lable) }}
       </p>
-      <span v-if="number">
+      <span>
         {{ moneyFormat(number) }}
-        {{ $t('rial') }}
+        <span v-if="number !== 0">
+          {{ $t('rial') }}
+        </span>
       </span>
     </v-card-title>
   </v-card>

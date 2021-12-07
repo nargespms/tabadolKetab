@@ -26,19 +26,36 @@
       :no-data-text="$t('Nodataavailable')"
     >
       <template v-slot:top>
-        <v-toolbar color="teal " flat height="48">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon color="white" @click="addAuthor" v-bind="attrs" v-on="on"
-                >mdi-account-edit
-              </v-icon>
-            </template>
-            <span>{{ $t('addAuthor') }}</span>
-          </v-tooltip>
-          <span class="pr-4 font-weight-medium white--text">
-            {{ $t('authorsList') }}
+        <div
+          class="teal py-2 px-4  d-flex justify-space-between"
+          flat
+          height="48"
+        >
+          <div>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  color="white"
+                  @click="addAuthor"
+                  v-bind="attrs"
+                  v-on="on"
+                  >mdi-account-edit
+                </v-icon>
+              </template>
+              <span>{{ $t('addAuthor') }}</span>
+            </v-tooltip>
+            <span class="pr-4 font-weight-medium white--text">
+              {{ $t('authorsList') }}
+            </span>
+          </div>
+
+          <span class="white--text ">
+            <span>
+              تعداد رکوردهای یافت شده :
+            </span>
+            {{ totalData }}
           </span>
-        </v-toolbar>
+        </div>
       </template>
 
       <template v-slot:header="{ props: { headers } }">

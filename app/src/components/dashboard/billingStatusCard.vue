@@ -26,8 +26,8 @@
     <v-row>
       <v-col cols="12" lg="4">
         <creditStatusCard
-          :lable="'todayOnlineShop'"
-          :number="billing.todayOnlineShop"
+          :lable="'sumOfWageToday'"
+          :number="billing.sumOfWageToday"
           :color="color"
         />
       </v-col>
@@ -55,6 +55,13 @@
           :color="color"
         />
       </v-col>
+      <v-col cols="12" lg="4">
+        <creditStatusCard
+          :lable="'todayOnlineShop'"
+          :number="billing.todayOnlineShop"
+          :color="color"
+        />
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -74,6 +81,7 @@ export default {
         booksValue: 0,
         usersCreditSumFromboooksTrade: 0,
         sumOfWage: 0,
+        sumOfWageToday: 0,
         todayOnlineShop: 0,
 
         totalDeposit: 0,
@@ -122,6 +130,21 @@ export default {
         }
       });
     },
+    sumOfWageToday() {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/report/wage', {
+          params: {
+            filter: {
+              createdAt: new Date(),
+            },
+          },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.billing.sumOfWageToday = res.data.sum;
+          }
+        });
+    },
     usersCreditSumFromboooksTrade() {
       this.$axios
         .get('/v1/api/tabaadol-e-ketaab/report/sell-credit')
@@ -161,6 +184,7 @@ export default {
     this.usersCredit();
     this.todayOnline();
     this.sumOfWage();
+    this.sumOfWageToday();
     this.usersCreditSumFromboooksTrade();
     this.totalDeposit();
     this.totalBuy();

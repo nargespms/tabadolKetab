@@ -142,6 +142,7 @@
       :options="options"
       :totalData="totalData"
       :loading="loading"
+      :sum-final-total="sumFinalTotal"
     />
     <lazyTradesTable
       @reloadTable="getData"
@@ -313,6 +314,8 @@ export default {
       errorEnable: false,
       errorMsg: '',
       urlFilter: {},
+
+      sumFinalTotal: 0,
     };
   },
   methods: {
@@ -339,6 +342,9 @@ export default {
           if (res.status === 200) {
             this.tableData = res.data.result.docs;
             this.totalData = res.data.result.totalDocs;
+            if (this.module === 'invoices') {
+              this.sumFinalTotal = res.data.result.sumFinalTotal;
+            }
             this.options = {
               ...this.options,
               page,

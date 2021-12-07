@@ -3,7 +3,7 @@
     <v-card-actions class="teal mb-7">
       <v-card-title class="white--text pa-0">
         <span>
-          گزارش کاربران با بیشترین خرید و فروش
+          گزارش کاربران با بیشترین خرید
         </span>
       </v-card-title>
       <v-spacer></v-spacer>

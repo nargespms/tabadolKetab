@@ -23,19 +23,30 @@
         >{{ $t('PRIVATE') }}</v-btn
       >
     </div>
-    <v-toolbar color="teal " flat height="48">
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-icon color="white" @click="addMessage" v-bind="attrs" v-on="on"
-            >mdi-comment-plus-outline
-          </v-icon>
-        </template>
-        <span>{{ $t('CreateMessage') }}</span>
-      </v-tooltip>
-      <span class="pr-4 font-weight-medium white--text">
-        {{ $t(tableName) }}
+
+    <div class="teal py-2 px-4  d-flex justify-space-between" flat height="48">
+      <div>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon color="white" @click="addMessage" v-bind="attrs" v-on="on"
+              >mdi-comment-plus-outline
+            </v-icon>
+          </template>
+          <span>{{ $t('CreateMessage') }}</span>
+        </v-tooltip>
+        <span class="pr-4 font-weight-medium white--text">
+          {{ $t(tableName) }}
+        </span>
+      </div>
+
+      <span class="white--text ">
+        <span>
+          تعداد رکوردهای یافت شده :
+        </span>
+        {{ totalData }}
       </span>
-    </v-toolbar>
+    </div>
+
     <v-progress-linear
       v-if="isLoading"
       color="primary"
