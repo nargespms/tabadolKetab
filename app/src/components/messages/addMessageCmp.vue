@@ -144,9 +144,9 @@
               :disabled="!valid"
               color="success"
               class="mr-4"
-              @click="validate"
+              @click="confirmToSend"
             >
-              {{ $t('save') }}
+              {{ $t('sendMessage') }}
             </v-btn>
 
             <v-btn color="error" class="mr-4" @click="reset"
@@ -156,6 +156,16 @@
         </v-form>
       </v-card>
     </v-col>
+
+    <v-dialog v-model="enableConfirmation" max-width="500px">
+      <promptDialog
+        :title="mode === 'add' ? 'sendMessage' : 'editMessage'"
+        :message="'AreUSureAboutTheInformation'"
+        @accept="sendMessage"
+        @reject="disableConfirmation"
+      />
+    </v-dialog>
+
     <notifMessage
       v-if="saveSuccess"
       :msg="'operationSuccessfullyOcured'"
@@ -176,6 +186,8 @@ import notifMessage from '../structure/notifMessage.vue';
 import datePickerCmp from '../structure/datePickerCmp.vue';
 import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
 import staffsAutoComplete from '../structure/staffsAutoComplete.vue';
+import promptDialog from '../structure/promptDialog.vue';
+
 import dateTime from '../../mixins/dateTime.js';
 import uploadFile from '../file/uploadFile.vue';
 
@@ -190,6 +202,7 @@ export default {
     clientsAutoComplete,
     staffsAutoComplete,
     uploadFile,
+    promptDialog,
   },
   mixins: [dateTime],
   props: {
@@ -211,6 +224,7 @@ export default {
       requireRule: [v => !!v || `${this.$t('thisFieldIsRequired')}`],
       messageType: ['PRIVATE', 'PUBLIC'],
       users: ['user1', 'user2', 'user3', 'user4'],
+
       message: {
         title: '',
         text: '',
@@ -223,6 +237,8 @@ export default {
       // error
       errorEnable: false,
       errorMsg: '',
+
+      enableConfirmation: false,
     };
   },
   methods: {
@@ -248,7 +264,14 @@ export default {
     setUploadedId(value) {
       this.message.attachmentId = value;
     },
-    validate() {
+
+    confirmToSend() {
+      this.enableConfirmation = true;
+    },
+    disableConfirmation() {
+      this.enableConfirmation = false;
+    },
+    sendMessage() {
       this.$refs.form.validate();
       console.log(this.$refs.datePicker.date);
 
@@ -277,12 +300,14 @@ export default {
                 this.saveSuccess = true;
                 this.reset();
                 this.$emit('savedSuccessfully');
+                this.enableConfirmation = false;
               }
             })
             .catch(e => {
               if (e.response.status === 422) {
                 this.errorEnable = true;
                 this.errorMsg = e.response.data.message;
+                this.enableConfirmation = false;
               }
             });
         }
@@ -302,17 +327,20 @@ export default {
                 });
                 this.reset();
                 this.$emit('savedSuccessfully');
+                this.enableConfirmation = false;
               }
             })
             .catch(e => {
               if (e.response.status === 404) {
                 this.errorEnable = true;
                 this.errorMsg = 'canNotBeEditted';
+                this.enableConfirmation = false;
               }
             });
         }
       } else {
         this.valid = false;
+        this.enableConfirmation = false;
       }
     },
     reset() {

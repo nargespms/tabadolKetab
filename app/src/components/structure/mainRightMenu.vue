@@ -26,7 +26,7 @@
                   v-if="$store.state.bookShop.userInfo.role === 'CLIENT'"
                 >
                   {{ $t('creditAmount') }} &nbsp;: &nbsp;{{
-                    moneyFormat($store.state.bookShop.credit)
+                    moneyFormat($store.state.bookShop.userInfo.credit)
                   }}
                   &nbsp;{{ $t('rial') }}
                 </span>
