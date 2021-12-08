@@ -176,6 +176,7 @@ export default {
                 this.saveSuccess = true;
                 this.reset();
                 this.publisher.active = true;
+                this.$emit('addedSuccessfully');
               }
             })
             .catch(e => {

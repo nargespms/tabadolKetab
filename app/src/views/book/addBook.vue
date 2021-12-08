@@ -1,6 +1,6 @@
 <template>
   <v-row no-gutters class="justify-center">
-    <v-col cols="12" sm="12" md="8">
+    <v-col cols="12" sm="12" xl="9" lg="10" md="11">
       <addBookCmp :mode="'add'" />
     </v-col>
   </v-row>

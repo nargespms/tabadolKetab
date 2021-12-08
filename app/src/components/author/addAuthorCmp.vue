@@ -5,7 +5,8 @@
         <v-card-actions class="teal">
           <v-card-title class="white--text pa-0">
             <span>
-              {{ $t('addAuthor') }}
+              {{ $t('add') }}
+              {{ $t(name) }}
             </span>
           </v-card-title>
           <v-spacer></v-spacer>
@@ -105,6 +106,10 @@ export default {
     data: {
       type: Object,
     },
+    name: {
+      type: String,
+      default: 'author',
+    },
   },
   data() {
     return {
@@ -127,7 +132,6 @@ export default {
 
       if (this.$refs.form.validate()) {
         if (this.mode === 'edit') {
-          console.log(this.author);
           this.$axios
             .put(`/v1/api/tabaadol-e-ketaab/author/${this.author.id}`, {
               ...this.author,
@@ -143,6 +147,7 @@ export default {
             .post('/v1/api/tabaadol-e-ketaab/author', { ...this.author })
             .then(res => {
               console.log(res.data);
+              this.$emit('addedSuccessfully');
             })
             .catch(e => {
               if (e.response.status === 409) {

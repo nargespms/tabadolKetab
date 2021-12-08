@@ -1,9 +1,15 @@
 <template>
   <div>
     <div
-      class="clientNumberWrap px-3 pt-3 d-flex align-center justify-space-between"
+      class="clientNumberWrap px-3 pt-3 d-flex align-center justify-space-between flex-wrap"
     >
-      <v-tabs light vertical background-color="transparent" v-model="tab">
+      <v-tabs
+        light
+        :vertical="$vuetify.breakpoint.sm ? true : false"
+        background-color="transparent"
+        v-model="tab"
+        :width="undefined"
+      >
         <v-tab
           v-for="tab in tabs"
           :key="tab.index"
@@ -15,7 +21,7 @@
           {{ $t(tab.text) }}
         </v-tab>
 
-        <v-tab-item background-color="transparent" class="w250">
+        <v-tab-item background-color="transparent" class="w250 mt-3">
           <div class="w250 pr-8">
             <nationalId
               :isRequire="tab === 0"
@@ -24,7 +30,7 @@
             />
           </div>
         </v-tab-item>
-        <v-tab-item>
+        <v-tab-item class="mt-3">
           <div class="w250 pr-8">
             <mobilePhone
               :key="mobileKey"
@@ -181,5 +187,8 @@ export default {
   .v-tabs-items {
     background-color: transparent !important;
   }
+}
+.v-tabs {
+  width: unset;
 }
 </style>

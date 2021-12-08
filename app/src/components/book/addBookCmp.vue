@@ -101,12 +101,64 @@
         <div v-if="isAdmin">
           <v-row>
             <v-col cols="12" md="6" class="pa-0">
-              <bookCatAutocomplete
-                :isRequire="bookCatVallidate"
-                @sendValue="getBookCat"
-                ref="bookCat"
-                :height="32"
+              <bookCategoryWrapper
+                :key="bookcategoryKey"
                 :editDataId="mode === 'edit' ? book.category.id : ''"
+                :mode="mode"
+                @getBookCat="getBookCat"
+              />
+            </v-col>
+            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+              <publisherControlWrapper
+                :editDataId="
+                  mode === 'edit' && book.publisher ? book.publisher.id : ''
+                "
+                :mode="mode"
+                @setPublisher="getPublisher"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6" class="pa-0">
+              <authorControlWrapper
+                :name="'author'"
+                :mode="mode"
+                :editDataId="
+                  mode === 'edit' && book.author ? book.author.id : ''
+                "
+                @authorSet="getAuthor"
+              />
+            </v-col>
+            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+              <authorControlWrapper
+                :name="'translator'"
+                :mode="mode"
+                :editDataId="
+                  mode === 'edit' && book.translator ? book.translator.id : ''
+                "
+                @translatorSet="getTranslator"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6" class="pa-0">
+              <authorControlWrapper
+                :name="'searcher'"
+                :mode="mode"
+                :editDataId="
+                  mode === 'edit' && book.searcher ? book.searcher.id : ''
+                "
+                @searcherSet="getSearcher"
+              />
+            </v-col>
+            <v-col cols="12" md="6" class="pa-0 pr-md-4  pr-lg-4 pr-0">
+              <authorControlWrapper
+                :name="'writer'"
+                :mode="mode"
+                :editDataId="
+                  mode === 'edit' && book.writer ? book.writer.id : ''
+                "
+                @writerSet="getWriter"
               />
             </v-col>
           </v-row>
@@ -114,7 +166,7 @@
 
         <div v-else>
           <v-row>
-            <v-col cols="12" md="6" class="pa-0 ">
+            <v-col cols="12" md="6" class="pa-0">
               <authorAutocomplete
                 :isRequire="false"
                 :isMultiple="false"
@@ -251,6 +303,7 @@
                 @sendValue="getTag"
                 :height="32"
                 :editDataId="mode === 'edit' && book.tags ? book.tags : []"
+                :key="tagsKey"
               />
             </div>
           </v-col>
@@ -438,24 +491,28 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import bookCatAutocomplete from '../bookCategory/bookCatAutocomplete.vue';
 import tagsAutocomplete from '../tags/tagsAutocomplete.vue';
 import publisherAutocomplete from '../publisher/publisherAutocomplete.vue';
 import authorAutocomplete from '../author/authorAutocomplete.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
 import uploadFile from '../file/uploadFile.vue';
 import getClientByIdentity from '../users/getClientByIdentity.vue';
+import bookCategoryWrapper from './bookCategoryWrapper.vue';
+import publisherControlWrapper from './publisherControlWrapper.vue';
+import authorControlWrapper from './authorControlWrapper.vue';
 
 export default {
   name: 'addBookCmp',
   components: {
     notifMessage,
-    bookCatAutocomplete,
     tagsAutocomplete,
     publisherAutocomplete,
     authorAutocomplete,
     uploadFile,
     getClientByIdentity,
+    bookCategoryWrapper,
+    publisherControlWrapper,
+    authorControlWrapper,
   },
   props: {
     mode: {
@@ -496,8 +553,7 @@ export default {
       book: {
         allowDiscount: true,
       },
-      // bookCategory vlidate
-      bookCatVallidate: true,
+
       // error
       errorEnable: false,
       errorMsg: '',
@@ -508,6 +564,8 @@ export default {
       bookId: undefined,
 
       getClientKey: 0,
+      bookcategoryKey: 0,
+      tagsKey: 0,
     };
   },
 
@@ -564,12 +622,7 @@ export default {
     // validate form
     validate(barcode) {
       this.$refs.form.validate();
-      // book category validation
-      if (this.isAdmin && this.$refs.bookCat.model === null) {
-        this.bookCatVallidate = true;
-      } else {
-        this.bookCatVallidate = false;
-      }
+
       if (
         (this.$refs.form.validate() && this.isAdmin && this.book.sellerId) ||
         (this.$refs.form.validate() && !this.isAdmin)
@@ -674,9 +727,10 @@ export default {
 
     reset() {
       this.$refs.form.reset();
-      this.bookCatVallidate = true;
+      this.bookcategoryKey += 1;
       this.book.allowDiscount = true;
       this.allowKey += 1;
+      this.tagsKey += 1;
     },
     // notif hide
 
