@@ -160,7 +160,7 @@
         </td>
       </tbody>
     </table>
-    <div class="d-flex justify-center">
+    <div class="d-flex justify-center mb-5">
       <v-btn
         class="ma-2 d-flex"
         :loading="loadingMore"
