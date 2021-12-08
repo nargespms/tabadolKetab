@@ -18,6 +18,7 @@
           <v-card flat class="pa-4">
             <usersStatusCards v-if="item.tab === 'users'" />
             <ticketsStatusCard v-if="item.tab === 'tickets'" />
+            <messagesStatusCard v-if="item.tab === 'messages'" />
             <discountsStatusCard v-if="item.tab === 'discounts'" />
             <postsStatusCard v-if="item.tab === 'post'" />
             <booksStatusCard v-if="item.tab === 'book'" />
@@ -33,6 +34,7 @@
 <script>
 import usersStatusCards from './usersStatusCards.vue';
 import ticketsStatusCard from './ticketsStatusCard.vue';
+import messagesStatusCard from './messagesStatusCard.vue';
 import discountsStatusCard from './discountsStatusCard.vue';
 import postsStatusCard from './postsStatusCard.vue';
 import billingStatusCard from './billingStatusCard.vue';
@@ -49,6 +51,7 @@ export default {
     billingStatusCard,
     booksStatusCard,
     financialReportWrap,
+    messagesStatusCard,
   },
   data() {
     return {
@@ -65,6 +68,11 @@ export default {
           tab: 'tickets',
           icon: 'mdi-ticket-account',
           condition: true,
+        },
+        {
+          tab: 'messages',
+          icon: 'mdi-android-messages',
+          condition: this.$store.state.bookShop.userInfo.role === 'CLIENT',
         },
         {
           tab: 'discounts',

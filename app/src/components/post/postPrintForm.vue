@@ -101,6 +101,18 @@
             </div>
           </v-col>
         </v-row>
+
+        <v-row>
+          <v-col cols="12" md="12">
+            <div class=" d-flex align-center ">
+              <span class="font-weight-black">
+                {{ $t('bookDonation') }} :
+              </span>
+              <v-radio :label="$t('no')" :value="false" class="pr-12"></v-radio>
+              <v-radio :label="$t('yes')" :value="true" class="pr-12"></v-radio>
+            </div>
+          </v-col>
+        </v-row>
         <v-row class="py-12">
           <v-col cols="12" md="6" class="text-center">
             امضا درخواست کننده</v-col

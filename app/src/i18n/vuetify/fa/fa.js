@@ -486,6 +486,8 @@ export default {
   RegisteredBooksNumber: 'تعداد کل  کتاب های ثبت شده ',
   ticketsNumber: 'تعداد تیکت ها ',
   todayTicketsNumber: 'تعداد تیکت های امروز',
+  messagesNumber: 'تعداد پیام ها ',
+  todayMessagesNumber: 'تعداد پیام های امروز',
   totalRegisteredBookNumber: 'تعداد کل کتاب های ثبت شده',
   todayRegisteredBookNumber: ' تعداد کتاب های ثبت شده امروز',
   confirmedBooksNumber: 'تعداد کتاب های تایید شده',
