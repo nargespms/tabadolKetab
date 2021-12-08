@@ -5,7 +5,9 @@
     >
       <v-tabs
         light
-        :vertical="$vuetify.breakpoint.sm ? true : false"
+        :vertical="
+          $vuetify.breakpoint.xs ? false : $vuetify.breakpoint.lg ? true : ''
+        "
         background-color="transparent"
         v-model="tab"
         :width="undefined"
