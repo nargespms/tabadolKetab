@@ -78,7 +78,9 @@
       <tbody v-if="tableData.length > 0">
         <tr v-for="item in tableData" :key="item.index">
           <td>
-            {{ item.title }}
+            <span class="pointer" @click="preview(item)">
+              {{ item.title }}
+            </span>
           </td>
           <td>
             {{ new Date(item.sendDate).toLocaleDateString('fa') }}
@@ -250,7 +252,6 @@ export default {
     },
     // methods for preview
     preview(item) {
-      console.log(item);
       this.enablePreview = true;
       this.previewItem = item;
     },
