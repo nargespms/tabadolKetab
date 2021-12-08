@@ -190,7 +190,9 @@ export default {
     background-color: transparent !important;
   }
 }
-.v-tabs {
-  width: unset;
+.clientNumberWrap {
+  .v-tabs {
+    width: unset !important;
+  }
 }
 </style>
