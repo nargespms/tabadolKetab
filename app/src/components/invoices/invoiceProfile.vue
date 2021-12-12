@@ -51,7 +51,7 @@
             :deletable="false"
           />
         </v-row>
-        <v-row class="pa-5">
+        <v-row class="pa-5 ">
           <v-col cols="12" md="6" class="pa-0">
             <table class="generalTable ">
               <tr>
@@ -100,18 +100,19 @@
             </table>
           </v-col>
         </v-row>
-        <!-- <v-row class="pa-5">
+        <v-row v-if="invoice.delivery !== 'PRESENCE'" class="pa-5">
           <div class="postGuide">
             <span class="blue--text text--accent-3">
               <v-icon color="primary">fas fa-motorcycle</v-icon>
-              هزینه پیک به صورت نقدی دریافت میشود و مبلغ آن
               <span>
-                20000 تومان
+                {{ $t('postPrice') }}
               </span>
-              میباشد.
+              <span>
+                {{ moneyFormat(deliveryCalculatedPrice) }} {{ $t('rial') }}
+              </span>
             </span>
           </div>
-        </v-row> -->
+        </v-row>
         <div class="justify-center d-flex mb-4">
           <v-btn color="primary" class="mr-4 px-16" @click="printInvoice">
             <v-icon> mdi-printer</v-icon>
@@ -125,9 +126,11 @@
 
 <script>
 import invoiceItems from './invoiceItems.vue';
+import moneyFormat from '../../mixins/moneyFormat.js';
 
 export default {
   name: 'invoiceProfile',
+  mixins: [moneyFormat],
   components: {
     invoiceItems,
   },
@@ -136,23 +139,26 @@ export default {
       type: String,
     },
   },
+
   data() {
     return {
       isLoading: true,
       invoiceItems: [],
-      invoice: {
-        // issueDate: '2020-11-24T20:30:00.000Z',
-        // clientName: 'علی مشتری',
-        // cashier: 'علی تبادلیان',
-        // phone: '۰۹۱۲۶۷۸۹۳۴۵',
-        // postalCode: '۱۴۷۵۲۳۶۸۶۳۴',
-        // booksPriceWithoutDiscount: '125000 ریال',
-        // remainedCredit: '20000 ریال',
-        // booksPrice: '20000 ریال',
-        // address: 'شهران خیابان طوقانی خیابان جهاد پلاک ۳۰ واحد ۷',
-      },
+      invoice: {},
+
+      freeDelivery: undefined,
+      deliveryPrice: undefined,
     };
   },
+
+  computed: {
+    deliveryCalculatedPrice() {
+      return this.invoice.books.length < this.freeDelivery
+        ? this.deliveryPrice
+        : this.$t('free');
+    },
+  },
+
   methods: {
     invoiceList() {
       this.$router.push({
@@ -166,17 +172,33 @@ export default {
       console.log(routeData);
       window.open(routeData.href, '_blank');
     },
-  },
-  mounted() {
-    this.$axios
-      .get(`/v1/api/tabaadol-e-ketaab/invoice/${this.$route.params.invoiceId}`)
-      .then(res => {
+
+    getSetting() {
+      this.$axios.get('/v1/api/tabaadol-e-ketaab/setting').then(res => {
         if (res.status === 200) {
-          this.invoice = res.data;
-          this.invoiceItems = res.data.books;
+          this.freeDelivery = res.data.freeDelivery;
+          this.deliveryPrice = res.data.deliveryPrice;
           this.isLoading = false;
         }
       });
+    },
+    getInvoiceData() {
+      this.$axios
+        .get(
+          `/v1/api/tabaadol-e-ketaab/invoice/${this.$route.params.invoiceId}`
+        )
+        .then(res => {
+          if (res.status === 200) {
+            this.invoice = res.data;
+            this.invoiceItems = res.data.books;
+            this.isLoading = false;
+          }
+        });
+    },
+  },
+  mounted() {
+    this.getSetting();
+    this.getInvoiceData();
   },
 };
 </script>

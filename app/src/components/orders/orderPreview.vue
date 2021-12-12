@@ -48,10 +48,10 @@
                   {{ order.address.zipCode }}
                 </span>
               </p>
-              <p>
+              <p v-if="order.address.mobile">
                 <span class="font-weight-black"> {{ $t('mobile') }} : </span>
                 <span class="numberDir">
-                  {{ order.client.mobile }}
+                  {{ order.address.mobile }}
                 </span>
               </p>
             </div>
