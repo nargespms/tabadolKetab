@@ -174,7 +174,7 @@ export default {
   discountPreview: 'مشاهده تخفیف',
   couponDiscount: 'بن تخفیف',
   Thisbookissoldorreservedorregisteredbyclient:
-    'کتاب مورد نظر رزرو شده است و یا به فروش رسیده است !',
+    'کتاب مورد نظر رزرو شده است و یا به فروش رسیده است و یا وضعیت آن مجاز نیست  !',
   youcannoteditthisbook: 'کتاب مورد نظر قابل ویرایش نمیباشد',
   ua: 'جزییات دستگاه کاربر',
   invalidCoupon: 'بن تخفیف مورد نظر نامعتبر میباشد',

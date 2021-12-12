@@ -50,7 +50,7 @@
       <v-row class="pt-6 px-6" v-if="isAdmin">
         <v-col cols="12" class="pa-0">
           <span v-if="mode === 'edit'" class="fn13 pb-2 d-block primary--text">
-            برای ثبت کاربر با توجه به اطلاعات داده شده ، کاربر را دریافت کنید.
+            برای تغییر کاربر با توجه به اطلاعات کاربر، کاربر را دریافت کنید.
           </span>
           <getClientByIdentity
             :key="getClientKey"
@@ -771,6 +771,7 @@ export default {
 
     edittingData(newVal) {
       this.book = newVal;
+      this.book.sellerId = newVal.seller.id;
     },
   },
   mounted() {
@@ -778,7 +779,6 @@ export default {
       this.getBookData();
     } else if (this.mode === 'edit' && this.state === 'modal') {
       this.book = { ...this.edittingData };
-
       this.isLoading = false;
     } else {
       this.isLoading = false;

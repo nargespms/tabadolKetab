@@ -200,6 +200,7 @@ export default {
       type: Boolean,
     },
   },
+
   data() {
     return {
       expanded: [],
@@ -219,6 +220,7 @@ export default {
       books: [],
     };
   },
+
   methods: {
     addClient() {
       this.$router.push({
@@ -227,7 +229,12 @@ export default {
     },
     edit(book) {
       this.enableEdit = true;
-      this.edittingItem = book;
+      this.$axios.get(`/v1/api/tabaadol-e-ketaab/book/${book.id}`).then(res => {
+        if (res.status === 200) {
+          this.edittingItem = res.data;
+          this.isLoading = false;
+        }
+      });
     },
     closeModal() {
       this.enableEdit = false;
