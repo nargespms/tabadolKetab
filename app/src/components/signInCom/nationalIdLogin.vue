@@ -1,26 +1,48 @@
 <template>
-  <v-form ref="form" v-model="valid">
-    <nationalId
-      :autofocus="true"
-      @setNationalId="setNationalId"
-      :isRequire="true"
-    />
-    <password @setPassword="setPassword" />
+  <div>
+    <v-form ref="form" v-model="valid">
+      <nationalId
+        :autofocus="true"
+        @setNationalId="setNationalId"
+        :isRequire="true"
+      />
+      <password @setPassword="setPassword" />
+      <v-row>
+        <v-col cols="12" md="12">
+          <v-row>
+            <v-col cols="12" md="12">
+              <captcha @setCaptcha="setCaptcha" :key="captchaKey" />
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+      <div class="justify-center d-flex">
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="px-5"
+          @click="validate"
+        >
+          {{ $t('enter') }}
+        </v-btn>
+      </div>
+    </v-form>
+
     <v-row>
-      <v-col cols="12" md="12">
-        <v-row>
-          <v-col cols="12" md="12">
-            <captcha @setCaptcha="setCaptcha" :key="captchaKey" />
-          </v-col>
-        </v-row>
+      <v-col class="text-center my-3">
+        <router-link
+          v-if="$route.name === 'login'"
+          class="primary--text "
+          :to="{ name: 'admin-login' }"
+        >
+          آیا کارمند هستید ؟ اینجا را کلیک کنید
+        </router-link>
+        <router-link v-else class="primary--text" :to="{ name: 'login' }">
+          آیا عضو مشتریان تبادل هستید ؟ اینجا را کلیک کنید
+        </router-link>
       </v-col>
     </v-row>
-    <div class="justify-center d-flex">
-      <v-btn :disabled="!valid" color="success" class="px-5" @click="validate">
-        {{ $t('enter') }}
-      </v-btn>
-    </div>
-  </v-form>
+  </div>
 </template>
 
 <script>
