@@ -88,7 +88,7 @@
             </span>
           </td>
           <td>
-            <span v-if="item.afterDiscount">
+            <span v-if="item.afterDiscount" class="d-block ltr">
               {{ moneyFormat(item.afterDiscount) }}
             </span>
           </td>
