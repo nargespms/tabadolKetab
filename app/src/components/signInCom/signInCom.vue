@@ -21,20 +21,22 @@
           <!-- <v-tabs-items v-model="tab"> -->
           <!-- <v-tab-item v-for="item in items" :key="item.tab"> -->
           <!-- <template v-if="item.tab === 'nationalId'">
-                <nationalIdLogin
-                  :endpoint="endpoint"
-                  @error404="error404"
-                  @error406="error406"
-                />
               </template> -->
+          <nationalIdLogin
+            :endpoint="endpoint"
+            @error404="error404"
+            @error406="error406"
+          />
 
-          <!-- <template v-if="item.tab === 'mobile'"> -->
-          <mobileLogin
+          <!-- <mobileLogin
             class="my-5"
             :endpoint="endpoint"
             @error406="error406"
             @error404="mobileError404"
-          />
+          /> -->
+
+          <!-- <template v-if="item.tab === 'mobile'"> -->
+
           <!-- </template> -->
           <!-- </v-tab-item> -->
           <!-- </v-tabs-items> -->
@@ -58,15 +60,15 @@
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import mobileLogin from './mobileLogin.vue';
-// import nationalIdLogin from './nationalIdLogin.vue';
+// import mobileLogin from './mobileLogin.vue';
+import nationalIdLogin from './nationalIdLogin.vue';
 
 export default {
   name: 'signInCom',
   components: {
     notifMessage,
-    mobileLogin,
-    // nationalIdLogin,
+    // mobileLogin,
+    nationalIdLogin,
   },
   data() {
     return {

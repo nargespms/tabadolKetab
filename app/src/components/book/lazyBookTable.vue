@@ -83,10 +83,14 @@
             </template>
           </td>
           <td>
-            {{ moneyFormat(item.undergraduatePrice) }}
+            <span v-if="item.undergraduatePrice">
+              {{ moneyFormat(item.undergraduatePrice) }}
+            </span>
           </td>
           <td>
-            {{ moneyFormat(item.afterDiscount) }}
+            <span v-if="item.afterDiscount">
+              {{ moneyFormat(item.afterDiscount) }}
+            </span>
           </td>
 
           <td>
