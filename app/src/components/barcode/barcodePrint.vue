@@ -10,7 +10,7 @@
       >
       <span class="text-center font-weight-bold fn12 pb-1" v-if="!isLoading">
         {{ book.category.title }} |
-        {{ new Date().toLocaleDateString('fa') }}</span
+        {{ new Date(book.createdAt).toLocaleDateString('fa') }}</span
       >
     </div>
   </div>
