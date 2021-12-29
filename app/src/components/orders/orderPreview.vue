@@ -48,7 +48,7 @@
                   {{ order.address.zipCode }}
                 </span>
               </p>
-              <p v-if="order.address.mobile">
+              <p v-if="order.address && order.address.mobile">
                 <span class="font-weight-black"> {{ $t('mobile') }} : </span>
                 <span class="numberDir">
                   {{ order.address.mobile }}
