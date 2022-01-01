@@ -173,7 +173,7 @@
                       ($store.state.bookShop.userInfo.role === 'CLIENT' &&
                         item.status !== 'CLIENTREGISTER') ||
                         ($store.state.bookShop.userInfo.role !== 'CLIENT' &&
-                          item.status === 'CONFIRMED')
+                          !$store.state.bookShop.userInfo.role.d_book)
                     "
                   >
                     mdi-delete
