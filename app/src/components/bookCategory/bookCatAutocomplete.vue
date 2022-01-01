@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import _ from 'lodash';
+
 export default {
   name: 'bookCatAutocomplete',
   props: {
@@ -96,14 +98,8 @@ export default {
         }
       });
     },
-  },
-  watch: {
-    // eslint-disable-next-line no-unused-vars
-    search(val) {
-      // Items have already been loaded
-      if (this.items.length > 0) return;
 
-      this.isLoading = true;
+    searchData: _.debounce(function() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/categories').then(res => {
         console.log(res);
         if (res.status === 200) {
@@ -111,6 +107,15 @@ export default {
           this.isLoading = false;
         }
       });
+    }, 1500),
+  },
+  watch: {
+    // eslint-disable-next-line no-unused-vars
+    search(val) {
+      // Items have already been loaded
+      // if (this.items.length > 0) return;
+      this.searchData();
+      this.isLoading = true;
     },
     isRequire(newVal) {
       this.localRequire = newVal;
