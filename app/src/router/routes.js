@@ -563,7 +563,7 @@ const routes = [
         component: () => import('../views/orders/ordersList.vue'),
         meta: {
           requiresAuth: true,
-          roles: [{ r_order: true }],
+          roles: [{ r_order: true }, { c_invoice: true }],
           access: 'BOTH',
           cRole: 'CLIENT',
         },
@@ -583,7 +583,7 @@ const routes = [
         component: () => import('../views/orders/orderPage.vue'),
         meta: {
           requiresAuth: true,
-          roles: [{ r_order: true }],
+          roles: [{ r_order: true }, { c_invoice: true }],
           access: 'BOTH',
           cRole: 'CLIENT',
         },
