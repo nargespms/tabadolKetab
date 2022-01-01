@@ -32,7 +32,7 @@
       <p v-if="book.undergraduatePrice" class=" primary--text">
         {{ this.moneyFormat(book.undergraduatePrice) }} {{ $t('rial') }}
       </p>
-      <v-btn
+      <!-- <v-btn
         color="blue lighten-1"
         class="px-6"
         :disabled="bought"
@@ -44,7 +44,7 @@
         <span :class="!bought ? 'white--text' : ''">
           {{ $t('buy') }}
         </span>
-      </v-btn>
+      </v-btn> -->
     </div>
   </v-card>
 </template>

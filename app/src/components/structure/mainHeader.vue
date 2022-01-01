@@ -19,7 +19,7 @@
         </div>
 
         <div class="pl-6 enterPannel d-flex">
-          <div
+          <!-- <div
             class="pl-3 shoppingBasket"
             @click="shoppingBag"
             v-if="
@@ -44,7 +44,7 @@
             <span class="white--text">
               {{ $t('shoppingBasket') }}
             </span>
-          </div>
+          </div> -->
 
           <div
             @click="exitPannel"
