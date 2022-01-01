@@ -99,21 +99,29 @@ export default {
       });
     },
 
-    searchData: _.debounce(function() {
-      this.$axios.get('/v1/api/tabaadol-e-ketaab/categories').then(res => {
-        if (res.status === 200) {
-          this.items = res.data.categories;
-          this.isLoading = false;
-        }
-      });
-    }, 1000),
+    searchData: _.debounce(function(val) {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/categories', {
+          params: {
+            filter: {
+              title: val,
+            },
+          },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.items = res.data.categories;
+            this.isLoading = false;
+          }
+        });
+    }, 500),
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
     search(val) {
       // Items have already been loaded
       // if (this.items.length > 0) return;
-      this.searchData();
+      this.searchData(val);
       this.isLoading = true;
     },
     isRequire(newVal) {

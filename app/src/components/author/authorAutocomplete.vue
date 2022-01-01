@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import _ from 'lodash';
+
 export default {
   name: 'authorAutocomplete',
   props: {
@@ -111,33 +113,32 @@ export default {
         }
       });
     },
+    searchData: _.debounce(function(val) {
+      this.$axios
+        .get('/v1/api/tabaadol-e-ketaab/authors', {
+          params: {
+            filter: {
+              title: val,
+            },
+          },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.items = res.data.authors;
+            this.isLoading = false;
+          }
+        });
+    }, 500),
   },
 
   watch: {
     // eslint-disable-next-line no-unused-vars
     search(val) {
       // Items have already been loaded
-      if (this.items.length > 0) return;
-      console.log(val);
-      if (val.length >= 3) {
-        this.isLoading = true;
-        this.$axios
-          .get('/v1/api/tabaadol-e-ketaab/authors', {
-            params: {
-              filter: {
-                title: val,
-              },
-            },
-          })
-          .then(res => {
-            if (res.status === 200) {
-              this.items = res.data.authors;
-              this.isLoading = false;
-            }
-          });
-      } else {
-        this.getData();
-      }
+      // if (this.items.length > 0) return;
+
+      this.isLoading = true;
+      this.searchData(val);
     },
     isRequire(newVal) {
       this.localRequire = newVal;

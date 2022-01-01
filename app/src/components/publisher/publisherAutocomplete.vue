@@ -137,7 +137,7 @@ export default {
             this.isLoading = false;
           }
         });
-    }, 1000),
+    }, 500),
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
