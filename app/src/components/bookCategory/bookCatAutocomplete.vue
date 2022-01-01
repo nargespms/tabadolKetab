@@ -101,13 +101,12 @@ export default {
 
     searchData: _.debounce(function() {
       this.$axios.get('/v1/api/tabaadol-e-ketaab/categories').then(res => {
-        console.log(res);
         if (res.status === 200) {
           this.items = res.data.categories;
           this.isLoading = false;
         }
       });
-    }, 1500),
+    }, 1000),
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
