@@ -98,7 +98,7 @@ export default {
         }
       });
     },
-
+    // eslint-disable-next-line
     searchData: _.debounce(function(val) {
       this.$axios
         .get('/v1/api/tabaadol-e-ketaab/categories', {
