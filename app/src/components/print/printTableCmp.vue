@@ -32,13 +32,13 @@ export default {
 </script>
 <style lang="scss">
 .generalTable {
-  border: thin solid rgba(0, 0, 0, 0.12);
+  border: thin solid #000;
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 8px;
   th,
   td {
-    border: thin solid rgba(0, 0, 0, 0.12);
+    border: thin solid #000;
     font-weight: normal;
     text-align: center;
     padding: 8px;
