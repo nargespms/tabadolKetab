@@ -149,10 +149,8 @@
                     v-on="on"
                     v-bind="attrs"
                     :disabled="
-                      ($store.state.bookShop.userInfo.role === 'CLIENT' &&
-                        item.status !== 'CLIENTREGISTER') ||
-                        ($store.state.bookShop.userInfo.role !== 'CLIENT' &&
-                          item.status === 'CONFIRMED')
+                      $store.state.bookShop.userInfo.role === 'CLIENT' &&
+                        item.status !== 'CLIENTREGISTER'
                     "
                   >
                     mdi-pencil
