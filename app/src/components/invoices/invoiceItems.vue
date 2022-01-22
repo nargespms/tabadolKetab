@@ -108,7 +108,7 @@
             </span>
             <span else> </span>
           </td>
-          <td v-if="deletable" class="grey lighten-2"></td>
+          <td v-if="deletable"></td>
         </tr>
       </tbody>
     </table>

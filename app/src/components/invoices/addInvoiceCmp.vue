@@ -155,7 +155,7 @@ export default {
       ],
 
       barcode: '',
-      invoiceItems: [],
+      // invoiceItems: [],
       invoice: {},
       // user validation
       userValidate: true,
@@ -164,6 +164,17 @@ export default {
       delivery: 'PRESENCE',
       booksId: [],
     };
+  },
+
+  computed: {
+    invoiceItems: {
+      get() {
+        return this.$store.state.bookShop.bag;
+      },
+      set(v) {
+        return v;
+      },
+    },
   },
   methods: {
     clientError() {
@@ -199,6 +210,9 @@ export default {
             if (foundBook === -1) {
               this.booksId.push(res.data.id);
               this.invoiceItems.push(res.data);
+              this.$store.commit('bookShop/addToBag', res.data, {
+                module: 'bookShop',
+              });
               this.reset();
             } else {
               this.errorEnable = true;
@@ -224,7 +238,10 @@ export default {
     },
 
     deleteItem(item) {
-      this.invoiceItems.pop(item);
+      console.log(item);
+      this.$store.commit('bookShop/removeFromBag', item, {
+        module: 'bookShop',
+      });
     },
     // reset form
     reset() {
