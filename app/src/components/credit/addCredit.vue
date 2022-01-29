@@ -28,6 +28,58 @@
         <v-form ref="form" v-model="valid" lazy-validation class="pa-4">
           <v-row>
             <v-col>
+              <div>
+                <div
+                  class="mb-6"
+                  v-if="
+                    this.$store.state.bookShop.userInfo.role !== 'CLIENT' &&
+                      this.mode === 'modal'
+                  "
+                >
+                  <div class="d-flex justify-space-between flex-wrap">
+                    <p>
+                      <span class="font-weight-black">
+                        {{ $t('fullname') }} :
+                      </span>
+                      <span>
+                        {{ client.firstName }}
+                        {{ client.lastName }}
+                      </span>
+                    </p>
+
+                    <p>
+                      <span class="font-weight-black">
+                        {{ $t('mobile') }} :
+                      </span>
+                      <span class="numberDir">
+                        {{ client.mobile }}
+                      </span>
+                    </p>
+
+                    <p v-if="client.nationalId">
+                      <span class="font-weight-black">
+                        {{ $t('nationalId') }} :
+                      </span>
+                      <span>
+                        {{ client.nationalId }}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                <getClientByIdentity
+                  v-if="
+                    this.$store.state.bookShop.userInfo.role !== 'CLIENT' &&
+                      this.mode !== 'modal'
+                  "
+                  class="mb-6"
+                  :key="getClientKey"
+                  :edit-data="mode === 'edit' ? book.seller : {}"
+                  @setUser="setClient"
+                  @clientError="clientError"
+                />
+              </div>
+
               <v-text-field
                 v-if="queryGet"
                 v-model.number="credit.credit"
@@ -51,21 +103,7 @@
                   </span>
                 </template>
               </v-text-field>
-              <div>
-                <clientsAutoComplete
-                  v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
-                  ref="userAutocomplete"
-                  :isRequired="
-                    this.$store.state.bookShop.userInfo.role !== 'CLIENT'
-                      ? true
-                      : false
-                  "
-                  @setUser="setClient"
-                  :placeHolder="'clients'"
-                  dynamicClass="pb-7"
-                  :editDataId="clientId"
-                />
-              </div>
+
               <payMethod
                 v-if="this.$store.state.bookShop.userInfo.role !== 'CLIENT'"
                 @setMethod="setMethod"
@@ -103,12 +141,18 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+    <notifMessage
+      v-if="errorEnable"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </v-row>
 </template>
 
 <script>
 import notifMessage from '../structure/notifMessage.vue';
-import clientsAutoComplete from '../structure/clientsAutoComplete.vue';
+import getClientByIdentity from '../users/getClientByIdentity.vue';
 import payMethod from '../shoppingBag/payMethod.vue';
 import moneyFormat from '../../mixins/moneyFormat.js';
 
@@ -116,8 +160,8 @@ export default {
   name: 'addCredit',
   components: {
     notifMessage,
-    clientsAutoComplete,
     payMethod,
+    getClientByIdentity,
   },
   props: {
     data: {
@@ -125,6 +169,10 @@ export default {
     },
     mode: {
       type: String,
+    },
+    client: {
+      type: Object,
+      default: () => {},
     },
   },
   mixins: [moneyFormat],
@@ -143,6 +191,11 @@ export default {
       isLoading: false,
       queryGet: false,
       payMethods: ['POZ', 'CARD', 'CASH', 'GIFT'],
+
+      errorEnable: false,
+      errorMsg: '',
+
+      getClientKey: 0,
     };
   },
   methods: {
@@ -159,14 +212,6 @@ export default {
     },
     validate() {
       this.$refs.form.validate();
-      // user validate
-      if (this.$store.state.bookShop.userInfo.role !== 'CLIENT') {
-        if (this.$refs.userAutocomplete.model === null) {
-          this.clientValidate = false;
-        } else {
-          this.clientValidate = true;
-        }
-      }
 
       if (this.$store.state.bookShop.userInfo.role === 'CLIENT') {
         this.endpoint = '/v1/api/tabaadol-e-ketaab/credit';
@@ -176,7 +221,7 @@ export default {
         this.method = 'patch';
       }
 
-      if (this.$refs.form.validate() && this.clientValidate) {
+      if (this.credit.clientId && this.credit.credit) {
         this.isLoading = true;
         this.$axios[this.method](this.endpoint, { ...this.credit }).then(
           res => {
@@ -188,6 +233,7 @@ export default {
               if (this.mode === 'modal') {
                 this.$emit('closeModal');
               }
+              this.getClientKey += 1;
               this.isLoading = false;
               this.saveSuccess = true;
 
@@ -207,6 +253,14 @@ export default {
     hideNotif() {
       this.saveSuccess = false;
       this.userValidate = true;
+    },
+
+    clientError() {
+      this.errorEnable = true;
+      this.errorMsg = 'clientNotFound';
+    },
+    hideError() {
+      this.errorEnable = false;
     },
   },
   watch: {

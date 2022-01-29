@@ -162,6 +162,7 @@
     <v-dialog v-model="addCreditModal" max-width="1000px">
       <addCredit
         :data="clientCredit"
+        :client="order.client"
         :mode="'modal'"
         @closeModal="closeAddCredit"
       />
