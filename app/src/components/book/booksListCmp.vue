@@ -107,6 +107,15 @@ export default {
           divider: true,
         },
         {
+          text: 'mobile',
+          value: 'sellerMobile',
+          align: 'center',
+          filterable: true,
+          filterType: 'text',
+          filterName: 'sellerMobile',
+          divider: true,
+        },
+        {
           text: 'confirmerUser',
           value: 'confirmedById',
           align: 'center',

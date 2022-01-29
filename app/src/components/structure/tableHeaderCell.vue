@@ -312,7 +312,14 @@ export default {
     },
 
     emitFilter: _.debounce(function b(name) {
-      this.$emit('filterCol', this.filter, name);
+      if (
+        this.data.filterName === 'sellerMobile' &&
+        this.filter.sellerMobile.length > 7
+      ) {
+        this.$emit('filterCol', this.filter, name);
+      } else if (this.data.filterName !== 'sellerMobile') {
+        this.$emit('filterCol', this.filter, name);
+      }
     }, 1500),
 
     emitFilterRange: _.debounce(function b(first, second) {

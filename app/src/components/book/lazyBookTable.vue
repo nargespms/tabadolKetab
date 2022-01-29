@@ -108,6 +108,11 @@
             {{ item.seller.lastName }}
           </td>
           <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
+            <span class="numberDir ">
+              {{ item.seller.mobile }}
+            </span>
+          </td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
             <span v-if="item.confirmedBy">
               {{ item.confirmedBy.firstName }}
               {{ item.confirmedBy.lastName }}
