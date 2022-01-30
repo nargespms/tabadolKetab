@@ -128,6 +128,8 @@
 </template>
 
 <script>
+import _ from 'lodash';
+
 import notifMessage from '../structure/notifMessage.vue';
 import invoiceItems from './invoiceItems.vue';
 import deliveryMethod from '../shoppingBag/deliveryMethod.vue';
@@ -162,7 +164,7 @@ export default {
       clientId: '',
       usersKey: 0,
       delivery: 'PRESENCE',
-      booksId: [],
+      // booksId: [],
     };
   },
 
@@ -170,6 +172,14 @@ export default {
     invoiceItems: {
       get() {
         return this.$store.state.bookShop.bag;
+      },
+      set(v) {
+        return v;
+      },
+    },
+    booksId: {
+      get() {
+        return this.$store.state.bookShop.bag.map(item => item.id);
       },
       set(v) {
         return v;
@@ -195,7 +205,7 @@ export default {
         this.addItem();
       }
     },
-    addItem() {
+    addItem: _.debounce(function a() {
       this.$refs.form.validate();
 
       // it should add item to invoice item
@@ -235,10 +245,9 @@ export default {
       //   this.errorEnable = true;
       //   this.errorMsg = 'pleaseFillTheInput';
       // }
-    },
+    }, 800),
 
     deleteItem(item) {
-      console.log(item);
       this.$store.commit('bookShop/removeFromBag', item, {
         module: 'bookShop',
       });
