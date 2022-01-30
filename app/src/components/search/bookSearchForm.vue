@@ -37,7 +37,7 @@
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
                 <v-text-field v-model="barcode" :label="$t('barcode')" outlined>
                   <template v-slot:append v-if="barcode">
-                    <v-icon @click="clear('barcode')"
+                    <v-icon @click="clearBarcode"
                       >mdi-close-circle-outline</v-icon
                     >
                   </template>
@@ -311,6 +311,10 @@ export default {
       console.log(name);
       this.filter[name] = '';
       delete this.filter.name;
+      this.$emit('searchBook', this.filter);
+    },
+    clearBarcode() {
+      this.barcode = '';
       this.$emit('searchBook', this.filter);
     },
   },

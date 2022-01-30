@@ -103,6 +103,9 @@ export default {
     cart() {
       this.cartEnable = true;
     },
+    expansionStatus(newVal) {
+      return newVal;
+    },
   },
 
   methods: {
