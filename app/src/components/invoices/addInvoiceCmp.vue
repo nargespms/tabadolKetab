@@ -231,6 +231,7 @@ export default {
           }
         })
         .catch(e => {
+          this.barcode = '';
           console.log(e);
           if (e.response.status === 404) {
             this.errorEnable = true;
@@ -259,6 +260,9 @@ export default {
     clearInvoice() {
       this.$refs.form.reset();
       this.invoiceItems = [];
+      this.$store.commit('bookShop/clearBag', {
+        module: 'bookShop',
+      });
     },
     // notif hide
     hideNotif() {
