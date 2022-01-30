@@ -1,6 +1,10 @@
 <template>
   <div>
-    <bookSearchForm @searchBook="searchBook" />
+    <bookSearchForm
+      :expansionstatus="expansionStatus"
+      @searchBook="searchBook"
+      @searchByBarcode="searchByBarcode"
+    />
     <booksSearchResults
       v-if="searchResult.length > 0"
       class="mt-6"
@@ -43,6 +47,19 @@
       @hideNotif="hideNotif"
       :type="'success'"
     />
+
+    <notifMessage
+      v-if="saveSuccess"
+      :msg="'operationSuccessfullyOcured'"
+      @hideNotif="hideSuccess"
+      :type="'success'"
+    />
+    <notifMessage
+      v-if="errorEnable"
+      :msg="errorMsg"
+      @hideNotif="hideError"
+      :type="'error'"
+    />
   </div>
 </template>
 
@@ -74,6 +91,11 @@ export default {
       cartEnable: false,
 
       cart: this.$store.state.bookShop.bag,
+
+      errorEnable: false,
+      saveSuccess: false,
+
+      expansionStatus: true,
     };
   },
 
@@ -99,7 +121,28 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.searchResult = res.data.result.docs;
+            if (res.data.result.docs > 0) {
+              this.expansionStatus = false;
+            } else {
+              this.expansionStatus = true;
+            }
           }
+        });
+    },
+    searchByBarcode(barcode) {
+      this.$axios
+        .get(`/v1/api/tabaadol-e-ketaab/book-number/${barcode}`)
+        .then(res => {
+          if (res.status === 200) {
+            this.searchResult = [res.data];
+            this.expansionStatus = false;
+          }
+        })
+        .catch(() => {
+          this.expansionStatus = true;
+
+          this.errorEnable = true;
+          this.errorMsg = 'Thisbookissoldorreservedorregisteredbyclient';
         });
     },
 
@@ -131,6 +174,14 @@ export default {
     },
     hideNotif() {
       this.cartEnable = false;
+    },
+
+    // notif hide
+    hideSuccess() {
+      this.saveSuccess = false;
+    },
+    hideError() {
+      this.errorEnable = false;
     },
   },
   mounted() {

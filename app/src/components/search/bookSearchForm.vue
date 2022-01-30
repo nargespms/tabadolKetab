@@ -35,6 +35,15 @@
                 </v-text-field>
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
+                <v-text-field v-model="barcode" :label="$t('barcode')" outlined>
+                  <template v-slot:append v-if="barcode">
+                    <v-icon @click="clear('barcode')"
+                      >mdi-close-circle-outline</v-icon
+                    >
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
                 <authorAutocomplete
                   :isRequire="false"
                   :isMultiple="false"
@@ -54,16 +63,7 @@
                   :clearable="true"
                 />
               </v-col>
-              <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
-                <authorAutocomplete
-                  :isRequire="false"
-                  :isMultiple="false"
-                  :placeHolder="'translator'"
-                  @sendValue="getTranslator"
-                  :height="32"
-                  :clearable="true"
-                />
-              </v-col>
+              <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0"> </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="3" class="pa-0">
@@ -77,6 +77,16 @@
                 />
               </v-col>
               <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
+                <authorAutocomplete
+                  :isRequire="false"
+                  :isMultiple="false"
+                  :placeHolder="'translator'"
+                  @sendValue="getTranslator"
+                  :height="32"
+                  :clearable="true"
+                />
+              </v-col>
+              <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
                 <v-text-field
                   v-model="filter.shabak"
                   :label="$t('shabak')"
@@ -84,20 +94,6 @@
                 >
                   <template v-slot:append v-if="filter.shabak">
                     <v-icon @click="clear('shabak')"
-                      >mdi-close-circle-outline</v-icon
-                    >
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
-                <v-text-field
-                  v-model="filter.nationalCode"
-                  :label="$t('nationalcode')"
-                  outlined
-                  v-mask="'###########'"
-                >
-                  <template v-slot:append v-if="filter.nationalcode">
-                    <v-icon @click="clear('nationalcode')"
                       >mdi-close-circle-outline</v-icon
                     >
                   </template>
@@ -122,6 +118,23 @@
                   :height="32"
                 />
               </v-col>
+              <v-col cols="12" md="3" class="pa-0 pr-md-2 pr-0">
+                <v-text-field
+                  v-model="filter.nationalCode"
+                  :label="$t('nationalcode')"
+                  outlined
+                  v-mask="'###########'"
+                >
+                  <template v-slot:append v-if="filter.nationalcode">
+                    <v-icon @click="clear('nationalcode')"
+                      >mdi-close-circle-outline</v-icon
+                    >
+                  </template>
+                </v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
               <v-col cols="12" md="9" class="pa-0 d-flex align-self-end pr-4">
                 <span class="pl-6"> {{ $t('priceRange') }}: </span>
 
@@ -199,11 +212,18 @@ export default {
     authorAutocomplete,
     publisherAutocomplete,
   },
+
+  props: {
+    expansionStatus: {
+      type: Boolean,
+      default: true,
+    },
+  },
   mixins: [moneyFormat],
   data() {
     return {
       valid: true,
-      show: true,
+      show: this.expansionStatus ? this.expansionStatus : true,
       filter: {
         minPrice: 10000,
         maxPrice: 9000000,
@@ -211,6 +231,8 @@ export default {
       min: 10000,
       max: 9000000,
       range: [10000, 9000000],
+
+      barcode: '',
     };
   },
   methods: {
@@ -232,9 +254,10 @@ export default {
     searchBook() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        this.show = false;
-        console.log(this.filter);
         this.$emit('searchBook', this.filter);
+        if (this.barcode) {
+          this.$emit('searchByBarcode', this.barcode);
+        }
       } else {
         this.valid = false;
       }
