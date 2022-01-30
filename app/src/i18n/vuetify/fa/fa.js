@@ -623,4 +623,5 @@ export default {
     '  فایل با فرمت های  jpeg, png, gif, webp, mp4, mp3, pdf, txt   .قابل بارگزاری هستند',
   sendMessage: 'ارسال پیام',
   AreUSureAboutTheInformation: 'آیا از اطلاعات  وارد شده اطمینان دارید ؟',
+  enterFUlly: 'بارکد را به صورت کامل درج نمایید.',
 };

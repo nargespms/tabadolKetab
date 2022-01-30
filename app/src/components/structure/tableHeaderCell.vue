@@ -34,6 +34,8 @@
       v-model="filter[data.value]"
       :style="`width:200px`"
       class="ma-auto"
+      :hint="$t(data.hint)"
+      persistent-hint
       @input="emitFilter(data.value)"
     >
       <template v-slot:append v-if="filter[data.value]">

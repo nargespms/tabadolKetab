@@ -127,6 +127,15 @@ export default {
 
         {
           text: 'barcode',
+          value: 'number',
+          align: 'center',
+          filterable: true,
+          filterType: 'text',
+          hint: 'enterFUlly',
+          divider: true,
+        },
+        {
+          text: 'barcode',
           value: 'barcode',
           align: 'center',
           filterable: false,

@@ -119,6 +119,11 @@
             </span>
           </td>
           <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
+            <span>
+              {{ item.number }}
+            </span>
+          </td>
+          <td v-if="$store.state.bookShop.userInfo.role !== 'CLIENT'">
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon @click="printBarCode(item)" v-bind="attrs" v-on="on"
