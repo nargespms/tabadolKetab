@@ -188,7 +188,15 @@ export default {
     },
   },
   mounted() {
-    this.searchBook();
+    if (this.$route.query) {
+      this.filter = {
+        name: this.$route.query['filter[name]'],
+        translatorName: this.$route.query['filter[translatorName]'],
+        publisher: this.$route.query['filter[publisher]'],
+        authorName: this.$route.query['filter[authorName]'],
+      };
+    }
+    this.searchBook(this.filter);
   },
 };
 </script>
