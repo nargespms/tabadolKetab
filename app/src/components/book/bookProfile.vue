@@ -55,6 +55,13 @@
               {{ this.moneyFormat(book.afterDiscount) }} {{ $t('rial') }}
             </span>
           </p>
+
+          <p v-if="book.confirmDate">
+            <span> {{ $t('registerDate') }} : </span>
+            <span>
+              {{ new Date(book.confirmDate).toLocaleDateString('fa') }}
+            </span>
+          </p>
         </div>
         <v-btn color="blue lighten-1" class="px-6 d-block" @click="addToBag">
           <v-icon color="white">
