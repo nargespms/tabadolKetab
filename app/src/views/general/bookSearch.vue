@@ -155,7 +155,7 @@ export default {
       this.$axios
         .get('/v1/api/tabaadol-e-ketaab/books', {
           params: {
-            ...this.filter,
+            filter:{...this.filter},
             offset: this.searchResult.length,
             limit: 8,
           },
