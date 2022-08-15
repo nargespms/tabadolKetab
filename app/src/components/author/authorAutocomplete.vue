@@ -136,7 +136,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     search(val) {
       // Items have already been loaded
-      // if (this.items.length > 0) return;
+      if (this.items.length > 0) return;
 
       this.isLoading = true;
       this.searchData(val);
