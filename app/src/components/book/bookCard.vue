@@ -21,16 +21,18 @@
           {{ $t('writer') }} : {{ book.writer.title }}
         </p>
       </router-link>
+
       <p
-        v-if="book.discount > 0"
+        v-if="book.undergraduatePrice"
         :class="
           book.afterDiscount ? 'text-decoration-line-through  grey--text' : ''
         "
       >
-        {{ this.moneyFormat(book.afterDiscount) }} {{ $t('rial') }}
-      </p>
-      <p v-if="book.undergraduatePrice" class=" primary--text">
         {{ this.moneyFormat(book.undergraduatePrice) }} {{ $t('rial') }}
+      </p>
+
+      <p v-if="book.discount > 0" class=" primary--text">
+        {{ this.moneyFormat(book.afterDiscount) }} {{ $t('rial') }}
       </p>
       <!-- <v-btn
         color="blue lighten-1"
